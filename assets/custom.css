@@ -90,3 +90,98 @@
   max-width: 78rem;
   margin-inline: auto;
 }
+
+/* ---- Header ---- */
+
+/* Wordmark: no logo image has been uploaded yet, so the stock logo block
+   (blocks/_header-logo.liquid) falls back to rendering the shop name as
+   plain text via snippets/image.liquid's text_fallback. Style that text to
+   match the Figma wordmark (Lora SemiBold 24px, olive grove, 2px tracking).
+   There is no theme setting for the fallback text's typography/color, so
+   this has to live in CSS. The 44x40 tree mark icon from the design has no
+   asset yet and is intentionally skipped. */
+.header-logo {
+  font-family: var(--font-heading--family) !important;
+  font-weight: 600 !important;
+  font-style: normal !important;
+  font-size: 24px !important;
+  letter-spacing: 2px;
+  color: var(--color-primary-button-background) !important;
+}
+
+@media screen and (min-width: 750px) {
+  /* Nav bar height (96px): section_height only offers compact/standard, so
+     dial in the exact vertical padding via the header's own --header-padding
+     custom property (consumed by .header__columns in sections/header.liquid). */
+  #header-component .header__row--top .header__columns {
+    --header-padding: 26px;
+  }
+
+  /* Nav bar asymmetric side padding (100px left / 50px right): no setting
+     exists for unequal left/right header padding, only the symmetric
+     page-width/full-width choice. header-group.json sets section_width to
+     "full-width" on the header section so .header__columns gets real
+     padding-left/padding-right (see .section--full-width-margin in
+     base.css) that this can override cleanly. */
+  #header-component .header__row--top .header__columns {
+    padding-left: 100px !important;
+    padding-right: 50px !important;
+  }
+
+  /* Inline menu type: Plus Jakarta Sans SemiBold via the "subheading" font
+     setting, but the top-level size setting tops out at 18px (1.125rem) —
+     20px isn't one of the enum options, so bump it here. Also sets the
+     26px item gap and the olive-grove hover color, neither of which has a
+     setting. */
+  .header-menu .menu-list__link {
+    font-size: 20px !important;
+  }
+
+  .header-menu .menu-list__list {
+    gap: 26px;
+  }
+
+  .header-menu .menu-list__link:hover,
+  .header-menu .menu-list__link:focus {
+    color: var(--color-primary-button-background) !important;
+  }
+}
+
+/* "Find your shoe" pill: the 7th main-menu item, targeted by its href
+   (ends in /pages/size-width-guide) rather than nth-child so it keeps
+   working if the menu is reordered. Horizon wraps a top-level link that has
+   child links in a <span class="menu-list__trigger"> alongside the
+   .menu-list__disclosure caret button (see blocks/_header-menu.liquid) -
+   style that wrapper as the pill and only reveal/reposition the disclosure
+   button, leaving its toggle behaviour and submenu markup untouched. */
+.menu-list__trigger:has(> a[href$="/pages/size-width-guide"]) {
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding-inline: 14px;
+  border: 1px solid var(--color-foreground);
+  border-radius: 999px;
+  background-color: #ffffff;
+}
+
+.menu-list__trigger:has(> a[href$="/pages/size-width-guide"])::before {
+  content: '';
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  background-color: var(--color-foreground);
+  -webkit-mask: url('icon-search.svg') no-repeat center / contain;
+  mask: url('icon-search.svg') no-repeat center / contain;
+}
+
+.menu-list__trigger:has(> a[href$="/pages/size-width-guide"]) .menu-list__link {
+  height: auto;
+}
+
+.menu-list__trigger:has(> a[href$="/pages/size-width-guide"]) .menu-list__disclosure {
+  position: static;
+  opacity: 1;
+  pointer-events: auto;
+  transform: none;
+  padding: 0;
+}
