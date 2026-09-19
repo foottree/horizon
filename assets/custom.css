@@ -185,3 +185,10 @@
   transform: none;
   padding: 0;
 }
+
+/* Mobile menu drawer: enlarge the close (X) icon. The stock
+   icon-close-menu.svg is 14px; scale it to 24px inside its 44px tap target. */
+.menu-drawer__close-button .header-drawer-icon svg {
+  width: 24px;
+  height: 24px;
+}
