@@ -148,6 +148,9 @@
    style that wrapper as the pill and only reveal/reposition the disclosure
    button, leaving its toggle behaviour and submenu markup untouched. */
 .menu-list__trigger:has(> a[href$="/pages/size-width-guide"]) {
+  /* Centre the 32px box in the 44px menu row: the row wraps its hidden submenu
+     onto a second flex line, so align-items cannot centre it. */
+  margin-block: 6px;
   align-items: center;
   gap: 8px;
   height: 32px;
