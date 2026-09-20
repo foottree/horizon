@@ -163,7 +163,8 @@
     "disclosures": "Disclosures",
     "disclosures_metafield_content": "Required safety warnings and regulatory disclosures for this product.",
     "app_required_for_ratings": "An app is required for product ratings. [Learn more](https://help.shopify.com/manual/apps)",
-    "navigation": "Navigation"
+    "navigation": "Navigation",
+    "grid_layout_paragraph": "Only used by the grid style: two left-column menus, a shop-all button, and center columns built from this item's own 2nd/3rd-level menu links."
   },
   "html_defaults": {
     "join_our_email_list": "<h2>Join our email list</h2>",
@@ -250,7 +251,8 @@
     "video_external": "Use a YouTube or Vimeo URL",
     "pills_usage": "Used for applied filters, discount codes, and search suggestions",
     "media_type_info": "Features are populated from your menu links",
-    "submenu_style": "Dropdown shows a compact list under the parent link. A third level opens as a flyout beside its row."
+    "submenu_style": "Dropdown shows a compact list under the parent link. A third level opens as a flyout beside its row.",
+    "mega_menu_panel_menu_item": "Matched against this top-level menu item's title (case-insensitive). Leave blank to not match any item."
   },
   "names": {
     "column": "Column",
@@ -419,7 +421,9 @@
     "view_all_button": "View all",
     "disclosures": "Disclosures",
     "pills": "Pills",
-    "comparison_slider": "Comparison slider"
+    "comparison_slider": "Comparison slider",
+    "mega_menu_panel": "Mega menu panel",
+    "mega_menu_promo": "Promo tile"
   },
   "options": {
     "progress_bar": "Progress bar",
@@ -735,7 +739,8 @@
     "wide": "Wide",
     "youtube": "YouTube",
     "with_hints": "With hints",
-    "below_media": "Below media"
+    "below_media": "Below media",
+    "tabbed": "Tabbed"
   },
   "settings": {
     "grid_section_card_layout": "Card layout",
@@ -1192,7 +1197,14 @@
     "top_row_background": "Top row background",
     "top_row_text": "Top row text",
     "bottom_row_background": "Bottom row background",
-    "bottom_row_text": "Bottom row text"
+    "bottom_row_text": "Bottom row text",
+    "menu_item_title": "Top-level menu item title",
+    "group_1_menu": "Group 1 menu",
+    "group_2_menu": "Group 2 menu",
+    "shop_all_label": "Shop all button label",
+    "shop_all_url": "Shop all button link",
+    "caption": "Caption",
+    "button_label": "Button label"
   },
   "text_defaults": {
     "accordion_heading": "Accordion heading",

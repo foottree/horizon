@@ -1,0 +1,72 @@
+{%- doc -%}
+  A promo tile nested inside a `_mega-menu-panel` (grid style, right column). No image ->
+  the tile keeps its background colour placeholder (settings.color_palette.color5).
+
+  Rendered by its parent panel's own `{% content_for 'blocks' %}` (a block's direct children
+  render this way, unlike a grandchild read from two levels up — see the note in
+  _mega-menu-panel.liquid), so `block.settings` here is the tile's own, fully resolved.
+
+  @example
+  Rendered automatically, in block order, by the matched `_mega-menu-panel`'s
+  `{% content_for 'blocks' %}` — never called directly.
+{%- enddoc -%}
+
+<a
+  href="{{ block.settings.url | default: '#' }}"
+  class="ft-grid__promo"
+  {{ block.shopify_attributes }}
+>
+  {% if block.settings.image %}
+    {{
+      block.settings.image
+      | image_url: width: 630
+      | image_tag:
+        loading: 'lazy',
+        widths: '315, 630',
+        sizes: '(min-width: 990px) 315px, 25vw',
+        class: 'ft-grid__promo-image'
+    }}
+  {% endif %}
+  <span
+    class="ft-grid__promo-overlay"
+    aria-hidden="true"
+  ></span>
+  <span class="ft-grid__promo-content">
+    {% if block.settings.caption != blank %}
+      <span class="ft-grid__promo-caption">{{- block.settings.caption -}}</span>
+    {% endif %}
+    {% if block.settings.button_label != blank %}
+      <span class="ft-grid__promo-btn">{{- block.settings.button_label -}}</span>
+    {% endif %}
+  </span>
+</a>
+
+{% schema %}
+{
+  "name": "t:names.mega_menu_promo",
+  "tag": null,
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:settings.image"
+    },
+    {
+      "type": "text",
+      "id": "caption",
+      "label": "t:settings.caption"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "t:settings.button_label",
+      "default": "t:text_defaults.button_label"
+    },
+    {
+      "type": "url",
+      "id": "url",
+      "label": "t:settings.link"
+    }
+  ]
+}
+{% endschema %}

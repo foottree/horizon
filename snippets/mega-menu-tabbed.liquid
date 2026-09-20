@@ -1,0 +1,122 @@
+{%- doc -%}
+  Renders the "tabbed" mega menu panel style (rail + card grid), matched to the sunnystep
+  "Shoe Finder" reference (see the CSS block "Header mega menu: tabbed & grid" in
+  assets/custom.css for the measured spec this implements).
+
+  Rail = the top-level link's 2nd-level links that have children (label = link title); a
+  childless 2nd-level link renders as a plain rail link to its own URL instead. The panel for
+  a rail item = its 3rd-level links as cards; a card's image is the linked collection's
+  featured image when present, otherwise a placeholder box. Hovering a rail item swaps the
+  active panel (assets/custom.js); the first rail item with children is active by default.
+  The panel container width is fixed (in Liquid, from the widest rail item's card count) so
+  switching rail items never resizes the dropdown.
+
+  @param {object} link - The top-level menu link being rendered (e.g. "Find your shoe").
+  @param {object} panel - The matched `_mega-menu-panel` block's own `block` (style == 'tabbed').
+
+  @example
+  {% render 'mega-menu-tabbed', link: link, panel: block %}
+{%- enddoc -%}
+
+{% liquid
+  assign rail_items = link.links
+
+  assign max_cards = 0
+  for item in rail_items
+    if item.links != blank
+      assign max_cards = item.links.size | at_least: max_cards
+    endif
+  endfor
+  assign card_gap_count = max_cards | minus: 1 | at_least: 0
+  assign gap_total = card_gap_count | times: 20
+  assign panel_width = max_cards | times: 140 | plus: gap_total
+%}
+<div
+  class="ft-tabbed"
+  {{ panel.shopify_attributes }}
+>
+  <div
+    class="ft-tabbed__rail"
+    role="list"
+  >
+    {% liquid
+      assign rail_index = 0
+    %}
+    {% for item in rail_items %}
+      {% if item.links != blank %}
+        {% liquid
+          assign rail_index = rail_index | plus: 1
+          assign is_first_rail = false
+          if rail_index == 1
+            assign is_first_rail = true
+          endif
+          assign rail_target = 'ft-tabbed-panel-' | append: panel.id | append: '-' | append: forloop.index0
+        %}
+        <button
+          type="button"
+          class="ft-tabbed__rail-item{% if is_first_rail %} is-active{% endif %}"
+          data-ft-rail
+          data-ft-rail-target="{{ rail_target }}"
+          aria-current="{{ is_first_rail }}"
+        >
+          {{- item.title -}}
+        </button>
+      {% else %}
+        <a
+          href="{{ item.url }}"
+          class="ft-tabbed__rail-item ft-tabbed__rail-item--link"
+        >
+          {{- item.title -}}
+        </a>
+      {% endif %}
+    {% endfor %}
+  </div>
+  <div
+    class="ft-tabbed__panels"
+    style="--ft-tabbed-panel-width: {{ panel_width }}px;"
+  >
+    {% liquid
+      assign panel_index = 0
+    %}
+    {% for item in rail_items %}
+      {% if item.links != blank %}
+        {% liquid
+          assign panel_index = panel_index | plus: 1
+          assign is_first_panel = false
+          if panel_index == 1
+            assign is_first_panel = true
+          endif
+        %}
+        <div
+          id="ft-tabbed-panel-{{ panel.id }}-{{ forloop.index0 }}"
+          class="ft-tabbed__panel{% if is_first_panel %} is-active{% endif %}"
+        >
+          <div class="ft-tabbed__grid">
+            {% for card in item.links %}
+              <a
+                href="{{ card.url }}"
+                class="ft-tabbed__card"
+              >
+                <span class="ft-tabbed__card-img">
+                  {% if card.object.featured_image %}
+                    {{
+                      card.object.featured_image
+                      | image_url: width: 280
+                      | image_tag:
+                        loading: 'lazy',
+                        widths: '140, 280',
+                        sizes: '140px',
+                        class: 'ft-tabbed__card-img-el',
+                        alt: card.title
+                    }}
+                  {% endif %}
+                </span>
+                <span class="ft-tabbed__card-label">{{- card.title -}}</span>
+              </a>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>

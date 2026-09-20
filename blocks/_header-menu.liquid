@@ -93,10 +93,38 @@
 
     {% capture children %}
       {% for link in block_settings.menu.links %}
+        {% comment %}
+          Per-top-level-item mega menu panel: a `_mega-menu-panel` block whose `menu_item`
+          setting matches this link's title (case-insensitive) overrides the block-level
+          submenu_style for this one item; unmatched items fall back to it (so e.g.
+          Men/Accessories/SALE keep the plain dropdown/mega style below).
+
+          `content_for 'block'` only renders *static* blocks, and only accepts a literal id
+          (not a variable) - so the match can't be found by looping `block.blocks` and calling
+          content_for with the loop's id (a nested block's own `settings` also read blank
+          outside its own render, so the match can't be tested that way either; see the
+          architecture note in blocks/_mega-menu-panel.liquid). Instead a handful of static
+          panel slots are declared in sections/header-group.json (mega-menu-panel-1..4, room
+          for more top-level items later); every slot is tried, in a fixed literal call, for
+          every top-level link, passing the link under test - each panel only renders real
+          markup when ITS OWN `menu_item` setting matches, so at most one produces output.
+        {% endcomment %}
+        {% capture mega_panel_output %}
+          {% content_for 'block', type: '_mega-menu-panel', id: 'mega-menu-panel-1', link: link %}
+          {% content_for 'block', type: '_mega-menu-panel', id: 'mega-menu-panel-2', link: link %}
+          {% content_for 'block', type: '_mega-menu-panel', id: 'mega-menu-panel-3', link: link %}
+          {% content_for 'block', type: '_mega-menu-panel', id: 'mega-menu-panel-4', link: link %}
+        {% endcapture %}
         {% liquid
+          assign mega_panel_output = mega_panel_output | strip
+          assign has_mega_panel = false
+          if mega_panel_output != blank
+            assign has_mega_panel = true
+          endif
+
           # A third level renders as a flyout beside its parent row, so any depth works here.
           assign use_dropdown = false
-          if block_settings.submenu_style == 'dropdown' and link.links != blank
+          if has_mega_panel == false and block_settings.submenu_style == 'dropdown' and link.links != blank
             assign use_dropdown = true
           endif
         %}
@@ -151,7 +179,9 @@
                 class="menu-list__submenu-inner"
                 style="{% render 'submenu-font-styles', settings: block_settings %}"
               >
-                {% if use_dropdown %}
+                {% if has_mega_panel %}
+                  {{ mega_panel_output }}
+                {% elsif use_dropdown %}
                   <ul class="dropdown-menu__list" role="list">
                     {%- for child in link.links -%}
                       <li class="dropdown-menu__item{% if child.links != blank %} dropdown-menu__item--has-children{% endif %}">
@@ -1063,6 +1093,11 @@
 {
   "name": "t:names.menu",
   "tag": null,
+  "blocks": [
+    {
+      "type": "_mega-menu-panel"
+    }
+  ],
   "settings": [
     {
       "type": "link_list",

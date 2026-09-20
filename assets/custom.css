@@ -624,3 +624,350 @@
 #header-component .menu-drawer-container[open] .menu-drawer__animated-element {
   animation-name: ft-menu-drawer-nav-open;
 }
+
+/* ---- Header mega menu: tabbed & grid ---- */
+/* Two more mega menu styles, chosen per top-level item via a nested `_mega-menu-panel` block
+   (blocks/_header-menu.liquid matches the block's `menu_item` setting against the top-level
+   link's title, case-insensitive; unmatched items keep the block's own submenu_style). Both
+   reuse the stock full-width `.menu-list__submenu` shell (position/clip-path/reveal already
+   handled by header-menu.js + the base stylesheet above) and only restyle the inner panel, so
+   only overrides of stock rules need the #header-component prefix (this block's own
+   {% stylesheet %} in _header-menu.liquid loads after this file).
+
+   TABBED matches sunnystep.com's "Shoe Finder" dropdown; GRID matches sg.anothersole.com's
+   Women/Men mega menu. Layout, dimensions and spacing are copied from the measured live specs;
+   only brand tokens are swapped: their orange/rust accents -> olive
+   var(--color-primary-button-background); their tints -> --dropdown-tint (olive, #eef2e4) or
+   cream #faf7f0 (settings.color_palette.color5); their hairlines -> --dropdown-hairline
+   (#e0dcd2); Poppins -> var(--font-body--family); text colour -> var(--color-foreground).
+   The brief forbids text under 16px: every live value under 16px (11-14px, .75-.875rem) maps
+   to var(--font-size--md) (16px) instead - noted per rule below. */
+
+/* -- Tabbed (sunnystep Shoe Finder) -- */
+
+/* Matched via :has() on the panel's own wrapper class rather than a modifier class from the
+   parent <li>: the panel's style ("tabbed"/"grid") lives on the matched `_mega-menu-panel`
+   block's own settings, which blocks/_header-menu.liquid cannot read ahead of rendering it
+   (see the architecture note in blocks/_mega-menu-panel.liquid) - only the rendered panel
+   itself knows which style it is. */
+#header-component .menu-list__submenu-inner:has(> .ft-tabbed) {
+  display: flex;
+  justify-content: center;
+  flex-wrap: nowrap;
+  padding: 32px 48px;
+  border-top: 1px solid var(--dropdown-hairline);
+  box-shadow: 0 12px 32px rgb(0 0 0 / 0.08);
+}
+
+#header-component .ft-tabbed {
+  display: flex;
+  align-items: flex-start;
+  gap: 48px;
+}
+
+#header-component .ft-tabbed__rail {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 0 0 200px;
+  border-right: 1px solid var(--dropdown-hairline);
+  padding-right: 32px;
+  padding-top: 4px;
+}
+
+#header-component .ft-tabbed__rail-item {
+  display: block;
+  width: 100%;
+  padding: 12px 14px;
+  margin: 0;
+  background: none;
+  border: none;
+  border-left: 2px solid transparent;
+  font-family: var(--font-body--family);
+  font-weight: 500;
+  font-size: var(--font-size--md); /* floor: live value is 13px */
+  line-height: 1.3;
+  color: var(--color-foreground);
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    color 0.15s ease-in-out,
+    background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out;
+}
+
+#header-component .ft-tabbed__rail-item.is-active,
+#header-component .ft-tabbed__rail-item:hover,
+#header-component .ft-tabbed__rail-item:focus-visible {
+  color: var(--color-primary-button-background);
+  background-color: var(--dropdown-tint);
+  border-left-color: var(--color-primary-button-background);
+}
+
+#header-component .ft-tabbed__panels {
+  position: relative;
+  width: var(--ft-tabbed-panel-width, auto);
+}
+
+#header-component .ft-tabbed__panel {
+  display: none;
+}
+
+#header-component .ft-tabbed__panel.is-active {
+  display: block;
+}
+
+#header-component .ft-tabbed__grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start;
+}
+
+#header-component .ft-tabbed__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  flex: 0 0 140px;
+  width: 140px;
+  text-decoration: none;
+}
+
+#header-component .ft-tabbed__card-img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 4px;
+  overflow: hidden;
+  background-color: rgb(var(--color-foreground-rgb) / 0.06); /* placeholder box, no featured image */
+}
+
+#header-component .ft-tabbed__card-img-el {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#header-component .ft-tabbed__card-label {
+  font-family: var(--font-body--family);
+  font-weight: 400;
+  font-size: var(--font-size--md); /* floor: live value is 12px */
+  line-height: 1.3;
+  color: var(--color-foreground);
+  text-align: center;
+  transition: color 0.15s ease-in-out;
+}
+
+#header-component .ft-tabbed__card:hover .ft-tabbed__card-label,
+#header-component .ft-tabbed__card:focus-visible .ft-tabbed__card-label {
+  color: var(--color-primary-button-background);
+}
+
+/* -- Grid (sg.anothersole.com Women/Men) -- */
+
+#header-component .menu-list__submenu-inner:has(> .ft-grid) {
+  flex-wrap: nowrap;
+  align-items: flex-start;
+}
+
+#header-component .ft-grid {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--gap-xl); /* theme's own token: matches the live --menu-horizontal-gap (28px) */
+  width: 100%;
+}
+
+#header-component .ft-grid__left {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 20px 40px;
+  background-color: #faf7f0; /* settings.color_palette.color5 */
+  align-self: stretch;
+}
+
+#header-component .ft-grid__left-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+#header-component .ft-grid__group-heading {
+  margin: 0;
+  color: var(--color-primary-button-background);
+  text-transform: uppercase; /* live value, independent of the block's own text-case setting */
+}
+
+#header-component .ft-grid__sublist {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+#header-component .ft-grid__cta.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 13px 20px;
+  border-radius: 100px;
+  font-size: var(--font-size--md); /* floor: live value is .875rem (14px) */
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  margin-top: var(--padding-sm);
+}
+
+#header-component .ft-grid__center {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding-block: 20px;
+}
+
+#header-component .ft-grid__columns {
+  display: flex;
+  gap: var(--gap-xl); /* theme's own token: matches the live --menu-horizontal-gap/vertical-gap */
+}
+
+#header-component .ft-grid__column {
+  flex: 0 0 auto;
+}
+
+#header-component .ft-grid__column-heading {
+  color: var(--color-primary-button-background);
+  text-transform: uppercase; /* live value, independent of the block's own text-case setting */
+}
+
+#header-component .ft-grid__row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+#header-component .ft-grid__thumb {
+  display: block;
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: rgb(var(--color-foreground-rgb) / 0.06); /* placeholder circle, no featured image */
+}
+
+#header-component .ft-grid__thumb-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#header-component .ft-grid__all-link {
+  display: inline-block;
+  position: relative;
+  padding-block-start: 20px;
+  font-family: var(--font-body--family);
+  font-size: var(--font-size--md); /* floor: live value is 14px */
+  color: var(--color-primary-button-background);
+  text-decoration: underline;
+}
+
+#header-component .ft-grid__all-link::before {
+  content: '\2192';
+  position: absolute;
+  top: 20px;
+  right: -15px;
+  width: 8px;
+  height: 10px;
+  font-family: var(--font-body--family);
+  color: var(--color-primary-button-background);
+}
+
+#header-component .ft-grid__right {
+  flex: 0 0 auto;
+  width: clamp(200px, 25%, 315px);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-self: flex-start;
+  justify-content: space-between;
+  padding-top: 20px;
+}
+
+#header-component .ft-grid__promo {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 2.5;
+  background-color: #faf7f0; /* settings.color_palette.color5, placeholder when no image */
+  overflow: hidden;
+  text-decoration: none;
+}
+
+#header-component .ft-grid__promo-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease-in-out;
+}
+
+#header-component .ft-grid__promo:hover .ft-grid__promo-image {
+  transform: scale(1.04);
+}
+
+#header-component .ft-grid__promo-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgb(var(--color-foreground-rgb) / 0.35);
+}
+
+#header-component .ft-grid__promo-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 8px;
+  padding: 14px 14px 12px;
+  text-align: center;
+}
+
+#header-component .ft-grid__promo-caption {
+  margin: 0;
+  font-family: var(--font-heading--family);
+  font-weight: 600;
+  font-size: var(--font-size--md); /* floor: live value is .8rem (12.8px) */
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #fff;
+  line-height: 1.3;
+  text-shadow: 0 1px 3px rgb(0 0 0 / 0.4);
+}
+
+#header-component .ft-grid__promo-btn {
+  display: inline-block;
+  padding: 7px 20px;
+  border-radius: 100px;
+  background-color: rgb(255 255 255 / 0.85);
+  border: 1px solid var(--color-primary-button-background);
+  color: var(--color-primary-button-background);
+  font-family: var(--font-body--family);
+  font-size: var(--font-size--md); /* floor: live value is .75rem (12px) */
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  transition:
+    background-color 0.15s ease-in-out,
+    color 0.15s ease-in-out;
+}
+
+#header-component .ft-grid__promo:hover .ft-grid__promo-btn {
+  background-color: rgb(255 255 255 / 0.95);
+  color: var(--color-foreground);
+}

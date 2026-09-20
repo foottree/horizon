@@ -76,7 +76,66 @@
             "drawer_dividers": true,
             "submenu_style": "dropdown"
           },
-          "blocks": {}
+          "blocks": {
+            "mega-menu-panel-1": {
+              "type": "_mega-menu-panel",
+              "static": true,
+              "settings": {
+                "menu_item": "Women",
+                "style": "grid",
+                "group_1_menu": "mega-women-featured",
+                "group_2_menu": "mega-women-shop-by-style",
+                "shop_all_label": "Shop all Women",
+                "shop_all_url": "/collections/women"
+              },
+              "blocks": {
+                "mega-menu-promo-1": {
+                  "type": "_mega-menu-promo",
+                  "settings": {
+                    "caption": "Sample promo 1",
+                    "button_label": "Shop now",
+                    "url": "#"
+                  },
+                  "blocks": {}
+                },
+                "mega-menu-promo-2": {
+                  "type": "_mega-menu-promo",
+                  "settings": {
+                    "caption": "Sample promo 2",
+                    "button_label": "Shop now",
+                    "url": "#"
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "mega-menu-promo-1",
+                "mega-menu-promo-2"
+              ]
+            },
+            "mega-menu-panel-2": {
+              "type": "_mega-menu-panel",
+              "static": true,
+              "settings": {
+                "menu_item": "Find your shoe",
+                "style": "tabbed"
+              },
+              "blocks": {}
+            },
+            "mega-menu-panel-3": {
+              "type": "_mega-menu-panel",
+              "static": true,
+              "settings": {},
+              "blocks": {}
+            },
+            "mega-menu-panel-4": {
+              "type": "_mega-menu-panel",
+              "static": true,
+              "settings": {},
+              "blocks": {}
+            }
+          },
+          "block_order": []
         }
       },
       "settings": {
