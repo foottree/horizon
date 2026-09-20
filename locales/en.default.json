@@ -102,6 +102,8 @@
       // Button to view filtered product results and close filter dialog
       "other": "See {{ count }} items"
     },
+    // Final row of a dropdown-style header submenu, links to the parent menu item's own URL
+    "shop_all": "Shop all {{ title }}",
     "show_filters": "Filter",
     "show_less": "Show less",
     "show_more": "Show more",

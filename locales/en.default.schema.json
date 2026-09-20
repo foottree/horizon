@@ -249,7 +249,8 @@
     "video_autoplay": "Videos will be muted by default",
     "video_external": "Use a YouTube or Vimeo URL",
     "pills_usage": "Used for applied filters, discount codes, and search suggestions",
-    "media_type_info": "Features are populated from your menu links"
+    "media_type_info": "Features are populated from your menu links",
+    "submenu_style": "Dropdown shows a compact list under the parent link. A third level opens as a flyout beside its row."
   },
   "names": {
     "column": "Column",
@@ -422,6 +423,8 @@
   },
   "options": {
     "progress_bar": "Progress bar",
+    "mega_menu": "Mega menu",
+    "dropdown": "Dropdown",
     "above_carousel": "Above carousel",
     "accent": "Accent",
     "all": "All",
@@ -738,6 +741,7 @@
     "grid_section_card_layout": "Card layout",
     "grid_section_carousel_match_collection": "Match Collection list (section grid)",
     "grid_section_carousel_match_collection_info": "Carousel uses the same section grid as Collection list.",
+    "submenu_style": "Submenu style",
     "accordion": "Accordion",
     "account": "Account",
     "actions_display_style": "Menu style",

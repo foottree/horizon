@@ -93,8 +93,15 @@
 
     {% capture children %}
       {% for link in block_settings.menu.links %}
+        {% liquid
+          # A third level renders as a flyout beside its parent row, so any depth works here.
+          assign use_dropdown = false
+          if block_settings.submenu_style == 'dropdown' and link.links != blank
+            assign use_dropdown = true
+          endif
+        %}
         <li
-          class="menu-list__list-item"
+          class="menu-list__list-item{% if use_dropdown %} menu-list__list-item--dropdown{% endif %}"
           on:blur="/deactivate"
           on:pointerenter="/activate"
           on:pointerleave="/deactivate"
@@ -138,12 +145,60 @@
               Collapsed by default via `inert`: keeps the submenu out of the tab order
               and the accessibility tree until it is opened. Toggled in header-menu.js.
             {%- endcomment -%}
-            <div class="menu-list__submenu{{ background_color_classes }}" ref="submenu[]" data-skip-node-update inert>
+            <div class="menu-list__submenu{{ background_color_classes }}{% if use_dropdown %} menu-list__submenu--dropdown{% endif %}" ref="submenu[]" data-skip-node-update inert>
               <div
                 id="submenu-{{ forloop.index }}"
                 class="menu-list__submenu-inner"
                 style="{% render 'submenu-font-styles', settings: block_settings %}"
               >
+                {% if use_dropdown %}
+                  <ul class="dropdown-menu__list" role="list">
+                    {%- for child in link.links -%}
+                      <li class="dropdown-menu__item{% if child.links != blank %} dropdown-menu__item--has-children{% endif %}">
+                        <a
+                          href="{{ child.url }}"
+                          class="dropdown-menu__link{% if child.current %} dropdown-menu__link--current{% endif %}"
+                          {% if child.current %}
+                            aria-current="page"
+                          {% endif %}
+                          {% if child.links != blank %}
+                            aria-haspopup="true"
+                          {% endif %}
+                        >
+                          {{- child.title -}}
+                          {%- if child.links != blank -%}
+                            <span class="svg-wrapper dropdown-menu__caret">
+                              {{- 'icon-caret.svg' | inline_asset_content -}}
+                            </span>
+                          {%- endif -%}
+                        </a>
+                        {%- if child.links != blank -%}
+                          <ul class="dropdown-menu__list dropdown-menu__list--nested" role="list">
+                            {%- for grandchild in child.links -%}
+                              <li class="dropdown-menu__item">
+                                <a
+                                  href="{{ grandchild.url }}"
+                                  class="dropdown-menu__link{% if grandchild.current %} dropdown-menu__link--current{% endif %}"
+                                  {% if grandchild.current %}
+                                    aria-current="page"
+                                  {% endif %}
+                                >
+                                  {{- grandchild.title -}}
+                                </a>
+                              </li>
+                            {%- endfor -%}
+                          </ul>
+                        {%- endif -%}
+                      </li>
+                    {%- endfor -%}
+                    <li class="dropdown-menu__divider" role="presentation"></li>
+                    <li class="dropdown-menu__item">
+                      <a href="{{ link.url }}" class="dropdown-menu__link dropdown-menu__link--shop-all">
+                        {{- 'actions.shop_all' | t: title: link.title -}}
+                      </a>
+                    </li>
+                  </ul>
+                {% else %}
                 {% assign list_id = 'MegaMenuList-' | append: forloop.index %}
                 <div class="mega-menu section section--full-width-margin section--{{ section.settings.section_width }}">
                   <div
@@ -163,6 +218,7 @@
                     %}
                   </div>
                 </div>
+                {% endif %}
               </div>
             </div>
           {%- endif -%}
@@ -198,7 +254,7 @@
     >
       <div class="header-menu__inner">
         <nav
-          class="menu-list"
+          class="menu-list{% if block_settings.submenu_style == 'dropdown' %} menu-list--dropdown{% endif %}"
           aria-label="{{ 'accessibility.header_navigation_label' | t }}"
           style="{% render 'menu-font-styles', settings: block_settings, menu_type: 'mega_menu' %}"
         >
@@ -328,12 +384,19 @@
     height: 100%;
     margin-block: 0;
 
+    /* Invisible hit area that keeps the pointer "inside" the item while it travels toward
+       the open panel. header-menu.js sizes --box-height as (header bottom - link top), so
+       the box is meant to stop exactly at the header's bottom edge - but `top` then pushes
+       it down by --header-padding, overhanging the header by that much. The overhang grows
+       the header's paint bounds, and the pointermove handler toggling `display` re-rasters
+       that layer, flashing the header background full-width in the strip below its border.
+       Subtracting the offset lands the box back on the header's bottom edge. */
     &::after {
       content: '';
       position: absolute;
       display: none;
       top: var(--header-padding);
-      height: var(--box-height);
+      height: calc(var(--box-height, 0px) - var(--header-padding));
       left: 0;
       right: 0;
     }
@@ -624,6 +687,187 @@
     scrollbar-color: rgb(var(--color-foreground-rgb) / var(--opacity-40)) transparent;
   }
 
+  /** Dropdown submenu: a compact list under the parent link instead of the full-width
+      mega menu. Keeps the stock wrapper (hover bridging, inert toggling, keyboard, More
+      overflow) and only restyles it; header-menu.js provides --dropdown-inline-start. **/
+  .menu-list__list-item--dropdown:where(:not([slot='overflow'])) > .menu-list__submenu--dropdown {
+    --submenu-gap: calc(var(--padding-block-end, var(--header-padding)) + var(--border-bottom-width, 0px));
+
+    width: max-content;
+    min-width: 12.5rem;
+    max-width: 17.5rem;
+    left: var(--dropdown-inline-start, 0px);
+    top: calc(100% - var(--submenu-gap));
+    padding-inline: 0;
+    clip-path: none;
+    transition: none;
+  }
+
+  .menu-list__list-item--dropdown:where(:not([slot='overflow']))
+    > .menu-list__submenu--dropdown
+    > .menu-list__submenu-inner {
+    display: block;
+    /* Transparent bridge over the row padding so the pointer can travel into the panel;
+       the panel itself overlaps the row's bottom border by its 2px line. */
+    margin-block-start: calc(var(--submenu-gap) - var(--border-bottom-width, 0px));
+    padding-block: 1.125rem;
+    padding-inline: 0;
+    transform: none;
+    max-height: calc(100vh - var(--header-height) - 40px);
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    border: 1px solid rgb(var(--color-border-rgb) / var(--opacity-40));
+    border-block-start: 0;
+    box-shadow: 2px 2px 6px rgb(var(--color-foreground-rgb) / 0.05);
+  }
+
+  .menu-list__submenu--dropdown > .menu-list__submenu-inner::before {
+    content: '';
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--color-foreground);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s ease-in-out 50ms;
+  }
+
+  .menu-list__list-item:has([aria-expanded='true']) > .menu-list__submenu--dropdown > .menu-list__submenu-inner::before {
+    transform: scaleX(1);
+  }
+
+  /* The full-width underlay is sized from the open submenu; a dropdown paints its own panel. */
+  #header-component:has(.menu-list__submenu--dropdown:not([inert])) .header__underlay-open {
+    height: 0;
+  }
+
+  .dropdown-menu__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Third level: a panel beside its parent row, pulled up by the parent's block padding
+     and border so its first row lines up with the row that opened it. */
+  .dropdown-menu__item--has-children {
+    position: relative;
+  }
+
+  /* Prestige only scrolls a panel that has no flyout inside it; scrolling would clip one. */
+  .menu-list__submenu--dropdown > .menu-list__submenu-inner:has(.dropdown-menu__list--nested) {
+    max-height: none;
+    overflow: visible;
+  }
+
+  .dropdown-menu__list--nested {
+    position: absolute;
+    inset-block-start: calc(-1.125rem - 1px);
+    inset-inline-start: 100%;
+    z-index: var(--layer-raised);
+    width: max-content;
+    min-width: 12.5rem;
+    max-width: 17.5rem;
+    padding-block: 1.125rem;
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    border: 1px solid rgb(var(--color-border-rgb) / var(--opacity-40));
+    box-shadow: 2px 2px 6px rgb(var(--color-foreground-rgb) / 0.05);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+  }
+
+  .dropdown-menu__item--has-children:is(:hover, :focus-within) > .dropdown-menu__list--nested {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .dropdown-menu__item--has-children > .dropdown-menu__link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gap-xs);
+  }
+
+  .dropdown-menu__caret {
+    width: 0.75rem;
+    height: 0.75rem;
+    flex: none;
+    rotate: -90deg;
+  }
+
+  /* The header row is taller than a menu item by its block padding, so the strip of padding
+     above the labels sat outside the item. Drifting the cursor up into it left the item and
+     closed the open panel; coming back reopened it, which read as the header flickering.
+     The strip below the item is already bridged by the panel itself, so only the top needs
+     covering. This pseudo-element sits entirely above the trigger, so it never overlaps the
+     label or swallows a click, and being absolute it adds no layout. */
+  .menu-list--dropdown .menu-list__list-item--dropdown > .menu-list__trigger {
+    position: relative;
+  }
+
+  .menu-list--dropdown .menu-list__list-item--dropdown > .menu-list__trigger::before {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    inset-block-end: 100%;
+    height: var(--header-padding);
+  }
+
+  /* Top-level links without a submenu get the underline that wipes in on hover. It hangs
+     below the item by the row's padding and border so it lands on the header's bottom edge,
+     level with the 2px line a submenu panel draws, rather than tight under the text.
+     Anchored to the item, which fills the row, not the link, which does not.
+     Safe to make these items positioned: the selector excludes items that own a submenu,
+     so no absolutely-positioned panel depends on this containing block. */
+  .menu-list--dropdown
+    .menu-list__list-item:not(:has(.menu-list__submenu), :has(.button-unstyled)) {
+    position: relative;
+  }
+
+  .menu-list--dropdown
+    .menu-list__list-item:not(:has(.menu-list__submenu), :has(.button-unstyled))::after {
+    content: '';
+    position: absolute;
+    inset-block-end: calc(-1 * (var(--header-padding) + var(--border-bottom-width, 0px)));
+    inset-inline: var(--gap-sm);
+    height: 2px;
+    background: currentcolor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.2s ease-in-out;
+  }
+
+  @media screen and (pointer: fine) {
+    .menu-list--dropdown
+      .menu-list__list-item:not(:has(.menu-list__submenu), :has(.button-unstyled)):hover::after {
+      transform: scaleX(1);
+    }
+  }
+
+  .dropdown-menu__link {
+    display: block;
+    padding: 0.375rem 1.5625rem;
+    font-family: var(--menu-child-font-family);
+    font-style: var(--menu-child-font-style);
+    font-weight: var(--menu-child-font-weight);
+    font-size: var(--menu-child-font-size);
+    line-height: 1.65;
+    text-transform: var(--menu-child-font-case);
+    color: var(--color-foreground);
+    text-decoration: none;
+    white-space: normal;
+    transition: color 0.2s ease-in-out;
+  }
+
+  @media screen and (pointer: fine) {
+    .dropdown-menu__link:hover {
+      color: rgb(var(--color-foreground-rgb) / 0.65);
+    }
+  }
+
   .mega-menu__link {
     font-family: var(--menu-child-font-family);
     font-style: var(--menu-child-font-style);
@@ -864,8 +1108,16 @@
           "label": "12px"
         },
         {
+          "value": "0.8125rem",
+          "label": "13px"
+        },
+        {
           "value": "0.875rem",
           "label": "14px"
+        },
+        {
+          "value": "0.9375rem",
+          "label": "15px"
         },
         {
           "value": "1rem",
@@ -941,6 +1193,23 @@
     {
       "type": "header",
       "content": "t:content.submenu_feature"
+    },
+    {
+      "type": "select",
+      "id": "submenu_style",
+      "label": "t:settings.submenu_style",
+      "info": "t:info.submenu_style",
+      "options": [
+        {
+          "value": "mega",
+          "label": "t:options.mega_menu"
+        },
+        {
+          "value": "dropdown",
+          "label": "t:options.dropdown"
+        }
+      ],
+      "default": "mega"
     },
     {
       "type": "select",

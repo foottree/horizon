@@ -72,7 +72,8 @@
             "navigation_bar": false,
             "drawer_accordion": false,
             "drawer_accordion_expand_first": false,
-            "drawer_dividers": false
+            "drawer_dividers": false,
+            "submenu_style": "dropdown"
           },
           "blocks": {}
         }

@@ -351,3 +351,220 @@
     margin-inline-start: 4px;
   }
 }
+
+/* ---- Header dropdown submenu ---- */
+/* Foot Tree "Nav Dropdown" design for the header-menu block's submenu_style: "dropdown".
+   The markup, panel positioning (--dropdown-inline-start) and hover/inert/keyboard
+   behaviour are ported from backhouse-fragrances into blocks/_header-menu.liquid; this
+   block only restyles the result to the Figma design. Mobile drawer is untouched. */
+
+#header-component {
+  --dropdown-tint: #eef2e4; /* settings.color_palette.color2 */
+  --dropdown-hairline: #e0dcd2; /* settings.color_palette.color3 */
+}
+
+/* Panel: fixed 300px width, positioned so its left edge sits 24px before the parent
+   link's own text (the row's own inline padding lines the text back up under the link). */
+#header-component .menu-list__list-item--dropdown:not([slot='overflow']) > .menu-list__submenu--dropdown {
+  left: calc(var(--dropdown-inline-start, 0px) - 24px);
+}
+
+#header-component .menu-list__submenu--dropdown {
+  width: 18.75rem; /* 300px */
+  min-width: 18.75rem;
+  max-width: 18.75rem;
+  /* backhouse's panel overlaps the row by its own bottom padding (--submenu-gap); Foot
+     Tree's panel instead sits a plain 8px below the header's bottom border, so start the
+     (still hoverable, still pointer-bridging) outer box flush with the row's own bottom
+     edge and let the inner panel's margin-block-start below be the visible 8px gap. */
+  top: 100%;
+}
+
+/* White surface, hairline border, 8px radius, 8px vertical padding, 8px below the header. */
+#header-component .menu-list__submenu--dropdown > .menu-list__submenu-inner {
+  margin-block-start: 8px;
+  padding-block: 8px;
+  border-radius: 8px;
+  border: 1px solid var(--dropdown-hairline);
+  background-color: var(--color-background);
+}
+
+/* backhouse's ported panel reveals a top wipe-in line; the Foot Tree panel is a plain
+   bordered box instead. */
+#header-component .menu-list__submenu--dropdown > .menu-list__submenu-inner::before {
+  display: none;
+}
+
+/* Third-level flyout: same panel treatment, realigned to the new 8px panel padding. */
+#header-component .dropdown-menu__list--nested {
+  inset-block-start: calc(-8px - 1px);
+  width: 18.75rem;
+  min-width: 18.75rem;
+  max-width: 18.75rem;
+  padding-block: 8px;
+  border-radius: 8px;
+  border: 1px solid var(--dropdown-hairline);
+  background-color: var(--color-background);
+}
+
+/* Rows: 56px tall, 24px inline padding, Plus Jakarta Sans Medium 18px ink, no underline. */
+#header-component .dropdown-menu__link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 56px;
+  padding-inline: 24px;
+  padding-block: 0;
+  font-family: var(--font-body--family);
+  font-weight: 500;
+  font-size: var(--font-size--lg);
+  line-height: 1;
+  color: var(--color-foreground);
+  text-decoration: none;
+}
+
+/* The "->" only shows on hover/focus/current rows; kept as an absolutely positioned
+   pseudo-element at the row's right edge so it never affects the title's own layout.
+   Leaf rows only: a row with children keeps its caret (opens a flyout) instead, and
+   the "Shop all" row has its own SemiBold styling below with no arrow. */
+#header-component
+  .dropdown-menu__item:not(.dropdown-menu__item--has-children)
+  > .dropdown-menu__link:not(.dropdown-menu__link--shop-all)::after {
+  content: '\2192';
+  position: absolute;
+  inset-inline-end: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-body--family);
+  font-weight: 400;
+  font-size: var(--font-size--lg);
+  color: var(--color-primary-button-background);
+  opacity: 0;
+  transition: opacity 0.15s ease-in-out;
+}
+
+#header-component .dropdown-menu__link:hover,
+#header-component .dropdown-menu__link:focus-visible,
+#header-component .dropdown-menu__link--current {
+  background-color: var(--dropdown-tint);
+  color: var(--color-primary-button-background);
+}
+
+#header-component
+  .dropdown-menu__item:not(.dropdown-menu__item--has-children)
+  > .dropdown-menu__link:not(.dropdown-menu__link--shop-all):hover::after,
+#header-component
+  .dropdown-menu__item:not(.dropdown-menu__item--has-children)
+  > .dropdown-menu__link:not(.dropdown-menu__link--shop-all):focus-visible::after,
+#header-component
+  .dropdown-menu__item:not(.dropdown-menu__item--has-children)
+  > .dropdown-menu__link--current:not(.dropdown-menu__link--shop-all)::after {
+  opacity: 1;
+}
+
+/* Divider + "Shop all <parent>" row (rendered only inside dropdown-style submenus). */
+#header-component .dropdown-menu__divider {
+  height: 1px;
+  margin-block: 8px;
+  margin-inline: 24px;
+  padding: 0;
+  list-style: none;
+  background-color: var(--dropdown-hairline);
+}
+
+#header-component .dropdown-menu__link--shop-all {
+  font-weight: 600;
+  color: var(--color-primary-button-background);
+}
+
+/* Active parent link: olive text and a 3px olive underline at the header row's bottom
+   edge, as wide as the link text, while its dropdown is open. Keyed off the
+   aria-expanded state Horizon already toggles on the disclosure trigger - no new JS. */
+#header-component
+  .menu-list--dropdown
+  .menu-list__list-item--dropdown:has([aria-expanded='true'])
+  .menu-list__link {
+  color: var(--color-primary-button-background);
+}
+
+#header-component
+  .menu-list--dropdown
+  .menu-list__list-item--dropdown:has([aria-expanded='true'])
+  .menu-list__link-title {
+  position: relative;
+}
+
+/* Anchored to the title span (so the bar's own width = the text's width) with a fixed
+   offset down to the header row's bottom border, measured against this header's own
+   height rather than a generic header-padding calc. */
+#header-component
+  .menu-list--dropdown
+  .menu-list__list-item--dropdown:has([aria-expanded='true'])
+  .menu-list__link-title::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  bottom: -32px;
+  height: 3px;
+  background: var(--color-primary-button-background);
+}
+
+/* Page scrim: while a dropdown submenu is open, dim the page below the header (Figma
+   "Scrim" = ink foreground at 35% opacity). Horizon's own header__underlay only paints
+   a background behind the header row/panel itself, so this adds a dedicated overlay
+   for the rest of the page. */
+#header-component:has(.menu-list__submenu--dropdown:not([inert]))::after {
+  content: '';
+  position: fixed;
+  inset: var(--header-group-height, var(--header-height)) 0 0 0;
+  z-index: var(--layer-window-overlay);
+  background: rgb(var(--color-foreground-rgb) / 0.35);
+  pointer-events: none;
+}
+
+/* ---- Mobile drawer: slide in from the right (burger sits on the right) ---- */
+/* header-drawer.liquid anchors .menu-drawer to the left and hides it at translateX(-100%);
+   its stylesheet loads after custom.css, so #header-component carries the specificity. */
+#header-component .menu-drawer {
+  left: auto;
+  right: 0;
+  transform: translateX(100%);
+  border-right: 0;
+  border-left: var(--style-border-drawer);
+  padding: var(--safe-area-inset-top) max(0px, calc(var(--safe-area-inset-right) - var(--drawer-padding)))
+    var(--safe-area-inset-bottom) 0;
+}
+
+#header-component .menu-open > .menu-drawer {
+  transform: translateX(0);
+}
+
+/* nested (child) panels inside the drawer travel the same way */
+#header-component .menu-drawer__submenu {
+  transform: translateX(5%);
+  padding: var(--safe-area-inset-top) max(0px, calc(var(--safe-area-inset-right) - var(--drawer-padding)))
+    var(--safe-area-inset-bottom) 0;
+}
+
+#header-component .menu-open > .menu-drawer__submenu:not(.menu-drawer__menu--childlist) {
+  transform: translateX(0);
+}
+
+/* staggered link reveal mirrors too */
+@keyframes ft-menu-drawer-nav-open {
+  0% {
+    visibility: hidden;
+    opacity: 0;
+    transform: translateX(0.5rem);
+  }
+
+  100% {
+    visibility: visible;
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+#header-component .menu-drawer-container[open] .menu-drawer__animated-element {
+  animation-name: ft-menu-drawer-nav-open;
+}
