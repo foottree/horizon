@@ -93,21 +93,7 @@
 
 /* ---- Header ---- */
 
-/* Wordmark: no logo image has been uploaded yet, so the stock logo block
-   (blocks/_header-logo.liquid) falls back to rendering the shop name as
-   plain text via snippets/image.liquid's text_fallback. Style that text to
-   match the Figma wordmark (Lora SemiBold 24px, olive grove, 2px tracking).
-   There is no theme setting for the fallback text's typography/color, so
-   this has to live in CSS. The 44x40 tree mark icon from the design has no
-   asset yet and is intentionally skipped. */
-.header-logo {
-  font-family: var(--font-heading--family) !important;
-  font-weight: 600 !important;
-  font-style: normal !important;
-  font-size: 24px !important;
-  letter-spacing: 2px;
-  color: var(--color-primary-button-background) !important;
-}
+/* Wordmark is the uploaded logo file (config/settings_data.json), not text. */
 
 @media screen and (min-width: 750px) {
   /* Nav bar height (96px): section_height only offers compact/standard, so
@@ -131,14 +117,21 @@
   /* Inline menu type: Plus Jakarta Sans SemiBold via the "subheading" font
      setting, but the top-level size setting tops out at 18px (1.125rem) —
      20px isn't one of the enum options, so bump it here. Also sets the
-     26px item gap and the olive-grove hover color, neither of which has a
-     setting. */
+     olive-grove hover color, which has no setting. */
   .header-menu .menu-list__link {
-    font-size: 20px !important;
+    font-size: var(--font-size--xl) !important;
   }
 
-  .header-menu .menu-list__list {
-    gap: 26px;
+  /* Horizon spaces top-level items via padding-inline: var(--gap-sm)
+     (11.2px/side) on .menu-list__link-title, inside overflow-list's shadow
+     part - not a simple flex "gap" that a single property can override.
+     Scoped to direct top-level titles only (the child-combinator chain
+     stops at .menu-list__link, so it does not reach "Find your shoe"'s
+     .menu-list__trigger wrapper or any nested submenu title) and tightened
+     just enough, together with the 24px menu offset above, that all 7 items
+     fit without collapsing into Horizon's "More" overflow item at 1440px. */
+  .header-menu .menu-list > .overflow-menu > .menu-list__list-item > .menu-list__link > .menu-list__link-title {
+    padding-inline: 8px;
   }
 
   .header-menu .menu-list__link:hover,
@@ -156,19 +149,19 @@
    button, leaving its toggle behaviour and submenu markup untouched. */
 .menu-list__trigger:has(> a[href$="/pages/size-width-guide"]) {
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   height: 32px;
-  padding-inline: 14px;
+  padding-inline: 6px;
   border: 1px solid var(--color-foreground);
-  border-radius: 999px;
+  border-radius: 0;
   background-color: #ffffff;
 }
 
 .menu-list__trigger:has(> a[href$="/pages/size-width-guide"])::before {
   content: '';
   flex-shrink: 0;
-  width: 14px;
-  height: 14px;
+  width: 18px;
+  height: 18px;
   background-color: var(--color-foreground);
   -webkit-mask: url('icon-search.svg') no-repeat center / contain;
   mask: url('icon-search.svg') no-repeat center / contain;
@@ -195,16 +188,105 @@
   max-width: none;
 }
 
-/* Wordmark is set in caps in the design ("FOOT TREE"); the shop name is
-   title case, so transform it here. */
-.header-logo {
-  text-transform: uppercase;
-}
-
 /* Design leaves ~66px between the wordmark lockup and the first menu item;
-   Horizon's grid gives ~20px. Push the menu right on desktop only. */
+   Horizon's grid gives ~20px. Push the menu right on desktop only. Kept at
+   24px (not the design's 40px) so all 7 top-level items - including the
+   "Find your shoe" control - fit without collapsing into Horizon's "More"
+   overflow item at 1440px. */
 @media screen and (min-width: 750px) {
   #header-component .header__row--top .header-menu {
-    margin-inline-start: 40px;
+    margin-inline-start: 24px;
+  }
+}
+
+/* Cart count as "(0)" text beside the bag, as in the design, instead of
+   Horizon's round bubble over the icon. Always visible, including at zero. */
+.header-actions__cart-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.header-actions__cart-icon .cart-bubble,
+.header-actions__cart-icon .cart-bubble.visually-hidden {
+  position: static !important;
+  width: auto !important;
+  height: auto !important;
+  aspect-ratio: auto;
+  padding: 0;
+  margin: 0 !important;
+  clip: auto !important;
+  clip-path: none !important;
+  overflow: visible !important;
+  white-space: nowrap !important;
+  color: currentColor;
+}
+
+.header-actions__cart-icon .cart-bubble__background {
+  display: none;
+}
+
+.header-actions__cart-icon .cart-bubble__text {
+  font-family: var(--font-body--family);
+  font-size: var(--font-size--lg);
+  font-weight: 500;
+  line-height: 1;
+}
+
+.header-actions__cart-icon .cart-bubble__text::before {
+  content: '(';
+}
+
+.header-actions__cart-icon .cart-bubble__text::after {
+  content: ')';
+}
+
+.header-actions__cart-icon .cart-bubble__text-count[hidden] {
+  display: inline !important;
+}
+
+.header-actions__cart-icon .cart-bubble__text-count:empty::before {
+  content: '0';
+}
+
+/* The bubble no longer overlaps the icon, so drop the donut cut-out. */
+.header-actions__cart-icon.header-actions__cart-icon--has-cart svg {
+  mask: none;
+  -webkit-mask: none;
+}
+
+/* The empty-cart count span is hidden via a class, not the hidden attribute. */
+.header-actions__cart-icon .cart-bubble__text-count.hidden {
+  display: inline !important;
+}
+
+/* Mobile header icons: Horizon gives every action icon a 44px square
+   touch target (.svg-wrapper via --button-size), so adjacent icons read as
+   ~25px apart even with zero grid-gap between them. Pull the bag icon's
+   box down to its own glyph size and shrink its "(0)" text so the count
+   hugs the bag, and pull the search icon and the cart action closer to
+   their neighbours - all via margin/box-size, not by shrinking anyone's
+   actual tap target below 44px. */
+@media screen and (max-width: 749px) {
+  .header-actions__cart-icon {
+    gap: 4px;
+    min-height: var(--minimum-touch-target);
+  }
+
+  #header-component .header-actions__cart-icon .svg-wrapper {
+    width: var(--icon-size-md);
+    height: var(--icon-size-md);
+  }
+
+  .header-actions__cart-icon .cart-bubble__text {
+    font-size: var(--font-size--sm);
+  }
+
+  #header-component .search-action {
+    margin-inline-start: -18px;
+  }
+
+  #header-component .account-button + .header-actions__action {
+    margin-inline-start: -4px;
   }
 }
