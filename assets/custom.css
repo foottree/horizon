@@ -386,7 +386,7 @@
   padding-block: 8px;
   border-radius: 8px;
   border: 1px solid var(--dropdown-hairline);
-  background-color: var(--color-background);
+  background-color: #fff; /* Figma: white surface; not the drawer colour setting, which also feeds --color-background here */;
 }
 
 /* backhouse's ported panel reveals a top wipe-in line; the Foot Tree panel is a plain
@@ -404,7 +404,7 @@
   padding-block: 8px;
   border-radius: 8px;
   border: 1px solid var(--dropdown-hairline);
-  background-color: var(--color-background);
+  background-color: #fff; /* Figma: white surface; not the drawer colour setting, which also feeds --color-background here */;
 }
 
 /* Rows: 56px tall, 24px inline padding, Plus Jakarta Sans Medium 18px ink, no underline. */
@@ -580,6 +580,25 @@
   html[scroll-lock] .page-wrapper {
     overflow: visible;
   }
+}
+
+/* breathing room above the first link, and 0.5px hairline dividers (drawer_dividers is on in
+   header-group.json; stock draws them 1px in the border colour) */
+#header-component .menu-drawer__menu:not(.menu-drawer__menu--childlist) {
+  padding-block-start: var(--padding-sm);
+}
+
+/* top-level rows (Horizon only marks the nested groups in a 3-level menu) and the nested groups */
+#header-component .menu-drawer__navigation > .menu-drawer__menu > .menu-drawer__list-item,
+#header-component .menu-drawer__list-item--divider,
+#header-component .menu-drawer__menu-container--divider {
+  border-block-end: 0.5px solid #e0dcd2; /* palette color3, line */
+}
+
+/* level-2 group headings in the nested panel: 14px subdued by default, smaller than their own
+   links; lift to 18px so the hierarchy reads top-down */
+#header-component .menu-drawer__submenu .menu-drawer__menu-item--parent {
+  font-size: var(--font-size--lg);
 }
 
 /* the header burger turns into the X while open, so the drawer needs no close button of its own */

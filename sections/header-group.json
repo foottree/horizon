@@ -61,6 +61,7 @@
           "static": true,
           "settings": {
             "menu": "main-menu",
+            "background_color": "{{ settings.color_palette.color5 }}",
             "type_font_primary_size": "1.125rem",
             "menu_font_style": "inverse",
             "type_font_primary_link": "subheading",
@@ -72,7 +73,7 @@
             "navigation_bar": false,
             "drawer_accordion": false,
             "drawer_accordion_expand_first": false,
-            "drawer_dividers": false,
+            "drawer_dividers": true,
             "submenu_style": "dropdown"
           },
           "blocks": {}
