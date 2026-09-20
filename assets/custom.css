@@ -545,6 +545,15 @@
   transform: translateX(0);
 }
 
+/* full screen width on phones (stock: 95vw, max 500px) */
+@media screen and (max-width: 749px) {
+  #header-component .menu-drawer {
+    width: 100%;
+    max-width: none;
+    border-left: 0;
+  }
+}
+
 /* nested (child) panels fill the shortened drawer and travel the same way */
 #header-component .menu-drawer__submenu {
   top: 0;
