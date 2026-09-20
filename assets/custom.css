@@ -179,12 +179,12 @@
   padding: 0;
 }
 
-/* Mobile menu drawer: enlarge the close (X) icon. The stock
-   icon-close-menu.svg is 14px; the X glyph only fills ~46% of the viewBox, so a 36px box gives a ~17px X. */
+/* Mobile menu drawer close (X): icon-close-menu.svg is a full-bleed X glyph,
+   shown at the medium icon size. */
 .menu-drawer__close-button .header-drawer-icon,
 .menu-drawer__close-button .header-drawer-icon svg {
-  width: 36px;
-  height: 36px;
+  width: var(--icon-size-md);
+  height: var(--icon-size-md);
   max-width: none;
 }
 
@@ -282,8 +282,13 @@
     font-size: var(--font-size--sm);
   }
 
+  /* 16px between search, account and bag on phones, matching the count-to-burger gap. */
   #header-component .account-button + .header-actions__action {
-    margin-inline-start: -4px;
+    margin-inline-start: 5px;
+  }
+
+  #header-component .header__columns header-actions {
+    margin-inline-start: -6px;
   }
 }
 
@@ -292,6 +297,13 @@
 /* Specificity has to beat the section stylesheet, which loads after custom.css. */
 #header-component .header__icon--summary .header-drawer-icon--open,
 #header-component .header__icon--summary .header-drawer-icon--open > svg {
+  width: var(--icon-size-sm);
+  height: var(--icon-size-sm);
+}
+
+/* The X that replaces the burger while the drawer is open, at the same size. */
+#header-component .header__icon--summary .header-drawer-icon--close,
+#header-component .header__icon--summary .header-drawer-icon--close > svg {
   width: var(--icon-size-sm);
   height: var(--icon-size-sm);
 }
