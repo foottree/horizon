@@ -515,39 +515,67 @@
    for the rest of the page. */
 #header-component:has(.menu-list__submenu--dropdown:not([inert]))::after {
   content: '';
-  position: fixed;
-  inset: var(--header-group-height, var(--header-height)) 0 0 0;
-  z-index: var(--layer-window-overlay);
+  /* #header-component has `contain: layout`, so a fixed/absolute box inside it is placed
+     against the header box itself: start at its bottom edge and run a full viewport down. */
+  position: absolute;
+  inset: 100% 0 auto 0;
+  height: 100dvh;
+  z-index: 0;
   background: rgb(var(--color-foreground-rgb) / 0.35);
   pointer-events: none;
 }
 
-/* ---- Mobile drawer: slide in from the right (burger sits on the right) ---- */
-/* header-drawer.liquid anchors .menu-drawer to the left and hides it at translateX(-100%);
-   its stylesheet loads after custom.css, so #header-component carries the specificity. */
+/* ---- Mobile drawer: opens below the header (header stays visible) and slides in from the
+   right, since the burger sits on the right. custom.js keeps --ft-drawer-top equal to the
+   header's rendered bottom edge at all times (closed state included), so the panel never
+   jumps at the start of its transition; --header-group-height is only the no-JS fallback.
+   header-drawer.liquid's stylesheet loads after custom.css, hence #header-component. ---- */
 #header-component .menu-drawer {
   left: auto;
   right: 0;
+  top: var(--ft-drawer-top, var(--header-group-height));
+  height: calc(var(--drawer-height) - var(--ft-drawer-top, var(--header-group-height)));
   transform: translateX(100%);
   border-right: 0;
   border-left: var(--style-border-drawer);
-  padding: var(--safe-area-inset-top) max(0px, calc(var(--safe-area-inset-right) - var(--drawer-padding)))
-    var(--safe-area-inset-bottom) 0;
+  padding: 0 max(0px, calc(var(--safe-area-inset-right) - var(--drawer-padding))) var(--safe-area-inset-bottom) 0;
 }
 
 #header-component .menu-open > .menu-drawer {
   transform: translateX(0);
 }
 
-/* nested (child) panels inside the drawer travel the same way */
+/* nested (child) panels fill the shortened drawer and travel the same way */
 #header-component .menu-drawer__submenu {
+  top: 0;
+  height: 100%;
   transform: translateX(5%);
-  padding: var(--safe-area-inset-top) max(0px, calc(var(--safe-area-inset-right) - var(--drawer-padding)))
-    var(--safe-area-inset-bottom) 0;
+  padding: 0 max(0px, calc(var(--safe-area-inset-right) - var(--drawer-padding))) var(--safe-area-inset-bottom) 0;
 }
 
 #header-component .menu-open > .menu-drawer__submenu:not(.menu-drawer__menu--childlist) {
   transform: translateX(0);
+}
+
+/* dim only the page below the header, never the header itself */
+#header-component .menu-drawer__backdrop {
+  top: var(--ft-drawer-top, var(--header-group-height));
+  height: calc(100dvh - var(--ft-drawer-top, var(--header-group-height)));
+}
+
+/* Horizon locks scrolling by also giving .page-wrapper overflow:hidden, which makes it the
+   sticky header's scrollport; below 990px the window is the real scroller, so that un-sticks
+   the header and it leaves the viewport the moment the drawer opens on a scrolled page. The
+   html-level lock is enough there. */
+@media screen and (max-width: 989px) {
+  html[scroll-lock] .page-wrapper {
+    overflow: visible;
+  }
+}
+
+/* the header burger turns into the X while open, so the drawer needs no close button of its own */
+#header-component .menu-drawer__close-button {
+  display: none;
 }
 
 /* staggered link reveal mirrors too */
