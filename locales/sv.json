@@ -118,7 +118,9 @@
     "open": "Öppna",
     "back_to": "Tillbaka till {{ title }}",
     "back_to_main_menu": "Tillbaka till huvudmenyn",
-    "zoom_media": "Zooma media {{ index }}"
+    "zoom_media": "Zooma media {{ index }}",
+    "shop_all": "Shop all {{ title }}",
+    "all_category": "All {{ title }}"
   },
   "content": {
     "reviews": "recensioner",

@@ -122,7 +122,9 @@
     "open": "Atidaryti",
     "back_to": "Grįžti į „{{ title }}“",
     "zoom_media": "Padidinti mediją {{ index }}",
-    "back_to_main_menu": "Atgal į pagrindinį meniu"
+    "back_to_main_menu": "Atgal į pagrindinį meniu",
+    "shop_all": "Shop all {{ title }}",
+    "all_category": "All {{ title }}"
   },
   "content": {
     "reviews": "apžvalgos (-ų; -a)",

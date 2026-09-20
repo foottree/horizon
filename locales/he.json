@@ -102,7 +102,9 @@
       "other": "הצגת {{ count }} פריטים",
       "many": "הצגת {{ count }} פריטים",
       "two": "הצגת {{ count }} פריטים"
-    }
+    },
+    "shop_all": "Shop all {{ title }}",
+    "all_category": "All {{ title }}"
   },
   "blocks": {
     "contact_form": {

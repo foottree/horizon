@@ -159,7 +159,9 @@
     "product_sku": "SKU",
     "layered_slideshow": "Gelaagde diavoorstelling",
     "cart_drawer": "Winkelwagenoptie",
-    "disclosures": "Toelichtingen"
+    "disclosures": "Toelichtingen",
+    "mega_menu_panel": "Mega menu panel",
+    "mega_menu_promo": "Promo tile"
   },
   "settings": {
     "autoplay": "Automatisch afspelen",
@@ -574,7 +576,18 @@
     "input_style": "Invoerstijl",
     "selected_button_style": "Geselecteerde knopstijl",
     "open_by_default": "Standaard geopend",
-    "title_preset": "Titelvoorinstelling"
+    "title_preset": "Titelvoorinstelling",
+    "grid_section_card_layout": "Card layout",
+    "grid_section_carousel_match_collection": "Match Collection list (section grid)",
+    "grid_section_carousel_match_collection_info": "Carousel uses the same section grid as Collection list.",
+    "submenu_style": "Submenu style",
+    "menu_item_title": "Top-level menu item title",
+    "group_1_menu": "Group 1 menu",
+    "group_2_menu": "Group 2 menu",
+    "shop_all_label": "Shop all button label",
+    "shop_all_url": "Shop all button link",
+    "caption": "Caption",
+    "button_label": "Button label"
   },
   "options": {
     "apple": "Apple",
@@ -850,7 +863,11 @@
     "below_media": "Onder media",
     "full_frame": "Volledig kader",
     "icons": "Pictogrammen",
-    "input_field": "Invoerveld"
+    "input_field": "Invoerveld",
+    "progress_bar": "Progress bar",
+    "mega_menu": "Mega menu",
+    "dropdown": "Dropdown",
+    "tabbed": "Tabbed"
   },
   "content": {
     "background_video": "Achtergrondvideo",
@@ -978,7 +995,8 @@
     "gift_card_products": "Cadeaubonproducten",
     "disclosures": "Toelichtingen",
     "disclosures_metafield_content": "Verplichte veiligheidswaarschuwingen en wettelijke vermeldingen voor dit product.",
-    "page_text_color_contrast_info": "Secties met een aangepaste achtergrondkleur gebruiken deze tekstkleur alleen als er voldoende kleurcontrast is."
+    "page_text_color_contrast_info": "Secties met een aangepaste achtergrondkleur gebruiken deze tekstkleur alleen als er voldoende kleurcontrast is.",
+    "grid_layout_paragraph": "Only used by the grid style: two left-column menus, a shop-all button, and center columns built from this item's own 2nd/3rd-level menu links."
   },
   "html_defaults": {
     "share_information_about_your": "<p>Deel informatie over je merk met je klanten. Beschrijf een product, doe aankondigingen of heet klanten welkom in je winkel.</p>",
@@ -1102,7 +1120,9 @@
     "page_text_color_default_info": "Standaard voor themasecties",
     "actions_display_style": "Op mobiel worden altijd pictogrammen gebruikt",
     "edit_input_field_in_theme_settings": "Invoerveld bewerken in [thema-instellingen](/editor?context=theme&category=input%20fields)",
-    "edit_variants_in_theme_settings": "Variantstijl bewerken in [thema-instellingen](/editor?context=theme&category=variant%20pickers)"
+    "edit_variants_in_theme_settings": "Variantstijl bewerken in [thema-instellingen](/editor?context=theme&category=variant%20pickers)",
+    "submenu_style": "Dropdown shows a compact list under the parent link. A third level opens as a flyout beside its row.",
+    "mega_menu_panel_menu_item": "Matched against this top-level menu item's title (case-insensitive). Leave blank to not match any item."
   },
   "categories": {
     "product_list": "Uitgelichte collectie",

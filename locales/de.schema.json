@@ -159,7 +159,9 @@
     "product_sku": "SKU",
     "layered_slideshow": "Überlagerte Slideshow",
     "cart_drawer": "Warenkorbeinschub",
-    "disclosures": "Pflichtangaben"
+    "disclosures": "Pflichtangaben",
+    "mega_menu_panel": "Mega menu panel",
+    "mega_menu_promo": "Promo tile"
   },
   "settings": {
     "autoplay": "Autoplay",
@@ -574,7 +576,18 @@
     "input_style": "Eingabestil",
     "selected_button_style": "Ausgewählter Button-Stil",
     "open_by_default": "Standardmäßig geöffnet",
-    "title_preset": "Titelvoreinstellung"
+    "title_preset": "Titelvoreinstellung",
+    "grid_section_card_layout": "Card layout",
+    "grid_section_carousel_match_collection": "Match Collection list (section grid)",
+    "grid_section_carousel_match_collection_info": "Carousel uses the same section grid as Collection list.",
+    "submenu_style": "Submenu style",
+    "menu_item_title": "Top-level menu item title",
+    "group_1_menu": "Group 1 menu",
+    "group_2_menu": "Group 2 menu",
+    "shop_all_label": "Shop all button label",
+    "shop_all_url": "Shop all button link",
+    "caption": "Caption",
+    "button_label": "Button label"
   },
   "options": {
     "apple": "Apfel",
@@ -850,7 +863,11 @@
     "below_media": "Unter den Medien",
     "full_frame": "Vollbild",
     "icons": "Symbole",
-    "input_field": "Eingabefeld"
+    "input_field": "Eingabefeld",
+    "progress_bar": "Progress bar",
+    "mega_menu": "Mega menu",
+    "dropdown": "Dropdown",
+    "tabbed": "Tabbed"
   },
   "content": {
     "background_video": "Hintergrundvideo",
@@ -978,7 +995,8 @@
     "gift_card_products": "Gutscheinprodukte",
     "disclosures": "Pflichtangaben",
     "disclosures_metafield_content": "Erforderliche Sicherheitshinweise und gesetzliche Pflichtangaben für dieses Produkt.",
-    "page_text_color_contrast_info": "Abschnitte mit einer benutzerdefinierten Hintergrundfarbe verwenden diese Textfarbe nur bei ausreichendem Farbkontrast."
+    "page_text_color_contrast_info": "Abschnitte mit einer benutzerdefinierten Hintergrundfarbe verwenden diese Textfarbe nur bei ausreichendem Farbkontrast.",
+    "grid_layout_paragraph": "Only used by the grid style: two left-column menus, a shop-all button, and center columns built from this item's own 2nd/3rd-level menu links."
   },
   "html_defaults": {
     "share_information_about_your": "<p>Teile Informationen über deine Marke mit deinen Kunden. Beschreibe ein Produkt, mache Ankündigungen oder heiße Kunden in deinem Shop willkommen.</p>",
@@ -1102,7 +1120,9 @@
     "page_text_color_default_info": "Standard für Theme-Abschnitte",
     "actions_display_style": "Auf Mobilgeräten werden immer Symbole verwendet",
     "edit_input_field_in_theme_settings": "Eingabefeld in den [Theme-Einstellungen](/editor?context=theme&category=input%20fields) bearbeiten",
-    "edit_variants_in_theme_settings": "Bearbeite das Varianten-Styling in den [Theme-Einstellungen](/editor?context=theme&category=variant%20pickers)"
+    "edit_variants_in_theme_settings": "Bearbeite das Varianten-Styling in den [Theme-Einstellungen](/editor?context=theme&category=variant%20pickers)",
+    "submenu_style": "Dropdown shows a compact list under the parent link. A third level opens as a flyout beside its row.",
+    "mega_menu_panel_menu_item": "Matched against this top-level menu item's title (case-insensitive). Leave blank to not match any item."
   },
   "categories": {
     "product_list": "Vorgestellte Kollektion",

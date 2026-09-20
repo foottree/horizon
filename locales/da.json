@@ -118,7 +118,9 @@
     "open": "Åbn",
     "back_to": "Tilbage til {{ title }}",
     "zoom_media": "Zoom medie {{ index }}",
-    "back_to_main_menu": "Tilbage til hovedmenu"
+    "back_to_main_menu": "Tilbage til hovedmenu",
+    "shop_all": "Shop all {{ title }}",
+    "all_category": "All {{ title }}"
   },
   "content": {
     "reviews": "anmeldelser",

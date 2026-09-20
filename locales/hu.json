@@ -118,7 +118,9 @@
     "open": "Megnyitás",
     "back_to": "Vissza ide: {{ title }}",
     "zoom_media": "Médiaelem nagyítása ({{ index }})",
-    "back_to_main_menu": "Vissza a főmenübe"
+    "back_to_main_menu": "Vissza a főmenübe",
+    "shop_all": "Shop all {{ title }}",
+    "all_category": "All {{ title }}"
   },
   "content": {
     "reviews": "összegzés",

@@ -159,7 +159,9 @@
     "product_sku": "SKU",
     "layered_slideshow": "Lagdelt lysbildefremvisning",
     "cart_drawer": "Handlekurvskuff",
-    "disclosures": "Opplysninger"
+    "disclosures": "Opplysninger",
+    "mega_menu_panel": "Mega menu panel",
+    "mega_menu_promo": "Promo tile"
   },
   "settings": {
     "alignment": "Justering",
@@ -574,7 +576,18 @@
     "input_style": "Inndatastil",
     "selected_button_style": "Valgt knappestil",
     "open_by_default": "Åpen som standard",
-    "title_preset": "Forhåndsinnstilling for tittel"
+    "title_preset": "Forhåndsinnstilling for tittel",
+    "grid_section_card_layout": "Card layout",
+    "grid_section_carousel_match_collection": "Match Collection list (section grid)",
+    "grid_section_carousel_match_collection_info": "Carousel uses the same section grid as Collection list.",
+    "submenu_style": "Submenu style",
+    "menu_item_title": "Top-level menu item title",
+    "group_1_menu": "Group 1 menu",
+    "group_2_menu": "Group 2 menu",
+    "shop_all_label": "Shop all button label",
+    "shop_all_url": "Shop all button link",
+    "caption": "Caption",
+    "button_label": "Button label"
   },
   "options": {
     "apple": "Eple",
@@ -850,7 +863,11 @@
     "below_media": "Under mediene",
     "full_frame": "Full ramme",
     "icons": "Ikoner",
-    "input_field": "Inndatafelt"
+    "input_field": "Inndatafelt",
+    "progress_bar": "Progress bar",
+    "mega_menu": "Mega menu",
+    "dropdown": "Dropdown",
+    "tabbed": "Tabbed"
   },
   "content": {
     "advanced": "Avansert",
@@ -978,7 +995,8 @@
     "gift_card_products": "Gavekortprodukter",
     "disclosures": "Opplysninger",
     "disclosures_metafield_content": "Obligatoriske sikkerhetsadvarsler og lovpålagte opplysninger for dette produktet.",
-    "page_text_color_contrast_info": "Seksjoner med en egendefinert bakgrunnsfarge bruker bare denne tekstfargen når det er tilstrekkelig fargekontrast."
+    "page_text_color_contrast_info": "Seksjoner med en egendefinert bakgrunnsfarge bruker bare denne tekstfargen når det er tilstrekkelig fargekontrast.",
+    "grid_layout_paragraph": "Only used by the grid style: two left-column menus, a shop-all button, and center columns built from this item's own 2nd/3rd-level menu links."
   },
   "html_defaults": {
     "share_information_about_your": "<p>Del informasjon om merkevaren din med kundene. Beskriv et produkt, kom med kunngjøringer eller ønsk kundene velkommen til butikken.</p>",
@@ -1102,7 +1120,9 @@
     "page_text_color_default_info": "Standard for temaseksjoner",
     "actions_display_style": "Ikoner brukes alltid på mobil",
     "edit_input_field_in_theme_settings": "Rediger inndatafelt i [temainnstillinger](/editor?context=theme&category=input%20fields)",
-    "edit_variants_in_theme_settings": "Rediger variantstiler i [temainnstillinger](/editor?context=theme&category=variant%20pickers)"
+    "edit_variants_in_theme_settings": "Rediger variantstiler i [temainnstillinger](/editor?context=theme&category=variant%20pickers)",
+    "submenu_style": "Dropdown shows a compact list under the parent link. A third level opens as a flyout beside its row.",
+    "mega_menu_panel_menu_item": "Matched against this top-level menu item's title (case-insensitive). Leave blank to not match any item."
   },
   "categories": {
     "product_list": "Utvalgt samling",

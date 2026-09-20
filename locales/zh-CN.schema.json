@@ -159,7 +159,9 @@
     "product_sku": "SKU",
     "layered_slideshow": "分层幻灯片",
     "cart_drawer": "购物车抽屉",
-    "disclosures": "披露信息"
+    "disclosures": "披露信息",
+    "mega_menu_panel": "Mega menu panel",
+    "mega_menu_promo": "Promo tile"
   },
   "settings": {
     "alignment": "对齐方式",
@@ -574,7 +576,18 @@
     "input_style": "输入框样式",
     "selected_button_style": "所选按钮样式",
     "open_by_default": "默认展开",
-    "title_preset": "标题预设"
+    "title_preset": "标题预设",
+    "grid_section_card_layout": "Card layout",
+    "grid_section_carousel_match_collection": "Match Collection list (section grid)",
+    "grid_section_carousel_match_collection_info": "Carousel uses the same section grid as Collection list.",
+    "submenu_style": "Submenu style",
+    "menu_item_title": "Top-level menu item title",
+    "group_1_menu": "Group 1 menu",
+    "group_2_menu": "Group 2 menu",
+    "shop_all_label": "Shop all button label",
+    "shop_all_url": "Shop all button link",
+    "caption": "Caption",
+    "button_label": "Button label"
   },
   "options": {
     "apple": "Apple",
@@ -850,7 +863,11 @@
     "below_media": "媒体文件下方",
     "full_frame": "全画幅",
     "icons": "图标",
-    "input_field": "输入字段"
+    "input_field": "输入字段",
+    "progress_bar": "Progress bar",
+    "mega_menu": "Mega menu",
+    "dropdown": "Dropdown",
+    "tabbed": "Tabbed"
   },
   "content": {
     "advanced": "高级",
@@ -978,7 +995,8 @@
     "gift_card_products": "礼品卡产品",
     "disclosures": "披露信息",
     "disclosures_metafield_content": "此产品所需的安全警告和监管披露信息。",
-    "page_text_color_contrast_info": "具有自定义背景色的分区仅在颜色对比度足够时才会使用此文本颜色。"
+    "page_text_color_contrast_info": "具有自定义背景色的分区仅在颜色对比度足够时才会使用此文本颜色。",
+    "grid_layout_paragraph": "Only used by the grid style: two left-column menus, a shop-all button, and center columns built from this item's own 2nd/3rd-level menu links."
   },
   "html_defaults": {
     "share_information_about_your": "<p>与您的客户分享有关您品牌的信息。描述产品、发布公告或欢迎客户光临您的商店。</p>",
@@ -1102,7 +1120,9 @@
     "page_text_color_default_info": "模板分区的默认设置",
     "actions_display_style": "在移动设备上始终使用图标",
     "edit_input_field_in_theme_settings": "在[模板设置](/editor?context=theme&category=input%20fields)中编辑输入字段",
-    "edit_variants_in_theme_settings": "在[模板设置](/editor?context=theme&category=variant%20pickers)中编辑多属性样式"
+    "edit_variants_in_theme_settings": "在[模板设置](/editor?context=theme&category=variant%20pickers)中编辑多属性样式",
+    "submenu_style": "Dropdown shows a compact list under the parent link. A third level opens as a flyout beside its row.",
+    "mega_menu_panel_menu_item": "Matched against this top-level menu item's title (case-insensitive). Leave blank to not match any item."
   },
   "categories": {
     "basic": "基本",

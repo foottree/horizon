@@ -118,7 +118,9 @@
     "open": "Openen",
     "back_to": "Terug naar {{ title }}",
     "zoom_media": "In-/uitzoomen op media {{ index }}",
-    "back_to_main_menu": "Terug naar hoofdmenu"
+    "back_to_main_menu": "Terug naar hoofdmenu",
+    "shop_all": "Shop all {{ title }}",
+    "all_category": "All {{ title }}"
   },
   "content": {
     "reviews": "recensies",

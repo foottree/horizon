@@ -146,7 +146,8 @@
     "disclosures": "גילוי נאות",
     "disclosures_metafield_content": "אזהרות בטיחות חובה וגילויים רגולטוריים עבור מוצר זה.",
     "app_required_for_ratings": "נדרש יישום עבור דירוגי מוצרים. [למידע נוסף](https://help.shopify.com/manual/apps)",
-    "navigation": "ניווט"
+    "navigation": "ניווט",
+    "grid_layout_paragraph": "Only used by the grid style: two left-column menus, a shop-all button, and center columns built from this item's own 2nd/3rd-level menu links."
   },
   "html_defaults": {
     "join_our_email_list": "<h2>הצטרף לרשימת הדיוור שלנו</h2>",
@@ -232,13 +233,15 @@
     "video_autoplay": "סרטונים יושתקו כברירת מחדל",
     "video_external": "השתמש בכתובת URL של YouTube או Vimeo",
     "pills_usage": "משמש למסננים שהוחלו, קודי הנחה והצעות חיפוש",
-    "media_type_info": "התכונות מאוכלסות מקישורי התפריט שלך"
+    "media_type_info": "התכונות מאוכלסות מקישורי התפריט שלך",
+    "submenu_style": "Dropdown shows a compact list under the parent link. A third level opens as a flyout beside its row.",
+    "mega_menu_panel_menu_item": "Matched against this top-level menu item's title (case-insensitive). Leave blank to not match any item."
   },
   "names": {
+    "404": "404",
     "column": "עמודה",
     "product_title": "כותרת מוצר",
     "custom_liquid": "Custom Liquid",
-    "404": "404",
     "accelerated_checkout": "תשלום מואץ",
     "accordion": "אקורדיון",
     "accordion_row": "שורת אקורדיון",
@@ -394,7 +397,9 @@
     "view_all_button": "הצג הכול",
     "disclosures": "גילוי נאות",
     "pills": "גלולות",
-    "comparison_slider": "מחוון השוואה"
+    "comparison_slider": "מחוון השוואה",
+    "mega_menu_panel": "Mega menu panel",
+    "mega_menu_promo": "Promo tile"
   },
   "options": {
     "above_carousel": "מעל הקרוסלה",
@@ -670,7 +675,11 @@
     "wide": "רחב",
     "youtube": "YouTube",
     "with_hints": "עם רמזים",
-    "below_media": "מתחת למדיה"
+    "below_media": "מתחת למדיה",
+    "progress_bar": "Progress bar",
+    "mega_menu": "Mega menu",
+    "dropdown": "Dropdown",
+    "tabbed": "Tabbed"
   },
   "settings": {
     "accordion": "אקורדיון",
@@ -1085,7 +1094,18 @@
     "top_row_background": "רקע לשורה העליונה",
     "top_row_text": "טקסט לשורה העליונה",
     "bottom_row_background": "רקע לשורה התחתונה",
-    "bottom_row_text": "טקסט לשורה התחתונה"
+    "bottom_row_text": "טקסט לשורה התחתונה",
+    "grid_section_card_layout": "Card layout",
+    "grid_section_carousel_match_collection": "Match Collection list (section grid)",
+    "grid_section_carousel_match_collection_info": "Carousel uses the same section grid as Collection list.",
+    "submenu_style": "Submenu style",
+    "menu_item_title": "Top-level menu item title",
+    "group_1_menu": "Group 1 menu",
+    "group_2_menu": "Group 2 menu",
+    "shop_all_label": "Shop all button label",
+    "shop_all_url": "Shop all button link",
+    "caption": "Caption",
+    "button_label": "Button label"
   },
   "text_defaults": {
     "accordion_heading": "כותרת אקורדיון",

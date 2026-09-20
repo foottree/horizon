@@ -98,7 +98,9 @@
     "see_items": {
       "one": "{{ count }} آئٹم دیکھیں",
       "other": "{{ count }} آئٹم دیکھیں"
-    }
+    },
+    "shop_all": "Shop all {{ title }}",
+    "all_category": "All {{ title }}"
   },
   "blocks": {
     "contact_form": {

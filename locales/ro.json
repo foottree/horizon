@@ -120,7 +120,9 @@
     "open": "Deschidere",
     "back_to": "Înapoi la {{ title }}",
     "back_to_main_menu": "Înapoi la meniul principal",
-    "zoom_media": "Fă zoom pe elementul media {{ index }}"
+    "zoom_media": "Fă zoom pe elementul media {{ index }}",
+    "shop_all": "Shop all {{ title }}",
+    "all_category": "All {{ title }}"
   },
   "content": {
     "reviews": "recenzii",

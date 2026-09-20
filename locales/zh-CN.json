@@ -118,7 +118,9 @@
     "open": "打开",
     "back_to": "返回 {{ title }}",
     "zoom_media": "缩放媒体文件 {{ index }}",
-    "back_to_main_menu": "返回主菜单"
+    "back_to_main_menu": "返回主菜单",
+    "shop_all": "Shop all {{ title }}",
+    "all_category": "All {{ title }}"
   },
   "content": {
     "reviews": "评价",

@@ -106,7 +106,9 @@
       "many": "عرض {{ count }} من العناصر",
       "two": "عرض {{ count }} من العناصر",
       "zero": "عرض {{ count }} من العناصر"
-    }
+    },
+    "shop_all": "Shop all {{ title }}",
+    "all_category": "All {{ title }}"
   },
   "blocks": {
     "contact_form": {

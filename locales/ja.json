@@ -118,7 +118,9 @@
     "open": "オープン",
     "back_to": "{{ title }} に戻る",
     "zoom_media": "ズームメディア {{ index }}",
-    "back_to_main_menu": "メインメニューに戻る"
+    "back_to_main_menu": "メインメニューに戻る",
+    "shop_all": "Shop all {{ title }}",
+    "all_category": "All {{ title }}"
   },
   "content": {
     "reviews": "レビュー",

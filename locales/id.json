@@ -118,7 +118,9 @@
     "open": "Buka",
     "back_to": "Kembali ke {{ title }}",
     "back_to_main_menu": "Kembali ke menu utama",
-    "zoom_media": "Perbesar media {{ index }}"
+    "zoom_media": "Perbesar media {{ index }}",
+    "shop_all": "Shop all {{ title }}",
+    "all_category": "All {{ title }}"
   },
   "content": {
     "reviews": "ulasan",

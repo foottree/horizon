@@ -118,7 +118,9 @@
     "open": "Mở",
     "back_to": "Quay lại {{ title }}",
     "zoom_media": "Thu phóng nội dung {{ index }}",
-    "back_to_main_menu": "Quay lại menu chính"
+    "back_to_main_menu": "Quay lại menu chính",
+    "shop_all": "Shop all {{ title }}",
+    "all_category": "All {{ title }}"
   },
   "content": {
     "reviews": "đánh giá",

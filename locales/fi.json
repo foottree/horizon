@@ -118,7 +118,9 @@
     "open": "Avaa",
     "back_to": "Takaisin kohteeseen {{ title }}",
     "zoom_media": "Lähennä mediasisältö: {{ index }}",
-    "back_to_main_menu": "Takaisin päävalikkoon"
+    "back_to_main_menu": "Takaisin päävalikkoon",
+    "shop_all": "Shop all {{ title }}",
+    "all_category": "All {{ title }}"
   },
   "content": {
     "reviews": "arvostelua",

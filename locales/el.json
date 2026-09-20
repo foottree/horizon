@@ -118,7 +118,9 @@
     "open": "Σε εξέλιξη",
     "back_to": "Επιστροφή σε {{ title }}",
     "zoom_media": "Μεγέθυνση πολυμέσου {{ index }}",
-    "back_to_main_menu": "Επιστροφή στο κύριο μενού"
+    "back_to_main_menu": "Επιστροφή στο κύριο μενού",
+    "shop_all": "Shop all {{ title }}",
+    "all_category": "All {{ title }}"
   },
   "content": {
     "reviews": "κριτικές",

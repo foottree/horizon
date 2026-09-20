@@ -118,7 +118,9 @@
     "open": "Açık",
     "back_to": "Geri dön: {{ title }}",
     "back_to_main_menu": "Ana menüye dön",
-    "zoom_media": "Medyayı yakınlaştır: {{ index }}"
+    "zoom_media": "Medyayı yakınlaştır: {{ index }}",
+    "shop_all": "Shop all {{ title }}",
+    "all_category": "All {{ title }}"
   },
   "content": {
     "reviews": "değerlendirme",

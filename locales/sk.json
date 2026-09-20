@@ -122,7 +122,9 @@
     "open": "Otvoriť",
     "back_to": "Späť na: {{ title }}",
     "zoom_media": "Nástroj na priblíženie {{ index }}",
-    "back_to_main_menu": "Späť do hlavnej ponuky"
+    "back_to_main_menu": "Späť do hlavnej ponuky",
+    "shop_all": "Shop all {{ title }}",
+    "all_category": "All {{ title }}"
   },
   "content": {
     "reviews": "recenz.",

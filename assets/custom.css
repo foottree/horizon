@@ -386,7 +386,7 @@
   padding-block: 8px;
   border-radius: 8px;
   border: 1px solid var(--dropdown-hairline);
-  background-color: #fff; /* Figma: white surface; not the drawer colour setting, which also feeds --color-background here */;
+  background-color: var(--color-background);;
 }
 
 /* backhouse's ported panel reveals a top wipe-in line; the Foot Tree panel is a plain
@@ -404,7 +404,7 @@
   padding-block: 8px;
   border-radius: 8px;
   border: 1px solid var(--dropdown-hairline);
-  background-color: #fff; /* Figma: white surface; not the drawer colour setting, which also feeds --color-background here */;
+  background-color: var(--color-background);;
 }
 
 /* Rows: 56px tall, 24px inline padding, Plus Jakarta Sans Medium 18px ink, no underline. */
@@ -531,6 +531,7 @@
    jumps at the start of its transition; --header-group-height is only the no-JS fallback.
    header-drawer.liquid's stylesheet loads after custom.css, hence #header-component. ---- */
 #header-component .menu-drawer {
+  background-color: #faf7f0; /* header cream, palette color5. Not the block colour setting: that one also paints the desktop mega panels, which stay white */
   left: auto;
   right: 0;
   top: var(--ft-drawer-top, var(--header-group-height));

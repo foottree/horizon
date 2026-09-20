@@ -118,7 +118,9 @@
     "open": "เปิด",
     "back_to": "กลับไปที่ {{ title }}",
     "zoom_media": "ซูมสื่อ {{ index }}",
-    "back_to_main_menu": "กลับไปที่เมนูหลัก"
+    "back_to_main_menu": "กลับไปที่เมนูหลัก",
+    "shop_all": "Shop all {{ title }}",
+    "all_category": "All {{ title }}"
   },
   "content": {
     "reviews": "รีวิว",

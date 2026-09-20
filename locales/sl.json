@@ -122,7 +122,9 @@
     "open": "Odpri",
     "back_to": "Nazaj na: {{ title }}",
     "zoom_media": "Povečava predstavnosti {{ index }}",
-    "back_to_main_menu": "Nazaj na glavni meni"
+    "back_to_main_menu": "Nazaj na glavni meni",
+    "shop_all": "Shop all {{ title }}",
+    "all_category": "All {{ title }}"
   },
   "content": {
     "reviews": "ocen.",

@@ -118,7 +118,9 @@
     "open": "열기",
     "back_to": "{{ title }}(으)로 돌아가기",
     "back_to_main_menu": "메인 메뉴로 돌아가기",
-    "zoom_media": "{{ index }} 미디어 확대/축소"
+    "zoom_media": "{{ index }} 미디어 확대/축소",
+    "shop_all": "Shop all {{ title }}",
+    "all_category": "All {{ title }}"
   },
   "content": {
     "reviews": "리뷰",

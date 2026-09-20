@@ -120,7 +120,9 @@
     "open": "Abrir",
     "back_to": "Regressar a {{ title }}",
     "zoom_media": "Ampliar conteúdo multimédia {{ index }}",
-    "back_to_main_menu": "Voltar ao menu principal"
+    "back_to_main_menu": "Voltar ao menu principal",
+    "shop_all": "Shop all {{ title }}",
+    "all_category": "All {{ title }}"
   },
   "content": {
     "reviews": "avaliações",

@@ -118,7 +118,9 @@
     "open": "Отваряне",
     "back_to": "Назад към {{ title }}",
     "zoom_media": "Увеличаване на мултимедия {{ index }}",
-    "back_to_main_menu": "Назад към главното меню"
+    "back_to_main_menu": "Назад към главното меню",
+    "shop_all": "Shop all {{ title }}",
+    "all_category": "All {{ title }}"
   },
   "content": {
     "reviews": "мнения",

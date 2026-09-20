@@ -120,7 +120,9 @@
     "open": "Otvori",
     "back_to": "Natrag na {{ title }}",
     "zoom_media": "Zoom medijskog sadržaja {{ index }}",
-    "back_to_main_menu": "Natrag na glavni izbornik"
+    "back_to_main_menu": "Natrag na glavni izbornik",
+    "shop_all": "Shop all {{ title }}",
+    "all_category": "All {{ title }}"
   },
   "content": {
     "reviews": "recenzije",

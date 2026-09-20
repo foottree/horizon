@@ -146,7 +146,8 @@
     "disclosures": "عمليات الإفصاح",
     "disclosures_metafield_content": "تحذيرات السلامة وعمليات الإفصاح التنظيمية المطلوبة لهذا المنتج.",
     "app_required_for_ratings": "يلزم وجود تطبيق لتقييمات المنتج. [تعرّف على المزيد](https://help.shopify.com/manual/apps)",
-    "navigation": "التنقل"
+    "navigation": "التنقل",
+    "grid_layout_paragraph": "Only used by the grid style: two left-column menus, a shop-all button, and center columns built from this item's own 2nd/3rd-level menu links."
   },
   "html_defaults": {
     "join_our_email_list": "<h2>انضم إلى قائمتنا البريدية</h2>",
@@ -232,13 +233,15 @@
     "video_autoplay": "سيتم كتم صوت مقاطع الفيديو بشكل افتراضي",
     "video_external": "استخدم عنوان URL لـ YouTube أو Vimeo",
     "pills_usage": "يُستخدم لعوامل التصفية المطبقة، وأكواد الخصم، واقتراحات البحث",
-    "media_type_info": "تمت تعبئة الميزات من روابط القائمة الخاصة بك"
+    "media_type_info": "تمت تعبئة الميزات من روابط القائمة الخاصة بك",
+    "submenu_style": "Dropdown shows a compact list under the parent link. A third level opens as a flyout beside its row.",
+    "mega_menu_panel_menu_item": "Matched against this top-level menu item's title (case-insensitive). Leave blank to not match any item."
   },
   "names": {
+    "404": "404",
     "column": "عمود",
     "product_title": "عنوان المنتج",
     "custom_liquid": "Liquid مخصص",
-    "404": "404",
     "accelerated_checkout": "الدفع السريع",
     "accordion": "أكورديون",
     "accordion_row": "صف الأكورديون",
@@ -394,7 +397,9 @@
     "view_all_button": "عرض الكل",
     "disclosures": "عمليات الإفصاح",
     "pills": "أشكال بيضاوية",
-    "comparison_slider": "شريط تمرير المقارنة"
+    "comparison_slider": "شريط تمرير المقارنة",
+    "mega_menu_panel": "Mega menu panel",
+    "mega_menu_promo": "Promo tile"
   },
   "options": {
     "above_carousel": "أعلى العرض الدائري",
@@ -670,7 +675,11 @@
     "wide": "عريض",
     "youtube": "YouTube",
     "with_hints": "مع تلميحات",
-    "below_media": "أسفل الوسائط"
+    "below_media": "أسفل الوسائط",
+    "progress_bar": "Progress bar",
+    "mega_menu": "Mega menu",
+    "dropdown": "Dropdown",
+    "tabbed": "Tabbed"
   },
   "settings": {
     "accordion": "أكورديون",
@@ -1085,7 +1094,18 @@
     "top_row_background": "خلفية الصف العلوي",
     "top_row_text": "نص الصف العلوي",
     "bottom_row_background": "خلفية الصف السفلي",
-    "bottom_row_text": "نص الصف السفلي"
+    "bottom_row_text": "نص الصف السفلي",
+    "grid_section_card_layout": "Card layout",
+    "grid_section_carousel_match_collection": "Match Collection list (section grid)",
+    "grid_section_carousel_match_collection_info": "Carousel uses the same section grid as Collection list.",
+    "submenu_style": "Submenu style",
+    "menu_item_title": "Top-level menu item title",
+    "group_1_menu": "Group 1 menu",
+    "group_2_menu": "Group 2 menu",
+    "shop_all_label": "Shop all button label",
+    "shop_all_url": "Shop all button link",
+    "caption": "Caption",
+    "button_label": "Button label"
   },
   "text_defaults": {
     "accordion_heading": "عنوان القائمة المنسدلة",
