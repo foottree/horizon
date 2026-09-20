@@ -187,8 +187,24 @@
 }
 
 /* Mobile menu drawer: enlarge the close (X) icon. The stock
-   icon-close-menu.svg is 14px; scale it to 24px inside its 44px tap target. */
+   icon-close-menu.svg is 14px; the X glyph only fills ~46% of the viewBox, so a 36px box gives a ~17px X. */
+.menu-drawer__close-button .header-drawer-icon,
 .menu-drawer__close-button .header-drawer-icon svg {
-  width: 24px;
-  height: 24px;
+  width: 36px;
+  height: 36px;
+  max-width: none;
+}
+
+/* Wordmark is set in caps in the design ("FOOT TREE"); the shop name is
+   title case, so transform it here. */
+.header-logo {
+  text-transform: uppercase;
+}
+
+/* Design leaves ~66px between the wordmark lockup and the first menu item;
+   Horizon's grid gives ~20px. Push the menu right on desktop only. */
+@media screen and (min-width: 750px) {
+  #header-component .header__row--top .header-menu {
+    margin-inline-start: 40px;
+  }
 }
