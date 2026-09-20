@@ -282,11 +282,57 @@
     font-size: var(--font-size--sm);
   }
 
-  #header-component .search-action {
-    margin-inline-start: -18px;
-  }
-
   #header-component .account-button + .header-actions__action {
     margin-inline-start: -4px;
+  }
+}
+
+/* Mobile hamburger: three-line icon (assets/icon-menu.svg, same glyph as
+   backhouse) shown one step larger than stock, as in that theme. */
+/* Specificity has to beat the section stylesheet, which loads after custom.css. */
+#header-component .header__icon--summary .header-drawer-icon--open,
+#header-component .header__icon--summary .header-drawer-icon--open > svg {
+  width: var(--icon-size-sm);
+  height: var(--icon-size-sm);
+}
+
+/* Keep a full-width tap target for the burger while the icon hugs the right edge. */
+#header-component .header__icon--summary {
+  min-width: var(--minimum-touch-target);
+}
+
+/* Mobile header layout: logo first on the left, then search, account, bag and
+   the hamburger on the right (as on the sip-sip hooray build). Horizon's stock
+   mobile grid is 'leftA leftB center rightA rightB' with the drawer at leftA and
+   search at leftB; the areas are re-mapped here instead of touching the markup. */
+@media screen and (max-width: 749px) {
+  #header-component .header__columns,
+  #header-component[data-menu-style='drawer'] .header__columns {
+    --header-template-columns: 1fr max-content max-content max-content !important;
+    grid-template-areas: 'center search actions burger' !important;
+  }
+
+  #header-component .header__columns .header-logo {
+    grid-area: center !important;
+    justify-self: start;
+  }
+
+  #header-component .header__columns .search-action {
+    grid-area: search !important;
+  }
+
+  #header-component .header__columns header-actions {
+    grid-area: actions !important;
+  }
+
+  #header-component .header__columns header-drawer,
+  #header-component .header__columns .menu-drawer-container {
+    grid-area: burger !important;
+  }
+
+  #header-component .header__icon--menu {
+    justify-content: flex-end;
+    padding-inline: 0;
+    margin-inline-start: 4px;
   }
 }
