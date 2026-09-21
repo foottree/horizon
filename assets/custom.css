@@ -972,3 +972,31 @@
   background-color: rgb(255 255 255 / 0.95);
   color: var(--color-foreground);
 }
+
+/* ---- Product badges (Figma "Need chip" on the product card) ----
+   16px inset from the photo corner, 4px radius (theme setting), padding 7px 12px, Plus Jakarta
+   Sans SemiBold 14 / 1.5. Sold out / Sale keep their theme-setting colours; merchant badges
+   from the custom.product_badges metaobjects carry their own colours inline
+   (snippets/product-badges.liquid). Several badges stack top-down with a small gap.
+   Doubled selectors: product-badges-styles.liquid loads after this file. */
+.product-badges.product-badges {
+  --badge-inset: 16px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.product-badges.product-badges--top-right {
+  align-items: flex-end;
+}
+
+.product-badges .product-badges__badge {
+  --badge-font-size: var(--font-size--sm); /* 14px, as drawn; the 16px floor applies to running copy */
+  --badge-rectangle-padding-block: 7px;
+  --badge-rectangle-padding-inline: 12px;
+
+  line-height: 1.5;
+  white-space: nowrap;
+}

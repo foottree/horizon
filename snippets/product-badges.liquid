@@ -1,0 +1,56 @@
+{%- doc -%}
+  Badges shown over a product card's image: the automatic "Sold out" / "Sale" badges from
+  stock Horizon, followed by the merchant-managed badges from the product's
+  `custom.product_badges` metafield (a list of "Product Badges" metaobjects, each with a
+  label, background colour and text colour; draft entries are not returned by Liquid).
+
+  Position, corner radius and typography come from the global Badges theme settings.
+
+  @param {object} product - The product to render badges for
+
+  @example
+  {% render 'product-badges', product: product %}
+{%- enddoc -%}
+
+{%- liquid
+  assign custom_badges = product.metafields.custom.product_badges.value
+  assign sold_out = false
+  assign on_sale = false
+  if product.available == false
+    assign sold_out = true
+  elsif product.compare_at_price > product.price
+    assign on_sale = true
+  endif
+-%}
+
+{%- if sold_out or on_sale or custom_badges != blank -%}
+  <div
+    class="product-badges product-badges--{{ settings.badge_position }}"
+    style="
+      --badge-border-radius: {{ settings.badge_corner_radius }}px;
+      --badge-font-family: var(--font-{{ settings.badge_font_family }}--family); --badge-font-weight: var(--font-{{ settings.badge_font_family }}--weight); --badge-text-transform: {{ settings.badge_text_transform }};
+    "
+  >
+    {%- if sold_out -%}
+      <div class="product-badges__badge product-badges__badge--rectangle color-custom-badge-sold-out">
+        {{- 'content.product_badge_sold_out' | t -}}
+      </div>
+    {%- elsif on_sale -%}
+      <div class="product-badges__badge product-badges__badge--rectangle color-custom-badge-sale">
+        {{- 'content.product_badge_sale' | t -}}
+      </div>
+    {%- endif -%}
+
+    {%- for badge in custom_badges -%}
+      {%- if badge.label == blank -%}
+        {%- continue -%}
+      {%- endif -%}
+      <div
+        class="product-badges__badge product-badges__badge--rectangle product-badges__badge--custom"
+        style="--color-background: {{ badge.badge_background_color | default: '#4a6a1d' }}; --color-foreground: {{ badge.badge_text_color | default: '#ffffff' }};"
+      >
+        {{- badge.label | escape -}}
+      </div>
+    {%- endfor -%}
+  </div>
+{%- endif -%}
