@@ -101,9 +101,16 @@
                   class="mega-menu__link ft-grid__row"
                 >
                   <span class="ft-grid__thumb">
-                    {% if row.object.featured_image %}
+                    {% liquid
+                      comment
+                        Menu image = the collection's custom.menu_image metafield (a dedicated, ideally square
+                        picture for the menu); the collection image is only the fallback when it is empty.
+                      endcomment
+                      assign menu_image = row.object.metafields.custom.menu_image.value | default: row.object.featured_image
+                    %}
+                    {% if menu_image %}
                       {{
-                        row.object.featured_image
+                        menu_image
                         | image_url: width: 80
                         | image_tag:
                           loading: 'lazy',
