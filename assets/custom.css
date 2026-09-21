@@ -586,11 +586,15 @@
   padding-block-start: var(--padding-sm);
 }
 
-/* top-level rows (Horizon only marks the nested groups in a 3-level menu) and the nested groups */
+/* top-level rows (Horizon only marks the nested groups in a 3-level menu) and the nested groups.
+   A top-level row with children also wraps a <details> that stock gives its own line; the row
+   already draws one, so that inner line is dropped or the two stack into 1px. */
 #header-component .menu-drawer__navigation > .menu-drawer__menu > .menu-drawer__list-item,
-#header-component .menu-drawer__list-item--divider,
-#header-component .menu-drawer__menu-container--divider {
+#header-component .menu-drawer__list-item--divider {
   border-block-end: 0.5px solid #e0dcd2; /* palette color3, line */
+}
+#header-component .menu-drawer__menu-container--divider {
+  border-block-end: 0;
 }
 
 /* level-2 group headings in the nested panel: 14px subdued by default, smaller than their own
