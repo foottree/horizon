@@ -159,9 +159,7 @@
     "product_sku": "SKU(재고 관리 코드)",
     "layered_slideshow": "레이어드 슬라이드 쇼",
     "cart_drawer": "카트 서랍",
-    "disclosures": "고지 사항",
-    "mega_menu_panel": "Mega menu panel",
-    "mega_menu_promo": "Promo tile"
+    "disclosures": "고지 사항"
   },
   "settings": {
     "autoplay": "자동 재생",
@@ -581,15 +579,10 @@
     "grid_section_carousel_match_collection": "Match Collection list (section grid)",
     "grid_section_carousel_match_collection_info": "Carousel uses the same section grid as Collection list.",
     "submenu_style": "Submenu style",
-    "menu_item_title": "Top-level menu item title",
-    "group_1_menu": "Group 1 menu",
-    "group_2_menu": "Group 2 menu",
-    "shop_all_label": "Shop all button label",
-    "shop_all_url": "Shop all button link",
-    "caption": "Caption",
-    "button_label": "Button label",
     "arrows_placement": "Arrow placement",
-    "custom_class": "Custom CSS class"
+    "custom_class": "Custom CSS class",
+    "submenu_style_exceptions": "Use the other style for",
+    "tile_image_ratio": "Tile image ratio"
   },
   "options": {
     "apple": "Apple",
@@ -869,11 +862,13 @@
     "progress_bar": "Progress bar",
     "mega_menu": "Mega menu",
     "dropdown": "Dropdown",
-    "tabbed": "Tabbed",
     "beside_slide": "Beside the slide",
     "to_right": "Right",
     "to_left": "Left",
-    "with_pagination": "With pagination"
+    "with_pagination": "With pagination",
+    "portrait_4_5": "Portrait 4:5",
+    "portrait_3_4": "Portrait 3:4",
+    "portrait_2_3": "Portrait 2:3"
   },
   "content": {
     "background_video": "배경 비디오",
@@ -957,7 +952,6 @@
     "text": "텍스트",
     "thumbnails": "미리 보기 이미지",
     "visible_if_collection_has_more_products": "표시된 제품보다 컬렉션에 더 많은 제품이 있는 경우에 표시됩니다",
-    "grid_layout": "그리드 레이아웃",
     "app_required_for_ratings": "제품 평점을 사용하려면 앱이 필요합니다. [자세히 알아보기](https://help.shopify.com/manual/apps)",
     "icon": "아이콘",
     "manage_store_name": "[스토어 이름 관리](/admin/settings/general?edit=storeName)",
@@ -1001,8 +995,7 @@
     "gift_card_products": "기프트 카드 제품",
     "disclosures": "고지 사항",
     "disclosures_metafield_content": "이 제품에 필수적인 안전 경고 및 규제 관련 고지 사항입니다.",
-    "page_text_color_contrast_info": "사용자 지정 배경 색상이 있는 섹션은 색상 대비가 충분한 경우에만 이 텍스트 색상을 사용합니다.",
-    "grid_layout_paragraph": "Only used by the grid style: two left-column menus, a shop-all button, and center columns built from this item's own 2nd/3rd-level menu links."
+    "page_text_color_contrast_info": "사용자 지정 배경 색상이 있는 섹션은 색상 대비가 충분한 경우에만 이 텍스트 색상을 사용합니다."
   },
   "html_defaults": {
     "share_information_about_your": "<p>고객과 브랜드에 대한 정보를 공유하세요. 제품을 설명하거나, 공지 사항을 알리거나, 스토어를 방문하는 고객을 환영할 수 있습니다.</p>",
@@ -1128,8 +1121,8 @@
     "edit_input_field_in_theme_settings": "[테마 설정](/editor?context=theme&category=input%20fields)에서 입력 필드 편집",
     "edit_variants_in_theme_settings": "[테마 설정](/editor?context=theme&category=variant%20pickers)에서 이형 상품 스타일을 편집하십시오.",
     "submenu_style": "Dropdown shows a compact list under the parent link. A third level opens as a flyout beside its row.",
-    "mega_menu_panel_menu_item": "Matched against this top-level menu item's title (case-insensitive). Leave blank to not match any item.",
-    "slide_height_mobile_fit_content": "0 = fit content"
+    "slide_height_mobile_fit_content": "0 = fit content",
+    "submenu_style_exceptions": "Top-level item titles, comma separated, e.g. Find your shoe. Those items get Dropdown when the default is Mega menu, and Mega menu when the default is Dropdown."
   },
   "categories": {
     "basic": "기본",

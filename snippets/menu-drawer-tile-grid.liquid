@@ -1,0 +1,74 @@
+{%- doc -%}
+  Renders the mobile drawer's 2-column tile grid for one top-level menu item's children:
+  an "All <parent title>" tile (using the parent link's own image), only when the parent link
+  itself points to a collection, followed by one tile per child link. Used inside that item's
+  slide-in level-2 panel (snippets/header-drawer.liquid,
+  "fewer than 3 levels" branch) and, when the header-menu block's `drawer_accordion` setting is
+  turned on instead, inside its accordion row. Matches the desktop tile-grid submenu
+  (snippets/menu-tiles.liquid): same image source/placeholder and tile_image_ratio via
+  snippets/menu-tile-image.liquid, card label below the image instead of overlaid. Keeps the
+  `details-content` class so an accordion-custom-component ancestor (accordion mode) still
+  animates its height/opacity smoothly - it is inert, unused CSS in the slide-in panel context.
+
+  @param {object} link - The top-level menu link being rendered.
+  @param {string} [tile_image_ratio] - CSS aspect-ratio value for each tile's image box
+    (header-menu block setting `tile_image_ratio`).
+
+  @example
+  {% render 'menu-drawer-tile-grid', link: link, tile_image_ratio: block_settings.tile_image_ratio %}
+{%- enddoc -%}
+
+<ul
+  class="menu-drawer__tile-grid details-content"
+  role="list"
+  tabindex="-1"
+  style="--tile-image-ratio: {{ tile_image_ratio | default: '3 / 4' }};"
+>
+  {%- if link.type == 'collection_link' -%}
+    <li>
+      <a
+        id="HeaderDrawer-{{ link.handle }}-all"
+        href="{{ link.url }}"
+        class="menu-drawer__tile-card"
+      >
+        <span class="ft-tile-image">
+          {% render 'menu-tile-image', link: link %}
+        </span>
+        <span class="menu-drawer__tile-label">
+          {{- 'actions.all_category' | t: title: link.title -}}
+          <span
+            class="svg-wrapper menu-drawer__tile-arrow"
+            aria-hidden="true"
+          >
+            {{- 'icon-arrow.svg' | inline_asset_content -}}
+          </span>
+        </span>
+      </a>
+    </li>
+  {%- endif -%}
+  {%- for child in link.links -%}
+    <li>
+      <a
+        id="HeaderDrawer-{{ link.handle }}-{{ child.handle }}"
+        href="{{ child.url }}"
+        class="menu-drawer__tile-card{% if child.current %} menu-drawer__tile-card--active{% endif %}"
+        {% if child.current %}
+          aria-current="page"
+        {% endif %}
+      >
+        <span class="ft-tile-image">
+          {% render 'menu-tile-image', link: child %}
+        </span>
+        <span class="menu-drawer__tile-label">
+          {{- child.title | escape -}}
+          <span
+            class="svg-wrapper menu-drawer__tile-arrow"
+            aria-hidden="true"
+          >
+            {{- 'icon-arrow.svg' | inline_asset_content -}}
+          </span>
+        </span>
+      </a>
+    </li>
+  {%- endfor -%}
+</ul>

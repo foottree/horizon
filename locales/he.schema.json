@@ -63,7 +63,6 @@
     "local_pickup_description": "הצג מיקומי איסוף סמוכים כאשר איסוף מהחנות של החנות המקוונת מוגדר. [למידע נוסף](https://help.shopify.com/en/manual/fulfillment/setup/delivery-methods/pickup-in-store)",
     "fonts": "גופנים",
     "grid": "רשת",
-    "grid_layout": "פריסת רשת",
     "heading": "כותרת",
     "heading_size": "גודל כותרת",
     "utilities": "כלי עזר",
@@ -146,8 +145,7 @@
     "disclosures": "גילוי נאות",
     "disclosures_metafield_content": "אזהרות בטיחות חובה וגילויים רגולטוריים עבור מוצר זה.",
     "app_required_for_ratings": "נדרש יישום עבור דירוגי מוצרים. [למידע נוסף](https://help.shopify.com/manual/apps)",
-    "navigation": "ניווט",
-    "grid_layout_paragraph": "Only used by the grid style: two left-column menus, a shop-all button, and center columns built from this item's own 2nd/3rd-level menu links."
+    "navigation": "ניווט"
   },
   "html_defaults": {
     "join_our_email_list": "<h2>הצטרף לרשימת הדיוור שלנו</h2>",
@@ -235,8 +233,8 @@
     "pills_usage": "משמש למסננים שהוחלו, קודי הנחה והצעות חיפוש",
     "media_type_info": "התכונות מאוכלסות מקישורי התפריט שלך",
     "submenu_style": "Dropdown shows a compact list under the parent link. A third level opens as a flyout beside its row.",
-    "mega_menu_panel_menu_item": "Matched against this top-level menu item's title (case-insensitive). Leave blank to not match any item.",
-    "slide_height_mobile_fit_content": "0 = fit content"
+    "slide_height_mobile_fit_content": "0 = fit content",
+    "submenu_style_exceptions": "Top-level item titles, comma separated, e.g. Find your shoe. Those items get Dropdown when the default is Mega menu, and Mega menu when the default is Dropdown."
   },
   "names": {
     "404": "404",
@@ -398,9 +396,7 @@
     "view_all_button": "הצג הכול",
     "disclosures": "גילוי נאות",
     "pills": "גלולות",
-    "comparison_slider": "מחוון השוואה",
-    "mega_menu_panel": "Mega menu panel",
-    "mega_menu_promo": "Promo tile"
+    "comparison_slider": "מחוון השוואה"
   },
   "options": {
     "above_carousel": "מעל הקרוסלה",
@@ -680,11 +676,13 @@
     "progress_bar": "Progress bar",
     "mega_menu": "Mega menu",
     "dropdown": "Dropdown",
-    "tabbed": "Tabbed",
     "beside_slide": "Beside the slide",
     "to_right": "Right",
     "to_left": "Left",
-    "with_pagination": "With pagination"
+    "with_pagination": "With pagination",
+    "portrait_4_5": "Portrait 4:5",
+    "portrait_3_4": "Portrait 3:4",
+    "portrait_2_3": "Portrait 2:3"
   },
   "settings": {
     "accordion": "אקורדיון",
@@ -1104,15 +1102,10 @@
     "grid_section_carousel_match_collection": "Match Collection list (section grid)",
     "grid_section_carousel_match_collection_info": "Carousel uses the same section grid as Collection list.",
     "submenu_style": "Submenu style",
-    "menu_item_title": "Top-level menu item title",
-    "group_1_menu": "Group 1 menu",
-    "group_2_menu": "Group 2 menu",
-    "shop_all_label": "Shop all button label",
-    "shop_all_url": "Shop all button link",
-    "caption": "Caption",
-    "button_label": "Button label",
     "arrows_placement": "Arrow placement",
-    "custom_class": "Custom CSS class"
+    "custom_class": "Custom CSS class",
+    "submenu_style_exceptions": "Use the other style for",
+    "tile_image_ratio": "Tile image ratio"
   },
   "text_defaults": {
     "accordion_heading": "כותרת אקורדיון",

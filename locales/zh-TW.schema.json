@@ -159,9 +159,7 @@
     "product_sku": "存貨單位 (SKU)",
     "layered_slideshow": "分層輪播",
     "cart_drawer": "購物車",
-    "disclosures": "資訊揭露",
-    "mega_menu_panel": "Mega menu panel",
-    "mega_menu_promo": "Promo tile"
+    "disclosures": "資訊揭露"
   },
   "settings": {
     "alignment": "對齊",
@@ -581,15 +579,10 @@
     "grid_section_carousel_match_collection": "Match Collection list (section grid)",
     "grid_section_carousel_match_collection_info": "Carousel uses the same section grid as Collection list.",
     "submenu_style": "Submenu style",
-    "menu_item_title": "Top-level menu item title",
-    "group_1_menu": "Group 1 menu",
-    "group_2_menu": "Group 2 menu",
-    "shop_all_label": "Shop all button label",
-    "shop_all_url": "Shop all button link",
-    "caption": "Caption",
-    "button_label": "Button label",
     "arrows_placement": "Arrow placement",
-    "custom_class": "Custom CSS class"
+    "custom_class": "Custom CSS class",
+    "submenu_style_exceptions": "Use the other style for",
+    "tile_image_ratio": "Tile image ratio"
   },
   "options": {
     "apple": "Apple",
@@ -869,11 +862,13 @@
     "progress_bar": "Progress bar",
     "mega_menu": "Mega menu",
     "dropdown": "Dropdown",
-    "tabbed": "Tabbed",
     "beside_slide": "Beside the slide",
     "to_right": "Right",
     "to_left": "Left",
-    "with_pagination": "With pagination"
+    "with_pagination": "With pagination",
+    "portrait_4_5": "Portrait 4:5",
+    "portrait_3_4": "Portrait 3:4",
+    "portrait_2_3": "Portrait 2:3"
   },
   "content": {
     "advanced": "進階",
@@ -947,7 +942,6 @@
     "collection_page": "商品系列頁面",
     "customer_account": "顧客帳號",
     "edit_empty_state_collection_in_theme_settings": "在[主題設定](/editor?context=theme&category=search)中編輯空白商品系列",
-    "grid_layout": "網格版面配置",
     "home_page": "首頁",
     "images": "圖片",
     "inverse_logo_info": "透明頁首背景設為「反白」時使用",
@@ -1001,8 +995,7 @@
     "gift_card_products": "禮品卡商品",
     "disclosures": "資訊揭露",
     "disclosures_metafield_content": "此商品必備的安全警告與法規資訊揭露。",
-    "page_text_color_contrast_info": "具有自訂背景顏色的區段，僅在色彩對比度充足時才會使用此文字顏色。",
-    "grid_layout_paragraph": "Only used by the grid style: two left-column menus, a shop-all button, and center columns built from this item's own 2nd/3rd-level menu links."
+    "page_text_color_contrast_info": "具有自訂背景顏色的區段，僅在色彩對比度充足時才會使用此文字顏色。"
   },
   "html_defaults": {
     "share_information_about_your": "<p>向顧客分享您的品牌故事。可用來敘述產品、發布公告，或歡迎顧客造訪您的商店。</p>",
@@ -1128,8 +1121,8 @@
     "edit_input_field_in_theme_settings": "在 [佈景主題設定](/editor?context=theme&category=input%20fields) 中編輯輸入欄位",
     "edit_variants_in_theme_settings": "在[佈景主題設定](/editor?context=theme&category=variant%20pickers)中編輯子類樣式",
     "submenu_style": "Dropdown shows a compact list under the parent link. A third level opens as a flyout beside its row.",
-    "mega_menu_panel_menu_item": "Matched against this top-level menu item's title (case-insensitive). Leave blank to not match any item.",
-    "slide_height_mobile_fit_content": "0 = fit content"
+    "slide_height_mobile_fit_content": "0 = fit content",
+    "submenu_style_exceptions": "Top-level item titles, comma separated, e.g. Find your shoe. Those items get Dropdown when the default is Mega menu, and Mega menu when the default is Dropdown."
   },
   "categories": {
     "basic": "基本",

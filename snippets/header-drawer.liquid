@@ -135,51 +135,11 @@
                         class="menu-drawer__menu-item menu-drawer__menu-item--mainlist menu-drawer__animated-element"
                       >
                         <span class="menu-drawer__menu-item-text wrap-text">{{ link.title | escape }}</span>
-                        <span class="svg-wrapper icon-plus">
-                          {{- 'icon-plus.svg' | inline_asset_content -}}
+                        <span class="svg-wrapper icon-animated">
+                          {{- 'icon-caret.svg' | inline_asset_content -}}
                         </span>
                       </summary>
-                      {% liquid
-                        assign render_link_image = false
-                        if block_settings.menu_style == 'collection_images'
-                          assign catalog_links = link.links | where: 'type', 'catalog_link'
-                          assign collection_list_links = link.links | where: 'type', 'collections_link'
-                          assign collection_links = link.links | where: 'type', 'collection_link'
-                          if catalog_links.size > 0 or collection_list_links.size > 0 or collection_links.size > 0
-                            assign render_link_image = true
-                          endif
-                        endif
-                      %}
-                      <ul
-                        class="menu-drawer__menu menu-drawer__menu--childlist menu-drawer__animated-element details-content{% if render_link_image %} menu-drawer__menu--grid{% endif %}"
-                        role="list"
-                        tabindex="-1"
-                      >
-                        {%- for childlink in link.links -%}
-                          <li
-                            class="menu-drawer__list-item"
-                            style="--menu-drawer-animation-index: {{ forloop.index }};"
-                          >
-                            <a
-                              id="HeaderDrawer-{{ link.handle }}-{{ childlink.handle }}"
-                              href="{{ childlink.url }}"
-                              class="menu-drawer__menu-item menu-drawer__menu-item--child{% if childlink.current %} menu-drawer__menu-item--active{% endif %}"
-                              {% if childlink.current %}
-                                aria-current="page"
-                              {% endif %}
-                            >
-                              {% if render_link_image %}
-                                {% render 'link-featured-image',
-                                  link: childlink,
-                                  class: 'menu-drawer__link-image',
-                                  sizes: 'auto, 400px'
-                                %}
-                              {% endif %}
-                              <span class="menu-drawer__menu-item-text wrap-text">{{ childlink.title | escape }}</span>
-                            </a>
-                          </li>
-                        {%- endfor -%}
-                      </ul>
+                      {% render 'menu-drawer-tile-grid', link: link, tile_image_ratio: block_settings.tile_image_ratio %}
                     </details>
                   {% endcapture %}
                   {% render 'accordion-custom-component',
@@ -188,58 +148,67 @@
                   %}
                 {% elsif block_settings.drawer_accordion == false and link.links != blank %}
                   {%- comment -%}
-                    Flat menus for links with children, in menus with fewer than 3 levels of links
+                    Sliding level-2 panel for links with children, in menus with fewer than 3
+                    levels of links - the same slide-in mechanics as the "3 levels" branch below
+                    (header-drawer.js's open/submenu, back and close actions operate on any
+                    matching <details>/.menu-drawer__submenu pair via closest() lookups, not only
+                    a 3-deep menu), holding the 2-column tile grid instead of a plain link list.
                   {%- endcomment -%}
-                  <a
-                    id="HeaderDrawer-{{ link.handle }}"
-                    href="{{ link.url }}"
-                    class="menu-drawer__menu-item menu-drawer__menu-item--mainlist menu-drawer__animated-element"
-                    {% if link.current %}
-                      aria-current="page"
-                    {% endif %}
+                  <details
+                    id="Details-menu-drawer-menu-item-{{ link.handle }}"
+                    class="menu-drawer__menu-container{% if block_settings.drawer_dividers %} menu-drawer__menu-container--divider{% endif %}"
                   >
-                    <span class="menu-drawer__menu-item-text wrap-text">{{ link.title | escape }}</span>
-                  </a>
-                  {% liquid
-                    assign render_link_image = false
-                    if block_settings.menu_style == 'collection_images'
-                      assign catalog_links = link.links | where: 'type', 'catalog_link'
-                      assign collection_list_links = link.links | where: 'type', 'collections_link'
-                      assign collection_links = link.links | where: 'type', 'collection_link'
-                      if catalog_links.size > 0 or collection_list_links.size > 0 or collection_links.size > 0
-                        assign render_link_image = true
-                      endif
-                    endif
-                  %}
-                  <ul
-                    class="menu-drawer__menu menu-drawer__menu--childlist{% if render_link_image %} menu-drawer__menu--grid{% endif %}"
-                    role="list"
-                    tabindex="-1"
-                  >
-                    {%- for childlink in link.links -%}
-                      <li
-                        class="menu-drawer__list-item"
-                        style="--menu-drawer-animation-index: {{ animation_index }};"
-                      >
-                        <a
-                          href="{{ childlink.url }}"
-                          class="menu-drawer__menu-item menu-drawer__menu-item--child menu-drawer__animated-element{% if childlink.current %} menu-drawer__menu-item--active{% endif %}"
-                          {% if childlink.current %}
-                            aria-current="page"
-                          {% endif %}
-                        >
-                          {% if render_link_image %}
-                            {% render 'link-featured-image',
-                              link: childlink,
-                              class: 'menu-drawer__link-image',
-                              sizes: 'auto, 400px'
-                            %}
-                          {% endif %}
-                          <span class="menu-drawer__menu-item-text wrap-text">{{ childlink.title | escape }}</span>
-                        </a>
-                      </li>
-                    {%- endfor -%}
-                  </ul>
+                    <summary
+                      id="HeaderDrawer-{{ link.handle }}"
+                      class="menu-drawer__menu-item menu-drawer__menu-item--mainlist menu-drawer__animated-element{% if link.child_active %} menu-drawer__menu-item--active{% endif %}"
+                      on:click="header-drawer/open/submenu"
+                    >
+                      <span class="menu-drawer__menu-item-text wrap-text">{{ link.title | escape }}</span>
+                      <span class="svg-wrapper icon-caret icon-caret--forward">
+                        {{- 'icon-caret.svg' | inline_asset_content -}}
+                      </span>
+                    </summary>
+                    <div
+                      id="link-{{ link.handle | escape }}"
+                      class="menu-drawer__submenu has-submenu"
+                      tabindex="-1"
+                      style="--menu-drawer-animation-index: {{ animation_index }};"
+                    >
+                      <div class="menu-drawer__inner-submenu">
+                        <div class="menu-drawer__nav-buttons menu-drawer__nav-buttons--with-title">
+                          <button
+                            class="button menu-drawer__back-button focus-inset"
+                            on:click="header-drawer/back"
+                            aria-label="{{ 'actions.back_to_main_menu' | t }}"
+                          >
+                            <span class="svg-wrapper icon-caret icon-caret--backward">
+                              {{- 'icon-caret.svg' | inline_asset_content -}}
+                            </span>
+                          </button>
+                          <a
+                            href="{{ link.url }}"
+                            class="menu-drawer__title focus-inset"
+                            {% if link.current %}
+                              aria-current="page"
+                            {% endif %}
+                          >
+                            <span class="menu-drawer__menu-item-text wrap-text">{{ link.title | escape }}</span>
+                          </a>
+                          <button
+                            class="button button-unstyled close-button menu-drawer__close-button focus-inset"
+                            type="button"
+                            aria-label="{{ 'actions.close' | t }}"
+                            on:click="header-drawer/close"
+                          >
+                            <span class="svg-wrapper header-drawer-icon header-drawer-icon--close">
+                              {{- 'icon-close-menu.svg' | inline_asset_content -}}
+                            </span>
+                          </button>
+                        </div>
+                        {% render 'menu-drawer-tile-grid', link: link, tile_image_ratio: block_settings.tile_image_ratio %}
+                      </div>
+                    </div>
+                  </details>
                 {% else %}
                   {%- comment -%}
                     Simple links for links with no children (regardless of accordion setting), in menus with fewer than 3 levels of links
@@ -370,7 +339,6 @@
                                       sizes: 'auto, 400px'
                                     %}
                                   {% endif %}
-                                  {% render 'menu-drawer-thumb', link: childlink %}
                                   <span class="menu-drawer__menu-item-text wrap-text">
                                     {{- childlink.title | escape -}}
                                   </span>
@@ -438,7 +406,6 @@
                                                   sizes: 'auto, 400px'
                                                 %}
                                               {% endif %}
-                                              {% render 'menu-drawer-thumb', link: grandchildlink %}
                                               <span class="menu-drawer__menu-item-text wrap-text">
                                                 {{- grandchildlink.title | escape -}}
                                               </span>
@@ -504,7 +471,6 @@
                                               sizes: 'auto, 400px'
                                             %}
                                           {% endif %}
-                                          {% render 'menu-drawer-thumb', link: grandchildlink %}
                                           <span class="menu-drawer__menu-item-text wrap-text">
                                             {{- grandchildlink.title | escape -}}
                                           </span>
@@ -569,26 +535,6 @@
                             </ul>
                           </div>
                         {% endif %}
-                        {% comment %}
-                          Promo-tile strip target: `content_for 'block'` isn't available in this
-                          snippet (a hard Liquid syntax error - confirmed empirically), and
-                          calling it a second time from the mobile variant of
-                          blocks/_header-menu.liquid to get here another way turned out to be
-                          unsafe too (Shopify renders the *same* static `_mega-menu-panel` block
-                          content_for'd a second time as a stray, always-visible duplicate
-                          outside its normal hover-gated wrapper - confirmed empirically by
-                          inspecting the live DOM at 1440px). So this panel's promo strip (if it
-                          has one) is rendered once, only from the desktop panel's own existing
-                          content_for call (blocks/_mega-menu-panel.liquid), into an inert
-                          `<script type="text/plain" data-ft-drawer-promo-for="...">` tag;
-                          assets/custom.js fills this empty target from that text on page load
-                          (and again on any later header re-render), matched by the link handle
-                          below.
-                        {% endcomment %}
-                        <div
-                          class="ft-drawer-promo-target"
-                          data-ft-drawer-promo-target="{{ link.handle }}"
-                        ></div>
                       </div>
                     </div>
                   </details>
@@ -609,6 +555,37 @@
                 {%- endif -%}
               </li>
             {%- endfor -%}
+          {% endif %}
+          {%- comment -%}
+            Account row: last item of the top-level list, standing in for the header's own
+            account icon (hidden below 990px via assets/custom.css - the drawer replaces the
+            full header nav there). Plain link to routes.account_url (redirects to login when
+            signed out, same destination the header's own account control leads to), same
+            row/font treatment as any other top-level row (no chevron/submenu) but no bottom
+            hairline of its own - `menu-drawer__list-item--account` overrides it in
+            assets/custom.css so the divider above it (Wholesale, or whichever link is last)
+            stays as the visual end of the list.
+          {%- endcomment -%}
+          {% if shop.customer_accounts_enabled %}
+            <li
+              style="--menu-drawer-animation-index: {{ linklist.links.size | plus: 1 }};"
+              class="menu-drawer__list-item--account{% if block_settings.drawer_accordion %} menu-drawer__list-item--deep{% else %} menu-drawer__list-item--flat{% endif %}{% if block_settings.drawer_dividers %} menu-drawer__list-item--divider{% endif %}"
+            >
+              <a
+                href="{{ routes.account_url }}"
+                class="menu-drawer__menu-item menu-drawer__menu-item--mainlist menu-drawer__animated-element"
+              >
+                <span class="menu-drawer__account-row">
+                  <span
+                    class="svg-wrapper menu-drawer__account-icon"
+                    aria-hidden="true"
+                  >
+                    {{- 'icon-account.svg' | inline_asset_content -}}
+                  </span>
+                  <span class="menu-drawer__menu-item-text wrap-text">{{ 'content.account_title' | t }}</span>
+                </span>
+              </a>
+            </li>
           {% endif %}
         </ul>
       </nav>

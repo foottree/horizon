@@ -165,6 +165,46 @@
       "default": "1rem"
     },
     {
+      "type": "checkbox",
+      "id": "enable_mobile_size",
+      "label": "Enable mobile custom font size",
+      "default": false,
+      "info": "optional"
+    },
+    {
+      "type": "select",
+      "id": "mobile_font_size",
+      "label": "Mobile custom font size",
+      "options": [
+        {
+          "value": "",
+          "label": "t:options.default"
+        },
+        {
+          "value": "0.625rem",
+          "label": "10px"
+        },
+        {
+          "value": "0.75rem",
+          "label": "12px"
+        },
+        {
+          "value": "0.875rem",
+          "label": "14px"
+        },
+        {
+          "value": "1rem",
+          "label": "16px"
+        },
+        {
+          "value": "1.125rem",
+          "label": "18px"
+        }
+      ],
+      "default": "",
+      "visible_if": "{{ block.settings.enable_mobile_size == true }}"
+    },
+    {
       "type": "select",
       "id": "weight",
       "label": "t:settings.weight",

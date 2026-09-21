@@ -159,9 +159,7 @@
     "product_sku": "SKU",
     "layered_slideshow": "Diaporama superposé",
     "cart_drawer": "Panier coulissant",
-    "disclosures": "Divulgations",
-    "mega_menu_panel": "Mega menu panel",
-    "mega_menu_promo": "Promo tile"
+    "disclosures": "Divulgations"
   },
   "settings": {
     "autoplay": "Lecture automatique",
@@ -581,15 +579,10 @@
     "grid_section_carousel_match_collection": "Match Collection list (section grid)",
     "grid_section_carousel_match_collection_info": "Carousel uses the same section grid as Collection list.",
     "submenu_style": "Submenu style",
-    "menu_item_title": "Top-level menu item title",
-    "group_1_menu": "Group 1 menu",
-    "group_2_menu": "Group 2 menu",
-    "shop_all_label": "Shop all button label",
-    "shop_all_url": "Shop all button link",
-    "caption": "Caption",
-    "button_label": "Button label",
     "arrows_placement": "Arrow placement",
-    "custom_class": "Custom CSS class"
+    "custom_class": "Custom CSS class",
+    "submenu_style_exceptions": "Use the other style for",
+    "tile_image_ratio": "Tile image ratio"
   },
   "options": {
     "apple": "Pomme",
@@ -869,11 +862,13 @@
     "progress_bar": "Progress bar",
     "mega_menu": "Mega menu",
     "dropdown": "Dropdown",
-    "tabbed": "Tabbed",
     "beside_slide": "Beside the slide",
     "to_right": "Right",
     "to_left": "Left",
-    "with_pagination": "With pagination"
+    "with_pagination": "With pagination",
+    "portrait_4_5": "Portrait 4:5",
+    "portrait_3_4": "Portrait 3:4",
+    "portrait_2_3": "Portrait 2:3"
   },
   "content": {
     "background_video": "Vidéo de fond",
@@ -948,7 +943,6 @@
     "collection_page": "Page de collection",
     "customer_account": "Compte client",
     "edit_empty_state_collection_in_theme_settings": "Modifier la collection pour état vide dans les [paramètres du thème](/editor?context=theme&category=search)",
-    "grid_layout": "Mise en page en grille",
     "home_page": "Page d’accueil",
     "images": "Images",
     "inverse_logo_info": "Utilisé lorsque l’arrière-plan transparent de l’en-tête est défini sur Inverse",
@@ -1001,8 +995,7 @@
     "gift_card_products": "Produits de carte-cadeau",
     "disclosures": "Divulgations",
     "disclosures_metafield_content": "Avertissements de sécurité obligatoires et informations réglementaires pour ce produit.",
-    "page_text_color_contrast_info": "Les sections avec une couleur d’arrière-plan personnalisée utiliseront cette couleur du texte uniquement si le contraste des couleurs est suffisant.",
-    "grid_layout_paragraph": "Only used by the grid style: two left-column menus, a shop-all button, and center columns built from this item's own 2nd/3rd-level menu links."
+    "page_text_color_contrast_info": "Les sections avec une couleur d’arrière-plan personnalisée utiliseront cette couleur du texte uniquement si le contraste des couleurs est suffisant."
   },
   "html_defaults": {
     "share_information_about_your": "<p>Partagez des informations sur votre marque avec vos clients. Décrivez un produit, faites des annonces ou accueillez les clients dans votre boutique.</p>",
@@ -1128,8 +1121,8 @@
     "edit_input_field_in_theme_settings": "Modifier le champ de saisie dans les [paramètres du thème](/editor?context=theme&category=input%20fields)",
     "edit_variants_in_theme_settings": "Modifier le style des variantes dans les [paramètres du thème](/editor?context=theme&category=variant%20pickers)",
     "submenu_style": "Dropdown shows a compact list under the parent link. A third level opens as a flyout beside its row.",
-    "mega_menu_panel_menu_item": "Matched against this top-level menu item's title (case-insensitive). Leave blank to not match any item.",
-    "slide_height_mobile_fit_content": "0 = fit content"
+    "slide_height_mobile_fit_content": "0 = fit content",
+    "submenu_style_exceptions": "Top-level item titles, comma separated, e.g. Find your shoe. Those items get Dropdown when the default is Mega menu, and Mega menu when the default is Dropdown."
   },
   "categories": {
     "basic": "De base",

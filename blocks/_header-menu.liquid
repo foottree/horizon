@@ -65,8 +65,6 @@
   {% else %}
     {% liquid
       assign block_settings = block.settings
-      assign menu_content_type = block_settings.menu_style | default: 'text'
-      assign image_border_radius = block_settings.image_border_radius
 
       render 'contrast-override', background_color: block_settings.background_color, text_color: block_settings.text_color, section_id: block.id
 
@@ -83,49 +81,41 @@
       if parent_background_color.rgb == current_background_color.rgb
         assign background_color_classes = background_color_classes | append: ' background-matches-parent'
       endif
-
-      if block_settings.menu_style == 'featured_collections'
-        assign ratio = block_settings.featured_collections_aspect_ratio
-      elsif block_settings.menu_style == 'featured_products'
-        assign ratio = block_settings.featured_products_aspect_ratio
-      endif
     %}
 
     {% capture children %}
       {% for link in block_settings.menu.links %}
-        {% comment %}
-          Per-top-level-item mega menu panel: a `_mega-menu-panel` block whose `menu_item`
-          setting matches this link's title (case-insensitive) overrides the block-level
-          submenu_style for this one item; unmatched items fall back to it (so e.g.
-          Men/Accessories/SALE keep the plain dropdown/mega style below).
-
-          `content_for 'block'` only renders *static* blocks, and only accepts a literal id
-          (not a variable) - so the match can't be found by looping `block.blocks` and calling
-          content_for with the loop's id (a nested block's own `settings` also read blank
-          outside its own render, so the match can't be tested that way either; see the
-          architecture note in blocks/_mega-menu-panel.liquid). Instead a handful of static
-          panel slots are declared in sections/header-group.json (mega-menu-panel-1..4, room
-          for more top-level items later); every slot is tried, in a fixed literal call, for
-          every top-level link, passing the link under test - each panel only renders real
-          markup when ITS OWN `menu_item` setting matches, so at most one produces output.
-        {% endcomment %}
-        {% capture mega_panel_output %}
-          {% content_for 'block', type: '_mega-menu-panel', id: 'mega-menu-panel-1', link: link %}
-          {% content_for 'block', type: '_mega-menu-panel', id: 'mega-menu-panel-2', link: link %}
-          {% content_for 'block', type: '_mega-menu-panel', id: 'mega-menu-panel-3', link: link %}
-          {% content_for 'block', type: '_mega-menu-panel', id: 'mega-menu-panel-4', link: link %}
-        {% endcapture %}
         {% liquid
-          assign mega_panel_output = mega_panel_output | strip
-          assign has_mega_panel = false
-          if mega_panel_output != blank
-            assign has_mega_panel = true
-          endif
-
           # A third level renders as a flyout beside its parent row, so any depth works here.
+          # `submenu_style_exceptions` lets the merchant flip individual top-level items to the
+          # other desktop style (comma-separated titles, case-insensitive, whitespace trimmed,
+          # matched against link.title) while every other item keeps the block's own
+          # submenu_style. Mobile drawer behaviour (drawer_accordion) is unaffected - it has no
+          # dropdown/mega distinction of its own.
           assign use_dropdown = false
-          if has_mega_panel == false and block_settings.submenu_style == 'dropdown' and link.links != blank
-            assign use_dropdown = true
+          if link.links != blank
+            assign link_title_key = link.title | strip | downcase
+            assign is_style_exception = false
+            if block_settings.submenu_style_exceptions != blank
+              assign submenu_style_exceptions = block_settings.submenu_style_exceptions | split: ','
+              for exception_title in submenu_style_exceptions
+                assign exception_title_key = exception_title | strip | downcase
+                if exception_title_key == link_title_key
+                  assign is_style_exception = true
+                endif
+              endfor
+            endif
+            assign effective_submenu_style = block_settings.submenu_style
+            if is_style_exception
+              if effective_submenu_style == 'dropdown'
+                assign effective_submenu_style = 'mega'
+              else
+                assign effective_submenu_style = 'dropdown'
+              endif
+            endif
+            if effective_submenu_style == 'dropdown'
+              assign use_dropdown = true
+            endif
           endif
         %}
         <li
@@ -179,9 +169,7 @@
                 class="menu-list__submenu-inner"
                 style="{% render 'submenu-font-styles', settings: block_settings %}"
               >
-                {% if has_mega_panel %}
-                  {{ mega_panel_output }}
-                {% elsif use_dropdown %}
+                {% if use_dropdown %}
                   <ul class="dropdown-menu__list" role="list">
                     {%- for child in link.links -%}
                       <li class="dropdown-menu__item{% if child.links != blank %} dropdown-menu__item--has-children{% endif %}">
@@ -229,25 +217,7 @@
                     </li>
                   </ul>
                 {% else %}
-                {% assign list_id = 'MegaMenuList-' | append: forloop.index %}
-                <div class="mega-menu section section--full-width-margin section--{{ section.settings.section_width }}">
-                  <div
-                    class="mega-menu__grid"
-                    data-menu-grid-id="{{ list_id }}"
-                  >
-                    {% render 'mega-menu-list',
-                      parent_link: link,
-                      id: list_id,
-                      section: section,
-                      grid_columns_count: 6,
-                      grid_columns_count_tablet: 4,
-                      grid_columns_count_collection_images: 8,
-                      menu_content_type: menu_content_type,
-                      content_aspect_ratio: ratio,
-                      image_border_radius: image_border_radius
-                    %}
-                  </div>
-                </div>
+                  {% render 'menu-tiles', link: link, tile_image_ratio: block_settings.tile_image_ratio %}
                 {% endif %}
               </div>
             </div>
@@ -833,12 +803,23 @@
      closed the open panel; coming back reopened it, which read as the header flickering.
      The strip below the item is already bridged by the panel itself, so only the top needs
      covering. This pseudo-element sits entirely above the trigger, so it never overlaps the
-     label or swallows a click, and being absolute it adds no layout. */
-  .menu-list--dropdown .menu-list__list-item--dropdown > .menu-list__trigger {
+     label or swallows a click, and being absolute it adds no layout.
+
+     Excludes the "Find your shoe" trigger (assets/custom.css's own bordered pill box, with its
+     own search-icon ::before at the SAME element): that trigger isn't flush against the row
+     edges the same way stock dropdown triggers are (it has its own margin-block), so it doesn't
+     need this bridge - and a second ::before rule here would otherwise win on specificity
+     (3 classes vs. the pill rule's 2) and steal the icon's pseudo-element slot, rendering the
+     search glyph as a stray strip above the box instead of inside it. */
+  .menu-list--dropdown
+    .menu-list__list-item--dropdown
+    > .menu-list__trigger:not(:has(> a[href$="/pages/size-width-guide"])) {
     position: relative;
   }
 
-  .menu-list--dropdown .menu-list__list-item--dropdown > .menu-list__trigger::before {
+  .menu-list--dropdown
+    .menu-list__list-item--dropdown
+    > .menu-list__trigger:not(:has(> a[href$="/pages/size-width-guide"]))::before {
     content: '';
     position: absolute;
     inset-inline: 0;
@@ -1093,11 +1074,6 @@
 {
   "name": "t:names.menu",
   "tag": null,
-  "blocks": [
-    {
-      "type": "_mega-menu-panel"
-    }
-  ],
   "settings": [
     {
       "type": "link_list",
@@ -1245,6 +1221,36 @@
         }
       ],
       "default": "mega"
+    },
+    {
+      "type": "text",
+      "id": "submenu_style_exceptions",
+      "label": "t:settings.submenu_style_exceptions",
+      "info": "t:info.submenu_style_exceptions"
+    },
+    {
+      "type": "select",
+      "id": "tile_image_ratio",
+      "label": "t:settings.tile_image_ratio",
+      "options": [
+        {
+          "value": "1 / 1",
+          "label": "t:options.square"
+        },
+        {
+          "value": "4 / 5",
+          "label": "t:options.portrait_4_5"
+        },
+        {
+          "value": "3 / 4",
+          "label": "t:options.portrait_3_4"
+        },
+        {
+          "value": "2 / 3",
+          "label": "t:options.portrait_2_3"
+        }
+      ],
+      "default": "3 / 4"
     },
     {
       "type": "select",

@@ -76,7 +76,6 @@
     "local_pickup_description": "Show nearby pickup locations when online store local pickup is set up. [Learn more](https://help.shopify.com/en/manual/fulfillment/setup/delivery-methods/pickup-in-store)",
     "fonts": "Fonts",
     "grid": "Grid",
-    "grid_layout": "Grid layout",
     "heading": "Heading",
     "heading_size": "Heading size",
     "utilities": "Utilities",
@@ -163,8 +162,7 @@
     "disclosures": "Disclosures",
     "disclosures_metafield_content": "Required safety warnings and regulatory disclosures for this product.",
     "app_required_for_ratings": "An app is required for product ratings. [Learn more](https://help.shopify.com/manual/apps)",
-    "navigation": "Navigation",
-    "grid_layout_paragraph": "Only used by the grid style: two left-column menus, a shop-all button, and center columns built from this item's own 2nd/3rd-level menu links."
+    "navigation": "Navigation"
   },
   "html_defaults": {
     "join_our_email_list": "<h2>Join our email list</h2>",
@@ -252,7 +250,7 @@
     "pills_usage": "Used for applied filters, discount codes, and search suggestions",
     "media_type_info": "Features are populated from your menu links",
     "submenu_style": "Dropdown shows a compact list under the parent link. A third level opens as a flyout beside its row.",
-    "mega_menu_panel_menu_item": "Matched against this top-level menu item's title (case-insensitive). Leave blank to not match any item.",
+    "submenu_style_exceptions": "Top-level item titles, comma separated, e.g. Find your shoe. Those items get Dropdown when the default is Mega menu, and Mega menu when the default is Dropdown.",
     "slide_height_mobile_fit_content": "0 = fit content"
   },
   "names": {
@@ -422,9 +420,7 @@
     "view_all_button": "View all",
     "disclosures": "Disclosures",
     "pills": "Pills",
-    "comparison_slider": "Comparison slider",
-    "mega_menu_panel": "Mega menu panel",
-    "mega_menu_promo": "Promo tile"
+    "comparison_slider": "Comparison slider"
   },
   "options": {
     "progress_bar": "Progress bar",
@@ -635,6 +631,9 @@
     "plant": "Plant",
     "plus": "Plus",
     "portrait": "Portrait",
+    "portrait_4_5": "Portrait 4:5",
+    "portrait_3_4": "Portrait 3:4",
+    "portrait_2_3": "Portrait 2:3",
     "pretty": "Pretty",
     "preview": "Preview",
     "price": "Price",
@@ -744,14 +743,15 @@
     "youtube": "YouTube",
     "with_hints": "With hints",
     "with_pagination": "With pagination",
-    "below_media": "Below media",
-    "tabbed": "Tabbed"
+    "below_media": "Below media"
   },
   "settings": {
     "grid_section_card_layout": "Card layout",
     "grid_section_carousel_match_collection": "Match Collection list (section grid)",
     "grid_section_carousel_match_collection_info": "Carousel uses the same section grid as Collection list.",
     "submenu_style": "Submenu style",
+    "submenu_style_exceptions": "Use the other style for",
+    "tile_image_ratio": "Tile image ratio",
     "accordion": "Accordion",
     "account": "Account",
     "actions_display_style": "Menu style",
@@ -1204,14 +1204,7 @@
     "top_row_background": "Top row background",
     "top_row_text": "Top row text",
     "bottom_row_background": "Bottom row background",
-    "bottom_row_text": "Bottom row text",
-    "menu_item_title": "Top-level menu item title",
-    "group_1_menu": "Group 1 menu",
-    "group_2_menu": "Group 2 menu",
-    "shop_all_label": "Shop all button label",
-    "shop_all_url": "Shop all button link",
-    "caption": "Caption",
-    "button_label": "Button label"
+    "bottom_row_text": "Bottom row text"
   },
   "text_defaults": {
     "accordion_heading": "Accordion heading",

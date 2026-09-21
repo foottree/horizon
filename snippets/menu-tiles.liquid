@@ -1,0 +1,71 @@
+{%- doc -%}
+  Renders the desktop tile-grid submenu panel for one top-level menu item (header-menu block's
+  submenu_style: "mega"): a single flex row of image tiles, centred and wrapping - an "All
+  <parent title>" tile (using the parent link's own image), only when the parent link itself
+  points to a collection, followed by one tile per child link. Replaces the old tabbed/grid
+  mega-menu panel styles with the sunnystep.com-style tile grid; see the "Header mega menu:
+  tile grid" CSS block in assets/custom.css for the panel shell (full-width, anchored to the
+  header row's own bottom edge, white background, fade+rise reveal) and tile styling this
+  fills. snippets/menu-tile-image.liquid supplies each tile's image (or nothing, falling back
+  to this file's own gradient placeholder box) and is shared with the mobile drawer's matching
+  grid (snippets/menu-drawer-tile-grid.liquid).
+
+  @param {object} link - The top-level menu link being rendered (e.g. "Women").
+  @param {string} [tile_image_ratio] - CSS aspect-ratio value for each tile's image box
+    (header-menu block setting `tile_image_ratio`).
+
+  @example
+  {% render 'menu-tiles', link: link, tile_image_ratio: block_settings.tile_image_ratio %}
+{%- enddoc -%}
+
+<div
+  class="ft-tiles"
+  style="--tile-image-ratio: {{ tile_image_ratio | default: '3 / 4' }};"
+>
+  {%- if link.type == 'collection_link' -%}
+    <a
+      href="{{ link.url }}"
+      class="ft-tiles__tile"
+    >
+      <span class="ft-tile-image">
+        {% render 'menu-tile-image', link: link %}
+      </span>
+      <span
+        class="ft-tiles__scrim"
+        aria-hidden="true"
+      ></span>
+      <span class="ft-tiles__label">
+        {{- 'actions.all_category' | t: title: link.title -}}
+        <span
+          class="svg-wrapper ft-tiles__arrow"
+          aria-hidden="true"
+        >
+          {{- 'icon-arrow.svg' | inline_asset_content -}}
+        </span>
+      </span>
+    </a>
+  {%- endif -%}
+  {%- for child in link.links -%}
+    <a
+      href="{{ child.url }}"
+      class="ft-tiles__tile"
+    >
+      <span class="ft-tile-image">
+        {% render 'menu-tile-image', link: child %}
+      </span>
+      <span
+        class="ft-tiles__scrim"
+        aria-hidden="true"
+      ></span>
+      <span class="ft-tiles__label">
+        {{- child.title -}}
+        <span
+          class="svg-wrapper ft-tiles__arrow"
+          aria-hidden="true"
+        >
+          {{- 'icon-arrow.svg' | inline_asset_content -}}
+        </span>
+      </span>
+    </a>
+  {%- endfor -%}
+</div>

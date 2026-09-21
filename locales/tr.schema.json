@@ -159,9 +159,7 @@
     "product_sku": "SKU",
     "layered_slideshow": "Katmanlı slayt gösterisi",
     "cart_drawer": "Sepet çekmecesi",
-    "disclosures": "Bildirimler",
-    "mega_menu_panel": "Mega menu panel",
-    "mega_menu_promo": "Promo tile"
+    "disclosures": "Bildirimler"
   },
   "settings": {
     "autoplay": "Otomatik oynatma",
@@ -581,15 +579,10 @@
     "grid_section_carousel_match_collection": "Match Collection list (section grid)",
     "grid_section_carousel_match_collection_info": "Carousel uses the same section grid as Collection list.",
     "submenu_style": "Submenu style",
-    "menu_item_title": "Top-level menu item title",
-    "group_1_menu": "Group 1 menu",
-    "group_2_menu": "Group 2 menu",
-    "shop_all_label": "Shop all button label",
-    "shop_all_url": "Shop all button link",
-    "caption": "Caption",
-    "button_label": "Button label",
     "arrows_placement": "Arrow placement",
-    "custom_class": "Custom CSS class"
+    "custom_class": "Custom CSS class",
+    "submenu_style_exceptions": "Use the other style for",
+    "tile_image_ratio": "Tile image ratio"
   },
   "options": {
     "apple": "Apple",
@@ -869,11 +862,13 @@
     "progress_bar": "Progress bar",
     "mega_menu": "Mega menu",
     "dropdown": "Dropdown",
-    "tabbed": "Tabbed",
     "beside_slide": "Beside the slide",
     "to_right": "Right",
     "to_left": "Left",
-    "with_pagination": "With pagination"
+    "with_pagination": "With pagination",
+    "portrait_4_5": "Portrait 4:5",
+    "portrait_3_4": "Portrait 3:4",
+    "portrait_2_3": "Portrait 2:3"
   },
   "content": {
     "background_video": "Arka plan videosu",
@@ -957,7 +952,6 @@
     "thumbnails": "Küçük resimler",
     "visibility": "Görünürlük",
     "visible_if_collection_has_more_products": "Koleksiyonda gösterilenden daha fazla ürün varsa görünür",
-    "grid_layout": "Izgara düzeni",
     "app_required_for_ratings": "Ürün derecelendirmeleri için bir uygulama gerekir. [Daha fazla bilgi edinin](https://help.shopify.com/manual/apps)",
     "icon": "Simge",
     "manage_store_name": "[Mağaza adını yönetin](/admin/settings/general?edit=storeName)",
@@ -1001,8 +995,7 @@
     "gift_card_products": "Hediye kartı ürünleri",
     "disclosures": "Bildirimler",
     "disclosures_metafield_content": "Bu ürün için zorunlu güvenlik uyarıları ve yasal bildirimler.",
-    "page_text_color_contrast_info": "Özel arka plan rengine sahip bölümler, yalnızca yeterli renk kontrastı olduğunda bu metin rengini kullanır.",
-    "grid_layout_paragraph": "Only used by the grid style: two left-column menus, a shop-all button, and center columns built from this item's own 2nd/3rd-level menu links."
+    "page_text_color_contrast_info": "Özel arka plan rengine sahip bölümler, yalnızca yeterli renk kontrastı olduğunda bu metin rengini kullanır."
   },
   "html_defaults": {
     "share_information_about_your": "<p>Markanızla ilgili bilgileri müşterilerinizle paylaşın. Bir ürünü açıklayın, duyurular yapın veya mağazanıza gelen müşterileri karşılayın.</p>",
@@ -1128,8 +1121,8 @@
     "edit_input_field_in_theme_settings": "[Tema ayarlarında](/editor?context=theme&category=input%20fields) giriş alanını düzenle",
     "edit_variants_in_theme_settings": "Varyasyon stilini [tema ayarlarından](/editor?context=theme&category=variant%20pickers) düzenleyin",
     "submenu_style": "Dropdown shows a compact list under the parent link. A third level opens as a flyout beside its row.",
-    "mega_menu_panel_menu_item": "Matched against this top-level menu item's title (case-insensitive). Leave blank to not match any item.",
-    "slide_height_mobile_fit_content": "0 = fit content"
+    "slide_height_mobile_fit_content": "0 = fit content",
+    "submenu_style_exceptions": "Top-level item titles, comma separated, e.g. Find your shoe. Those items get Dropdown when the default is Mega menu, and Mega menu when the default is Dropdown."
   },
   "categories": {
     "product_list": "Öne çıkan koleksiyon",

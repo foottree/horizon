@@ -1,0 +1,31 @@
+{%- doc -%}
+  Renders a mega-menu tile's image, or nothing when the linked object has neither a
+  `custom.collection_card_image` metafield image nor a featured image. Callers wrap the
+  (possibly empty) output in their own box, which carries a gradient placeholder background
+  that shows through whenever this renders nothing - see `.ft-tile-image` in assets/custom.css.
+  Shared by the desktop tile-grid submenu (snippets/menu-tiles.liquid) and the mobile drawer's
+  matching 2-column grid (snippets/menu-drawer-tile-grid.liquid).
+
+  @param {object} link - The menu link whose linked object supplies the image.
+  @param {string} [class] - Class for the <img> tag. Defaults to the shared cover-fit class.
+
+  @example
+  {% render 'menu-tile-image', link: link %}
+{%- enddoc -%}
+
+{% liquid
+  assign tile_image = link.object.metafields.custom.collection_card_image.value | default: link.object.featured_image
+  assign img_class = class | default: 'ft-tile-image__img'
+%}
+{%- if tile_image -%}
+  {{
+    tile_image
+    | image_url: width: 516
+    | image_tag:
+      loading: 'lazy',
+      widths: '200, 344, 400, 516',
+      sizes: '172px',
+      alt: link.title,
+      class: img_class
+  }}
+{%- endif -%}

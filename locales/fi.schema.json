@@ -159,9 +159,7 @@
     "product_sku": "SKU-koodi",
     "layered_slideshow": "Kerroksittainen diaesitys",
     "cart_drawer": "Veto-ostoskori",
-    "disclosures": "Ilmoitukset",
-    "mega_menu_panel": "Mega menu panel",
-    "mega_menu_promo": "Promo tile"
+    "disclosures": "Ilmoitukset"
   },
   "settings": {
     "alignment": "Tasaus",
@@ -581,15 +579,10 @@
     "grid_section_carousel_match_collection": "Match Collection list (section grid)",
     "grid_section_carousel_match_collection_info": "Carousel uses the same section grid as Collection list.",
     "submenu_style": "Submenu style",
-    "menu_item_title": "Top-level menu item title",
-    "group_1_menu": "Group 1 menu",
-    "group_2_menu": "Group 2 menu",
-    "shop_all_label": "Shop all button label",
-    "shop_all_url": "Shop all button link",
-    "caption": "Caption",
-    "button_label": "Button label",
     "arrows_placement": "Arrow placement",
-    "custom_class": "Custom CSS class"
+    "custom_class": "Custom CSS class",
+    "submenu_style_exceptions": "Use the other style for",
+    "tile_image_ratio": "Tile image ratio"
   },
   "options": {
     "apple": "Omena",
@@ -869,11 +862,13 @@
     "progress_bar": "Progress bar",
     "mega_menu": "Mega menu",
     "dropdown": "Dropdown",
-    "tabbed": "Tabbed",
     "beside_slide": "Beside the slide",
     "to_right": "Right",
     "to_left": "Left",
-    "with_pagination": "With pagination"
+    "with_pagination": "With pagination",
+    "portrait_4_5": "Portrait 4:5",
+    "portrait_3_4": "Portrait 3:4",
+    "portrait_2_3": "Portrait 2:3"
   },
   "content": {
     "advanced": "Lisäasetukset",
@@ -950,7 +945,6 @@
     "collection_page": "Kokoelmasivu",
     "customer_account": "Asiakastili",
     "edit_empty_state_collection_in_theme_settings": "Muokkaa tyhjän tilan kokoelmaa [teeman asetuksissa](/editor?context=theme&category=search)",
-    "grid_layout": "Ruudukkoasettelu",
     "home_page": "Etusivu",
     "inverse_logo_info": "Käytetään, kun läpinäkyvän ylätunnisteen taustaksi on asetettu Käänteinen",
     "manage_customer_accounts": "[Hallinnoi näkyvyyttä](/admin/settings/customer_accounts) asiakastilien asetuksissa. Vanhoja tilejä ei tueta.",
@@ -1001,8 +995,7 @@
     "gift_card_products": "Lahjakorttituotteet",
     "disclosures": "Ilmoitukset",
     "disclosures_metafield_content": "Tämän tuotteen pakolliset turvallisuusvaroitukset ja säädösten edellyttämät ilmoitukset.",
-    "page_text_color_contrast_info": "Osiot, joissa on mukautettu taustaväri, käyttävät tätä tekstin väriä vain, kun värikontrasti on riittävä.",
-    "grid_layout_paragraph": "Only used by the grid style: two left-column menus, a shop-all button, and center columns built from this item's own 2nd/3rd-level menu links."
+    "page_text_color_contrast_info": "Osiot, joissa on mukautettu taustaväri, käyttävät tätä tekstin väriä vain, kun värikontrasti on riittävä."
   },
   "html_defaults": {
     "share_information_about_your": "<p>Jaa tietoja brändistäsi asiakkaillesi. Kuvaile tuotetta, tee ilmoituksia tai toivota asiakkaat tervetulleiksi kauppaasi.</p>",
@@ -1128,8 +1121,8 @@
     "edit_input_field_in_theme_settings": "Muokkaa syöttökenttää [teeman asetuksissa](/editor?context=theme&category=input%20fields)",
     "edit_variants_in_theme_settings": "Muokkaa versioiden tyyliä [teeman asetuksissa](/editor?context=theme&category=variant%20pickers)",
     "submenu_style": "Dropdown shows a compact list under the parent link. A third level opens as a flyout beside its row.",
-    "mega_menu_panel_menu_item": "Matched against this top-level menu item's title (case-insensitive). Leave blank to not match any item.",
-    "slide_height_mobile_fit_content": "0 = fit content"
+    "slide_height_mobile_fit_content": "0 = fit content",
+    "submenu_style_exceptions": "Top-level item titles, comma separated, e.g. Find your shoe. Those items get Dropdown when the default is Mega menu, and Mega menu when the default is Dropdown."
   },
   "categories": {
     "basic": "Perusosat",
