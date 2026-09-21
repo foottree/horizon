@@ -14,6 +14,7 @@
 <a
   href="{{ block.settings.url | default: '#' }}"
   class="ft-grid__promo"
+  style="--promo-aspect-ratio: {{ block.settings.aspect_ratio | default: '3 / 2' }};"
   {{ block.shopify_attributes }}
 >
   {% if block.settings.image %}
@@ -61,6 +62,17 @@
       "id": "button_label",
       "label": "t:settings.button_label",
       "default": "t:text_defaults.button_label"
+    },
+    {
+      "type": "select",
+      "id": "aspect_ratio",
+      "label": "t:settings.aspect_ratio",
+      "options": [
+        { "value": "3 / 2", "label": "t:options.landscape" },
+        { "value": "1 / 1", "label": "t:options.square" },
+        { "value": "4 / 5", "label": "t:options.portrait" }
+      ],
+      "default": "3 / 2"
     },
     {
       "type": "url",

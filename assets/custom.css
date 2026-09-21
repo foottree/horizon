@@ -913,7 +913,7 @@
   position: relative;
   display: block;
   width: 100%;
-  aspect-ratio: 3 / 2.5;
+  aspect-ratio: var(--promo-aspect-ratio, 3 / 2); /* per-tile "Aspect ratio" setting; 3:2 keeps two stacked tiles from making the panel scroll */
   background-color: #faf7f0; /* settings.color_palette.color5, placeholder when no image */
   overflow: hidden;
   text-decoration: none;
