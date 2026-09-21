@@ -370,6 +370,7 @@
                                       sizes: 'auto, 400px'
                                     %}
                                   {% endif %}
+                                  {% render 'menu-drawer-thumb', link: childlink %}
                                   <span class="menu-drawer__menu-item-text wrap-text">
                                     {{- childlink.title | escape -}}
                                   </span>
@@ -437,6 +438,7 @@
                                                   sizes: 'auto, 400px'
                                                 %}
                                               {% endif %}
+                                              {% render 'menu-drawer-thumb', link: grandchildlink %}
                                               <span class="menu-drawer__menu-item-text wrap-text">
                                                 {{- grandchildlink.title | escape -}}
                                               </span>
@@ -502,6 +504,7 @@
                                               sizes: 'auto, 400px'
                                             %}
                                           {% endif %}
+                                          {% render 'menu-drawer-thumb', link: grandchildlink %}
                                           <span class="menu-drawer__menu-item-text wrap-text">
                                             {{- grandchildlink.title | escape -}}
                                           </span>
@@ -566,6 +569,26 @@
                             </ul>
                           </div>
                         {% endif %}
+                        {% comment %}
+                          Promo-tile strip target: `content_for 'block'` isn't available in this
+                          snippet (a hard Liquid syntax error - confirmed empirically), and
+                          calling it a second time from the mobile variant of
+                          blocks/_header-menu.liquid to get here another way turned out to be
+                          unsafe too (Shopify renders the *same* static `_mega-menu-panel` block
+                          content_for'd a second time as a stray, always-visible duplicate
+                          outside its normal hover-gated wrapper - confirmed empirically by
+                          inspecting the live DOM at 1440px). So this panel's promo strip (if it
+                          has one) is rendered once, only from the desktop panel's own existing
+                          content_for call (blocks/_mega-menu-panel.liquid), into an inert
+                          `<script type="text/plain" data-ft-drawer-promo-for="...">` tag;
+                          assets/custom.js fills this empty target from that text on page load
+                          (and again on any later header re-render), matched by the link handle
+                          below.
+                        {% endcomment %}
+                        <div
+                          class="ft-drawer-promo-target"
+                          data-ft-drawer-promo-target="{{ link.handle }}"
+                        ></div>
                       </div>
                     </div>
                   </details>

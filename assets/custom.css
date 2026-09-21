@@ -681,11 +681,11 @@
   width: 176px;
 }
 
-/* blocks/_mega-menu-promo.liquid always wraps its tile in this li (content_for 'blocks' can't
+/* blocks/_mega-menu-promo.liquid always wraps its tile in this div (content_for 'blocks' can't
    pass a "drawer" flag to tell it apart from the desktop render - see the doc comment there);
    a tile with neither an image nor a caption has nothing to show here, so hide the whole card
    rather than leave an empty one in the strip. */
-#header-component .menu-drawer__featured-content-list .ft-grid__promo-li:not(:has(.ft-grid__promo-image, .ft-grid__promo-caption)) {
+#header-component .menu-drawer__featured-content-list .ft-grid__promo-card:not(:has(.ft-grid__promo-image, .ft-grid__promo-caption)) {
   display: none;
 }
 
@@ -736,10 +736,10 @@
   text-shadow: none;
 }
 
-/* Desktop: the li exists only so _mega-menu-promo.liquid's one template can serve both
+/* Desktop: the div exists only so _mega-menu-promo.liquid's one template can serve both
    contexts; unwrap it back to a plain run of .ft-grid__promo anchors so .ft-grid__right's flex
    layout (snippets/mega-menu-grid.liquid) is exactly what it was before. */
-#header-component .ft-grid__right .ft-grid__promo-li {
+#header-component .ft-grid__right .ft-grid__promo-card {
   display: contents;
 }
 

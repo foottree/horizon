@@ -28,13 +28,33 @@
   endif
 %}
 {% if show_panel %}
+  {% capture promo_tiles %}
+    {% content_for 'blocks' %}
+  {% endcapture %}
+  {% comment %}
+    The mobile drawer's promo strip (if this panel has any `_mega-menu-promo` tiles) is built
+    right here, in the same single render as the desktop panel - NOT via a second content_for
+    'block' call for this same static id from blocks/_header-menu.liquid's mobile variant.
+    That was tried first and reproduces reliably: Shopify renders a static block content_for'd
+    a second time as a stray, always-visible element outside its normal hover-gated wrapper
+    (confirmed by inspecting the live DOM at 1440px - two extra copies of the strip land
+    directly under `.overflow-menu`, the "More" overflow component). Stashed here instead, in
+    an inert `<script type="text/plain">` (never parsed/executed/rendered by the browser, so it
+    costs the desktop panel nothing and needs no HTML-escaping); assets/custom.js reads its
+    text and fills in the matching drawer panel's empty target (snippets/header-drawer.liquid's
+    `[data-ft-drawer-promo-target]`, matched by link handle) on page load. See
+    snippets/mega-menu-drawer-promos.liquid for the strip markup itself.
+  {% endcomment %}
+  {% capture drawer_promo_html %}
+    {% render 'mega-menu-drawer-promos', promo_tiles: promo_tiles %}
+  {% endcapture %}
+  {% if drawer_promo_html != blank %}
+    <script type="text/plain" data-ft-drawer-promo-for="{{ link.handle }}">{{ drawer_promo_html }}</script>
+  {% endif %}
   {% case block.settings.style %}
     {% when 'tabbed' %}
       {% render 'mega-menu-tabbed', link: link, panel: block %}
     {% when 'grid' %}
-      {% capture promo_tiles %}
-        {% content_for 'blocks' %}
-      {% endcapture %}
       {% render 'mega-menu-grid', link: link, panel: block, promo_tiles: promo_tiles %}
   {% endcase %}
 {% endif %}
