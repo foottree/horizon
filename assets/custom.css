@@ -130,8 +130,21 @@
      .menu-list__trigger wrapper or any nested submenu title) and tightened
      just enough, together with the 24px menu offset above, that all 7 items
      fit without collapsing into Horizon's "More" overflow item at 1440px. */
-  .header-menu .menu-list > .overflow-menu > .menu-list__list-item > .menu-list__link > .menu-list__link-title {
-    padding-inline: 8px;
+  /* One visual gap between every top-level item (Figma: 26px between labels). Items with a
+     submenu wrap their link in .menu-list__trigger, so both chains are listed; the
+     "Find your shoe" box has no label padding (its border is the visible edge) and takes
+     the same half-gap as a margin instead. */
+  #header-component .header-menu {
+    --ft-menu-gap: 20px;
+  }
+
+  #header-component .menu-list > .overflow-menu > .menu-list__list-item > .menu-list__link > .menu-list__link-title,
+  #header-component .menu-list > .overflow-menu > .menu-list__list-item > .menu-list__trigger > .menu-list__link > .menu-list__link-title {
+    padding-inline: calc(var(--ft-menu-gap) / 2);
+  }
+
+  #header-component .menu-list__trigger:has(> a[href$="/pages/size-width-guide"]) {
+    margin-inline-start: calc(var(--ft-menu-gap) / 2);
   }
 
   .header-menu .menu-list__link:hover,
@@ -583,6 +596,11 @@
    links; lift to 18px so the hierarchy reads top-down */
 #header-component .menu-drawer__submenu .menu-drawer__menu-item--parent {
   font-size: var(--font-size--lg);
+}
+
+/* top-level rows at the desktop menu size (stock uses the 28px 2xl token on phones) */
+#header-component .menu-drawer {
+  --menu-top-level-font-size: var(--font-size--xl);
 }
 
 /* the header burger turns into the X while open, so the drawer needs no close button of its own */
