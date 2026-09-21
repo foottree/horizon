@@ -17,7 +17,9 @@
   let raf = null;
   const update = () => {
     raf = null;
-    const bottom = Math.max(0, Math.round(header.getBoundingClientRect().bottom));
+    // exact edge, not rounded: a fraction of a pixel of overlap lets the dimming backdrop
+    // darken the header's bottom border on 2x/3x phone screens
+    const bottom = Math.max(0, Number(header.getBoundingClientRect().bottom.toFixed(2)));
     details.style.setProperty('--ft-drawer-top', `${bottom}px`);
   };
   const schedule = () => {
@@ -79,4 +81,36 @@
 
   document.addEventListener('pointerover', onRailEnter, true);
   document.addEventListener('focusin', onRailEnter, true);
+})();
+
+/*
+ * Mobile drawer promo strip: blocks/_mega-menu-panel.liquid renders each top-level item's
+ * matched-panel promo tiles into an inert `<script type="text/plain"
+ * data-ft-drawer-promo-for="{handle}">` alongside the DESKTOP panel markup (its only
+ * content_for 'block' call - a second call for the mobile drawer reproducibly renders
+ * Shopify's static block as a stray, always-visible duplicate elsewhere in the header, so the
+ * drawer can't fetch its own copy the same way). Fill in each matching drawer panel's empty
+ * target (snippets/header-drawer.liquid's `[data-ft-drawer-promo-target]`) from that text.
+ *
+ * The header menu's content can arrive (or be replaced) after this script's first pass - see
+ * the "Section Rendering API" comment on the tabbed-rail delegation above - so a single
+ * one-time scan misses it if the targets/scripts aren't in the DOM yet. A MutationObserver
+ * re-runs the fill whenever the header subtree changes, not just once at load.
+ */
+(() => {
+  const header = document.getElementById('header-component');
+  if (!header) return;
+
+  const fillDrawerPromos = () => {
+    document.querySelectorAll('script[type="text/plain"][data-ft-drawer-promo-for]').forEach((node) => {
+      const handle = node.dataset.ftDrawerPromoFor;
+      if (!handle) return;
+      const target = document.querySelector(`[data-ft-drawer-promo-target="${CSS.escape(handle)}"]`);
+      if (!target || target.childElementCount > 0) return;
+      target.innerHTML = node.textContent;
+    });
+  };
+
+  fillDrawerPromos();
+  new MutationObserver(fillDrawerPromos).observe(header, { childList: true, subtree: true });
 })();
