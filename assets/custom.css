@@ -138,8 +138,10 @@
     --ft-menu-gap: 20px;
   }
 
+  /* The "Find your shoe" trigger is excluded: its box carries the half-gap as a margin (below)
+     and its own rule zeroes the title padding so the search icon sits tight to the label. */
   #header-component .menu-list > .overflow-menu > .menu-list__list-item > .menu-list__link > .menu-list__link-title,
-  #header-component .menu-list > .overflow-menu > .menu-list__list-item > .menu-list__trigger > .menu-list__link > .menu-list__link-title {
+  #header-component .menu-list > .overflow-menu > .menu-list__list-item > .menu-list__trigger:not(:has(> a[href$="/pages/size-width-guide"])) > .menu-list__link > .menu-list__link-title {
     padding-inline: calc(var(--ft-menu-gap) / 2);
   }
 
@@ -807,19 +809,19 @@
    to any non-dropdown top-level item (i.e. every "mega" style item, since a childless item never
    gets `[aria-expanded]` at all) while its tile panel is open. */
 #header-component
-  .menu-list__list-item:not(.menu-list__list-item--dropdown):has([aria-expanded='true'])
+  .menu-list__list-item:not(.menu-list__list-item--dropdown):has(.menu-list__submenu):has([aria-expanded='true'])
   .menu-list__link {
   color: var(--color-primary-button-background);
 }
 
 #header-component
-  .menu-list__list-item:not(.menu-list__list-item--dropdown):has([aria-expanded='true'])
+  .menu-list__list-item:not(.menu-list__list-item--dropdown):has(.menu-list__submenu):has([aria-expanded='true'])
   .menu-list__link-title {
   position: relative;
 }
 
 #header-component
-  .menu-list__list-item:not(.menu-list__list-item--dropdown):has([aria-expanded='true'])
+  .menu-list__list-item:not(.menu-list__list-item--dropdown):has(.menu-list__submenu):has([aria-expanded='true'])
   .menu-list__link-title::after {
   content: '';
   position: absolute;
@@ -827,6 +829,15 @@
   bottom: -32px;
   height: 3px;
   background: var(--color-primary-button-background);
+}
+
+/* Childless top-level items keep Horizon's own wipe-in hover bar (blocks/_header-menu.liquid);
+   it is restyled here to the same 3px olive as the active underline above and pulled in to the
+   label's edges, so a plain link and an open submenu parent underline identically. */
+#header-component .menu-list--dropdown .menu-list__list-item:not(:has(.menu-list__submenu), :has(.button-unstyled))::after {
+  height: 3px;
+  background: var(--color-primary-button-background);
+  inset-inline: calc(var(--ft-menu-gap) / 2);
 }
 
 #header-component .ft-tiles {
