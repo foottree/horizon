@@ -598,9 +598,10 @@
   font-size: var(--font-size--lg);
 }
 
-/* top-level rows at the desktop menu size (stock uses the 28px 2xl token on phones) */
-#header-component .menu-drawer {
-  --menu-top-level-font-size: var(--font-size--xl);
+/* top-level rows at the desktop menu size (stock sets the 28px 2xl token inline on the nav,
+   so the item itself is overridden rather than the variable) */
+#header-component .menu-drawer__menu-item--mainlist {
+  font-size: var(--font-size--xl);
 }
 
 /* the header burger turns into the X while open, so the drawer needs no close button of its own */
