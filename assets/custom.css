@@ -990,6 +990,16 @@
   color: var(--color-foreground);
 }
 
+/* ---- Search modal ----
+   Close button: stock draws the small-glyph icon-close.svg at the xs size (about 8px of ink);
+   the modal now uses the same full-bleed X as the drawer (icon-close-menu.svg) at the small
+   icon size, matching the header X. Doubled class beats the modal stylesheet, which loads later. */
+.predictive-search__close-modal-button.predictive-search__close-modal-button .svg-wrapper,
+.predictive-search__close-modal-button.predictive-search__close-modal-button svg {
+  width: var(--icon-size-sm);
+  height: var(--icon-size-sm);
+}
+
 /* ---- Product badges (Figma "Need chip" on the product card) ----
    16px inset from the photo corner, 4px radius (theme setting), padding 7px 12px, Plus Jakarta
    Sans SemiBold 14 / 1.5. Sold out / Sale keep their theme-setting colours; merchant badges
