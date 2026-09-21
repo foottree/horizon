@@ -604,6 +604,14 @@
   font-size: var(--font-size--xl);
 }
 
+/* no grey tap flash on phones when opening rows, panels or the burger */
+#header-component .menu-drawer a,
+#header-component .menu-drawer summary,
+#header-component .menu-drawer button,
+#header-component .header__icon--menu {
+  -webkit-tap-highlight-color: transparent;
+}
+
 /* the header burger turns into the X while open, so the drawer needs no close button of its own */
 #header-component .menu-drawer__close-button {
   display: none;
