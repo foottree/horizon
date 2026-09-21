@@ -1222,25 +1222,19 @@
     display: none;
   }
 
-  /* No per-slide anchor is available for the shared pagination control (it's a sibling of
-     slideshow-container, not nested in .slide__image-container), so its position is computed
-     from the full-bleed (section_width: full-width) slide's own width via its fixed 4:5 mobile
-     aspect-ratio (see .ft-hero below): image height ~= 100vw * 5/4, dots row collapses to the
-     10px visible dot height (min-height: 0, plus the dots' own negative margin), 16px above
-     that image's bottom edge. */
+  /* the slide is exactly the 4:5 image tall on mobile (see .ft-hero), so the dots row
+     (collapsed to its 10px dots via min-height: 0) sits 16px above the image's bottom edge */
   #MainContent .slideshow-section--controls-inline slideshow-controls[controls-on-media] {
-    top: calc(100vw * 5 / 4 - 26px);
-    bottom: auto;
+    bottom: 16px;
     min-height: 0;
   }
 }
 
 /* ft-hero: section-instance styling for the homepage hero slideshow (templates/index.json
    hero_slideshow, custom_class "ft-hero"). Desktop copy sits on the photo (content_position:
-   on-media) with 100px inline padding set on the _slide block itself; mobile drops the on-media
-   overlay and stacks the copy below a 4:5 image, matching Horizon's own
-   .slideshow--content-below-media pattern (snippets/slideshow-styles.liquid, blocks/_slide.liquid)
-   without switching the section's content_position setting. */
+   on-media), vertically centred, 100px inline padding set on the _slide block itself. Mobile keeps
+   the copy on the photo but pins it to the top and centres it, over a 4:5 image (the slide takes
+   its height from .slide__content's aspect ratio; the image container is absolute and fills it). */
 #MainContent .ft-hero .slide__content .text-block > * {
   max-inline-size: 660px;
 }
@@ -1257,18 +1251,23 @@
     min-height: auto;
   }
 
-  #MainContent .ft-hero .slide__image-container {
-    position: relative;
-    aspect-ratio: 4 / 5;
+  #MainContent .ft-hero .slide__content {
     height: auto;
-    width: 100%;
+    aspect-ratio: 4 / 5;
+    padding: 28px 20px 56px;
   }
 
-  #MainContent .ft-hero .slide__content {
-    position: static;
-    height: auto;
-    background-color: #faf7f0;
-    padding-block: 28px 36px;
-    padding-inline: 20px;
+  /* the panel carries its alignment and gap as inline custom properties, so the properties
+     themselves are set here rather than the variables */
+  #MainContent .ft-hero .slide__content .layout-panel-flex {
+    justify-content: flex-start;
+    align-items: center;
+    gap: 16px;
+  }
+
+  #MainContent .ft-hero .slide__content .text-block,
+  #MainContent .ft-hero .slide__content .text-block > * {
+    text-align: center;
+    margin-inline: auto;
   }
 }

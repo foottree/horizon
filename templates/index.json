@@ -20,7 +20,7 @@
         "corner_radius": 0,
         "slide_height": "custom",
         "slide_height_custom": 80,
-        "slide_height_custom_mobile": 60,
+        "slide_height_custom_mobile": 0,
         "content_position": "on-media",
         "background_color": "",
         "icons_style": "arrow",
