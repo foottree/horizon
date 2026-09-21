@@ -174,6 +174,10 @@
   height: auto;
 }
 
+.menu-list__trigger:has(> a[href$="/pages/size-width-guide"]) .menu-list__link-title {
+  padding-inline-start: 0;
+}
+
 .menu-list__trigger:has(> a[href$="/pages/size-width-guide"]) .menu-list__disclosure {
   position: static;
   opacity: 1;
@@ -643,6 +647,13 @@
    (#e0dcd2); Poppins -> var(--font-body--family); text colour -> var(--color-foreground).
    The brief forbids text under 16px: every live value under 16px (11-14px, .75-.875rem) maps
    to var(--font-size--md) (16px) instead - noted per rule below. */
+
+/* Stock caps the open panel at 80vh minus the header and scrolls the rest; let the tabbed
+   and grid panels use everything below the header (minus a small gutter) first. */
+#header-component .menu-list__submenu-inner:has(> .ft-tabbed),
+#header-component .menu-list__submenu-inner:has(> .ft-grid) {
+  max-height: calc(100dvh - var(--header-group-height, var(--header-height)) - var(--padding-lg));
+}
 
 /* -- Tabbed (sunnystep Shoe Finder) -- */
 
