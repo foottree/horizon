@@ -599,6 +599,15 @@
   font-size: var(--font-size--lg);
 }
 
+/* level-2 headings and level-3 links use the same face, weight and ink as the top-level rows;
+   only the sizes step down (20 / 18 / 16) */
+#header-component .menu-drawer__menu-item--parent,
+#header-component .menu-drawer__menu-item--child {
+  font-family: var(--menu-top-level-font-family);
+  font-weight: var(--menu-top-level-font-weight);
+  color: var(--menu-top-level-font-color);
+}
+
 /* top-level rows at the desktop menu size (stock sets the 28px 2xl token inline on the nav,
    so the item itself is overridden rather than the variable) */
 #header-component .menu-drawer__menu-item--mainlist {
@@ -709,7 +718,7 @@
   display: block;
   width: 100%;
   aspect-ratio: var(--promo-aspect-ratio, 3 / 2);
-  background-color: #faf7f0; /* settings.color_palette.color5, matches the desktop placeholder */
+  background-color: #e7e2d8; /* greige, palette color9: the drawer itself is cream, so the desktop cream placeholder would vanish */
 }
 
 #header-component .menu-drawer__featured-content-list .ft-grid__promo-overlay,

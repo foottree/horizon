@@ -91,6 +91,7 @@
                 "mega-menu-promo-1": {
                   "type": "_mega-menu-promo",
                   "settings": {
+                    "image": "shopify://shop_images/menu-promo-placeholder-1.png",
                     "caption": "Sample promo 1",
                     "button_label": "Shop now",
                     "url": "#"
@@ -100,6 +101,7 @@
                 "mega-menu-promo-2": {
                   "type": "_mega-menu-promo",
                   "settings": {
+                    "image": "shopify://shop_images/menu-promo-placeholder-2.png",
                     "caption": "Sample promo 2",
                     "button_label": "Shop now",
                     "url": "#"
