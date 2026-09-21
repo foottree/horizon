@@ -427,25 +427,8 @@
   text-decoration: none;
 }
 
-/* The "->" only shows on hover/focus/current rows; kept as an absolutely positioned
-   pseudo-element at the row's right edge so it never affects the title's own layout.
-   Leaf rows only: a row with children keeps its caret (opens a flyout) instead, and
-   the "Shop all" row has its own SemiBold styling below with no arrow. */
-#header-component
-  .dropdown-menu__item:not(.dropdown-menu__item--has-children)
-  > .dropdown-menu__link:not(.dropdown-menu__link--shop-all)::after {
-  content: '\2192';
-  position: absolute;
-  inset-inline-end: 24px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-family: var(--font-body--family);
-  font-weight: 400;
-  font-size: var(--font-size--lg);
-  color: var(--color-primary-button-background);
-  opacity: 0;
-  transition: opacity 0.15s ease-in-out;
-}
+/* The design's hover arrow ("->" at the row edge) was dropped on request; hover rows
+   keep only the tint and olive text. */
 
 #header-component .dropdown-menu__link:hover,
 #header-component .dropdown-menu__link:focus-visible,
@@ -454,17 +437,6 @@
   color: var(--color-primary-button-background);
 }
 
-#header-component
-  .dropdown-menu__item:not(.dropdown-menu__item--has-children)
-  > .dropdown-menu__link:not(.dropdown-menu__link--shop-all):hover::after,
-#header-component
-  .dropdown-menu__item:not(.dropdown-menu__item--has-children)
-  > .dropdown-menu__link:not(.dropdown-menu__link--shop-all):focus-visible::after,
-#header-component
-  .dropdown-menu__item:not(.dropdown-menu__item--has-children)
-  > .dropdown-menu__link--current:not(.dropdown-menu__link--shop-all)::after {
-  opacity: 1;
-}
 
 /* Divider + "Shop all <parent>" row (rendered only inside dropdown-style submenus). */
 #header-component .dropdown-menu__divider {
@@ -527,6 +499,13 @@
   z-index: 0;
   background: rgb(var(--color-foreground-rgb) / 0.35);
   pointer-events: none;
+}
+
+/* Row caret on dropdown rows that open a flyout: the block stylesheet draws it at 0.75rem,
+   which reads small next to the 18px labels. */
+#header-component .dropdown-menu__caret {
+  width: var(--icon-size-sm);
+  height: var(--icon-size-sm);
 }
 
 /* ---- Mobile drawer: opens below the header (header stays visible) and slides in from the
