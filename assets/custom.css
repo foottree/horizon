@@ -1147,3 +1147,128 @@
   line-height: 1.5;
   white-space: nowrap;
 }
+
+/* ---- Hero slideshow (Figma homepage hero) ----
+   sections/slideshow.liquid's controls_layout: "inline" option renders [prev][dots][next]
+   together inside <slideshow-controls> (no separate side slideshow-arrows) and adds the
+   .slideshow-section--controls-inline class to the section wrapper. custom_class "ft-hero"
+   is the section-instance hook for the rest of the hero's typography/spacing. Both blocks
+   below load before the component's own {% stylesheet %}s (slideshow-controls.liquid,
+   blocks/_slide.liquid), so selectors are ID-prefixed to win regardless of source order. */
+.slideshow-section--controls-inline slideshow-controls {
+  gap: 12px;
+}
+
+#MainContent .slideshow-section--controls-inline slideshow-controls[controls-on-media] {
+  bottom: 84px;
+}
+
+/* Stock sets mix-blend-mode: difference so unstyled (icons_shape: none) dots read against any
+   photo; our dots/arrows carry their own explicit colors, so the blend mode is unwanted. */
+#MainContent .slideshow-section--controls-inline slideshow-controls:has(.slideshow-controls__dots) {
+  mix-blend-mode: normal;
+}
+
+#MainContent .slideshow-section--controls-inline .slideshow-controls__arrows {
+  height: auto;
+}
+
+#MainContent .slideshow-section--controls-inline .slideshow-control--previous,
+#MainContent .slideshow-section--controls-inline .slideshow-control--next {
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border-radius: 50%;
+  background-color: rgb(255 255 255 / 0.9);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.8);
+  color: #3a5316;
+  transition: background-color 0.15s ease-in-out;
+}
+
+#MainContent .slideshow-section--controls-inline .slideshow-control--previous:hover,
+#MainContent .slideshow-section--controls-inline .slideshow-control--next:hover {
+  background-color: #fff;
+}
+
+#MainContent .slideshow-section--controls-inline .slideshow-control--previous .svg-wrapper,
+#MainContent .slideshow-section--controls-inline .slideshow-control--next .svg-wrapper,
+#MainContent .slideshow-section--controls-inline .slideshow-control--previous svg,
+#MainContent .slideshow-section--controls-inline .slideshow-control--next svg {
+  width: 20px;
+  height: 20px;
+  --icon-stroke-width: 2px;
+}
+
+#MainContent .slideshow-section--controls-inline .slideshow-controls__dots {
+  gap: 8px;
+  padding: 0;
+  border-radius: 0;
+  background: none;
+}
+
+#MainContent .slideshow-section--controls-inline .slideshow-controls__dots button {
+  --size: 10px;
+  --color: rgb(255 255 255 / 0.5);
+  --color-active: #4a6a1d;
+  --color-hover: rgb(255 255 255 / 0.75);
+}
+
+#MainContent .slideshow-section--controls-inline .slideshow-controls__dots button::after {
+  box-shadow: none;
+}
+
+@media screen and (max-width: 749px) {
+  #MainContent .slideshow-section--controls-inline .slideshow-controls__arrows {
+    display: none;
+  }
+
+  /* No per-slide anchor is available for the shared pagination control (it's a sibling of
+     slideshow-container, not nested in .slide__image-container), so its position is computed
+     from the full-bleed (section_width: full-width) slide's own width via its fixed 4:5 mobile
+     aspect-ratio (see .ft-hero below): image height ~= 100vw * 5/4, dots row collapses to the
+     10px visible dot height (min-height: 0, plus the dots' own negative margin), 16px above
+     that image's bottom edge. */
+  #MainContent .slideshow-section--controls-inline slideshow-controls[controls-on-media] {
+    top: calc(100vw * 5 / 4 - 26px);
+    bottom: auto;
+    min-height: 0;
+  }
+}
+
+/* ft-hero: section-instance styling for the homepage hero slideshow (templates/index.json
+   hero_slideshow, custom_class "ft-hero"). Desktop copy sits on the photo (content_position:
+   on-media) with 100px inline padding set on the _slide block itself; mobile drops the on-media
+   overlay and stacks the copy below a 4:5 image, matching Horizon's own
+   .slideshow--content-below-media pattern (snippets/slideshow-styles.liquid, blocks/_slide.liquid)
+   without switching the section's content_position setting. */
+#MainContent .ft-hero .slide__content .text-block > * {
+  max-inline-size: 660px;
+}
+
+#MainContent .ft-hero .slide__content .button {
+  font-size: 1.25rem;
+  padding-block: 16px;
+  padding-inline: 24px;
+  line-height: 1.5;
+}
+
+@media screen and (max-width: 749px) {
+  #MainContent .ft-hero slideshow-slides {
+    min-height: auto;
+  }
+
+  #MainContent .ft-hero .slide__image-container {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    height: auto;
+    width: 100%;
+  }
+
+  #MainContent .ft-hero .slide__content {
+    position: static;
+    height: auto;
+    background-color: #faf7f0;
+    padding-block: 28px 36px;
+    padding-inline: 20px;
+  }
+}

@@ -587,7 +587,9 @@
     "shop_all_label": "Shop all button label",
     "shop_all_url": "Shop all button link",
     "caption": "Caption",
-    "button_label": "Button label"
+    "button_label": "Button label",
+    "arrows_placement": "Arrow placement",
+    "custom_class": "Custom CSS class"
   },
   "options": {
     "apple": "Apple",
@@ -867,7 +869,11 @@
     "progress_bar": "Progress bar",
     "mega_menu": "Mega menu",
     "dropdown": "Dropdown",
-    "tabbed": "Tabbed"
+    "tabbed": "Tabbed",
+    "beside_slide": "Beside the slide",
+    "to_right": "Right",
+    "to_left": "Left",
+    "with_pagination": "With pagination"
   },
   "content": {
     "background_video": "배경 비디오",
@@ -1122,7 +1128,8 @@
     "edit_input_field_in_theme_settings": "[테마 설정](/editor?context=theme&category=input%20fields)에서 입력 필드 편집",
     "edit_variants_in_theme_settings": "[테마 설정](/editor?context=theme&category=variant%20pickers)에서 이형 상품 스타일을 편집하십시오.",
     "submenu_style": "Dropdown shows a compact list under the parent link. A third level opens as a flyout beside its row.",
-    "mega_menu_panel_menu_item": "Matched against this top-level menu item's title (case-insensitive). Leave blank to not match any item."
+    "mega_menu_panel_menu_item": "Matched against this top-level menu item's title (case-insensitive). Leave blank to not match any item.",
+    "slide_height_mobile_fit_content": "0 = fit content"
   },
   "categories": {
     "basic": "기본",

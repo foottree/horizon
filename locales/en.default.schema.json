@@ -252,7 +252,8 @@
     "pills_usage": "Used for applied filters, discount codes, and search suggestions",
     "media_type_info": "Features are populated from your menu links",
     "submenu_style": "Dropdown shows a compact list under the parent link. A third level opens as a flyout beside its row.",
-    "mega_menu_panel_menu_item": "Matched against this top-level menu item's title (case-insensitive). Leave blank to not match any item."
+    "mega_menu_panel_menu_item": "Matched against this top-level menu item's title (case-insensitive). Leave blank to not match any item.",
+    "slide_height_mobile_fit_content": "0 = fit content"
   },
   "names": {
     "column": "Column",
@@ -442,6 +443,7 @@
     "balance": "Balance",
     "banana": "Banana",
     "below_image": "Below image",
+    "beside_slide": "Beside the slide",
     "bento": "Bento",
     "black": "Black",
     "bluesky": "Bluesky",
@@ -728,6 +730,8 @@
     "underline": "Underline",
     // Gradient direction option, upward flow
     "up": "Up",
+    "to_right": "Right",
+    "to_left": "Left",
     "uppercase": "Uppercase",
     "vertical": "Vertical",
     "video": "Video",
@@ -739,6 +743,7 @@
     "wide": "Wide",
     "youtube": "YouTube",
     "with_hints": "With hints",
+    "with_pagination": "With pagination",
     "below_media": "Below media",
     "tabbed": "Tabbed"
   },
@@ -759,6 +764,7 @@
     "add_to_cart_animation": "Add to cart",
     "always_stack_buttons": "Always stack buttons",
     "aspect_ratio": "Aspect ratio",
+    "arrows_placement": "Arrow placement",
     "custom_mobile_media": "Show different media on mobile",
     "stack_media_on_mobile": "Stack media",
     "auto_rotate_announcements": "Auto-rotate announcements",
@@ -832,6 +838,7 @@
     "cover_image": "Cover image",
     "cover_image_size": "Cover image size",
     "currency_code": "Currency code",
+    "custom_class": "Custom CSS class",
     "custom_height": "Custom height",
     "custom_minimum_height": "Custom minimum height",
     // Checkbox to enable separate size settings for mobile devices

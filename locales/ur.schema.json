@@ -235,7 +235,8 @@
     "pills_usage": "لاگو کردہ فلٹر، ڈسکاؤنٹ کوڈ، اور تلاش کی تجاویز کے لیے استعمال ہوتا ہے",
     "media_type_info": "خصوصیات آپ کے مینو کے لنک سے پُر کی گئی ہیں",
     "submenu_style": "Dropdown shows a compact list under the parent link. A third level opens as a flyout beside its row.",
-    "mega_menu_panel_menu_item": "Matched against this top-level menu item's title (case-insensitive). Leave blank to not match any item."
+    "mega_menu_panel_menu_item": "Matched against this top-level menu item's title (case-insensitive). Leave blank to not match any item.",
+    "slide_height_mobile_fit_content": "0 = fit content"
   },
   "names": {
     "404": "404",
@@ -679,7 +680,11 @@
     "progress_bar": "Progress bar",
     "mega_menu": "Mega menu",
     "dropdown": "Dropdown",
-    "tabbed": "Tabbed"
+    "tabbed": "Tabbed",
+    "beside_slide": "Beside the slide",
+    "to_right": "Right",
+    "to_left": "Left",
+    "with_pagination": "With pagination"
   },
   "settings": {
     "accordion": "ایکارڈین",
@@ -1105,7 +1110,9 @@
     "shop_all_label": "Shop all button label",
     "shop_all_url": "Shop all button link",
     "caption": "Caption",
-    "button_label": "Button label"
+    "button_label": "Button label",
+    "arrows_placement": "Arrow placement",
+    "custom_class": "Custom CSS class"
   },
   "text_defaults": {
     "accordion_heading": "ایکارڈین کی سرخی",
