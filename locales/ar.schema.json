@@ -396,7 +396,9 @@
     "view_all_button": "عرض الكل",
     "disclosures": "عمليات الإفصاح",
     "pills": "أشكال بيضاوية",
-    "comparison_slider": "شريط تمرير المقارنة"
+    "comparison_slider": "شريط تمرير المقارنة",
+    "collection_rail": "Shop by Collection rail",
+    "collection_tile": "Collection tile"
   },
   "options": {
     "above_carousel": "أعلى العرض الدائري",
@@ -1105,7 +1107,8 @@
     "arrows_placement": "Arrow placement",
     "custom_class": "Custom CSS class",
     "submenu_style_exceptions": "Use the other style for",
-    "tile_image_ratio": "Tile image ratio"
+    "tile_image_ratio": "Tile image ratio",
+    "link_label": "Link label"
   },
   "text_defaults": {
     "accordion_heading": "عنوان القائمة المنسدلة",
@@ -1143,6 +1146,8 @@
     "what_is_return_policy": "ما هي سياسة الإرجاع؟",
     "when_will_order_arrive": "متى سأستلم طلبي؟",
     "where_are_products_made": "أين تُصنع منتجاتكم؟",
-    "disclosures": "الإفصاحات"
+    "disclosures": "الإفصاحات",
+    "shop_all": "Shop All",
+    "shop_by_collection": "Shop by Collection"
   }
 }

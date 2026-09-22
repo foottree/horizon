@@ -159,7 +159,9 @@
     "product_sku": "存貨單位 (SKU)",
     "layered_slideshow": "分層輪播",
     "cart_drawer": "購物車",
-    "disclosures": "資訊揭露"
+    "disclosures": "資訊揭露",
+    "collection_rail": "Shop by Collection rail",
+    "collection_tile": "Collection tile"
   },
   "settings": {
     "alignment": "對齊",
@@ -582,7 +584,8 @@
     "arrows_placement": "Arrow placement",
     "custom_class": "Custom CSS class",
     "submenu_style_exceptions": "Use the other style for",
-    "tile_image_ratio": "Tile image ratio"
+    "tile_image_ratio": "Tile image ratio",
+    "link_label": "Link label"
   },
   "options": {
     "apple": "Apple",
@@ -1090,7 +1093,9 @@
     "bestsellers": "熱銷商品",
     "featured_collection": "精選商品系列",
     "new_arrivals": "新品上市",
-    "disclosures": "資訊揭露"
+    "disclosures": "資訊揭露",
+    "shop_all": "Shop All",
+    "shop_by_collection": "Shop by Collection"
   },
   "info": {
     "carousel_layout_on_mobile": "在行動裝置上一律使用輪播",

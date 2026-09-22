@@ -709,10 +709,154 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
+    },
+    "collection_rail": {
+      "type": "collection-rail",
+      "name": "Shop by Collection rail",
+      "settings": {
+        "heading": "Shop by Collection",
+        "link_label": "Shop All",
+        "link": "shopify://collections/women",
+        "section_width": "narrow",
+        "mobile_card_size": 85,
+        "background_color": "",
+        "padding-block-start": 50,
+        "padding-block-end": 50,
+        "custom_mobile_padding": false,
+        "mobile-padding-block-start": 0,
+        "mobile-padding-block-end": 0,
+        "mobile-padding-inline-start": 0,
+        "mobile-padding-inline-end": 0
+      },
+      "blocks": {
+        "tile_mary_janes": {
+          "type": "collection_tile",
+          "name": "Mary Janes",
+          "settings": {
+            "collection": "mary-janes",
+            "label": "",
+            "image": ""
+          }
+        },
+        "tile_loafers": {
+          "type": "collection_tile",
+          "name": "Loafers",
+          "settings": {
+            "collection": "loafers",
+            "label": "",
+            "image": ""
+          }
+        },
+        "tile_heels": {
+          "type": "collection_tile",
+          "name": "Heels",
+          "settings": {
+            "collection": "heels",
+            "label": "",
+            "image": ""
+          }
+        },
+        "tile_sporty": {
+          "type": "collection_tile",
+          "name": "Sporty",
+          "settings": {
+            "collection": "sporty",
+            "label": "",
+            "image": ""
+          }
+        },
+        "tile_casual_weekend": {
+          "type": "collection_tile",
+          "name": "Casual Weekend",
+          "settings": {
+            "collection": "casual-weekend",
+            "label": "",
+            "image": ""
+          }
+        },
+        "tile_work_essentials": {
+          "type": "collection_tile",
+          "name": "Work Essentials",
+          "settings": {
+            "collection": "work-essentials",
+            "label": "",
+            "image": ""
+          }
+        },
+        "tile_active_outdoor": {
+          "type": "collection_tile",
+          "name": "Active & Outdoor",
+          "settings": {
+            "collection": "active-outdoor",
+            "label": "",
+            "image": ""
+          }
+        },
+        "tile_travel_comfort": {
+          "type": "collection_tile",
+          "name": "Travel Comfort",
+          "settings": {
+            "collection": "travel-comfort",
+            "label": "",
+            "image": ""
+          }
+        },
+        "tile_bridal_collection": {
+          "type": "collection_tile",
+          "name": "Bridal Collection",
+          "settings": {
+            "collection": "bridal-collection",
+            "label": "",
+            "image": ""
+          }
+        },
+        "tile_rainy_day_picks": {
+          "type": "collection_tile",
+          "name": "Rainy Day Picks",
+          "settings": {
+            "collection": "rainy-day-picks",
+            "label": "",
+            "image": ""
+          }
+        },
+        "tile_wide_fit_specials": {
+          "type": "collection_tile",
+          "name": "Wide Fit Specials",
+          "settings": {
+            "collection": "wide-fit-specials",
+            "label": "",
+            "image": ""
+          }
+        },
+        "tile_new_season_styles": {
+          "type": "collection_tile",
+          "name": "New Season Styles",
+          "settings": {
+            "collection": "new-season-styles",
+            "label": "",
+            "image": ""
+          }
+        }
+      },
+      "block_order": [
+        "tile_mary_janes",
+        "tile_loafers",
+        "tile_heels",
+        "tile_sporty",
+        "tile_casual_weekend",
+        "tile_work_essentials",
+        "tile_active_outdoor",
+        "tile_travel_comfort",
+        "tile_bridal_collection",
+        "tile_rainy_day_picks",
+        "tile_wide_fit_specials",
+        "tile_new_season_styles"
+      ]
     }
   },
   "order": [
     "hero_slideshow",
+    "collection_rail",
     "product_list_fa6P9H"
   ]
 }

@@ -159,7 +159,9 @@
     "product_sku": "SKU",
     "layered_slideshow": "Lagdelt lysbildefremvisning",
     "cart_drawer": "Handlekurvskuff",
-    "disclosures": "Opplysninger"
+    "disclosures": "Opplysninger",
+    "collection_rail": "Shop by Collection rail",
+    "collection_tile": "Collection tile"
   },
   "settings": {
     "alignment": "Justering",
@@ -582,7 +584,8 @@
     "arrows_placement": "Arrow placement",
     "custom_class": "Custom CSS class",
     "submenu_style_exceptions": "Use the other style for",
-    "tile_image_ratio": "Tile image ratio"
+    "tile_image_ratio": "Tile image ratio",
+    "link_label": "Link label"
   },
   "options": {
     "apple": "Eple",
@@ -1090,7 +1093,9 @@
     "bestsellers": "Bestselgere",
     "featured_collection": "Utvalgt samling",
     "new_arrivals": "Nyheter",
-    "disclosures": "Opplysninger"
+    "disclosures": "Opplysninger",
+    "shop_all": "Shop All",
+    "shop_by_collection": "Shop by Collection"
   },
   "info": {
     "carousel_layout_on_mobile": "Karusell brukes alltid på mobil",

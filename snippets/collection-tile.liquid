@@ -1,0 +1,151 @@
+{%- doc -%}
+  Renders one collection tile for the "Shop by Collection" rail (sections/collection-rail.liquid):
+  a linked image with a label row (collection title + arrow) below it. Shared by the section's own
+  tile loop (blocks/_collection-tile.liquid only carries the schema; the section reads each
+  block's settings directly and renders them through this snippet, once per desktop panel slot and
+  once more for the mobile carousel) - see collection-rail.liquid for why.
+
+  Image source order: `image` param -> collection.metafields.custom.collection_card_image ->
+  collection.featured_image -> a tinted placeholder box.
+
+  @param {object} [collection] - The collection the tile links to.
+  @param {string} [label] - Optional override for the tile's title (defaults to collection.title).
+  @param {object} [image] - Optional override image (defaults to the collection's own image).
+  @param {string} [tile_slot] - one of 'big' | 'small-a' | 'small-b' | 'tall'. Sets the desktop
+    grid position and the image's aspect ratio/sizes. Ignored on mobile, where every tile renders
+    at a uniform 3:4 ratio (see the `.collection-rail__mobile` override in the section's
+    stylesheet).
+  @param {string} [block_attributes] - `block.shopify_attributes` for the block this tile
+    represents, so the theme editor can select it in the live preview.
+
+  @example
+  {% render 'collection-tile', collection: block.settings.collection, label: block.settings.label, image: block.settings.image, tile_slot: 'big', block_attributes: block.shopify_attributes %}
+{%- enddoc -%}
+
+{% liquid
+  assign tile_image = image
+  if tile_image == blank and collection != blank
+    assign tile_image = collection.metafields.custom.collection_card_image.value
+  endif
+
+  if tile_image == blank and collection != blank
+    assign tile_image = collection.featured_image
+  endif
+
+  assign tile_label = label | default: collection.title
+  assign tile_slot = tile_slot | default: 'big'
+
+  case tile_slot
+    when 'small-a', 'small-b'
+      assign tile_sizes = '(min-width: 750px) 294px, 85vw'
+    else
+      assign tile_sizes = '(min-width: 750px) 612px, 85vw'
+  endcase
+%}
+
+<a
+  href="{{ collection.url | default: '#' }}"
+  class="collection-rail__tile collection-rail__tile--{{ tile_slot }}"
+  {{ block_attributes }}
+>
+  <span class="collection-rail__tile-image">
+    {%- if tile_image -%}
+      {{
+        tile_image
+        | image_url: width: 1200
+        | image_tag:
+          loading: 'lazy',
+          widths: '300, 450, 600, 750, 900, 1200',
+          sizes: tile_sizes,
+          alt: tile_label
+      }}
+    {%- else -%}
+      <span
+        class="collection-rail__tile-placeholder"
+        aria-hidden="true"
+      ></span>
+    {%- endif -%}
+  </span>
+  <span class="collection-rail__tile-label">
+    <span class="collection-rail__tile-title">{{- tile_label -}}</span>
+    <span
+      class="collection-rail__tile-arrow svg-wrapper"
+      aria-hidden="true"
+    >
+      {{- 'icon-arrow.svg' | inline_asset_content -}}
+    </span>
+  </span>
+</a>
+
+{% stylesheet %}
+  .collection-rail__tile {
+    display: block;
+    color: var(--color-foreground);
+    text-decoration: none;
+  }
+
+  .collection-rail__tile-image {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    border-radius: 8px;
+    background-color: var(--color-background);
+  }
+
+  .collection-rail__tile-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .collection-rail__tile:is(:hover, :focus-visible) .collection-rail__tile-image img {
+    transform: scale(1.03);
+  }
+
+  .collection-rail__tile-placeholder {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(#fff7e2, #e7e2d8);
+  }
+
+  .collection-rail__tile--big .collection-rail__tile-image {
+    aspect-ratio: 588 / 347;
+  }
+
+  .collection-rail__tile--small-a .collection-rail__tile-image,
+  .collection-rail__tile--small-b .collection-rail__tile-image {
+    aspect-ratio: 282 / 300;
+  }
+
+  .collection-rail__tile--tall .collection-rail__tile-image {
+    aspect-ratio: 588 / 671;
+  }
+
+  .collection-rail__tile-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .collection-rail__tile-title {
+    font-family: var(--font-subheading--family);
+    font-weight: 600;
+    font-size: 1.375rem;
+    line-height: 1.6;
+  }
+
+  .collection-rail__tile-arrow {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+  }
+
+  .collection-rail__tile-arrow svg {
+    width: 100%;
+    height: 100%;
+  }
+{% endstylesheet %}

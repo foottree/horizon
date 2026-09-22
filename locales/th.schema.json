@@ -159,7 +159,9 @@
     "product_sku": "SKU",
     "layered_slideshow": "สไลด์โชว์แบบซ้อน",
     "cart_drawer": "ตะกร้าสินค้าแบบเลื่อนด้านข้าง",
-    "disclosures": "การเปิดเผยข้อมูล"
+    "disclosures": "การเปิดเผยข้อมูล",
+    "collection_rail": "Shop by Collection rail",
+    "collection_tile": "Collection tile"
   },
   "settings": {
     "alignment": "การจัดตำแหน่ง",
@@ -582,7 +584,8 @@
     "arrows_placement": "Arrow placement",
     "custom_class": "Custom CSS class",
     "submenu_style_exceptions": "Use the other style for",
-    "tile_image_ratio": "Tile image ratio"
+    "tile_image_ratio": "Tile image ratio",
+    "link_label": "Link label"
   },
   "options": {
     "apple": "Apple",
@@ -1090,7 +1093,9 @@
     "bestsellers": "สินค้าขายดี",
     "featured_collection": "คอลเลกชันเด่น",
     "new_arrivals": "สินค้ามาใหม่",
-    "disclosures": "การเปิดเผยข้อมูล"
+    "disclosures": "การเปิดเผยข้อมูล",
+    "shop_all": "Shop All",
+    "shop_by_collection": "Shop by Collection"
   },
   "info": {
     "video_alt_text": "โปรดอธิบายวิดีโอสำหรับผู้ใช้เทคโนโลยีความช่วยเหลือพิเศษ",

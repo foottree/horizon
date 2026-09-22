@@ -159,7 +159,9 @@
     "product_sku": "SKU",
     "layered_slideshow": "Katmanlı slayt gösterisi",
     "cart_drawer": "Sepet çekmecesi",
-    "disclosures": "Bildirimler"
+    "disclosures": "Bildirimler",
+    "collection_rail": "Shop by Collection rail",
+    "collection_tile": "Collection tile"
   },
   "settings": {
     "autoplay": "Otomatik oynatma",
@@ -582,7 +584,8 @@
     "arrows_placement": "Arrow placement",
     "custom_class": "Custom CSS class",
     "submenu_style_exceptions": "Use the other style for",
-    "tile_image_ratio": "Tile image ratio"
+    "tile_image_ratio": "Tile image ratio",
+    "link_label": "Link label"
   },
   "options": {
     "apple": "Apple",
@@ -1090,7 +1093,9 @@
     "bestsellers": "Çok satanlar",
     "featured_collection": "Öne çıkan koleksiyon",
     "new_arrivals": "Yeni gelenler",
-    "disclosures": "Bildirimler"
+    "disclosures": "Bildirimler",
+    "shop_all": "Shop All",
+    "shop_by_collection": "Shop by Collection"
   },
   "info": {
     "video_alt_text": "Yardımcı teknoloji kullanıcıları için videoyu açıklayın",

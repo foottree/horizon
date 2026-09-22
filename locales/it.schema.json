@@ -159,7 +159,9 @@
     "product_sku": "SKU",
     "layered_slideshow": "Presentazione a livelli",
     "cart_drawer": "Finestra del carrello",
-    "disclosures": "Informative"
+    "disclosures": "Informative",
+    "collection_rail": "Shop by Collection rail",
+    "collection_tile": "Collection tile"
   },
   "settings": {
     "alignment": "Allineamento",
@@ -582,7 +584,8 @@
     "arrows_placement": "Arrow placement",
     "custom_class": "Custom CSS class",
     "submenu_style_exceptions": "Use the other style for",
-    "tile_image_ratio": "Tile image ratio"
+    "tile_image_ratio": "Tile image ratio",
+    "link_label": "Link label"
   },
   "options": {
     "apple": "Mela",
@@ -1090,7 +1093,9 @@
     "bestsellers": "Bestseller",
     "featured_collection": "Collezione in evidenza",
     "new_arrivals": "Nuovi arrivi",
-    "disclosures": "Informative"
+    "disclosures": "Informative",
+    "shop_all": "Shop All",
+    "shop_by_collection": "Shop by Collection"
   },
   "info": {
     "carousel_layout_on_mobile": "Sui dispositivi mobili viene sempre utilizzato il carosello.",

@@ -159,7 +159,9 @@
     "product_sku": "SKU-koodi",
     "layered_slideshow": "Kerroksittainen diaesitys",
     "cart_drawer": "Veto-ostoskori",
-    "disclosures": "Ilmoitukset"
+    "disclosures": "Ilmoitukset",
+    "collection_rail": "Shop by Collection rail",
+    "collection_tile": "Collection tile"
   },
   "settings": {
     "alignment": "Tasaus",
@@ -582,7 +584,8 @@
     "arrows_placement": "Arrow placement",
     "custom_class": "Custom CSS class",
     "submenu_style_exceptions": "Use the other style for",
-    "tile_image_ratio": "Tile image ratio"
+    "tile_image_ratio": "Tile image ratio",
+    "link_label": "Link label"
   },
   "options": {
     "apple": "Omena",
@@ -1090,7 +1093,9 @@
     "bestsellers": "Myydyimmät",
     "featured_collection": "Esittelykokoelma",
     "new_arrivals": "Uutuudet",
-    "disclosures": "Ilmoitukset"
+    "disclosures": "Ilmoitukset",
+    "shop_all": "Shop All",
+    "shop_by_collection": "Shop by Collection"
   },
   "info": {
     "carousel_layout_on_mobile": "Mobiilissa käytetään aina karusellia.",

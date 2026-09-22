@@ -159,7 +159,9 @@
     "product_sku": "SKU(재고 관리 코드)",
     "layered_slideshow": "레이어드 슬라이드 쇼",
     "cart_drawer": "카트 서랍",
-    "disclosures": "고지 사항"
+    "disclosures": "고지 사항",
+    "collection_rail": "Shop by Collection rail",
+    "collection_tile": "Collection tile"
   },
   "settings": {
     "autoplay": "자동 재생",
@@ -582,7 +584,8 @@
     "arrows_placement": "Arrow placement",
     "custom_class": "Custom CSS class",
     "submenu_style_exceptions": "Use the other style for",
-    "tile_image_ratio": "Tile image ratio"
+    "tile_image_ratio": "Tile image ratio",
+    "link_label": "Link label"
   },
   "options": {
     "apple": "Apple",
@@ -1090,7 +1093,9 @@
     "bestsellers": "베스트셀러",
     "featured_collection": "추천 컬렉션",
     "new_arrivals": "신상품",
-    "disclosures": "고지 사항"
+    "disclosures": "고지 사항",
+    "shop_all": "Shop All",
+    "shop_by_collection": "Shop by Collection"
   },
   "info": {
     "carousel_layout_on_mobile": "모바일에서는 항상 캐러셀이 사용됩니다.",

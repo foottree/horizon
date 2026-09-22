@@ -159,7 +159,9 @@
     "product_sku": "SKU",
     "layered_slideshow": "Warstwowy pokaz slajdów",
     "cart_drawer": "Szuflada koszyka",
-    "disclosures": "Informacje prawne"
+    "disclosures": "Informacje prawne",
+    "collection_rail": "Shop by Collection rail",
+    "collection_tile": "Collection tile"
   },
   "settings": {
     "autoplay": "Autoodtwarzanie",
@@ -582,7 +584,8 @@
     "arrows_placement": "Arrow placement",
     "custom_class": "Custom CSS class",
     "submenu_style_exceptions": "Use the other style for",
-    "tile_image_ratio": "Tile image ratio"
+    "tile_image_ratio": "Tile image ratio",
+    "link_label": "Link label"
   },
   "options": {
     "apple": "Apple",
@@ -1090,7 +1093,9 @@
     "bestsellers": "Bestsellery",
     "featured_collection": "Polecana kolekcja",
     "new_arrivals": "Nowości",
-    "disclosures": "Informacje prawne"
+    "disclosures": "Informacje prawne",
+    "shop_all": "Shop All",
+    "shop_by_collection": "Shop by Collection"
   },
   "info": {
     "video_alt_text": "Opisz wideo dla użytkowników technologii wspomagających",

@@ -159,7 +159,9 @@
     "product_sku": "SKU",
     "layered_slideshow": "レイヤースライドショー",
     "cart_drawer": "カートドロワー",
-    "disclosures": "開示情報"
+    "disclosures": "開示情報",
+    "collection_rail": "Shop by Collection rail",
+    "collection_tile": "Collection tile"
   },
   "settings": {
     "alignment": "配置",
@@ -582,7 +584,8 @@
     "arrows_placement": "Arrow placement",
     "custom_class": "Custom CSS class",
     "submenu_style_exceptions": "Use the other style for",
-    "tile_image_ratio": "Tile image ratio"
+    "tile_image_ratio": "Tile image ratio",
+    "link_label": "Link label"
   },
   "options": {
     "apple": "Apple",
@@ -1090,7 +1093,9 @@
     "bestsellers": "ベストセラー",
     "featured_collection": "特集コレクション",
     "new_arrivals": "新着商品",
-    "disclosures": "開示情報"
+    "disclosures": "開示情報",
+    "shop_all": "Shop All",
+    "shop_by_collection": "Shop by Collection"
   },
   "info": {
     "video_alt_text": "支援技術のユーザーのために動画の説明を記述します",

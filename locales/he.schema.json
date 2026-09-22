@@ -396,7 +396,9 @@
     "view_all_button": "הצג הכול",
     "disclosures": "גילוי נאות",
     "pills": "גלולות",
-    "comparison_slider": "מחוון השוואה"
+    "comparison_slider": "מחוון השוואה",
+    "collection_rail": "Shop by Collection rail",
+    "collection_tile": "Collection tile"
   },
   "options": {
     "above_carousel": "מעל הקרוסלה",
@@ -1105,7 +1107,8 @@
     "arrows_placement": "Arrow placement",
     "custom_class": "Custom CSS class",
     "submenu_style_exceptions": "Use the other style for",
-    "tile_image_ratio": "Tile image ratio"
+    "tile_image_ratio": "Tile image ratio",
+    "link_label": "Link label"
   },
   "text_defaults": {
     "accordion_heading": "כותרת אקורדיון",
@@ -1143,6 +1146,8 @@
     "what_is_return_policy": "מהי מדיניות ההחזרות?",
     "when_will_order_arrive": "מתי אקבל את ההזמנה שלי?",
     "where_are_products_made": "היכן מיוצרים המוצרים שלכם?",
-    "disclosures": "גילוי נאות"
+    "disclosures": "גילוי נאות",
+    "shop_all": "Shop All",
+    "shop_by_collection": "Shop by Collection"
   }
 }

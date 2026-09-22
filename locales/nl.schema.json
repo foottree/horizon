@@ -159,7 +159,9 @@
     "product_sku": "SKU",
     "layered_slideshow": "Gelaagde diavoorstelling",
     "cart_drawer": "Winkelwagenoptie",
-    "disclosures": "Toelichtingen"
+    "disclosures": "Toelichtingen",
+    "collection_rail": "Shop by Collection rail",
+    "collection_tile": "Collection tile"
   },
   "settings": {
     "autoplay": "Automatisch afspelen",
@@ -582,7 +584,8 @@
     "arrows_placement": "Arrow placement",
     "custom_class": "Custom CSS class",
     "submenu_style_exceptions": "Use the other style for",
-    "tile_image_ratio": "Tile image ratio"
+    "tile_image_ratio": "Tile image ratio",
+    "link_label": "Link label"
   },
   "options": {
     "apple": "Apple",
@@ -1090,7 +1093,9 @@
     "bestsellers": "Bestsellers",
     "featured_collection": "Uitgelichte collectie",
     "new_arrivals": "Nieuw binnen",
-    "disclosures": "Toelichtingen"
+    "disclosures": "Toelichtingen",
+    "shop_all": "Shop All",
+    "shop_by_collection": "Shop by Collection"
   },
   "info": {
     "carousel_layout_on_mobile": "Op mobiel wordt altijd een carrousel gebruikt",
