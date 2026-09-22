@@ -629,6 +629,39 @@
   min-height: 56px;
 }
 
+/* Client-reported WebKit-only bug: on a real iPhone the mainlist label sat ~12px lower than
+   its row's centre (rows measuring ~62px instead of 56, with far more gap above the label than
+   below). align-items: center on .menu-drawer__menu-item only centres the label's *line box*,
+   and a line box's half-leading (line-height minus the font's ascent+descent) is split evenly
+   above/below regardless of how that ascent+descent is itself split - so a font whose ascent is
+   much taller than its descent still renders with its baseline (and therefore its glyphs)
+   sitting below the box's true centre. That skew is fixed by the font's own metrics, so it
+   survives any padding/line-height change, and different engines read a webfont's ascent/
+   descent from different tables (hhea vs OS/2), so WebKit and Chromium can disagree on how
+   large the skew is from the very same Plus Jakarta Sans file - measured here at +1.5px low in
+   this WebKit build (webkit-2336) vs. the ~12px the client saw in real iOS Safari, same
+   direction, different magnitude of the same metric-table mismatch.
+   text-box-trim swaps that leading-based box for one trimmed to the label's actual cap-height/
+   alphabetic-baseline ink (the metrics browsers agree on, and the same reference Figma uses for
+   "vertical trim: cap height"), which align-items: center then centres exactly - confirmed
+   empirically in real WebKit: offset dropped from +1..+3px to 0px (±0.01px) on every row, with
+   row height and hairline position unaffected since those come from the row's own min-height,
+   not the label. Both properties are supported in current Safari/Chrome; unsupported browsers
+   silently keep today's (unfixed) box.
+   Scoped to --mainlist only (not every .menu-drawer__menu-item-text): trimming to the
+   alphabetic baseline intentionally lets descenders (the "y" in Our Story, Find your shoe)
+   hang below the box, same as Figma's own "cap height" vertical-trim option - fine as long as
+   nothing then clips that overhang. The base stylesheet's .menu-drawer__menu-item-text still
+   has overflow: hidden for its ellipsis truncation on long level-2/3 labels, which would clip
+   those descenders once the box shrinks to cap-alphabetic height, so overflow is reopened here
+   for the short, curated top-level labels only - wrap-text (word-wrap/hyphens, inherited) is
+   the fallback if one is ever unexpectedly long, in place of the now-unused ellipsis. */
+#header-component .menu-drawer__menu-item--mainlist .menu-drawer__menu-item-text {
+  text-box-trim: trim-both;
+  text-box-edge: cap alphabetic;
+  overflow: visible;
+}
+
 /* Drawer top-level carets: the right-pointing caret on a row that opens a level-2 panel
    (Women, Find your shoe) and the back caret in that panel's own header row both read too
    small at the stock --icon-size-xs; both are up to --icon-size-sm (20px) to match the rest of
