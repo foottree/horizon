@@ -172,7 +172,9 @@
     "collection_rail": "Shop by Collection rail",
     "collection_tile": "Collection tile",
     "product_rail_tabs": "Product rail with tabs",
-    "tab": "Tab"
+    "tab": "Tab",
+    "review": "Review",
+    "review_cards": "Customer reviews"
   },
   "settings": {
     "alignment": "Justering",
@@ -599,7 +601,24 @@
     "link_label": "Link label",
     "description": "Description",
     "show_arrows": "Show arrows",
-    "tabs_style": "Tab style"
+    "tabs_style": "Tab style",
+    "eyebrow": "Eyebrow",
+    "photo": "Photo",
+    "quote": "Quote",
+    "name": "Name",
+    "role": "Role",
+    "product_style": "Product / style",
+    "show_verified_chip": "Show verified chip",
+    "show_rating": "Show rating",
+    "rating": "Rating",
+    "stars": "Stars",
+    "rating_caption": "Rating caption",
+    "rating_link": "Rating link",
+    "image_fit": "Image fit",
+    "verified_label": "Verified label",
+    "card_background": "Card background",
+    "card_border": "Card border",
+    "card_radius": "Card corner radius"
   },
   "options": {
     "apple": "Apple",
@@ -1014,7 +1033,9 @@
     "disclosures": "Oplysninger",
     "disclosures_metafield_content": "Obligatoriske sikkerhedsadvarsler og lovpligtige oplysninger for dette produkt.",
     "page_text_color_contrast_info": "Afsnit med en brugerdefineret baggrundsfarve bruger kun denne tekstfarve, når der er tilstrækkelig farvekontrast.",
-    "tabs": "Tabs"
+    "tabs": "Tabs",
+    "card": "Card",
+    "content": "Content"
   },
   "html_defaults": {
     "share_information_about_your": "<p>Del oplysninger om dit brand med dine kunder. Beskriv et produkt, kom med meddelelser, eller byd kunder velkommen i din butik.</p>",

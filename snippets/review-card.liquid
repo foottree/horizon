@@ -1,0 +1,224 @@
+{%- doc -%}
+  Renders one review card for sections/review-cards.liquid (homepage section 06, "Customer
+  reviews", in the client's Figma). Rendered once per `review` block and reused in both the
+  desktop and mobile slideshows in that section - the same technique
+  snippets/collection-tile.liquid uses for sections/collection-rail.liquid, and for the same
+  reason: a Horizon section can't read theme-block settings, so the section loops its own
+  section-local `review` blocks and renders each one through this snippet directly.
+
+  All colors are inherited from CSS custom properties set on the section wrapper
+  (--review-cards-accent-color, --review-cards-muted-color, --review-cards-line-color,
+  --review-cards-chip-bg, --review-card-bg, --review-card-radius, --review-card-border,
+  --review-card-media-bg) rather than hard-coded here.
+
+  @param {object} [image] - The review photo.
+  @param {string} [quote] - The review quote.
+  @param {string} [name] - Customer name.
+  @param {string} [role] - Customer role, e.g. "Hospital staff".
+  @param {string} [product] - Product / style the review references.
+  @param {boolean} [verified] - Whether to show the "Verified" chip.
+  @param {string} [verified_label] - Label text for the verified chip.
+  @param {string} [image_ratio] - 'wide' | 'landscape' | 'square' - controls the media aspect ratio.
+  @param {string} [image_fit] - 'cover' | 'contain' - CSS object-fit for the photo.
+  @param {string} [block_attributes] - `block.shopify_attributes` for the block this card represents,
+    so the theme editor can select it in the live preview.
+
+  @example
+  {% render 'review-card',
+    image: block.settings.image,
+    quote: block.settings.quote,
+    name: block.settings.name,
+    role: block.settings.role,
+    product: block.settings.product,
+    verified: block.settings.verified,
+    verified_label: section.settings.verified_label,
+    image_ratio: section.settings.image_ratio,
+    image_fit: section.settings.image_fit,
+    block_attributes: block.shopify_attributes
+  %}
+{%- enddoc -%}
+
+{%- liquid
+  assign ratio_class = image_ratio | default: 'wide'
+  assign fit_class = image_fit | default: 'cover'
+
+  assign meta = ''
+  if role != blank and product != blank
+    assign meta = role | append: ' · ' | append: product
+  elsif role != blank
+    assign meta = role
+  elsif product != blank
+    assign meta = product
+  endif
+
+  assign img_alt = image.alt | default: name
+-%}
+
+<article
+  class="review-card"
+  {{ block_attributes }}
+>
+  <div class="review-card__media review-card__media--{{ ratio_class }} review-card__media--{{ fit_class }}">
+    {%- if image -%}
+      {{
+        image
+        | image_url: width: 1200
+        | image_tag:
+          loading: 'lazy',
+          widths: '300, 450, 600, 800, 1200',
+          sizes: '(min-width: 990px) 400px, 85vw',
+          alt: img_alt,
+          class: 'review-card__image'
+      }}
+    {%- else -%}
+      <span
+        class="review-card__placeholder"
+        aria-hidden="true"
+      ></span>
+    {%- endif -%}
+  </div>
+  <div class="review-card__body">
+    {%- if quote != blank -%}
+      <blockquote class="review-card__quote">{{ quote }}</blockquote>
+    {%- endif -%}
+    <div class="review-card__spacer"></div>
+    <div class="review-card__rule"></div>
+    <div class="review-card__attribution">
+      <div class="review-card__who">
+        {%- if name != blank -%}
+          <span class="review-card__name">{{ name }}</span>
+        {%- endif -%}
+        {%- if meta != blank -%}
+          <span class="review-card__meta">{{ meta }}</span>
+        {%- endif -%}
+      </div>
+      {%- if verified -%}
+        <span class="review-card__verified">
+          <span aria-hidden="true">&#10003;</span>{{ verified_label | default: 'Verified' }}
+        </span>
+      {%- endif -%}
+    </div>
+  </div>
+</article>
+
+{% stylesheet %}
+  .review-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: var(--review-card-bg, var(--color-background));
+    border: var(--review-card-border, none);
+    border-radius: var(--review-card-radius, 0px);
+    overflow: hidden;
+  }
+
+  .review-card__media {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    background-color: var(--color-background);
+  }
+
+  .review-card__media--wide {
+    aspect-ratio: 400 / 168;
+  }
+
+  .review-card__media--landscape {
+    aspect-ratio: 3 / 2;
+  }
+
+  .review-card__media--square {
+    aspect-ratio: 1 / 1;
+  }
+
+  .review-card__media--contain {
+    background-color: var(--review-card-media-bg, var(--color-background));
+  }
+
+  .review-card__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .review-card__media--cover .review-card__image {
+    object-fit: cover;
+  }
+
+  .review-card__media--contain .review-card__image {
+    object-fit: contain;
+  }
+
+  .review-card__placeholder {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(#fff7e2, #e7e2d8);
+  }
+
+  .review-card__body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 10px;
+    padding: 18px 24px 20px;
+  }
+
+  .review-card__quote {
+    margin: 0;
+    font-family: var(--font-heading--family);
+    font-weight: 600;
+    font-size: 1.375rem;
+    line-height: 1.24;
+    color: var(--color-foreground);
+  }
+
+  .review-card__spacer {
+    margin-top: auto;
+  }
+
+  .review-card__rule {
+    height: 1px;
+    flex-shrink: 0;
+    background: var(--review-cards-line-color, var(--color-border));
+  }
+
+  .review-card__attribution {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .review-card__who {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .review-card__name {
+    font-family: var(--font-subheading--family);
+    font-weight: 600;
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: var(--color-foreground);
+  }
+
+  .review-card__meta {
+    font-size: 0.9375rem;
+    color: var(--review-cards-muted-color, var(--color-foreground));
+  }
+
+  .review-card__verified {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+    font-size: 0.875rem;
+    font-weight: 600;
+    white-space: nowrap;
+    padding: 6px 10px;
+    border-radius: 4px;
+    background: var(--review-cards-chip-bg, var(--color-background));
+    color: var(--review-cards-accent-color, var(--color-foreground));
+  }
+{% endstylesheet %}

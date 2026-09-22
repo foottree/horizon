@@ -172,7 +172,9 @@
     "collection_rail": "Shop by Collection rail",
     "collection_tile": "Collection tile",
     "product_rail_tabs": "Product rail with tabs",
-    "tab": "Tab"
+    "tab": "Tab",
+    "review": "Review",
+    "review_cards": "Customer reviews"
   },
   "settings": {
     "autoplay": "자동 재생",
@@ -599,7 +601,24 @@
     "link_label": "Link label",
     "description": "Description",
     "show_arrows": "Show arrows",
-    "tabs_style": "Tab style"
+    "tabs_style": "Tab style",
+    "eyebrow": "Eyebrow",
+    "photo": "Photo",
+    "quote": "Quote",
+    "name": "Name",
+    "role": "Role",
+    "product_style": "Product / style",
+    "show_verified_chip": "Show verified chip",
+    "show_rating": "Show rating",
+    "rating": "Rating",
+    "stars": "Stars",
+    "rating_caption": "Rating caption",
+    "rating_link": "Rating link",
+    "image_fit": "Image fit",
+    "verified_label": "Verified label",
+    "card_background": "Card background",
+    "card_border": "Card border",
+    "card_radius": "Card corner radius"
   },
   "options": {
     "apple": "Apple",
@@ -1014,7 +1033,9 @@
     "disclosures": "고지 사항",
     "disclosures_metafield_content": "이 제품에 필수적인 안전 경고 및 규제 관련 고지 사항입니다.",
     "page_text_color_contrast_info": "사용자 지정 배경 색상이 있는 섹션은 색상 대비가 충분한 경우에만 이 텍스트 색상을 사용합니다.",
-    "tabs": "Tabs"
+    "tabs": "Tabs",
+    "card": "Card",
+    "content": "Content"
   },
   "html_defaults": {
     "share_information_about_your": "<p>고객과 브랜드에 대한 정보를 공유하세요. 제품을 설명하거나, 공지 사항을 알리거나, 스토어를 방문하는 고객을 환영할 수 있습니다.</p>",

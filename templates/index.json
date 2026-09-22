@@ -1735,6 +1735,347 @@
         "@media(max-width:749px){.ft-why-foot-tree .panel .stats-row .group-block{width:100%}}",
         "[class*=__link_story] a { text-decoration: none; }"
       ]
+    },
+    "corporate_door": {
+      "type": "section",
+      "settings": {
+        "content_direction": "row",
+        "vertical_on_mobile": true,
+        "reverse_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 0,
+        "enable_mobile_gap": false,
+        "mobile_gap": 12,
+        "section_width": "full-width",
+        "full_width_on_mobile": false,
+        "section_height": "",
+        "section_height_custom": 50,
+        "background_media": "none",
+        "background_color": "{{ settings.color_palette.color1 }}",
+        "video": "",
+        "video_position": "cover",
+        "background_image": "",
+        "background_image_position": "cover",
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_color": "",
+        "border_radius": 0,
+        "padding-block-start": 0,
+        "padding-block-end": 0,
+        "custom_mobile_padding": false,
+        "mobile-padding-block-start": 0,
+        "mobile-padding-block-end": 0,
+        "mobile-padding-inline-start": 0,
+        "mobile-padding-inline-end": 0,
+        "css_class": "ft-corporate",
+        "add_section_id": false,
+        "section_id": ""
+      },
+      "blocks": {
+        "panel": {
+          "type": "group",
+          "settings": {
+            "link": "",
+            "open_in_new_tab": false,
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "reverse_on_mobile": false,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "custom_mobile_alignment": false,
+            "mobile_vertical_alignment": "flex-start",
+            "vertical_alignment_flex_direction_column": "flex-start",
+            "gap": 18,
+            "enable_mobile_gap": false,
+            "mobile_gap": 12,
+            "width": "custom",
+            "custom_width": 57,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fill",
+            "custom_height": 100,
+            "background_media": "none",
+            "background_color": "{{ settings.color_palette.background }}",
+            "video": "",
+            "video_position": "cover",
+            "background_image": "",
+            "background_image_position": "cover",
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_color": "",
+            "border_radius": 0,
+            "enable_mobile_radius": false,
+            "mobile_border_radius": 0,
+            "placeholder": "",
+            "padding-block-start": 68,
+            "padding-block-end": 68,
+            "padding-inline-start": 100,
+            "padding-inline-end": 80,
+            "custom_mobile_padding": true,
+            "mobile-padding-block-start": 57,
+            "mobile-padding-block-end": 57,
+            "mobile-padding-inline-start": 20,
+            "mobile-padding-inline-end": 20,
+            "css_class": "panel"
+          },
+          "blocks": {
+            "eyebrow": {
+              "type": "text",
+              "settings": {
+                "text": "<p>FOR ORGANISATIONS</p>",
+                "width": "fit-content",
+                "max_width": "none",
+                "alignment": "left",
+                "type_preset": "custom",
+                "font": "var(--font-subheading--family)",
+                "font_size": "0.8125rem",
+                "enable_mobile_size": false,
+                "mobile_font_size": "1rem",
+                "line_height": "tight",
+                "letter_spacing": "loose",
+                "case": "uppercase",
+                "wrap": "pretty",
+                "text_color": "{{ settings.color_palette.color1 }}",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "custom_mobile_padding": false,
+                "mobile-padding-block-start": 0,
+                "mobile-padding-block-end": 0,
+                "mobile-padding-inline-start": 0,
+                "mobile-padding-inline-end": 0,
+                "custom_class": ""
+              }
+            },
+            "heading": {
+              "type": "text",
+              "settings": {
+                "text": "<h2>Corporate Sales and Bulk Orders</h2>",
+                "width": "fit-content",
+                "max_width": "none",
+                "alignment": "left",
+                "type_preset": "h2",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "enable_mobile_size": false,
+                "mobile_font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "",
+                "text_color": "{{ settings.color_palette.foreground }}",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "custom_mobile_padding": false,
+                "mobile-padding-block-start": 0,
+                "mobile-padding-block-end": 0,
+                "mobile-padding-inline-start": 0,
+                "mobile-padding-inline-end": 0,
+                "custom_class": ""
+              }
+            },
+            "paragraph": {
+              "type": "text",
+              "settings": {
+                "text": "<p>Serving hospitals, airlines and F&amp;B groups for over 52 years. Uniform programmes, size runs, quotations and account pricing.</p>",
+                "width": "100%",
+                "max_width": "none",
+                "alignment": "left",
+                "type_preset": "custom",
+                "font": "var(--font-body--family)",
+                "font_size": "1.25rem",
+                "enable_mobile_size": false,
+                "mobile_font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "",
+                "text_color": "{{ settings.color_palette.foreground }}",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "custom_mobile_padding": false,
+                "mobile-padding-block-start": 0,
+                "mobile-padding-block-end": 0,
+                "mobile-padding-inline-start": 0,
+                "mobile-padding-inline-end": 0,
+                "custom_class": ""
+              }
+            },
+            "cta": {
+              "type": "button",
+              "settings": {
+                "label": "Request a quote →",
+                "link": "/pages/for-organisations",
+                "open_in_new_tab": false,
+                "style_class": "button",
+                "custom_button_background": "{{ settings.color_palette.foreground }}",
+                "custom_button_text": "{{ settings.color_palette.background }}",
+                "custom_button_border": "{{ settings.color_palette.background }}",
+                "link_text_color": "",
+                "width": "fit-content",
+                "custom_width": 100,
+                "width_mobile": "fit-content",
+                "custom_width_mobile": 100
+              }
+            },
+            "bar": {
+              "type": "_divider",
+              "settings": {
+                "thickness": 5,
+                "corner_radius": "rounded",
+                "divider_color": "{{ settings.color_palette.color6 }}",
+                "width_percent": 8,
+                "padding-block-start": 0,
+                "padding-block-end": 0
+              }
+            }
+          },
+          "block_order": [
+            "bar",
+            "eyebrow",
+            "heading",
+            "paragraph",
+            "cta"
+          ]
+        },
+        "img_photo": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/corporate-team.jpg",
+            "link": "",
+            "image_ratio": "adapt",
+            "width": "custom",
+            "custom_width": 43,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fill",
+            "custom_height": 100,
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_color": "",
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          }
+        }
+      },
+      "block_order": [
+        "panel",
+        "img_photo"
+      ],
+      "custom_css": [
+        "@media(min-width:750px){.ft-corporate.section{--section-min-height:415px}}",
+        ".ft-corporate [class*=__bar] .divider__line{flex-basis:64px;border-radius:3px}",
+        ".ft-corporate [class*=__bar]{justify-content:flex-start}",
+        ".ft-corporate [class*=__photo] .image-block__image{width:100%}",
+        "@media(max-width:749px){.ft-corporate [class*=__photo] .image-block__image{--ratio:4/3!important}}",
+        ".ft-corporate [class*=__cta]{margin-top:10px}",
+        ".ft-corporate .button{background-color:#bd8c3d;border-color:#bd8c3d;color:#262622}"
+      ]
+    },
+    "customer_reviews": {
+      "type": "review-cards",
+      "blocks": {
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "image": "shopify://shop_images/review-1.jpg",
+            "quote": "“I have been wearing them almost 365 days of the year.”",
+            "name": "K.H. Cheng",
+            "role": "Hospital staff",
+            "product": "Gaia Mary Jane",
+            "verified": true
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "image": "shopify://shop_images/review-2.jpg",
+            "quote": "“First pair in years that didn’t rub my bunion. I ordered the wide and it was right the first time.”",
+            "name": "Real name",
+            "role": "Role",
+            "product": "Style",
+            "verified": true
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "image": "shopify://shop_images/review-3.jpg",
+            "quote": "“Twelve hours on a ward floor and my feet still felt fine at the end of it.”",
+            "name": "Real name",
+            "role": "Role",
+            "product": "Style",
+            "verified": true
+          }
+        }
+      },
+      "block_order": [
+        "review_1",
+        "review_2",
+        "review_3"
+      ],
+      "settings": {
+        "eyebrow": "HEAR FROM OUR CUSTOMERS",
+        "heading": "Why customers love Foot Tree",
+        "show_rating": true,
+        "rating": "5.0",
+        "stars": 5,
+        "rating_caption": "60+ reviews",
+        "rating_link": "",
+        "columns": 3,
+        "card_gap": 20,
+        "image_ratio": "wide",
+        "image_fit": "contain",
+        "mobile_card_size": 85,
+        "verified_label": "Verified",
+        "card_background": "#ffffff",
+        "card_border": true,
+        "card_radius": 8,
+        "section_width": "page-width",
+        "background_color": "",
+        "css_class": "ft-reviews",
+        "padding-block-start": 30,
+        "padding-block-end": 30,
+        "custom_mobile_padding": false,
+        "mobile-padding-block-start": 0,
+        "mobile-padding-block-end": 0,
+        "mobile-padding-inline-start": 0,
+        "mobile-padding-inline-end": 0
+      }
     }
   },
   "order": [
@@ -1742,6 +2083,8 @@
     "collection_rail",
     "bestsellers_rail",
     "new_arrivals_spotlight",
-    "why_foot_tree"
+    "why_foot_tree",
+    "corporate_door",
+    "customer_reviews"
   ]
 }

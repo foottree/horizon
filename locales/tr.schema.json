@@ -172,7 +172,9 @@
     "collection_rail": "Shop by Collection rail",
     "collection_tile": "Collection tile",
     "product_rail_tabs": "Product rail with tabs",
-    "tab": "Tab"
+    "tab": "Tab",
+    "review": "Review",
+    "review_cards": "Customer reviews"
   },
   "settings": {
     "autoplay": "Otomatik oynatma",
@@ -599,7 +601,24 @@
     "link_label": "Link label",
     "description": "Description",
     "show_arrows": "Show arrows",
-    "tabs_style": "Tab style"
+    "tabs_style": "Tab style",
+    "eyebrow": "Eyebrow",
+    "photo": "Photo",
+    "quote": "Quote",
+    "name": "Name",
+    "role": "Role",
+    "product_style": "Product / style",
+    "show_verified_chip": "Show verified chip",
+    "show_rating": "Show rating",
+    "rating": "Rating",
+    "stars": "Stars",
+    "rating_caption": "Rating caption",
+    "rating_link": "Rating link",
+    "image_fit": "Image fit",
+    "verified_label": "Verified label",
+    "card_background": "Card background",
+    "card_border": "Card border",
+    "card_radius": "Card corner radius"
   },
   "options": {
     "apple": "Apple",
@@ -1014,7 +1033,9 @@
     "disclosures": "Bildirimler",
     "disclosures_metafield_content": "Bu ürün için zorunlu güvenlik uyarıları ve yasal bildirimler.",
     "page_text_color_contrast_info": "Özel arka plan rengine sahip bölümler, yalnızca yeterli renk kontrastı olduğunda bu metin rengini kullanır.",
-    "tabs": "Tabs"
+    "tabs": "Tabs",
+    "card": "Card",
+    "content": "Content"
   },
   "html_defaults": {
     "share_information_about_your": "<p>Markanızla ilgili bilgileri müşterilerinizle paylaşın. Bir ürünü açıklayın, duyurular yapın veya mağazanıza gelen müşterileri karşılayın.</p>",
