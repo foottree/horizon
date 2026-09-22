@@ -624,7 +624,7 @@
       "settings": {
         "heading": "Shop by Collection",
         "link_label": "Shop All",
-        "link": "/collections",
+        "link": "shopify://collections",
         "section_width": "narrow",
         "mobile_card_size": 85,
         "background_color": "",
