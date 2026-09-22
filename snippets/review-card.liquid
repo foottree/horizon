@@ -94,7 +94,13 @@
       </div>
       {%- if verified -%}
         <span class="review-card__verified">
-          <span aria-hidden="true">&#10003;</span>{{ verified_label | default: 'Verified' }}
+          <span
+            class="review-card__verified-icon svg-wrapper"
+            aria-hidden="true"
+          >
+            {{- 'icon-verified-seal.svg' | inline_asset_content -}}
+          </span>
+          {{- verified_label | default: 'Verified' -}}
         </span>
       {%- endif -%}
     </div>
@@ -220,5 +226,19 @@
     border-radius: 4px;
     background: var(--review-cards-chip-bg, var(--color-background));
     color: var(--review-cards-accent-color, var(--color-foreground));
+  }
+
+  .review-card__verified-icon {
+    display: inline-flex;
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+    min-height: 16px;
+    --icon-verified-seal-check: var(--review-cards-chip-bg, var(--color-background));
+  }
+
+  .review-card__verified-icon svg {
+    width: 100%;
+    height: 100%;
   }
 {% endstylesheet %}
