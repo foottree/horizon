@@ -11,8 +11,8 @@
   @param {string} [slide_id] - The unique id assigned to the slide amongst all slides in the slideshow
   @param {string} [media_fit] - { 'cover', 'contain' } - CSS property for how the media should be fit in the slide
   @param {boolean} [navigate_to_slide] - Whether the user can click to navigate to the slide
-  @param {number} [slide_height_custom] - desktop grid row height percentage (dvh) used when slide_size is 'custom'
-  @param {number} [slide_height_custom_mobile] - mobile grid row height percentage (dvh) used when slide_size is 'custom'
+  @param {number} [slide_height_custom] - desktop grid row height in px used when slide_size is 'custom'
+  @param {number} [slide_height_custom_mobile] - mobile grid row height in px used when slide_size is 'custom'; 0 means auto
 
   @example
   {% render 'slideshow-slide', index: 0, children: imageElement, slide_id: 'slide-1', hidden: false, media_fit: 'cover' %}
@@ -36,9 +36,13 @@
       assign grid_template_rows = grid_template_rows | replace: '50dvh', '40dvh'
       assign grid_template_rows_desktop = grid_template_rows_desktop | replace: '70dvh', '60dvh'
     when 'custom'
-      assign mobile_row_value = slide_height_custom_mobile | append: 'dvh'
+      if slide_height_custom_mobile == 0
+        assign mobile_row_value = 'auto'
+      else
+        assign mobile_row_value = slide_height_custom_mobile | append: 'px'
+      endif
       assign grid_template_rows = grid_template_rows | replace: '50dvh', mobile_row_value
-      assign desktop_row_value = slide_height_custom | append: 'dvh'
+      assign desktop_row_value = slide_height_custom | append: 'px'
       assign grid_template_rows_desktop = grid_template_rows_desktop | replace: '70dvh', desktop_row_value
   endcase
 -%}
