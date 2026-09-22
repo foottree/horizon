@@ -170,7 +170,9 @@
     "cart_drawer": "购物车抽屉",
     "disclosures": "披露信息",
     "collection_rail": "Shop by Collection rail",
-    "collection_tile": "Collection tile"
+    "collection_tile": "Collection tile",
+    "product_rail_tabs": "Product rail with tabs",
+    "tab": "Tab"
   },
   "settings": {
     "alignment": "对齐方式",
@@ -594,7 +596,10 @@
     "custom_class": "Custom CSS class",
     "submenu_style_exceptions": "Use the other style for",
     "tile_image_ratio": "Tile image ratio",
-    "link_label": "Link label"
+    "link_label": "Link label",
+    "description": "Description",
+    "show_arrows": "Show arrows",
+    "tabs_style": "Tab style"
   },
   "options": {
     "apple": "Apple",
@@ -880,7 +885,8 @@
     "with_pagination": "With pagination",
     "portrait_4_5": "Portrait 4:5",
     "portrait_3_4": "Portrait 3:4",
-    "portrait_2_3": "Portrait 2:3"
+    "portrait_2_3": "Portrait 2:3",
+    "segmented": "Segmented"
   },
   "content": {
     "advanced": "高级",
@@ -1007,7 +1013,8 @@
     "gift_card_products": "礼品卡产品",
     "disclosures": "披露信息",
     "disclosures_metafield_content": "此产品所需的安全警告和监管披露信息。",
-    "page_text_color_contrast_info": "具有自定义背景色的分区仅在颜色对比度足够时才会使用此文本颜色。"
+    "page_text_color_contrast_info": "具有自定义背景色的分区仅在颜色对比度足够时才会使用此文本颜色。",
+    "tabs": "Tabs"
   },
   "html_defaults": {
     "share_information_about_your": "<p>与您的客户分享有关您品牌的信息。描述产品、发布公告或欢迎客户光临您的商店。</p>",

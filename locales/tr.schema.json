@@ -170,7 +170,9 @@
     "cart_drawer": "Sepet çekmecesi",
     "disclosures": "Bildirimler",
     "collection_rail": "Shop by Collection rail",
-    "collection_tile": "Collection tile"
+    "collection_tile": "Collection tile",
+    "product_rail_tabs": "Product rail with tabs",
+    "tab": "Tab"
   },
   "settings": {
     "autoplay": "Otomatik oynatma",
@@ -594,7 +596,10 @@
     "custom_class": "Custom CSS class",
     "submenu_style_exceptions": "Use the other style for",
     "tile_image_ratio": "Tile image ratio",
-    "link_label": "Link label"
+    "link_label": "Link label",
+    "description": "Description",
+    "show_arrows": "Show arrows",
+    "tabs_style": "Tab style"
   },
   "options": {
     "apple": "Apple",
@@ -880,7 +885,8 @@
     "with_pagination": "With pagination",
     "portrait_4_5": "Portrait 4:5",
     "portrait_3_4": "Portrait 3:4",
-    "portrait_2_3": "Portrait 2:3"
+    "portrait_2_3": "Portrait 2:3",
+    "segmented": "Segmented"
   },
   "content": {
     "background_video": "Arka plan videosu",
@@ -1007,7 +1013,8 @@
     "gift_card_products": "Hediye kartı ürünleri",
     "disclosures": "Bildirimler",
     "disclosures_metafield_content": "Bu ürün için zorunlu güvenlik uyarıları ve yasal bildirimler.",
-    "page_text_color_contrast_info": "Özel arka plan rengine sahip bölümler, yalnızca yeterli renk kontrastı olduğunda bu metin rengini kullanır."
+    "page_text_color_contrast_info": "Özel arka plan rengine sahip bölümler, yalnızca yeterli renk kontrastı olduğunda bu metin rengini kullanır.",
+    "tabs": "Tabs"
   },
   "html_defaults": {
     "share_information_about_your": "<p>Markanızla ilgili bilgileri müşterilerinizle paylaşın. Bir ürünü açıklayın, duyurular yapın veya mağazanıza gelen müşterileri karşılayın.</p>",

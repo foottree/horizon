@@ -170,7 +170,9 @@
     "cart_drawer": "Veto-ostoskori",
     "disclosures": "Ilmoitukset",
     "collection_rail": "Shop by Collection rail",
-    "collection_tile": "Collection tile"
+    "collection_tile": "Collection tile",
+    "product_rail_tabs": "Product rail with tabs",
+    "tab": "Tab"
   },
   "settings": {
     "alignment": "Tasaus",
@@ -594,7 +596,10 @@
     "custom_class": "Custom CSS class",
     "submenu_style_exceptions": "Use the other style for",
     "tile_image_ratio": "Tile image ratio",
-    "link_label": "Link label"
+    "link_label": "Link label",
+    "description": "Description",
+    "show_arrows": "Show arrows",
+    "tabs_style": "Tab style"
   },
   "options": {
     "apple": "Omena",
@@ -880,7 +885,8 @@
     "with_pagination": "With pagination",
     "portrait_4_5": "Portrait 4:5",
     "portrait_3_4": "Portrait 3:4",
-    "portrait_2_3": "Portrait 2:3"
+    "portrait_2_3": "Portrait 2:3",
+    "segmented": "Segmented"
   },
   "content": {
     "advanced": "Lisäasetukset",
@@ -1007,7 +1013,8 @@
     "gift_card_products": "Lahjakorttituotteet",
     "disclosures": "Ilmoitukset",
     "disclosures_metafield_content": "Tämän tuotteen pakolliset turvallisuusvaroitukset ja säädösten edellyttämät ilmoitukset.",
-    "page_text_color_contrast_info": "Osiot, joissa on mukautettu taustaväri, käyttävät tätä tekstin väriä vain, kun värikontrasti on riittävä."
+    "page_text_color_contrast_info": "Osiot, joissa on mukautettu taustaväri, käyttävät tätä tekstin väriä vain, kun värikontrasti on riittävä.",
+    "tabs": "Tabs"
   },
   "html_defaults": {
     "share_information_about_your": "<p>Jaa tietoja brändistäsi asiakkaillesi. Kuvaile tuotetta, tee ilmoituksia tai toivota asiakkaat tervetulleiksi kauppaasi.</p>",

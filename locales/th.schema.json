@@ -170,7 +170,9 @@
     "cart_drawer": "ตะกร้าสินค้าแบบเลื่อนด้านข้าง",
     "disclosures": "การเปิดเผยข้อมูล",
     "collection_rail": "Shop by Collection rail",
-    "collection_tile": "Collection tile"
+    "collection_tile": "Collection tile",
+    "product_rail_tabs": "Product rail with tabs",
+    "tab": "Tab"
   },
   "settings": {
     "alignment": "การจัดตำแหน่ง",
@@ -594,7 +596,10 @@
     "custom_class": "Custom CSS class",
     "submenu_style_exceptions": "Use the other style for",
     "tile_image_ratio": "Tile image ratio",
-    "link_label": "Link label"
+    "link_label": "Link label",
+    "description": "Description",
+    "show_arrows": "Show arrows",
+    "tabs_style": "Tab style"
   },
   "options": {
     "apple": "Apple",
@@ -880,7 +885,8 @@
     "with_pagination": "With pagination",
     "portrait_4_5": "Portrait 4:5",
     "portrait_3_4": "Portrait 3:4",
-    "portrait_2_3": "Portrait 2:3"
+    "portrait_2_3": "Portrait 2:3",
+    "segmented": "Segmented"
   },
   "content": {
     "advanced": "ขั้นสูง",
@@ -1007,7 +1013,8 @@
     "gift_card_products": "สินค้าบัตรของขวัญ",
     "disclosures": "การเปิดเผยข้อมูล",
     "disclosures_metafield_content": "คำเตือนด้านความปลอดภัยและข้อมูลตามระเบียบข้อบังคับที่ต้องเปิดเผยสำหรับสินค้านี้",
-    "page_text_color_contrast_info": "ส่วนที่มีสีพื้นหลังแบบกำหนดเองจะใช้สีตัวอักษรนี้ก็ต่อเมื่อมีความเปรียบต่างของสีเพียงพอ"
+    "page_text_color_contrast_info": "ส่วนที่มีสีพื้นหลังแบบกำหนดเองจะใช้สีตัวอักษรนี้ก็ต่อเมื่อมีความเปรียบต่างของสีเพียงพอ",
+    "tabs": "Tabs"
   },
   "html_defaults": {
     "share_information_about_your": "<p>แชร์ข้อมูลเกี่ยวกับแบรนด์ของคุณกับลูกค้า อธิบายสินค้า ประกาศข่าวสาร หรือต้อนรับลูกค้าสู่ร้านค้าของคุณ</p>",

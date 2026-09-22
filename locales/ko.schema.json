@@ -170,7 +170,9 @@
     "cart_drawer": "카트 서랍",
     "disclosures": "고지 사항",
     "collection_rail": "Shop by Collection rail",
-    "collection_tile": "Collection tile"
+    "collection_tile": "Collection tile",
+    "product_rail_tabs": "Product rail with tabs",
+    "tab": "Tab"
   },
   "settings": {
     "autoplay": "자동 재생",
@@ -594,7 +596,10 @@
     "custom_class": "Custom CSS class",
     "submenu_style_exceptions": "Use the other style for",
     "tile_image_ratio": "Tile image ratio",
-    "link_label": "Link label"
+    "link_label": "Link label",
+    "description": "Description",
+    "show_arrows": "Show arrows",
+    "tabs_style": "Tab style"
   },
   "options": {
     "apple": "Apple",
@@ -880,7 +885,8 @@
     "with_pagination": "With pagination",
     "portrait_4_5": "Portrait 4:5",
     "portrait_3_4": "Portrait 3:4",
-    "portrait_2_3": "Portrait 2:3"
+    "portrait_2_3": "Portrait 2:3",
+    "segmented": "Segmented"
   },
   "content": {
     "background_video": "배경 비디오",
@@ -1007,7 +1013,8 @@
     "gift_card_products": "기프트 카드 제품",
     "disclosures": "고지 사항",
     "disclosures_metafield_content": "이 제품에 필수적인 안전 경고 및 규제 관련 고지 사항입니다.",
-    "page_text_color_contrast_info": "사용자 지정 배경 색상이 있는 섹션은 색상 대비가 충분한 경우에만 이 텍스트 색상을 사용합니다."
+    "page_text_color_contrast_info": "사용자 지정 배경 색상이 있는 섹션은 색상 대비가 충분한 경우에만 이 텍스트 색상을 사용합니다.",
+    "tabs": "Tabs"
   },
   "html_defaults": {
     "share_information_about_your": "<p>고객과 브랜드에 대한 정보를 공유하세요. 제품을 설명하거나, 공지 사항을 알리거나, 스토어를 방문하는 고객을 환영할 수 있습니다.</p>",

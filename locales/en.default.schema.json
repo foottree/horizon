@@ -145,6 +145,7 @@
     "submit_button": "Submit button",
     "swatches": "Swatches",
     "submenu_feature": "Submenu feature",
+    "tabs": "Tabs",
     // Section header for text positioning settings
     "text": "Text",
     "text_presets": "Text presets",
@@ -380,6 +381,7 @@
     "product_list_button": "View all button",
     "product_media": "Product media",
     "product_price": "Price",
+    "product_rail_tabs": "Product rail with tabs",
     "product_recommendations": "Recommended products",
     "product_sku": "SKU",
     "product_review_stars": "Review stars",
@@ -411,6 +413,7 @@
     "submit_button": "Submit button",
     "summary": "Summary",
     "swatches": "Swatches",
+    "tab": "Tab",
     "text": "Text",
     "title": "Title",
     "typography": "Typography",
@@ -663,6 +666,7 @@
     "scale": "Scale",
     "secondary": "Secondary",
     "secondary_style": "Secondary style",
+    "segmented": "Segmented",
     "semibold": "Semibold",
     "sentence": "Sentence",
     "serving_dish": "Serving dish",
@@ -853,6 +857,7 @@
     "default_logo": "Default logo",
     "desktop_height": "Desktop height",
     "desktop_pagination": "Desktop pagination",
+    "description": "Description",
     "direction": "Direction",
     // Button appearance for email signup form
     "display": "Display",
@@ -1094,6 +1099,7 @@
     "shape": "Shape",
     // Checkbox label to toggle visibility of UI elements
     "show": "Show",
+    "show_arrows": "Show arrows",
     "show_as_accordion": "Show as accordion on mobile",
     "show_author": "Author",
     "show_alignment": "Show alignment",
@@ -1134,6 +1140,7 @@
     "submenu_size": "Submenu size",
     "success_color": "Success",
     "swatches": "Swatches",
+    "tabs_style": "Tab style",
     "tertiary_font": "Tertiary font",
     // Generic label for text-related settings (content or color)
     "text": "Text",
