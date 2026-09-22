@@ -522,7 +522,8 @@
     --swatch-height: 32px;
     --color-border: var(--product-rail-tabs-track-color, #e0dcd2);
     border-width: 1px;
-    border-radius: 6px;
+    /* radius follows the theme's Variant swatch setting (a circle at 32); forcing 6px here
+       left the outer shell squarer than the colour fill inside it */
   }
 
   .product-rail-tabs .variant-option__button-label--has-swatch:has(:checked) {
