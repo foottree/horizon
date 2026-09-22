@@ -11,28 +11,6 @@
   "sections": {
     "hero_slideshow": {
       "type": "slideshow",
-      "name": "t:names.slideshow",
-      "settings": {
-        "display_mode": "full_frame",
-        "section_width": "full-width",
-        "full_frame_on_mobile": false,
-        "slideshow_gap": 12,
-        "corner_radius": 0,
-        "slide_height": "custom",
-        "slide_height_custom": 720,
-        "slide_height_custom_mobile": 0,
-        "content_position": "on-media",
-        "background_color": "",
-        "icons_style": "arrow",
-        "icons_shape": "circle",
-        "slideshow_controls_style": "dots",
-        "controls_layout": "inline",
-        "autoplay": false,
-        "autoplay_speed": 4,
-        "custom_class": "ft-hero",
-        "padding-block-start": 0,
-        "padding-block-end": 0
-      },
       "blocks": {
         "slide_1": {
           "type": "_slide",
@@ -40,7 +18,6 @@
           "settings": {
             "media_type_1": "image",
             "image_1": "shopify://shop_images/hero-slide-1.jpg",
-            "video_1": "",
             "image_1_mobile": "shopify://shop_images/hero-slide-1-mobile-placeholder.png",
             "content_direction": "column",
             "vertical_on_mobile": true,
@@ -64,7 +41,6 @@
             "text_eyebrow": {
               "type": "text",
               "name": "t:names.text",
-              "blocks": {},
               "settings": {
                 "text": "<p>SINGAPORE’S WIDE-FIT SHOEMAKERS SINCE 1974</p>",
                 "width": "100%",
@@ -93,12 +69,12 @@
                 "mobile-padding-inline-start": 0,
                 "mobile-padding-inline-end": 0,
                 "custom_class": ""
-              }
+              },
+              "blocks": {}
             },
             "text_heading": {
               "type": "text",
               "name": "t:names.heading",
-              "blocks": {},
               "settings": {
                 "text": "<h1>Shoes that fit feet like yours.</h1>",
                 "width": "100%",
@@ -127,12 +103,12 @@
                 "mobile-padding-inline-start": 0,
                 "mobile-padding-inline-end": 0,
                 "custom_class": ""
-              }
+              },
+              "blocks": {}
             },
             "text_body": {
               "type": "text",
               "name": "t:names.text",
-              "blocks": {},
               "settings": {
                 "text": "<p>Wide fits and real cushioning. Designed for all day comfort. Made for professionals. Now, everyone.</p>",
                 "width": "100%",
@@ -161,12 +137,12 @@
                 "mobile-padding-inline-start": 0,
                 "mobile-padding-inline-end": 0,
                 "custom_class": ""
-              }
+              },
+              "blocks": {}
             },
             "button_cta": {
               "type": "button",
               "name": "t:names.button",
-              "blocks": {},
               "settings": {
                 "label": "Shop Bestsellers",
                 "link": "shopify://collections/bestsellers-women",
@@ -180,7 +156,8 @@
                 "custom_width": 100,
                 "width_mobile": "fit-content",
                 "custom_width_mobile": 100
-              }
+              },
+              "blocks": {}
             }
           },
           "block_order": [
@@ -196,7 +173,6 @@
           "settings": {
             "media_type_1": "image",
             "image_1": "shopify://shop_images/hero-slide-2.jpg",
-            "video_1": "",
             "image_1_mobile": "shopify://shop_images/hero-slide-2-mobile-placeholder.png",
             "content_direction": "column",
             "vertical_on_mobile": true,
@@ -220,7 +196,6 @@
             "text_eyebrow": {
               "type": "text",
               "name": "t:names.text",
-              "blocks": {},
               "settings": {
                 "text": "<p>SINGAPORE’S WIDE-FIT SHOEMAKERS SINCE 1974</p>",
                 "width": "100%",
@@ -249,12 +224,12 @@
                 "mobile-padding-inline-start": 0,
                 "mobile-padding-inline-end": 0,
                 "custom_class": ""
-              }
+              },
+              "blocks": {}
             },
             "text_heading": {
               "type": "text",
               "name": "t:names.heading",
-              "blocks": {},
               "settings": {
                 "text": "<h1>Made for Asian Fit</h1>",
                 "width": "100%",
@@ -283,12 +258,12 @@
                 "mobile-padding-inline-start": 0,
                 "mobile-padding-inline-end": 0,
                 "custom_class": ""
-              }
+              },
+              "blocks": {}
             },
             "text_body": {
               "type": "text",
               "name": "t:names.text",
-              "blocks": {},
               "settings": {
                 "text": "<p>Wide-fit, Slip-resistant and Cushioned Comfort For All-Day Wear</p>",
                 "width": "100%",
@@ -317,12 +292,12 @@
                 "mobile-padding-inline-start": 0,
                 "mobile-padding-inline-end": 0,
                 "custom_class": ""
-              }
+              },
+              "blocks": {}
             },
             "button_cta": {
               "type": "button",
               "name": "t:names.button",
-              "blocks": {},
               "settings": {
                 "label": "Shop Wide-Fit Shoes",
                 "link": "shopify://collections/wide-fit-specials",
@@ -336,7 +311,8 @@
                 "custom_width": 100,
                 "width_mobile": "fit-content",
                 "custom_width_mobile": 100
-              }
+              },
+              "blocks": {}
             }
           },
           "block_order": [
@@ -352,7 +328,6 @@
           "settings": {
             "media_type_1": "image",
             "image_1": "shopify://shop_images/hero-slide-1.jpg",
-            "video_1": "",
             "image_1_mobile": "shopify://shop_images/hero-slide-1-mobile-placeholder.png",
             "content_direction": "column",
             "vertical_on_mobile": true,
@@ -376,7 +351,6 @@
             "text_eyebrow": {
               "type": "text",
               "name": "t:names.text",
-              "blocks": {},
               "settings": {
                 "text": "<p>SINGAPORE’S WIDE-FIT SHOEMAKERS SINCE 1974</p>",
                 "width": "100%",
@@ -405,12 +379,12 @@
                 "mobile-padding-inline-start": 0,
                 "mobile-padding-inline-end": 0,
                 "custom_class": ""
-              }
+              },
+              "blocks": {}
             },
             "text_heading": {
               "type": "text",
               "name": "t:names.heading",
-              "blocks": {},
               "settings": {
                 "text": "<h1>Shoes that fit feet like yours.</h1>",
                 "width": "100%",
@@ -439,12 +413,12 @@
                 "mobile-padding-inline-start": 0,
                 "mobile-padding-inline-end": 0,
                 "custom_class": ""
-              }
+              },
+              "blocks": {}
             },
             "text_body": {
               "type": "text",
               "name": "t:names.text",
-              "blocks": {},
               "settings": {
                 "text": "<p>Wide fits and real cushioning. Designed in-house, fitted in person, since 1974.</p>",
                 "width": "100%",
@@ -473,12 +447,12 @@
                 "mobile-padding-inline-start": 0,
                 "mobile-padding-inline-end": 0,
                 "custom_class": ""
-              }
+              },
+              "blocks": {}
             },
             "button_cta": {
               "type": "button",
               "name": "t:names.button",
-              "blocks": {},
               "settings": {
                 "label": "Shop Bestsellers",
                 "link": "shopify://collections/bestsellers-women",
@@ -492,7 +466,8 @@
                 "custom_width": 100,
                 "width_mobile": "fit-content",
                 "custom_width_mobile": 100
-              }
+              },
+              "blocks": {}
             }
           },
           "block_order": [
@@ -507,7 +482,29 @@
         "slide_1",
         "slide_2",
         "slide_3"
-      ]
+      ],
+      "name": "t:names.slideshow",
+      "settings": {
+        "display_mode": "full_frame",
+        "section_width": "full-width",
+        "full_frame_on_mobile": false,
+        "slideshow_gap": 12,
+        "corner_radius": 0,
+        "slide_height": "custom",
+        "slide_height_custom": 720,
+        "slide_height_custom_mobile": 0,
+        "content_position": "on-media",
+        "background_color": "",
+        "icons_style": "arrow",
+        "icons_shape": "circle",
+        "slideshow_controls_style": "dots",
+        "controls_layout": "inline",
+        "autoplay": false,
+        "autoplay_speed": 4,
+        "custom_class": "ft-hero",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
     },
     "product_list_fa6P9H": {
       "type": "product-list",
@@ -532,16 +529,23 @@
             "height": "fit",
             "custom_height": 100,
             "background_media": "none",
+            "background_color": "",
             "video_position": "cover",
             "background_image_position": "cover",
             "border": "none",
             "border_width": 1,
             "border_opacity": 100,
+            "border_color": "",
             "border_radius": 0,
             "padding-block-start": 0,
             "padding-block-end": 0,
             "padding-inline-start": 0,
-            "padding-inline-end": 0
+            "padding-inline-end": 0,
+            "custom_mobile_padding": false,
+            "mobile-padding-block-start": 0,
+            "mobile-padding-block-end": 0,
+            "mobile-padding-inline-start": 0,
+            "mobile-padding-inline-end": 0
           },
           "blocks": {
             "product_list_text_YFtzcL": {
@@ -559,6 +563,7 @@
                 "letter_spacing": "normal",
                 "case": "none",
                 "wrap": "pretty",
+                "text_color": "",
                 "background": false,
                 "background_color": "#00000026",
                 "corner_radius": 0,
@@ -576,6 +581,10 @@
                 "label": "View all",
                 "open_in_new_tab": false,
                 "style_class": "button-unstyled",
+                "custom_button_background": "{{ settings.color_palette.foreground }}",
+                "custom_button_text": "{{ settings.color_palette.background }}",
+                "custom_button_border": "{{ settings.color_palette.background }}",
+                "link_text_color": "",
                 "width": "fit-content",
                 "custom_width": 100,
                 "width_mobile": "fit-content",
@@ -595,9 +604,11 @@
           "static": true,
           "settings": {
             "product_card_gap": 4,
+            "background_color": "",
             "border": "none",
             "border_width": 1,
             "border_opacity": 100,
+            "border_color": "",
             "border_radius": 0,
             "padding-block-start": 0,
             "padding-block-end": 0,
@@ -613,6 +624,7 @@
                 "border": "none",
                 "border_width": 1,
                 "border_opacity": 100,
+                "border_color": "",
                 "border_radius": 0,
                 "padding-block-start": 0,
                 "padding-block-end": 0,
@@ -635,6 +647,7 @@
                 "letter_spacing": "normal",
                 "case": "none",
                 "wrap": "pretty",
+                "text_color": "",
                 "background": false,
                 "background_color": "#00000026",
                 "corner_radius": 0,
@@ -660,6 +673,7 @@
                 "line_height": "normal",
                 "letter_spacing": "normal",
                 "case": "none",
+                "text_color": "",
                 "padding-block-start": 0,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
@@ -691,6 +705,7 @@
         "section_width": "page-width",
         "horizontal_alignment": "flex-start",
         "gap": 28,
+        "background_color": "",
         "padding-block-start": 48,
         "padding-block-end": 48
       }
