@@ -1120,7 +1120,7 @@
             "overlay_color": "#00000026",
             "overlay_style": "solid",
             "gradient_direction": "to top",
-            "border": "solid",
+            "border": "none",
             "border_width": 1,
             "border_opacity": 100,
             "border_color": "{{ settings.color_palette.color3 }}",
@@ -1730,7 +1730,7 @@
       "custom_css": [
         ".ft-why-foot-tree [class*=__img_archive] .image-block__image{--ratio:662/684!important}",
         "@media(max-width:749px){.ft-why-foot-tree [class*=__img_archive] .image-block__image{--ratio:4/5!important}}",
-        "@media(min-width:750px){.ft-why-foot-tree .panel{height:calc(100% - 32px)!important}}",
+        "@media(min-width:750px){.ft-why-foot-tree .panel{height:100%!important}}",
         ".ft-why-foot-tree .panel .stats-row .group-block{width:160px}",
         "@media(max-width:749px){.ft-why-foot-tree .panel .stats-row .group-block{width:100%}}",
         "[class*=__link_story] a { text-decoration: none; }"
