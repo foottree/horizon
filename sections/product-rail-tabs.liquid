@@ -487,6 +487,18 @@
     padding-inline: var(--util-page-margin-offset, var(--page-margin, 16px));
   }
 
+  /* Desktop rail is also force-full-width (so the rail itself can bleed past the content
+     column into the right-hand margin/viewport edge, per the Figma spec) - without this,
+     the progress track (width: 100%, padding-inline: 0 from the rule above) spans the same
+     full bleed as the rail instead of staying contained to the content column like
+     collection-rail's and resource-list-carousel's progress tracks do. Re-apply the same
+     page-margin inset used by the mobile rail above, on both edges - the desktop rail's
+     right bleed is a rail-only effect (slideshow_gutters: 'start'), not a progress-track
+     effect. */
+  .product-rail-tabs__rail-desktop.force-full-width .slideshow-controls__progress {
+    padding-inline: var(--util-page-margin-offset, var(--page-margin, 16px));
+  }
+
   .product-rail-tabs .slideshow-controls__progress-track {
     height: 4px;
     background: var(--product-rail-tabs-track-color, var(--color-border));
