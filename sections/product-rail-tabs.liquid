@@ -37,6 +37,18 @@
   sets `scroll-padding-inline-start` for 'start'), so native scroll-snap actually rests on
   that trailing inset instead of only being reachable by scripting scrollLeft directly.
 
+  That bleed/carousel treatment is only correct when a tab's cards genuinely overflow one
+  row: with `desktop_layout: 'auto'` (the default) a panel whose card_count is 4 or fewer
+  renders a contained 4-column CSS grid instead (`is_desktop_grid` in the Liquid below) -
+  no force-full-width, no bleed, no slideshow component, no progress bar/arrows - because a
+  fixed-320px carousel clips its last card at the viewport edge once there's almost nothing
+  left to scroll (this happened with the Men tab's exact 4 products at 320px + 24px gaps).
+  Each card is still captured once via `card_html` and reused as either a slideshow-slide's
+  children (carousel) or a plain grid-item's children (grid), so the card markup itself
+  never differs between the two. `desktop_layout: 'carousel'` opts back into today's
+  always-carousel behaviour regardless of card_count. Mobile is unaffected either way - it
+  always keeps its own carousel below.
+
   Swatch box size/radius/gap and the selected-swatch border are overridden here (scoped
   under .product-rail-tabs) rather than through global swatch settings - see swatch-styles
   .liquid and blocks/swatches.liquid for the class names/custom properties being targeted.
@@ -170,23 +182,47 @@
         assign max_items = section.settings[max_products_key]
 
         assign desktop_slides = ''
+        assign desktop_grid_items = ''
         assign mobile_slides = ''
         assign card_count = 0
+
+        # card_count has to be known before the card loop runs so it can decide, per panel,
+        # whether the desktop rail below renders as a contained grid or a carousel - the two
+        # branches build completely different desktop markup around the same captured
+        # card_html (see is_desktop_grid below).
+        if tab_collection != blank and tab_collection.products.size > 0
+          assign card_count = tab_collection.products.size | at_most: max_items
+        else
+          assign card_count = 4
+        endif
+
+        assign is_desktop_grid = false
+        if section.settings.desktop_layout == 'auto' and card_count <= 4
+          assign is_desktop_grid = true
+        endif
 
         if tab_collection != blank and tab_collection.products.size > 0
           for product in tab_collection.products limit: max_items
             capture card_html
               content_for 'block', type: '_product-card', id: 'static-product-card', closest.product: product, product_view_context: 'collection'
             endcapture
-            capture desktop_slide
-              render 'slideshow-slide', index: forloop.index0, children: card_html, class: 'product-rail-tabs__slide'
-            endcapture
-            assign desktop_slides = desktop_slides | append: desktop_slide
             capture mobile_slide
               render 'slideshow-slide', index: forloop.index0, children: card_html, class: 'product-rail-tabs__slide product-rail-tabs__slide--mobile'
             endcapture
             assign mobile_slides = mobile_slides | append: mobile_slide
-            assign card_count = forloop.index
+            if is_desktop_grid
+              capture grid_item
+                echo '<div class="product-rail-tabs__grid-item">'
+                echo card_html
+                echo '</div>'
+              endcapture
+              assign desktop_grid_items = desktop_grid_items | append: grid_item
+            else
+              capture desktop_slide
+                render 'slideshow-slide', index: forloop.index0, children: card_html, class: 'product-rail-tabs__slide'
+              endcapture
+              assign desktop_slides = desktop_slides | append: desktop_slide
+            endif
           endfor
         else
           for i in (1..4)
@@ -194,15 +230,23 @@
             capture card_html
               content_for 'block', type: '_product-card', id: 'static-product-card', closest.product: null
             endcapture
-            capture desktop_slide
-              render 'slideshow-slide', index: placeholder_index, children: card_html, class: 'product-rail-tabs__slide'
-            endcapture
-            assign desktop_slides = desktop_slides | append: desktop_slide
             capture mobile_slide
               render 'slideshow-slide', index: placeholder_index, children: card_html, class: 'product-rail-tabs__slide product-rail-tabs__slide--mobile'
             endcapture
             assign mobile_slides = mobile_slides | append: mobile_slide
-            assign card_count = i
+            if is_desktop_grid
+              capture grid_item
+                echo '<div class="product-rail-tabs__grid-item">'
+                echo card_html
+                echo '</div>'
+              endcapture
+              assign desktop_grid_items = desktop_grid_items | append: grid_item
+            else
+              capture desktop_slide
+                render 'slideshow-slide', index: placeholder_index, children: card_html, class: 'product-rail-tabs__slide'
+              endcapture
+              assign desktop_slides = desktop_slides | append: desktop_slide
+            endif
           endfor
         endif
       -%}
@@ -217,34 +261,43 @@
           hidden
         {% endunless %}
       >
-        <div
-          class="product-rail-tabs__rail-desktop hidden--mobile force-full-width"
-          style="--gutter-slide-width: var(--util-page-margin-offset);"
-        >
-          {%- capture desktop_controls -%}
-            {%- render 'slideshow-controls',
-              style: 'progress',
-              item_count: card_count,
-              show_arrows: section.settings.show_arrows,
-              arrows_on_media: false,
-              controls_on_media: false,
-              pagination_position: 'center',
-              class: 'product-rail-tabs__controls'
+        {%- if is_desktop_grid -%}
+          <div
+            class="product-rail-tabs__rail-desktop-grid hidden--mobile"
+            style="padding-inline: var(--util-page-margin-offset);"
+          >
+            {{ desktop_grid_items }}
+          </div>
+        {%- else -%}
+          <div
+            class="product-rail-tabs__rail-desktop hidden--mobile force-full-width"
+            style="--gutter-slide-width: var(--util-page-margin-offset);"
+          >
+            {%- capture desktop_controls -%}
+              {%- render 'slideshow-controls',
+                style: 'progress',
+                item_count: card_count,
+                show_arrows: section.settings.show_arrows,
+                arrows_on_media: false,
+                controls_on_media: false,
+                pagination_position: 'center',
+                class: 'product-rail-tabs__controls'
+              -%}
+            {%- endcapture -%}
+            {%- render 'slideshow',
+              class: 'product-rail-tabs__rail-slideshow',
+              style: '--slideshow-gap: 24px;',
+              slides: desktop_slides,
+              show_arrows: false,
+              auto_hide_controls: false,
+              infinite: false,
+              initial_slide: 0,
+              slide_count: card_count,
+              slideshow_gutters: 'start end',
+              controls: desktop_controls
             -%}
-          {%- endcapture -%}
-          {%- render 'slideshow',
-            class: 'product-rail-tabs__rail-slideshow',
-            style: '--slideshow-gap: 24px;',
-            slides: desktop_slides,
-            show_arrows: false,
-            auto_hide_controls: false,
-            infinite: false,
-            initial_slide: 0,
-            slide_count: card_count,
-            slideshow_gutters: 'start end',
-            controls: desktop_controls
-          -%}
-        </div>
+          </div>
+        {%- endif -%}
 
         <div
           class="product-rail-tabs__rail-mobile hidden--desktop force-full-width"
@@ -484,6 +537,27 @@
     width: 320px;
   }
 
+  /* Desktop grid: when a panel's card_count fits in one row (<= 4, see is_desktop_grid in
+     the Liquid above) the rail renders this contained grid instead of the force-full-width
+     carousel above - the bleed/peek treatment above is only correct when a tab genuinely
+     overflows four cards; with e.g. 4 cards at the fixed 320px carousel width the last card
+     gets clipped by the viewport edge instead of peeking, and the progress bar has almost
+     nothing to scroll. This block is intentionally NOT force-full-width itself (no bleed,
+     no slideshow component) - but its ancestor `<product-rail-tabs>` IS (see the class on
+     that element further up), so like `.product-rail-tabs__tablist-wrap` above it still
+     needs the inline `padding-inline: var(--util-page-margin-offset)` re-applied (see the
+     Liquid) purely to pull its own edges back in from that inherited full-viewport width to
+     the section's normal content column - that inset is unrelated to the carousel's
+     slideshow "gutters" concept, which doesn't apply here since there's no slideshow.
+     Always 4 columns regardless of how many cards actually exist (a 2-product tab still
+     gets 4 equal-width columns and simply ends its row early) so card width stays identical
+     across tabs instead of a sparse tab stretching its cards to fill the row. */
+  .product-rail-tabs__rail-desktop-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+
   .product-rail-tabs .slideshow-controls__progress {
     margin-top: 40px;
     padding-inline: 0;
@@ -695,6 +769,22 @@
         }
       ],
       "default": "segmented"
+    },
+    {
+      "type": "select",
+      "id": "desktop_layout",
+      "label": "t:settings.layout_type",
+      "options": [
+        {
+          "value": "auto",
+          "label": "t:options.auto"
+        },
+        {
+          "value": "carousel",
+          "label": "t:options.carousel"
+        }
+      ],
+      "default": "auto"
     },
     {
       "type": "checkbox",

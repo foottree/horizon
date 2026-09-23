@@ -25,6 +25,18 @@
   lets them show together (icons_style: 'progress' + hide_arrows off), matching how
   sections/product-rail-tabs.liquid also shows a progress bar and arrows at once (there,
   side-by-side; here, arrows in the header and the bar below the row).
+
+  Desktop grid: with `desktop_layout: 'auto'` (default) a row whose tile count fits within
+  `columns` renders a contained grid instead of the carousel above (`is_desktop_grid` below)
+  - `bleed_right` is ignored in that state, since bleeding past the content column only makes
+  sense once there's real overflow to scroll into (exactly 4 tiles at columns: 4 otherwise
+  bleeds with nothing to scroll, the same clipping bug sections/product-rail-tabs.liquid had
+  with a 4-product tab). The header nav arrows above need no extra handling for this: they're
+  already gated on `desktop_has_controls` (`card_count > columns`), which is false whenever
+  the grid branch is - `desktop_layout: 'carousel'` opts back into always-carousel regardless
+  of tile count. Each tile is still captured once via `tile_html` and reused as either a
+  slideshow-slide's children (carousel) or a plain grid-item's children (grid). Mobile is
+  unaffected either way - `columns` tiles always overflow a phone, so it stays a carousel.
 {% endcomment %}
 
 {%- liquid
@@ -35,7 +47,21 @@
 
 {%- liquid
   assign card_count = section.blocks.size
+  assign columns = section.settings.columns | default: 4
+
+  # Known before the tile loop runs (card_count and columns are both section-level, no
+  # per-tile dependency) so the loop below can build only the desktop markup that will
+  # actually render - see the comment above and sections/product-rail-tabs.liquid, which
+  # gained this same auto/grid choice for the same reason (a row that doesn't overflow
+  # shouldn't render as a bled carousel with a near-empty progress bar).
+  assign desktop_layout = section.settings.desktop_layout | default: 'auto'
+  assign is_desktop_grid = false
+  if desktop_layout == 'auto' and card_count <= columns
+    assign is_desktop_grid = true
+  endif
+
   assign desktop_slides = ''
+  assign desktop_grid_items = ''
   assign mobile_slides = ''
 -%}
 
@@ -53,19 +79,25 @@
     -%}
   {%- endcapture -%}
 
-  {%- capture desktop_slide -%}
-    {%- render 'slideshow-slide', index: forloop.index0, children: tile_html, class: 'video-carousel__slide' -%}
-  {%- endcapture -%}
-  {%- assign desktop_slides = desktop_slides | append: desktop_slide -%}
-
   {%- capture mobile_slide -%}
     {%- render 'slideshow-slide', index: forloop.index0, children: tile_html, class: 'video-carousel__slide video-carousel__mobile-slide' -%}
   {%- endcapture -%}
   {%- assign mobile_slides = mobile_slides | append: mobile_slide -%}
+
+  {%- if is_desktop_grid -%}
+    {%- capture grid_item -%}
+      <div class="video-carousel__grid-item">{{ tile_html }}</div>
+    {%- endcapture -%}
+    {%- assign desktop_grid_items = desktop_grid_items | append: grid_item -%}
+  {%- else -%}
+    {%- capture desktop_slide -%}
+      {%- render 'slideshow-slide', index: forloop.index0, children: tile_html, class: 'video-carousel__slide' -%}
+    {%- endcapture -%}
+    {%- assign desktop_slides = desktop_slides | append: desktop_slide -%}
+  {%- endif -%}
 {%- endfor -%}
 
 {%- liquid
-  assign columns = section.settings.columns | default: 4
   assign card_gap = section.settings.card_gap | default: 24
   assign mobile_card_size = section.settings.mobile_card_size | default: 70
   assign bleed_right = section.settings.bleed_right
@@ -169,53 +201,62 @@
     {%- endif -%}
   </div>
 
-  <div
-    class="video-carousel__desktop hidden--mobile{% if bleed_right %} force-full-width{% endif %}"
-    style="{% if bleed_right %}--gutter-slide-width: var(--util-page-margin-offset);{% endif %}"
-  >
-    {%- capture desktop_controls -%}
-      {%- if desktop_has_controls -%}
-        {%- if section.settings.enable_dots -%}
-          {%- render 'slideshow-controls',
-            style: 'dots',
-            autoplay: section.settings.autoplay,
-            item_count: card_count,
-            show_arrows: false,
-            arrows_on_media: false,
-            controls_on_media: false,
-            pagination_position: 'center',
-            class: 'video-carousel__controls'
-          -%}
-        {%- elsif icons_style == 'progress' -%}
-          {%- render 'slideshow-controls',
-            style: 'progress',
-            item_count: card_count,
-            show_arrows: false,
-            arrows_on_media: false,
-            controls_on_media: false,
-            pagination_position: 'center',
-            class: 'video-carousel__controls carousel-controls carousel-controls--progress'
-          -%}
+  {%- if is_desktop_grid -%}
+    <div
+      class="video-carousel__desktop-grid hidden--mobile"
+      style="--video-carousel-grid-columns: {{ columns }}; --video-carousel-grid-gap: {{ card_gap }}px;"
+    >
+      {{ desktop_grid_items }}
+    </div>
+  {%- else -%}
+    <div
+      class="video-carousel__desktop hidden--mobile{% if bleed_right %} force-full-width{% endif %}"
+      style="{% if bleed_right %}--gutter-slide-width: var(--util-page-margin-offset);{% endif %}"
+    >
+      {%- capture desktop_controls -%}
+        {%- if desktop_has_controls -%}
+          {%- if section.settings.enable_dots -%}
+            {%- render 'slideshow-controls',
+              style: 'dots',
+              autoplay: section.settings.autoplay,
+              item_count: card_count,
+              show_arrows: false,
+              arrows_on_media: false,
+              controls_on_media: false,
+              pagination_position: 'center',
+              class: 'video-carousel__controls'
+            -%}
+          {%- elsif icons_style == 'progress' -%}
+            {%- render 'slideshow-controls',
+              style: 'progress',
+              item_count: card_count,
+              show_arrows: false,
+              arrows_on_media: false,
+              controls_on_media: false,
+              pagination_position: 'center',
+              class: 'video-carousel__controls carousel-controls carousel-controls--progress'
+            -%}
+          {%- endif -%}
         {%- endif -%}
-      {%- endif -%}
-    {%- endcapture -%}
-    {%- render 'slideshow',
-      ref: 'videoCarouselDesktop',
-      class: 'video-carousel__slideshow',
-      style: desktop_style,
-      slides: desktop_slides,
-      show_arrows: false,
-      autoplay: section.settings.autoplay,
-      autoplay_speed: section.settings.autoplay_speed,
-      auto_hide_controls: false,
-      infinite: false,
-      initial_slide: 0,
-      slide_count: card_count,
-      slideshow_gutters: desktop_gutters,
-      attributes: desktop_slideshow_attributes,
-      controls: desktop_controls
-    -%}
-  </div>
+      {%- endcapture -%}
+      {%- render 'slideshow',
+        ref: 'videoCarouselDesktop',
+        class: 'video-carousel__slideshow',
+        style: desktop_style,
+        slides: desktop_slides,
+        show_arrows: false,
+        autoplay: section.settings.autoplay,
+        autoplay_speed: section.settings.autoplay_speed,
+        auto_hide_controls: false,
+        infinite: false,
+        initial_slide: 0,
+        slide_count: card_count,
+        slideshow_gutters: desktop_gutters,
+        attributes: desktop_slideshow_attributes,
+        controls: desktop_controls
+      -%}
+    </div>
+  {%- endif -%}
 
   <div
     class="video-carousel__mobile hidden--desktop force-full-width"
@@ -336,6 +377,23 @@
 
   .video-carousel__desktop .video-carousel__slide {
     height: auto;
+  }
+
+  /* Desktop grid: when the tile count fits within `columns` (see is_desktop_grid in the
+     Liquid above, default desktop_layout: 'auto') the row renders this contained grid
+     instead of the force-full-width carousel above - with exactly `columns` tiles the
+     carousel has nothing to scroll to, so bleed_right's right-edge bleed only clips the
+     last tile against the viewport instead of genuinely peeking past it. This block is
+     never force-full-width regardless of the bleed_right setting (bleed only makes sense
+     once there's real overflow to scroll into), so it needs no --gutter-slide-width either
+     - it sits in the section's normal content column, same as the heading above it. Column
+     count and gap come from the section's own `columns`/`card_gap` settings (2-6, unlike
+     product-rail-tabs's fixed 4), so they're set as inline custom properties rather than a
+     fixed repeat(4, ...) here. */
+  .video-carousel__desktop-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--video-carousel-grid-columns, 4), 1fr);
+    gap: var(--video-carousel-grid-gap, 24px);
   }
 
   /* Progress bar / dots: contained to the content column even when the desktop row bleeds
@@ -493,6 +551,22 @@
       "id": "bleed_right",
       "label": "t:settings.bleed_right",
       "default": true
+    },
+    {
+      "type": "select",
+      "id": "desktop_layout",
+      "label": "t:settings.layout_type",
+      "options": [
+        {
+          "value": "auto",
+          "label": "t:options.auto"
+        },
+        {
+          "value": "carousel",
+          "label": "t:options.carousel"
+        }
+      ],
+      "default": "auto"
     },
     {
       "type": "header",
