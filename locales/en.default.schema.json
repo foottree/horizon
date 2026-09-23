@@ -1124,6 +1124,7 @@
     // Checkbox label to toggle visibility of UI elements
     "show": "Show",
     "show_arrows": "Show arrows",
+    "show_arrow_icon": "Show arrow icon",
     "show_as_accordion": "Show as accordion on mobile",
     "show_author": "Author",
     "show_alignment": "Show alignment",

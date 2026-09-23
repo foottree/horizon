@@ -621,7 +621,8 @@
     "card_border": "Card border",
     "card_radius": "Card corner radius",
     "duration": "Duration",
-    "bleed_right": "Bleed right on desktop"
+    "bleed_right": "Bleed right on desktop",
+    "show_arrow_icon": "Show arrow icon"
   },
   "options": {
     "apple": "Maçã",

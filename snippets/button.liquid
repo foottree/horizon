@@ -22,6 +22,7 @@
     size-style
     {{ block_settings.style_class }}
     {{ block_settings.style_class }}--{{ block.id }}
+    {%- if block_settings.show_arrow %} button--with-arrow{% endif -%}
   "
   style="{% render 'size-style', settings: block_settings %}"
   {%- if block_settings.open_in_new_tab -%}
@@ -31,4 +32,23 @@
   {{ block.shopify_attributes }}
 >
   {{ block_settings.label }}
+  {%- if block_settings.show_arrow -%}
+    <span class="svg-wrapper" aria-hidden="true">
+      {{- 'icon-arrow.svg' | inline_asset_content -}}
+    </span>
+  {%- endif -%}
 </a>
+
+{% stylesheet %}
+  .button--with-arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .button--with-arrow .svg-wrapper {
+    flex-shrink: 0;
+    color: currentcolor;
+  }
+{% endstylesheet %}
