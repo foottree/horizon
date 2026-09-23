@@ -1215,3 +1215,55 @@
 .product-rail-tabs__rail-desktop slideshow-slides[gutters*='end'] {
   scroll-padding-inline-end: var(--gutter-slide-width, 0);
 }
+
+/* ---- Footer (Figma "Footer") ----
+   sections/footer-group.json: sitemap row (section "footer", 4 menu blocks) and legal bar
+   (section "utilities", two group blocks - ft-footer-lockup, ft-payment-group). Both sections
+   run section_width: "narrow" so their left/right inset matches the realigned homepage rails
+   (96px at 1440 / 176px at 1600 - see the "Section width: Narrow" rule above), rather than a
+   hard-coded 100px lifted straight from Figma. */
+
+/* blocks/menu.liquid exposes no font-size/letter-spacing/color settings for its heading vs.
+   its links, so the two-tone treatment (gold headings, white-82% links) is set here instead.
+   .footer-content is sections/footer.liquid's own content wrapper class (see its {% stylesheet %}
+   block, which already scopes a rule the same way) - there is only one footer on the site, so no
+   further scoping is needed. The section-group wrapper's own id is store/theme-specific
+   (id="shopify-section-sections--<n>__footer"), so it is not used as a selector here. */
+.footer-content .menu__heading__default {
+  font-family: var(--font-subheading--family); /* Plus Jakarta Sans SemiBold: type_subheading_font is plus_jakarta_sans_n6 */
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: #fee6aa; /* color7 */
+}
+
+.footer-content .menu__item,
+.footer-content .menu__item a {
+  font-family: var(--font-body--family);
+  font-weight: 400;
+  font-size: 1.25rem; /* 20px */
+  line-height: 1.6;
+  color: rgb(255 255 255 / 0.82);
+}
+
+/* Legal bar: the logo and payment-marks placeholders need fixed pixel widths that
+   blocks/image.liquid has no setting for (only percentage-based custom_width). max-width: 100%
+   keeps them from overflowing a narrow phone viewport. ft-footer-lockup/ft-payment-group are this
+   section's own css_class values (sections/footer-group.json), unique to this footer. */
+.ft-footer-lockup .image-block {
+  width: 160px;
+  max-width: 100%;
+}
+
+.ft-payment-group .image-block {
+  width: 440px;
+  max-width: 100%;
+}
+
+/* blocks/payment-icons.liquid renders shop.enabled_payment_types, which is empty on this dev
+   store (no payment provider configured) - the placeholder image fills the slot until then, and
+   hides itself automatically the moment enabled_payment_types starts rendering real icons. */
+.ft-payment-group:has(.payment-icons__item) .image-block {
+  display: none;
+}
