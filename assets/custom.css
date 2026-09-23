@@ -621,6 +621,15 @@
   min-height: 56px;
 }
 
+/* Stock puts a 12.8px margin-block-end (--margin-md) on every top-level <li>, below its
+   hairline - so the space under a divider (margin + the next row's own inset) ran ~33px
+   while the space above it was ~21px. Dropped so each label sits the same distance from
+   the hairline above and below; the row's min-height alone sets the rhythm. Scoped to the
+   top-level list only - the level-2 panel keeps stock spacing. */
+#header-component .menu-drawer__navigation > .menu-drawer__menu > .menu-drawer__list-item--flat {
+  margin-block-end: 0;
+}
+
 /* Client-reported WebKit-only bug: on a real iPhone the mainlist label sat ~12px lower than
    its row's centre (rows measuring ~62px instead of 56, with far more gap above the label than
    below). align-items: center on .menu-drawer__menu-item only centres the label's *line box*,
