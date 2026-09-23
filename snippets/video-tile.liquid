@@ -128,8 +128,10 @@
 
   .video-tile .deferred-media__poster-icon svg,
   .video-tile .video-placeholder-wrapper__poster-icon svg {
-    width: 16px;
-    height: 16px;
+    /* the Figma's own glyph is ~16px, which reads too small inside the 76px circle on a
+       phone; the theme's medium icon token (22px) carries better at both widths */
+    width: var(--icon-size-md);
+    height: var(--icon-size-md);
     color: inherit;
     filter: none;
   }
