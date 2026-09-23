@@ -6,11 +6,11 @@
   schema and are read straight off `block.settings` in a `for block in section.blocks` loop).
 
   Each tile is rendered once through snippets/video-tile.liquid, its markup captured, then
-  reused in two Horizon slideshows - a desktop one (tiles sized to 1/`columns` of the row,
-  peeking past the visible count when `bleed_right` is on) and a mobile one (single tile at
-  `mobile_card_size`% of the viewport) - only one of the pair is visible at a time
-  (hidden--mobile / hidden--desktop), the same technique review-cards uses for its own
-  desktop/mobile split.
+  reused in two Horizon slideshows - a desktop one (tiles sized to a fixed `--video-carousel-
+  card-width`, see the Desktop grid paragraph below, peeking past the visible count when
+  `bleed_right` is on) and a mobile one (single tile at `mobile_card_size`% of the viewport) -
+  only one of the pair is visible at a time (hidden--mobile / hidden--desktop), the same
+  technique review-cards uses for its own desktop/mobile split.
 
   Nav arrows: the Figma puts the two 56px arrow buttons in the HEADER, to the right of the
   heading - never overlaid on the tiles - so this can't use the usual `render 'slideshow-
@@ -37,6 +37,20 @@
   of tile count. Each tile is still captured once via `tile_html` and reused as either a
   slideshow-slide's children (carousel) or a plain grid-item's children (grid). Mobile is
   unaffected either way - `columns` tiles always overflow a phone, so it stays a carousel.
+
+  Card width: both branches size a tile from the SAME `--video-carousel-card-width` custom
+  property (set on the outer .video-carousel div, computed from `columns`/`card_gap`) instead
+  of each computing its own width independently - the carousel used to derive `--slide-width`
+  as a `100%`-based fraction of its OWN (force-full-width, viewport-ish) box, which doesn't
+  match the grid's content-column-based math, so a tile visibly resized when the row switched
+  from grid to carousel (e.g. adding a 5th tile). The shared variable is built from `--page-
+  content-width`/`--page-margin`/`100vw`, NOT assets/base.css's own `--full-page-grid-central-
+  column-width` - that one LOOKS like the right tool (it's already the theme's content-column
+  width), but verified via getComputedStyle probes to resolve incorrectly (a real 274px
+  instead of 294px at 1440) once read through a nested var()-in-calc() chain and finally
+  consumed by a property on a box nested deep inside a force-full-width ancestor, rather than
+  the .section element it's declared on. See sections/product-rail-tabs.liquid for the same
+  fix, reasoning, and verification detail.
 {% endcomment %}
 
 {%- liquid
@@ -102,7 +116,19 @@
   assign mobile_card_size = section.settings.mobile_card_size | default: 70
   assign bleed_right = section.settings.bleed_right
 
-  assign desktop_style = '--slideshow-gap: ' | append: card_gap | append: 'px; --slide-width: calc((100% - (' | append: card_gap | append: 'px * (' | append: columns | append: ' - 1))) / ' | append: columns | append: ');'
+  # A single shared card-width variable (set on the outer .video-carousel div below, and
+  # used by both the carousel slide width here and the grid track width in the stylesheet)
+  # replaces this rail's old percentage-based --slide-width formula. That formula read
+  # `100%` against whichever element it was applied to - inside the force-full-width
+  # .video-carousel__desktop (bleed_right on), that resolved against the full bled width,
+  # not the 1248px content column the grid uses, so a tile visibly resized switching between
+  # a grid tab and a carousel tab (the same bug sections/product-rail-tabs.liquid had with
+  # its hard-coded 320px carousel card vs. its ~294px grid card). See the comment on
+  # --video-carousel-card-width below (near the .video-carousel div's style attribute) for
+  # why it's built from --page-content-width/--page-margin/100vw rather than the theme's
+  # own --full-page-grid-central-column-width, which measured unreliably once consumed this
+  # deep in a force-full-width tree.
+  assign desktop_style = '--slideshow-gap: ' | append: card_gap | append: 'px; --slide-width: var(--video-carousel-card-width);'
   assign mobile_style = '--slideshow-gap: 16px; --slide-width: ' | append: mobile_card_size | append: '%;'
 
   assign desktop_slideshow_id = 'video-carousel-desktop-' | append: section.id
@@ -137,6 +163,23 @@
   endif
 
   assign desktop_slideshow_attributes = 'id="' | append: desktop_slideshow_id | append: '"'
+
+  # Same shared-card-width fix as sections/product-rail-tabs.liquid, but columns/card_gap
+  # are dynamic settings here (2-6 / 12-40px) rather than fixed 4/24, so the formula is
+  # built with Liquid instead of living as a static custom property in the stylesheet.
+  # --video-carousel-card-width itself (below, on the .video-carousel div's style attribute)
+  # is deliberately NOT built from the theme's --full-page-grid-central-column-width /
+  # --util-page-margin-offset (assets/base.css) - those measured unreliably (a real 274px
+  # instead of 294px at 1440, verified via getComputedStyle probes on sections/product-rail-
+  # tabs.liquid) once read through a nested var()-in-calc() chain and finally consumed by
+  # grid-template-columns on a box nested deep inside a force-full-width ancestor, rather
+  # than the element .section itself declares them on. --page-content-width and --page-
+  # margin, by contrast, are themselves plain fixed lengths with no `%` in their own
+  # definitions (rem constants / max() of px values - .section--narrow further overrides
+  # --page-content-width to a fixed 78rem in assets/custom.css), so rebuilding the same
+  # min(content-width, viewport-minus-margins) clamp from THOSE plus 100vw measured
+  # correctly everywhere it was tried.
+  assign column_gap_span = columns | minus: 1 | times: card_gap
 -%}
 
 <div
@@ -159,6 +202,7 @@
     --video-carousel-line-color: {{ settings.color_palette.color3 }};
     --video-tile-accent-color: {{ settings.color_palette.color4 }};
     --video-tile-chip-bg: {{ settings.color_palette.foreground | color_modify: 'alpha', 0.78 }};
+    --video-carousel-card-width: calc((min(var(--page-content-width), calc(100vw - (2 * var(--page-margin)))) - {{ column_gap_span }}px) / {{ columns }});
   "
   data-testid="video-carousel"
 >
@@ -387,12 +431,16 @@
      never force-full-width regardless of the bleed_right setting (bleed only makes sense
      once there's real overflow to scroll into), so it needs no --gutter-slide-width either
      - it sits in the section's normal content column, same as the heading above it. Column
-     count and gap come from the section's own `columns`/`card_gap` settings (2-6, unlike
-     product-rail-tabs's fixed 4), so they're set as inline custom properties rather than a
-     fixed repeat(4, ...) here. */
+     count comes from the section's own `columns` setting (2-6, unlike product-rail-tabs's
+     fixed 4), set as an inline custom property. Track size is `--video-carousel-card-width`
+     (set on the outer .video-carousel div, same value the carousel's --slide-width uses
+     above) rather than `1fr`, so a tile is the exact same rendered width whichever branch
+     is showing - `1fr` happened to compute the same number today (this grid's own box is
+     exactly the content column width), but only the shared variable actually guarantees
+     they can't drift apart again, the same fix as product-rail-tabs's grid track. */
   .video-carousel__desktop-grid {
     display: grid;
-    grid-template-columns: repeat(var(--video-carousel-grid-columns, 4), 1fr);
+    grid-template-columns: repeat(var(--video-carousel-grid-columns, 4), var(--video-carousel-card-width));
     gap: var(--video-carousel-grid-gap, 24px);
   }
 

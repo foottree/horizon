@@ -2098,13 +2098,24 @@
             "duration": "0:22",
             "alt": ""
           }
+        },
+        "video_5": {
+          "type": "video_tile",
+          "settings": {
+            "video": "",
+            "video_url": "",
+            "poster": "",
+            "duration": "0:27",
+            "alt": ""
+          }
         }
       },
       "block_order": [
         "video_1",
         "video_2",
         "video_3",
-        "video_4"
+        "video_4",
+        "video_5"
       ],
       "settings": {
         "heading": "More than 10,000 happy customers",

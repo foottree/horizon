@@ -85,6 +85,7 @@
     --product-rail-tabs-accent-color: {{ accent_color }};
     --product-rail-tabs-track-color: {{ track_color }};
     --product-rail-tabs-ink-soft: {{ ink_soft_color }};
+    --rail-card-width: calc((min(var(--page-content-width), calc(100vw - (2 * var(--page-margin)))) - (3 * 24px)) / 4);
   "
   data-testid="product-rail-tabs"
 >
@@ -529,12 +530,17 @@
     scroll-snap-align: start;
   }
 
-  /* Desktop rail only: a literal 320px card (not the fluid --column-count formula), so it
-     can bleed past the content column into the peeking fifth card. Scoped to the desktop
-     rail specifically - the mobile rail keeps the base slideshow-slide `width: var(--slide-
-     width, 100%)` fallback, driven by the inline --slide-width (mobile_card_size) percent. */
+  /* Desktop rail only: a fixed card width (not the fluid --column-count formula), so it can
+     bleed past the content column into the peeking fifth card. Scoped to the desktop rail
+     specifically - the mobile rail keeps the base slideshow-slide `width: var(--slide-
+     width, 100%)` fallback, driven by the inline --slide-width (mobile_card_size) percent.
+     `--rail-card-width` (set on .product-rail-tabs above) is the SAME variable the grid
+     below uses for its track size, so a card is the exact same rendered width whichever
+     branch is showing - it used to be a literal 320px here vs. ~294px in the grid (four
+     294px columns fit the 1248px content column with 24px gaps; 320px doesn't), so a card
+     visibly resized when the client switched from a grid tab to a carousel tab. */
   .product-rail-tabs__rail-desktop .product-rail-tabs__slide {
-    width: 320px;
+    width: var(--rail-card-width);
   }
 
   /* Desktop grid: when a panel's card_count fits in one row (<= 4, see is_desktop_grid in
@@ -551,10 +557,29 @@
      slideshow "gutters" concept, which doesn't apply here since there's no slideshow.
      Always 4 columns regardless of how many cards actually exist (a 2-product tab still
      gets 4 equal-width columns and simply ends its row early) so card width stays identical
-     across tabs instead of a sparse tab stretching its cards to fill the row. */
+     across tabs instead of a sparse tab stretching its cards to fill the row.
+
+     Track size is `var(--rail-card-width)`, NOT `1fr` - they are NOT interchangeable here,
+     verified by measurement, not assumed: `1fr` sizes against THIS element's own resolved
+     content-box width (which the padding-inline above already pins to the 1248px content
+     column, so `1fr` alone happens to render correctly), but a card width has to be the
+     SAME number inside the force-full-width carousel above too, where there is no local
+     "1248px box" to size a fraction of. `--rail-card-width` (see .product-rail-tabs above)
+     is built instead from `--page-content-width` and `--page-margin` - both plain fixed
+     lengths (rem/px via max(), no `%` anywhere in their own definitions) - combined with the
+     viewport-relative `100vw`, using our own `min()`, rather than reading the theme's ready-
+     made `--full-page-grid-central-column-width`/`--util-page-margin-offset` (assets/
+     base.css), which we tried first and verified (via getComputedStyle probes) does NOT
+     reliably carry its "100%" term through this variable's nested var()-in-calc() chain once
+     it's finally consumed by a DIFFERENT property (grid-template-columns here) on a
+     DIFFERENT, more deeply-nested box than the one it was declared on (it rendered a real
+     274px instead of 294px, and even the `100vw - 2 * var(--util-page-margin-offset)`
+     fallback resolved --util-page-margin-offset itself down to a bare 40px instead of the
+     correct 96px in this same nested context) - only a fixed-length-only chain measured
+     consistently everywhere it was tried. */
   .product-rail-tabs__rail-desktop-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, var(--rail-card-width));
     gap: 24px;
   }
 
