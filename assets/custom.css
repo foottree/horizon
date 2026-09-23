@@ -114,14 +114,6 @@
     padding-right: 50px !important;
   }
 
-  /* Inline menu type: Plus Jakarta Sans SemiBold via the "subheading" font
-     setting, but the top-level size setting tops out at 18px (1.125rem) —
-     20px isn't one of the enum options, so bump it here. Also sets the
-     olive-grove hover color, which has no setting. */
-  .header-menu .menu-list__link {
-    font-size: var(--font-size--xl) !important;
-  }
-
   /* Horizon spaces top-level items via padding-inline: var(--gap-sm)
      (11.2px/side) on .menu-list__link-title, inside overflow-list's shadow
      part - not a simple flex "gap" that a single property can override.

@@ -63,7 +63,7 @@
           "static": true,
           "settings": {
             "menu": "main-menu",
-            "type_font_primary_size": "1.125rem",
+            "type_font_primary_size": "1.25rem",
             "menu_font_style": "inverse",
             "type_font_primary_link": "subheading",
             "type_case_primary_link": "none",

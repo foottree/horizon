@@ -59,6 +59,33 @@
 
   assign desktop_style = '--slideshow-gap: ' | append: card_gap | append: 'px; --slide-width: calc((100% - (' | append: card_gap | append: 'px * (' | append: columns | append: ' - 1))) / ' | append: columns | append: ');'
   assign mobile_style = '--slideshow-gap: 16px; --slide-width: ' | append: mobile_card_size | append: '%;'
+
+  # Carousel navigation - mirrors snippets/resource-list-carousel.liquid: dots win over
+  # progress, arrows render on the slideshow itself (not inside the controls) and only
+  # when icons_style isn't 'none'/'progress' and hide_arrows isn't checked.
+  assign icons_style = section.settings.icons_style | default: 'progress'
+  assign show_arrows = false
+  if icons_style != 'none' and icons_style != 'progress' and section.settings.hide_arrows != true
+    assign show_arrows = true
+  endif
+
+  assign desktop_has_controls = false
+  if card_count > columns
+    assign desktop_has_controls = true
+  endif
+  assign desktop_show_arrows = false
+  if desktop_has_controls and show_arrows
+    assign desktop_show_arrows = true
+  endif
+
+  assign mobile_has_controls = false
+  if card_count > 1
+    assign mobile_has_controls = true
+  endif
+  assign mobile_show_arrows = false
+  if mobile_has_controls and show_arrows
+    assign mobile_show_arrows = true
+  endif
 -%}
 
 <div
@@ -128,16 +155,29 @@
 
   <div class="review-cards__desktop hidden--mobile">
     {%- capture desktop_controls -%}
-      {%- if card_count > columns -%}
-        {%- render 'slideshow-controls',
-          style: 'progress',
-          item_count: card_count,
-          show_arrows: false,
-          arrows_on_media: false,
-          controls_on_media: false,
-          pagination_position: 'center',
-          class: 'review-cards__controls'
-        -%}
+      {%- if desktop_has_controls -%}
+        {%- if section.settings.enable_dots -%}
+          {%- render 'slideshow-controls',
+            style: 'dots',
+            autoplay: section.settings.autoplay,
+            item_count: card_count,
+            show_arrows: false,
+            arrows_on_media: false,
+            controls_on_media: false,
+            pagination_position: 'center',
+            class: 'review-cards__controls'
+          -%}
+        {%- elsif icons_style == 'progress' -%}
+          {%- render 'slideshow-controls',
+            style: 'progress',
+            item_count: card_count,
+            show_arrows: false,
+            arrows_on_media: false,
+            controls_on_media: false,
+            pagination_position: 'center',
+            class: 'review-cards__controls carousel-controls carousel-controls--progress'
+          -%}
+        {%- endif -%}
       {%- endif -%}
     {%- endcapture -%}
     {%- render 'slideshow',
@@ -145,7 +185,11 @@
       class: 'review-cards__slideshow',
       style: desktop_style,
       slides: desktop_slides,
-      show_arrows: false,
+      show_arrows: desktop_show_arrows,
+      icon_style: icons_style,
+      icon_shape: section.settings.icons_shape,
+      autoplay: section.settings.autoplay,
+      autoplay_speed: section.settings.autoplay_speed,
       auto_hide_controls: false,
       infinite: false,
       initial_slide: 0,
@@ -159,16 +203,29 @@
     style="--gutter-slide-width: var(--util-page-margin-offset);"
   >
     {%- capture mobile_controls -%}
-      {%- if card_count > 1 -%}
-        {%- render 'slideshow-controls',
-          style: 'progress',
-          item_count: card_count,
-          show_arrows: false,
-          arrows_on_media: false,
-          controls_on_media: false,
-          pagination_position: 'center',
-          class: 'review-cards__controls'
-        -%}
+      {%- if mobile_has_controls -%}
+        {%- if section.settings.enable_dots -%}
+          {%- render 'slideshow-controls',
+            style: 'dots',
+            autoplay: section.settings.autoplay,
+            item_count: card_count,
+            show_arrows: false,
+            arrows_on_media: false,
+            controls_on_media: false,
+            pagination_position: 'center',
+            class: 'review-cards__controls'
+          -%}
+        {%- elsif icons_style == 'progress' -%}
+          {%- render 'slideshow-controls',
+            style: 'progress',
+            item_count: card_count,
+            show_arrows: false,
+            arrows_on_media: false,
+            controls_on_media: false,
+            pagination_position: 'center',
+            class: 'review-cards__controls carousel-controls carousel-controls--progress'
+          -%}
+        {%- endif -%}
       {%- endif -%}
     {%- endcapture -%}
     {%- render 'slideshow',
@@ -176,7 +233,11 @@
       class: 'review-cards__slideshow review-cards__slideshow--mobile',
       style: mobile_style,
       slides: mobile_slides,
-      show_arrows: false,
+      show_arrows: mobile_show_arrows,
+      icon_style: icons_style,
+      icon_shape: section.settings.icons_shape,
+      autoplay: section.settings.autoplay,
+      autoplay_speed: section.settings.autoplay_speed,
       auto_hide_controls: false,
       infinite: false,
       initial_slide: 0,
@@ -290,6 +351,12 @@
   }
 
   .review-cards__mobile.force-full-width .slideshow-controls__progress {
+    padding-inline: var(--util-page-margin-offset, var(--page-margin, 16px));
+  }
+
+  /* Carousel navigation: keep arrow overlays off the page edge on the full-width mobile
+     carousel, the same way snippets/resource-list-carousel.liquid pads slideshow-arrows. */
+  .review-cards__mobile.force-full-width slideshow-arrows {
     padding-inline: var(--util-page-margin-offset, var(--page-margin, 16px));
   }
 {% endstylesheet %}
@@ -469,6 +536,97 @@
       "id": "verified_label",
       "label": "t:settings.verified_label",
       "default": "Verified"
+    },
+    {
+      "type": "header",
+      "content": "t:content.carousel_navigation"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_dots",
+      "label": "Enable dots",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_arrows",
+      "label": "Hide arrows",
+      "default": false,
+      "visible_if": "{{ section.settings.enable_dots == true }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "t:settings.auto_rotate_slides",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "label": "t:settings.speed",
+      "min": 3,
+      "max": 7,
+      "step": 1,
+      "unit": "s",
+      "default": 4,
+      "visible_if": "{{ section.settings.autoplay == true }}"
+    },
+    {
+      "type": "select",
+      "id": "icons_style",
+      "label": "t:settings.icon",
+      "options": [
+        {
+          "value": "arrow",
+          "label": "t:options.arrows"
+        },
+        {
+          "value": "chevron",
+          "label": "t:options.chevrons"
+        },
+        {
+          "value": "arrows_large",
+          "label": "t:options.arrows_large"
+        },
+        {
+          "value": "chevron_large",
+          "label": "t:options.chevron_large"
+        },
+        {
+          "value": "progress",
+          "label": "t:options.progress_bar"
+        },
+        {
+          "value": "none",
+          "label": "t:options.none"
+        }
+      ],
+      "default": "progress"
+    },
+    {
+      "type": "select",
+      "id": "icons_shape",
+      "label": "t:settings.icon_background",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.none"
+        },
+        {
+          "value": "circle",
+          "label": "t:options.circle"
+        },
+        {
+          "value": "square",
+          "label": "t:options.square"
+        },
+        {
+          "value": "rectangle",
+          "label": "Rectangle"
+        }
+      ],
+      "default": "none",
+      "visible_if": "{{ section.settings.icons_style != 'none' }}"
     },
     {
       "type": "header",
