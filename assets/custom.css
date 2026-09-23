@@ -103,6 +103,18 @@
     --header-padding: 26px;
   }
 
+  /* Sticky state: once the header detaches from the top of the page it shrinks from the
+     96px nav bar to ~72px, and eases back when it returns. --header-padding is a plain
+     custom property (not registered with @property), so it cannot be transitioned itself;
+     the transition goes on the padding the column actually renders from it. */
+  #header-component .header__row--top .header__columns {
+    transition: padding-block 220ms var(--animation-easing, ease);
+  }
+
+  #header-component[data-sticky-state='active'] .header__row--top .header__columns {
+    --header-padding: 14px;
+  }
+
   /* Nav bar asymmetric side padding (100px left / 50px right): no setting
      exists for unequal left/right header padding, only the symmetric
      page-width/full-width choice. header-group.json sets section_width to
