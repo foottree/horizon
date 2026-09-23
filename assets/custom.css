@@ -108,7 +108,7 @@
      custom property (not registered with @property), so it cannot be transitioned itself;
      the transition goes on the padding the column actually renders from it. */
   #header-component .header__row--top .header__columns {
-    transition: padding-block 220ms var(--animation-easing, ease);
+    transition: padding-block 120ms var(--animation-easing, ease);
   }
 
   #header-component[data-sticky-state='active'] .header__row--top .header__columns {
