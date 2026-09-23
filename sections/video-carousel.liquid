@@ -1,0 +1,743 @@
+{% comment %}
+  "Social video carousel" section (homepage section 09 in the client's Figma, "Social — video
+  carousel"). Section-local `video_tile` blocks (a Horizon section can't read theme-block
+  settings - iterating `section.blocks` for `@theme` blocks gives back empty settings - so
+  this mirrors sections/review-cards.liquid: block settings live directly in this section's
+  schema and are read straight off `block.settings` in a `for block in section.blocks` loop).
+
+  Each tile is rendered once through snippets/video-tile.liquid, its markup captured, then
+  reused in two Horizon slideshows - a desktop one (tiles sized to 1/`columns` of the row,
+  peeking past the visible count when `bleed_right` is on) and a mobile one (single tile at
+  `mobile_card_size`% of the viewport) - only one of the pair is visible at a time
+  (hidden--mobile / hidden--desktop), the same technique review-cards uses for its own
+  desktop/mobile split.
+
+  Nav arrows: the Figma puts the two 56px arrow buttons in the HEADER, to the right of the
+  heading - never overlaid on the tiles - so this can't use the usual `render 'slideshow-
+  arrows'` overlay (which renders inside the slideshow's own tree, on top of the media). The
+  header buttons here are plain markup, wired straight to the desktop `<slideshow-component>`
+  by DOM id: `on:click="#id/previous"` resolves via `document.querySelector` (see assets/
+  component.js's declarative event dispatch), which works from anywhere in the document, not
+  only from inside the component's own subtree - unlike the ref-less `on:click="/previous"`
+  used elsewhere, which requires the button to be a descendant of the component. Because the
+  header buttons live outside the slideshow, they can coexist with the progress bar under the
+  row - unlike review-cards, where 'progress' and arrows are mutually exclusive, this section
+  lets them show together (icons_style: 'progress' + hide_arrows off), matching how
+  sections/product-rail-tabs.liquid also shows a progress bar and arrows at once (there,
+  side-by-side; here, arrows in the header and the bar below the row).
+{% endcomment %}
+
+{%- liquid
+  if section.settings.background_color != blank
+    render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
+  endif
+-%}
+
+{%- liquid
+  assign card_count = section.blocks.size
+  assign desktop_slides = ''
+  assign mobile_slides = ''
+-%}
+
+{%- for block in section.blocks -%}
+  {%- capture tile_html -%}
+    {%- render 'video-tile',
+      video: block.settings.video,
+      video_url: block.settings.video_url,
+      poster: block.settings.poster,
+      duration: block.settings.duration,
+      alt: block.settings.alt,
+      image_ratio: section.settings.image_ratio,
+      card_radius: section.settings.card_radius,
+      block_attributes: block.shopify_attributes
+    -%}
+  {%- endcapture -%}
+
+  {%- capture desktop_slide -%}
+    {%- render 'slideshow-slide', index: forloop.index0, children: tile_html, class: 'video-carousel__slide' -%}
+  {%- endcapture -%}
+  {%- assign desktop_slides = desktop_slides | append: desktop_slide -%}
+
+  {%- capture mobile_slide -%}
+    {%- render 'slideshow-slide', index: forloop.index0, children: tile_html, class: 'video-carousel__slide video-carousel__mobile-slide' -%}
+  {%- endcapture -%}
+  {%- assign mobile_slides = mobile_slides | append: mobile_slide -%}
+{%- endfor -%}
+
+{%- liquid
+  assign columns = section.settings.columns | default: 4
+  assign card_gap = section.settings.card_gap | default: 24
+  assign mobile_card_size = section.settings.mobile_card_size | default: 70
+  assign bleed_right = section.settings.bleed_right
+
+  assign desktop_style = '--slideshow-gap: ' | append: card_gap | append: 'px; --slide-width: calc((100% - (' | append: card_gap | append: 'px * (' | append: columns | append: ' - 1))) / ' | append: columns | append: ');'
+  assign mobile_style = '--slideshow-gap: 16px; --slide-width: ' | append: mobile_card_size | append: '%;'
+
+  assign desktop_slideshow_id = 'video-carousel-desktop-' | append: section.id
+
+  # Carousel navigation - copied from review-cards' settings verbatim, but the nav arrows
+  # here live in the header (see the comment block above) rather than overlaid on media, so
+  # unlike review-cards, icons_style: 'progress' doesn't exclude them - only hide_arrows and
+  # icons_style: 'none' do.
+  assign icons_style = section.settings.icons_style | default: 'progress'
+  assign desktop_has_controls = false
+  if card_count > columns
+    assign desktop_has_controls = true
+  endif
+  assign mobile_has_controls = false
+  if card_count > 1
+    assign mobile_has_controls = true
+  endif
+
+  assign show_header_arrows = false
+  if desktop_has_controls and icons_style != 'none' and section.settings.hide_arrows != true
+    assign show_header_arrows = true
+  endif
+
+  assign icon_name = 'arrow'
+  if icons_style contains 'chevron'
+    assign icon_name = 'caret'
+  endif
+
+  assign desktop_gutters = null
+  if bleed_right
+    assign desktop_gutters = 'start'
+  endif
+
+  assign desktop_slideshow_attributes = 'id="' | append: desktop_slideshow_id | append: '"'
+-%}
+
+<div
+  class="section-background{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
+></div>
+
+<div
+  class="
+    section
+    section--{{ section.settings.section_width }}
+    {% if section.settings.background_color != blank %}color-custom-{{ section.id }}{% endif %}
+    video-carousel
+    spacing-style
+    {{ section.settings.css_class }}
+  "
+  style="
+    {% render 'spacing-style', settings: section.settings %}
+    --video-carousel-heading-color: {{ settings.color_palette.foreground }};
+    --video-carousel-accent-color: {{ settings.color_palette.color4 }};
+    --video-carousel-line-color: {{ settings.color_palette.color3 }};
+    --video-tile-accent-color: {{ settings.color_palette.color4 }};
+    --video-tile-chip-bg: {{ settings.color_palette.foreground | color_modify: 'alpha', 0.78 }};
+  "
+  data-testid="video-carousel"
+>
+  <div class="video-carousel__header">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="video-carousel__heading h2">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    {%- if show_header_arrows -%}
+      <div class="video-carousel__nav hidden--mobile">
+        <button
+          type="button"
+          class="video-carousel__nav-arrow video-carousel__nav-arrow--previous flip-x"
+          aria-label="{{ 'accessibility.slideshow_previous' | t }}"
+          on:click="#{{ desktop_slideshow_id }}/previous"
+        >
+          <span class="svg-wrapper icon-{{ icon_name }}" aria-hidden="true">
+            {%- if icon_name == 'caret' -%}
+              {{- 'icon-caret.svg' | inline_asset_content -}}
+            {%- else -%}
+              {{- 'icon-arrow.svg' | inline_asset_content -}}
+            {%- endif -%}
+          </span>
+        </button>
+        <button
+          type="button"
+          class="video-carousel__nav-arrow video-carousel__nav-arrow--next"
+          aria-label="{{ 'accessibility.slideshow_next' | t }}"
+          on:click="#{{ desktop_slideshow_id }}/next"
+        >
+          <span class="svg-wrapper icon-{{ icon_name }}" aria-hidden="true">
+            {%- if icon_name == 'caret' -%}
+              {{- 'icon-caret.svg' | inline_asset_content -}}
+            {%- else -%}
+              {{- 'icon-arrow.svg' | inline_asset_content -}}
+            {%- endif -%}
+          </span>
+        </button>
+      </div>
+    {%- endif -%}
+  </div>
+
+  <div
+    class="video-carousel__desktop hidden--mobile{% if bleed_right %} force-full-width{% endif %}"
+    style="{% if bleed_right %}--gutter-slide-width: var(--util-page-margin-offset);{% endif %}"
+  >
+    {%- capture desktop_controls -%}
+      {%- if desktop_has_controls -%}
+        {%- if section.settings.enable_dots -%}
+          {%- render 'slideshow-controls',
+            style: 'dots',
+            autoplay: section.settings.autoplay,
+            item_count: card_count,
+            show_arrows: false,
+            arrows_on_media: false,
+            controls_on_media: false,
+            pagination_position: 'center',
+            class: 'video-carousel__controls'
+          -%}
+        {%- elsif icons_style == 'progress' -%}
+          {%- render 'slideshow-controls',
+            style: 'progress',
+            item_count: card_count,
+            show_arrows: false,
+            arrows_on_media: false,
+            controls_on_media: false,
+            pagination_position: 'center',
+            class: 'video-carousel__controls carousel-controls carousel-controls--progress'
+          -%}
+        {%- endif -%}
+      {%- endif -%}
+    {%- endcapture -%}
+    {%- render 'slideshow',
+      ref: 'videoCarouselDesktop',
+      class: 'video-carousel__slideshow',
+      style: desktop_style,
+      slides: desktop_slides,
+      show_arrows: false,
+      autoplay: section.settings.autoplay,
+      autoplay_speed: section.settings.autoplay_speed,
+      auto_hide_controls: false,
+      infinite: false,
+      initial_slide: 0,
+      slide_count: card_count,
+      slideshow_gutters: desktop_gutters,
+      attributes: desktop_slideshow_attributes,
+      controls: desktop_controls
+    -%}
+  </div>
+
+  <div
+    class="video-carousel__mobile hidden--desktop force-full-width"
+    style="--gutter-slide-width: var(--util-page-margin-offset);"
+  >
+    {%- capture mobile_controls -%}
+      {%- if mobile_has_controls -%}
+        {%- if section.settings.enable_dots -%}
+          {%- render 'slideshow-controls',
+            style: 'dots',
+            autoplay: section.settings.autoplay,
+            item_count: card_count,
+            show_arrows: false,
+            arrows_on_media: false,
+            controls_on_media: false,
+            pagination_position: 'center',
+            class: 'video-carousel__controls'
+          -%}
+        {%- elsif icons_style == 'progress' -%}
+          {%- render 'slideshow-controls',
+            style: 'progress',
+            item_count: card_count,
+            show_arrows: false,
+            arrows_on_media: false,
+            controls_on_media: false,
+            pagination_position: 'center',
+            class: 'video-carousel__controls carousel-controls carousel-controls--progress'
+          -%}
+        {%- endif -%}
+      {%- endif -%}
+    {%- endcapture -%}
+    {%- render 'slideshow',
+      ref: 'videoCarouselMobile',
+      class: 'video-carousel__slideshow video-carousel__slideshow--mobile',
+      style: mobile_style,
+      slides: mobile_slides,
+      show_arrows: false,
+      autoplay: section.settings.autoplay,
+      autoplay_speed: section.settings.autoplay_speed,
+      auto_hide_controls: false,
+      infinite: false,
+      initial_slide: 0,
+      slide_count: card_count,
+      slideshow_gutters: 'start end',
+      controls: mobile_controls
+    -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  .video-carousel__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-block-end: 28px;
+  }
+
+  .video-carousel__heading {
+    margin: 0;
+    color: var(--video-carousel-heading-color, currentcolor);
+  }
+
+  .video-carousel__nav {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-shrink: 0;
+  }
+
+  .video-carousel__nav-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    flex-shrink: 0;
+    padding: 0;
+    background: transparent;
+    border: 1.5px solid var(--video-carousel-line-color, #e0dcd2);
+    border-radius: 50%;
+    color: var(--video-carousel-accent-color, #4a6a1d);
+    cursor: pointer;
+    transition: background-color 180ms var(--animation-easing, ease), color 180ms var(--animation-easing, ease);
+  }
+
+  .video-carousel__nav-arrow:hover {
+    background: var(--video-carousel-accent-color, #4a6a1d);
+    color: var(--color-background, #fff);
+  }
+
+  .video-carousel__nav-arrow .svg-wrapper {
+    display: flex;
+    width: 20px;
+    height: 20px;
+  }
+
+  .video-carousel__nav-arrow svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .video-carousel__nav-arrow .icon-caret svg {
+    rotate: -90deg;
+  }
+
+  @media screen and (max-width: 749px) {
+    .video-carousel .video-carousel__header .video-carousel__heading {
+      font-size: 2rem;
+    }
+  }
+
+  /* Desktop: each slide is one tile, sized to 1/columns of the row - see --slide-width above. */
+  .video-carousel__slide {
+    scroll-snap-align: start;
+  }
+
+  .video-carousel__desktop .video-carousel__slide {
+    height: auto;
+  }
+
+  /* Progress bar / dots: contained to the content column even when the desktop row bleeds
+     (force-full-width) - reset the global inset here, then re-apply it only in the two
+     full-width contexts (mobile is always full-width; desktop only when bleed_right is on). */
+  .video-carousel .slideshow-controls__progress {
+    margin-top: 28px;
+    padding-inline: 0;
+    gap: 16px;
+  }
+
+  .video-carousel .slideshow-controls__progress-track {
+    height: 4px;
+    background: var(--video-carousel-line-color, var(--color-border));
+  }
+
+  .video-carousel .slideshow-controls__progress-bar {
+    background: var(--video-carousel-accent-color, var(--color-foreground));
+  }
+
+  /* The nav arrows live in the header only - always hide the progress style's own built-in
+     arrows so they never double up next to the track. */
+  .video-carousel .slideshow-controls__progress-arrows {
+    display: none;
+  }
+
+  .video-carousel__mobile.force-full-width .slideshow-controls__progress,
+  .video-carousel__desktop.force-full-width .slideshow-controls__progress {
+    padding-inline: var(--util-page-margin-offset, var(--page-margin, 16px));
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.video_carousel",
+  "class": "ui-test-video-carousel",
+  "max_blocks": 12,
+  "blocks": [
+    {
+      "type": "video_tile",
+      "name": "t:names.video",
+      "settings": [
+        {
+          "type": "video",
+          "id": "video",
+          "label": "t:settings.video"
+        },
+        {
+          "type": "video_url",
+          "id": "video_url",
+          "label": "t:settings.video_external_url",
+          "info": "t:info.video_external",
+          "accept": ["youtube", "vimeo"],
+          "visible_if": "{{ block.settings.video == blank }}"
+        },
+        {
+          "type": "image_picker",
+          "id": "poster",
+          "label": "t:settings.cover_image"
+        },
+        {
+          "type": "text",
+          "id": "duration",
+          "label": "t:settings.duration",
+          "placeholder": "0:24"
+        },
+        {
+          "type": "text",
+          "id": "alt",
+          "label": "t:settings.video_alt_text",
+          "info": "t:info.video_alt_text",
+          "visible_if": "{{ block.settings.video == blank }}"
+        }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": [
+      "header",
+      "footer"
+    ]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:settings.heading",
+      "default": "More than 10,000 happy customers"
+    },
+    {
+      "type": "header",
+      "content": "t:content.layout"
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "t:settings.columns",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "label": "t:settings.gap",
+      "min": 12,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "t:settings.image_ratio",
+      "options": [
+        {
+          "value": "portrait",
+          "label": "t:options.portrait"
+        },
+        {
+          "value": "vertical",
+          "label": "t:options.vertical"
+        },
+        {
+          "value": "square",
+          "label": "t:options.square"
+        }
+      ],
+      "default": "portrait"
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "t:settings.card_radius",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "mobile_card_size",
+      "label": "t:settings.mobile_card_size",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 70
+    },
+    {
+      "type": "checkbox",
+      "id": "bleed_right",
+      "label": "t:settings.bleed_right",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:content.carousel_navigation"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_dots",
+      "label": "Enable dots",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_arrows",
+      "label": "Hide arrows",
+      "default": false,
+      "visible_if": "{{ section.settings.enable_dots == true }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "t:settings.auto_rotate_slides",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "label": "t:settings.speed",
+      "min": 3,
+      "max": 7,
+      "step": 1,
+      "unit": "s",
+      "default": 4,
+      "visible_if": "{{ section.settings.autoplay == true }}"
+    },
+    {
+      "type": "select",
+      "id": "icons_style",
+      "label": "t:settings.icon",
+      "options": [
+        {
+          "value": "arrow",
+          "label": "t:options.arrows"
+        },
+        {
+          "value": "chevron",
+          "label": "t:options.chevrons"
+        },
+        {
+          "value": "arrows_large",
+          "label": "t:options.arrows_large"
+        },
+        {
+          "value": "chevron_large",
+          "label": "t:options.chevron_large"
+        },
+        {
+          "value": "progress",
+          "label": "t:options.progress_bar"
+        },
+        {
+          "value": "none",
+          "label": "t:options.none"
+        }
+      ],
+      "default": "progress"
+    },
+    {
+      "type": "select",
+      "id": "icons_shape",
+      "label": "t:settings.icon_background",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.none"
+        },
+        {
+          "value": "circle",
+          "label": "t:options.circle"
+        },
+        {
+          "value": "square",
+          "label": "t:options.square"
+        },
+        {
+          "value": "rectangle",
+          "label": "Rectangle"
+        }
+      ],
+      "default": "none",
+      "visible_if": "{{ section.settings.icons_style != 'none' }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.section_layout"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "t:settings.width",
+      "options": [
+        {
+          "value": "narrow",
+          "label": "t:options.narrow"
+        },
+        {
+          "value": "page-width",
+          "label": "t:options.page"
+        },
+        {
+          "value": "full-width",
+          "label": "t:options.full"
+        }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "placeholder": "t:settings.default"
+    },
+    {
+      "type": "text",
+      "id": "css_class",
+      "label": "CSS class",
+      "info": "optional"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_mobile_padding",
+      "label": "Custom Mobile Padding",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "mobile-padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.custom_mobile_padding == true }}"
+    },
+    {
+      "type": "range",
+      "id": "mobile-padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.custom_mobile_padding == true }}"
+    },
+    {
+      "type": "range",
+      "id": "mobile-padding-inline-start",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.custom_mobile_padding == true }}"
+    },
+    {
+      "type": "range",
+      "id": "mobile-padding-inline-end",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.custom_mobile_padding == true }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.video_carousel",
+      "category": "t:categories.storytelling",
+      "settings": {},
+      "blocks": {
+        "video_1": {
+          "type": "video_tile",
+          "name": "t:names.video",
+          "settings": {
+            "duration": "0:24"
+          }
+        },
+        "video_2": {
+          "type": "video_tile",
+          "name": "t:names.video",
+          "settings": {
+            "duration": "0:18"
+          }
+        },
+        "video_3": {
+          "type": "video_tile",
+          "name": "t:names.video",
+          "settings": {
+            "duration": "0:31"
+          }
+        },
+        "video_4": {
+          "type": "video_tile",
+          "name": "t:names.video",
+          "settings": {
+            "duration": "0:22"
+          }
+        }
+      },
+      "block_order": [
+        "video_1",
+        "video_2",
+        "video_3",
+        "video_4"
+      ]
+    }
+  ]
+}
+{% endschema %}

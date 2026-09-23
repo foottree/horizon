@@ -174,7 +174,8 @@
     "product_rail_tabs": "Product rail with tabs",
     "tab": "Tab",
     "review": "Review",
-    "review_cards": "Customer reviews"
+    "review_cards": "Customer reviews",
+    "video_carousel": "Social video carousel"
   },
   "settings": {
     "alignment": "对齐方式",
@@ -618,7 +619,9 @@
     "verified_label": "Verified label",
     "card_background": "Card background",
     "card_border": "Card border",
-    "card_radius": "Card corner radius"
+    "card_radius": "Card corner radius",
+    "duration": "Duration",
+    "bleed_right": "Bleed right on desktop"
   },
   "options": {
     "apple": "Apple",

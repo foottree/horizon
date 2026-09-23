@@ -1,0 +1,151 @@
+{%- doc -%}
+  Renders one video tile for sections/video-carousel.liquid (homepage section 09, "Social —
+  video carousel" in the client's Figma): a cover image/video with a centred play button and
+  a bottom-left duration chip. Rendered once per `video_tile` block and reused in both the
+  desktop and mobile slideshows - see sections/video-carousel.liquid for why (a Horizon
+  section can't read theme-block settings, so the section loops its own section-local
+  `video_tile` blocks and renders each one through this snippet directly, the same technique
+  snippets/review-card.liquid uses for sections/review-cards.liquid).
+
+  Video source: the uploaded `video` field wins when present; `video_url` (YouTube/Vimeo) is
+  the fallback when no video is uploaded; when neither is set, `snippets/video.liquid`'s own
+  placeholder branch renders an inert poster (or a generic placeholder image) with the play
+  button still visible, so the block never looks empty in the editor.
+
+  Tap-to-play only, never autoplay, matching the mockup's own note - `video_autoplay` is never
+  passed, so `snippets/video.liquid` always defers to a click.
+
+  The stock poster button's markup is never restructured - assets/base.css keys several
+  selectors off `deferred-media`'s exact direct children (e.g. `deferred-media > .deferred-
+  media__poster-button ~ *`) and breaks if that structure changes. The 76px circular play
+  button and the duration chip are CSS restyles/siblings only: the chip is an absolutely-
+  positioned sibling of whatever `snippets/video.liquid` renders (deferred-media or the inert
+  placeholder), both direct children of this tile.
+
+  @param {object} [video] - Uploaded Shopify video.
+  @param {object} [video_url] - `video_url` setting value (external YouTube/Vimeo), used only
+    when `video` is blank.
+  @param {object} [poster] - Cover image override. Falls back to the uploaded video's own
+    preview image when blank.
+  @param {string} [duration] - Duration chip text, e.g. "0:24". No chip renders when blank.
+  @param {string} [alt] - Accessible description for an external video.
+  @param {string} [image_ratio] - 'portrait' | 'vertical' | 'square' - the tile's aspect ratio.
+  @param {number} [card_radius] - Corner radius in px.
+  @param {string} [block_attributes] - `block.shopify_attributes` for the block this tile
+    represents, so the theme editor can select it in the live preview.
+
+  @example
+  {% render 'video-tile',
+    video: block.settings.video,
+    video_url: block.settings.video_url,
+    poster: block.settings.poster,
+    duration: block.settings.duration,
+    alt: block.settings.alt,
+    image_ratio: section.settings.image_ratio,
+    card_radius: section.settings.card_radius,
+    block_attributes: block.shopify_attributes
+  %}
+{%- enddoc -%}
+
+{%- liquid
+  assign ratio_class = image_ratio | default: 'portrait'
+  assign has_uploaded = false
+  if video != blank
+    assign has_uploaded = true
+  endif
+  assign preview_image = poster | default: video.preview_image
+-%}
+
+<div
+  class="video-tile video-tile--{{ ratio_class }}"
+  style="--video-tile-radius: {{ card_radius | default: 8 }}px;"
+  {{ block_attributes }}
+>
+  {%- if has_uploaded -%}
+    {%- render 'video',
+      video: video,
+      video_loop: false,
+      video_preview_image: preview_image
+    -%}
+  {%- else -%}
+    {%- render 'video',
+      video_from_url: true,
+      video: video_url.id,
+      video_loop: false,
+      video_type: video_url.type,
+      video_alt: alt,
+      video_preview_image: preview_image
+    -%}
+  {%- endif -%}
+
+  {%- if duration != blank -%}
+    <span class="video-tile__duration">{{ duration }}</span>
+  {%- endif -%}
+</div>
+
+{% stylesheet %}
+  .video-tile {
+    position: relative;
+    display: block;
+    width: 100%;
+    border-radius: var(--video-tile-radius, 8px);
+    overflow: hidden;
+    background-color: var(--color-background);
+  }
+
+  .video-tile--portrait {
+    aspect-ratio: 320 / 440;
+  }
+
+  .video-tile--vertical {
+    aspect-ratio: 9 / 16;
+  }
+
+  .video-tile--square {
+    aspect-ratio: 1 / 1;
+  }
+
+  .video-tile deferred-media,
+  .video-tile .video-placeholder-wrapper {
+    height: 100%;
+    width: 100%;
+  }
+
+  .video-tile deferred-media .deferred-media__poster-image {
+    width: 100%;
+  }
+
+  /* Restyle the stock poster button into the Figma's 76px white circle with an olive play
+     triangle - CSS only. Covers both the interactive deferred-media poster button and the
+     inert video-placeholder-wrapper button rendered when there's no video/poster at all. */
+  .video-tile .deferred-media__poster-icon,
+  .video-tile .video-placeholder-wrapper__poster-icon {
+    width: 76px;
+    height: 76px;
+    background: rgb(255 255 255 / 92%);
+    color: var(--video-tile-accent-color, #4a6a1d);
+  }
+
+  .video-tile .deferred-media__poster-icon svg,
+  .video-tile .video-placeholder-wrapper__poster-icon svg {
+    width: 16px;
+    height: 16px;
+    color: inherit;
+    filter: none;
+  }
+
+  .video-tile__duration {
+    position: absolute;
+    left: 16px;
+    bottom: 16px;
+    z-index: 2;
+    padding: 6px 12px;
+    border-radius: 4px;
+    background: var(--video-tile-chip-bg, rgb(38 38 34 / 78%));
+    color: #fff;
+    font-family: var(--font-subheading--family);
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+{% endstylesheet %}

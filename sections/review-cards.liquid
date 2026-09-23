@@ -267,7 +267,11 @@
   .review-cards__eyebrow {
     margin: 0;
     font-family: var(--font-subheading--family);
+    /* the eyebrow text blocks in the other sections render at the subheading weight (600)
+       with tight leading; match them so every tagline on the page reads the same */
+    font-weight: var(--font-subheading--weight);
     font-size: 0.8125rem;
+    line-height: 1.2;
     /* Horizon's own 'loose' tracking, the same token the eyebrow text blocks in the hero,
        Why Foot Tree and Corporate sections use, so every tagline on the page matches. */
     letter-spacing: var(--letter-spacing--body-loose);

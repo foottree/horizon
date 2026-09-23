@@ -2068,6 +2068,82 @@
         "mobile-padding-inline-start": 0,
         "mobile-padding-inline-end": 0
       }
+    },
+    "social_videos": {
+      "type": "video-carousel",
+      "blocks": {
+        "video_1": {
+          "type": "video_tile",
+          "settings": {
+            "video": "",
+            "video_url": "",
+            "poster": "",
+            "duration": "0:24",
+            "alt": ""
+          }
+        },
+        "video_2": {
+          "type": "video_tile",
+          "settings": {
+            "video": "",
+            "video_url": "",
+            "poster": "",
+            "duration": "0:18",
+            "alt": ""
+          }
+        },
+        "video_3": {
+          "type": "video_tile",
+          "settings": {
+            "video": "",
+            "video_url": "",
+            "poster": "",
+            "duration": "0:31",
+            "alt": ""
+          }
+        },
+        "video_4": {
+          "type": "video_tile",
+          "settings": {
+            "video": "",
+            "video_url": "",
+            "poster": "",
+            "duration": "0:22",
+            "alt": ""
+          }
+        }
+      },
+      "block_order": [
+        "video_1",
+        "video_2",
+        "video_3",
+        "video_4"
+      ],
+      "settings": {
+        "heading": "More than 10,000 happy customers",
+        "columns": 4,
+        "card_gap": 24,
+        "image_ratio": "portrait",
+        "card_radius": 8,
+        "mobile_card_size": 70,
+        "bleed_right": true,
+        "enable_dots": false,
+        "hide_arrows": false,
+        "autoplay": false,
+        "autoplay_speed": 4,
+        "icons_style": "progress",
+        "icons_shape": "none",
+        "section_width": "page-width",
+        "background_color": "",
+        "css_class": "ft-social-videos",
+        "padding-block-start": 30,
+        "padding-block-end": 30,
+        "custom_mobile_padding": false,
+        "mobile-padding-block-start": 0,
+        "mobile-padding-block-end": 0,
+        "mobile-padding-inline-start": 0,
+        "mobile-padding-inline-end": 0
+      }
     }
   },
   "order": [
@@ -2077,6 +2153,7 @@
     "new_arrivals_spotlight",
     "why_foot_tree",
     "corporate_door",
-    "customer_reviews"
+    "customer_reviews",
+    "social_videos"
   ]
 }

@@ -429,7 +429,9 @@
     "view_all_button": "View all",
     "disclosures": "Disclosures",
     "pills": "Pills",
-    "comparison_slider": "Comparison slider"
+    "comparison_slider": "Comparison slider",
+    // Section name for the homepage social proof video carousel (Figma section 09)
+    "video_carousel": "Social video carousel"
   },
   "options": {
     "progress_bar": "Progress bar",
@@ -1236,7 +1238,11 @@
     "top_row_background": "Top row background",
     "top_row_text": "Top row text",
     "bottom_row_background": "Bottom row background",
-    "bottom_row_text": "Bottom row text"
+    "bottom_row_text": "Bottom row text",
+    // Video tile duration chip setting, e.g. "0:24" (sections/video-carousel.liquid)
+    "duration": "Duration",
+    // Whether the video carousel's tile row bleeds to the viewport edge on desktop
+    "bleed_right": "Bleed right on desktop"
   },
   "text_defaults": {
     "accordion_heading": "Accordion heading",
