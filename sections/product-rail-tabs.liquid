@@ -26,9 +26,16 @@
   the wrapping `<product-rail-tabs>` element is `force-full-width` (edge-to-edge under the
   section's own grid, the same trick collection-rail uses for its mobile carousel) and the
   tablist/rail each re-establish the content column with `--util-page-margin-offset`. The
-  desktop slideshow only gutters its *start* edge (`slideshow_gutters: 'start'`) so the row
-  bleeds past the content column into the right-hand margin/viewport edge and a fifth card
-  peeks, per the Figma spec. The mobile slideshow guttres both edges as usual.
+  desktop slideshow guttres both edges (`slideshow_gutters: 'start end'`), same as mobile,
+  so the *resting* left inset and the *fully-scrolled* right inset both match the page
+  margin - but the end gutter only adds `padding-inline-end` (see slideshow-styles.liquid),
+  it never bled at rest because that padding sits after the last card, off-screen until you
+  scroll there. The right-hand bleed/peek at rest (a fifth card visible past the viewport
+  edge, per the Figma spec) is unaffected: it comes from the rail's total content width
+  exceeding the viewport at scrollLeft 0, not from the gutter attribute. custom.css adds the
+  matching `scroll-padding-inline-end` the stock component omits for the end gutter (it only
+  sets `scroll-padding-inline-start` for 'start'), so native scroll-snap actually rests on
+  that trailing inset instead of only being reachable by scripting scrollLeft directly.
 
   Swatch box size/radius/gap and the selected-swatch border are overridden here (scoped
   under .product-rail-tabs) rather than through global swatch settings - see swatch-styles
@@ -234,7 +241,7 @@
             infinite: false,
             initial_slide: 0,
             slide_count: card_count,
-            slideshow_gutters: 'start',
+            slideshow_gutters: 'start end',
             controls: desktop_controls
           -%}
         </div>
@@ -526,6 +533,12 @@
        left the outer shell squarer than the colour fill inside it */
   }
 
+  /* Stock rule (variant-picker-styles.liquid) draws the selected-swatch ring at
+     outline-offset: var(--focus-outline-offset), a relative 0.2em - on a 32px chip
+     that reads as a wide halo with the ring floating well clear of the colour fill.
+     This section already recolors the ring to the section accent; pin the offset to
+     0 instead (label and swatch boxes are identical at 32x32, so any non-zero offset
+     here is pure ring-to-chip gap) so the ring sits directly on the chip's edge. */
   .product-rail-tabs .variant-option__button-label--has-swatch:has(:checked) {
     --focus-outline: 1.5px solid var(--product-rail-tabs-accent-color, #4a6a1d);
 

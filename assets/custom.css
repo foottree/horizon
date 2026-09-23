@@ -159,7 +159,10 @@
      onto a second flex line, so align-items cannot centre it. */
   margin-block: 6px;
   align-items: center;
-  gap: 8px;
+  /* 2px, not the flex row's stock 8px: measured live, label-to-icon was
+     8px (this gap) + 11.2px (the title's own end padding, zeroed below) =
+     19.2px - too wide for a pill this size. */
+  gap: 2px;
   height: 32px;
   padding-inline: 6px;
   border: 1px solid var(--color-foreground);
@@ -182,7 +185,11 @@
 }
 
 .menu-list__trigger:has(> a[href$="/pages/size-width-guide"]) .menu-list__link-title {
-  padding-inline-start: 0;
+  /* Zero both sides: the stock --gap-sm (11.2px) end padding is the other
+     half of the label-to-icon gap this pill was showing (see the trigger's
+     own gap: 2px above). Other top-level titles keep their inline padding -
+     this stays scoped to the "Find your shoe" trigger only. */
+  padding-inline: 0;
 }
 
 .menu-list__trigger:has(> a[href$="/pages/size-width-guide"]) .menu-list__disclosure {
@@ -1192,4 +1199,19 @@
 
 .review-card__quote p + p {
   margin-top: 0.5em;
+}
+
+/* ---- Bestsellers rail (homepage section 03, sections/product-rail-tabs.liquid) ---- */
+
+/* The desktop rail now guttres 'start end' (see the section's own top comment) so the
+   trailing inset matches the leading one once fully scrolled. slideshow-styles.liquid's
+   `slideshow-slides[gutters*='end']` rule only sets `padding-inline-end` though - unlike
+   the 'start' gutter it never pairs that with a matching `scroll-padding-inline-end` - so
+   native scroll-snap (the rail's slides use `scroll-snap-align: start`) has no snap
+   boundary at the trailing edge and can stop short of the real end padding on a plain
+   swipe/wheel scroll. Add the missing scroll-padding here, scoped to this rail's own
+   desktop slideshow only, rather than in the shared component (mobile's 'start end' rail
+   and any other slideshow using an end gutter are out of scope for this fix). */
+.product-rail-tabs__rail-desktop slideshow-slides[gutters*='end'] {
+  scroll-padding-inline-end: var(--gutter-slide-width, 0);
 }
