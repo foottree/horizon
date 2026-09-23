@@ -268,7 +268,9 @@
     margin: 0;
     font-family: var(--font-subheading--family);
     font-size: 0.8125rem;
-    letter-spacing: 0.08em;
+    /* Horizon's own 'loose' tracking, the same token the eyebrow text blocks in the hero,
+       Why Foot Tree and Corporate sections use, so every tagline on the page matches. */
+    letter-spacing: var(--letter-spacing--body-loose);
     text-transform: uppercase;
     color: var(--review-cards-eyebrow-color, currentcolor);
   }
