@@ -630,9 +630,9 @@
         "background_color": "",
         "padding-block-start": 50,
         "padding-block-end": 50,
-        "custom_mobile_padding": false,
-        "mobile-padding-block-start": 0,
-        "mobile-padding-block-end": 0,
+        "custom_mobile_padding": true,
+        "mobile-padding-block-start": 68,
+        "mobile-padding-block-end": 68,
         "mobile-padding-inline-start": 0,
         "mobile-padding-inline-end": 0
       }
@@ -664,9 +664,9 @@
         "background_color": "",
         "padding-block-start": 50,
         "padding-block-end": 50,
-        "custom_mobile_padding": false,
-        "mobile-padding-block-start": 0,
-        "mobile-padding-block-end": 0,
+        "custom_mobile_padding": true,
+        "mobile-padding-block-start": 68,
+        "mobile-padding-block-end": 68,
         "mobile-padding-inline-start": 0,
         "mobile-padding-inline-end": 0
       },
@@ -2049,9 +2049,9 @@
         "css_class": "ft-reviews",
         "padding-block-start": 30,
         "padding-block-end": 30,
-        "custom_mobile_padding": false,
-        "mobile-padding-block-start": 0,
-        "mobile-padding-block-end": 0,
+        "custom_mobile_padding": true,
+        "mobile-padding-block-start": 57,
+        "mobile-padding-block-end": 57,
         "mobile-padding-inline-start": 0,
         "mobile-padding-inline-end": 0
       }
@@ -2125,9 +2125,9 @@
         "css_class": "ft-social-videos",
         "padding-block-start": 30,
         "padding-block-end": 30,
-        "custom_mobile_padding": false,
-        "mobile-padding-block-start": 0,
-        "mobile-padding-block-end": 0,
+        "custom_mobile_padding": true,
+        "mobile-padding-block-start": 57,
+        "mobile-padding-block-end": 57,
         "mobile-padding-inline-start": 0,
         "mobile-padding-inline-end": 0
       }
