@@ -376,12 +376,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 56px;
-    height: 56px;
+    /* the Figma draws 56px, but the hero slideshow's own arrows are 40px with a 16px
+       glyph (custom.css, .slideshow-control--previous/next), and these sat noticeably
+       larger beside them; matched to the hero so the two read as one control style */
+    width: 40px;
+    height: 40px;
     flex-shrink: 0;
     padding: 0;
     background: transparent;
-    border: 1.5px solid var(--video-carousel-line-color, #e0dcd2);
+    border: 1px solid var(--video-carousel-line-color, #e0dcd2);
     border-radius: 50%;
     color: var(--video-carousel-accent-color, #4a6a1d);
     cursor: pointer;
@@ -395,8 +398,8 @@
 
   .video-carousel__nav-arrow .svg-wrapper {
     display: flex;
-    width: 20px;
-    height: 20px;
+    width: 16px;
+    height: 16px;
   }
 
   .video-carousel__nav-arrow svg {
