@@ -1225,7 +1225,7 @@
             "paragraph": {
               "type": "text",
               "settings": {
-                "text": "<p>Our founder studied shoemaking since he was a boy in his father’s shoe factory in Singapore. To him, comfort is not one size fits all — which is why we can offer widths and sizes most brands can’t.</p>",
+                "text": "<p>Our founder studied shoemaking since he was a boy in his father’s shoe factory in Singapore. To him, comfort is not one size fits all - which is why we can offer widths and sizes most brands can’t.</p>",
                 "width": "100%",
                 "max_width": "none",
                 "alignment": "left",
