@@ -1996,15 +1996,7 @@
         "panel",
         "img_photo"
       ],
-      "custom_css": [
-        "@media(min-width:750px){.ft-corporate.section{--section-min-height:415px}}",
-        ".ft-corporate [class*=__bar] .divider__line{flex-basis:64px;border-radius:3px}",
-        ".ft-corporate [class*=__bar]{justify-content:flex-start}",
-        ".ft-corporate [class*=__photo] .image-block__image{width:100%}",
-        "@media(max-width:749px){.ft-corporate [class*=__photo] .image-block__image{--ratio:4/3!important}}",
-        ".ft-corporate [class*=__cta]{margin-top:10px}",
-        ".ft-corporate .button{background-color:#bd8c3d;border-color:#bd8c3d;color:#262622}"
-      ]
+      "custom_css": []
     },
     "customer_reviews": {
       "type": "review-cards",
@@ -2013,7 +2005,7 @@
           "type": "review",
           "settings": {
             "image": "shopify://shop_images/review-1.jpg",
-            "quote": "“I have been wearing them almost 365 days of the year.”",
+            "quote": "<p>“I have been wearing them almost 365 days of the year.”</p>",
             "name": "K.H. Cheng",
             "role": "Hospital staff",
             "product": "Gaia Mary Jane",
@@ -2024,7 +2016,7 @@
           "type": "review",
           "settings": {
             "image": "shopify://shop_images/review-2.jpg",
-            "quote": "“First pair in years that didn’t rub my bunion. I ordered the wide and it was right the first time.”",
+            "quote": "<p>“First pair in years that didn’t rub my bunion. I ordered the wide and it was right the first time.”</p>",
             "name": "Real name",
             "role": "Role",
             "product": "Style",
@@ -2035,7 +2027,7 @@
           "type": "review",
           "settings": {
             "image": "shopify://shop_images/review-3.jpg",
-            "quote": "“Twelve hours on a ward floor and my feet still felt fine at the end of it.”",
+            "quote": "<p>“Twelve hours on a ward floor and my feet still felt fine at the end of it.”</p>",
             "name": "Real name",
             "role": "Role",
             "product": "Style",

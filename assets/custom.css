@@ -1139,3 +1139,56 @@
     margin-inline: auto;
   }
 }
+
+/* ---- Corporate door (homepage section 05) -------------------------------------------------
+   The section is built from stock blocks in templates/index.json; these rules used to live in
+   its `custom_css` setting, which the editor caps at 500 characters (the rules are joined with
+   newlines, so the array was one character over). Nested block ids render as `<hash>__<key>`,
+   hence the `[class*=__key]` hooks. */
+
+@media (min-width: 750px) {
+  .ft-corporate.section {
+    --section-min-height: 415px;
+  }
+}
+
+/* the gold accent bar: a divider block, left-aligned and cut to the mockup's 64px */
+.ft-corporate [class*='__bar'] {
+  justify-content: flex-start;
+}
+
+.ft-corporate [class*='__bar'] .divider__line {
+  flex-basis: 64px;
+  border-radius: 3px;
+}
+
+.ft-corporate [class*='__photo'] .image-block__image {
+  width: 100%;
+}
+
+@media (max-width: 749px) {
+  .ft-corporate [class*='__photo'] .image-block__image {
+    --ratio: 4 / 3 !important;
+  }
+}
+
+.ft-corporate [class*='__cta'] {
+  margin-top: 10px;
+}
+
+.ft-corporate .button {
+  background-color: var(--color-gold, #bd8c3d);
+  border-color: var(--color-gold, #bd8c3d);
+  color: var(--color-ink, #262622);
+}
+
+/* ---- Customer reviews (homepage section 06) ---- */
+
+/* the quote is a rich text setting, so it arrives wrapped in <p> */
+.review-card__quote p {
+  margin: 0;
+}
+
+.review-card__quote p + p {
+  margin-top: 0.5em;
+}
