@@ -1279,3 +1279,30 @@
 .ft-payment-group:has(.payment-icons__item) .image-block {
   display: none;
 }
+
+/* Mobile: the legal bar stacks, so the lockup, the copyright line and the payment row each
+   centre rather than hugging the left edge - a left-aligned column under a centred logo read
+   as misaligned on a phone. Desktop keeps its logo-left / payments-right split. */
+@media screen and (max-width: 749px) {
+  /* the group blocks themselves are display: block, so their alignment lives on the inner
+     layout panel Horizon renders inside them */
+  .ft-footer-lockup .layout-panel-flex,
+  .ft-payment-group .layout-panel-flex {
+    justify-content: center;
+    align-items: center;
+  }
+
+  .ft-footer-lockup,
+  .ft-payment-group {
+    text-align: center;
+  }
+
+  .ft-footer-lockup .text-block,
+  .ft-footer-lockup .text-block > * {
+    text-align: center;
+  }
+
+  .ft-payment-group .payment-icons__list {
+    justify-content: center;
+  }
+}

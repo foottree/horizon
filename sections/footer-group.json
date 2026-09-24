@@ -166,7 +166,7 @@
             "lockup_logo": {
               "type": "image",
               "settings": {
-                "image": "shopify://shop_images/footer-logo-placeholder.png",
+                "image": "shopify://shop_images/foot-tree-logo-white.png",
                 "link": "",
                 "image_ratio": "adapt",
                 "width": "fit-content",
