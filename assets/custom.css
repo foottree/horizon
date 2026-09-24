@@ -480,7 +480,10 @@
   background-color: var(--color-background);;
 }
 
-/* Rows: 56px tall, 24px inline padding, Plus Jakarta Sans Medium 18px ink, no underline. */
+/* Rows: 56px tall, 24px inline padding, Plus Jakarta Sans Medium 18px ink, no underline.
+   The size is the header menu block's "Submenu size" setting when one is chosen; 18px is the
+   Auto fallback. Stock's --menu-child-font-size is not read here because its Auto value comes
+   from the Submenu style preset (14px), which is not what this panel is drawn at. */
 #header-component .dropdown-menu__link {
   position: relative;
   display: flex;
@@ -490,7 +493,7 @@
   padding-block: 0;
   font-family: var(--font-body--family);
   font-weight: 500;
-  font-size: var(--font-size--lg);
+  font-size: var(--ft-submenu-font-size, var(--font-size--lg));
   line-height: 1;
   color: var(--color-foreground);
   text-decoration: none;
