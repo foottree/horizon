@@ -906,6 +906,8 @@
     "menu": "القائمة",
     "minimum_height": "الحد الأدنى للارتفاع",
     "mobile_card_size": "حجم البطاقة على الهاتف المحمول",
+    "panel_gap": "Gap between tiles",
+    "tall_column_width": "Tall tile width",
     "mobile_columns": "أعمدة الهاتف المحمول",
     "mobile_height": "ارتفاع الهاتف المحمول",
     "mobile_logo_image": "شعار الهاتف المحمول",

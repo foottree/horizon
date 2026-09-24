@@ -464,6 +464,8 @@
     "layout_style": "Format",
     "length": "Længde",
     "mobile_card_size": "Kortstørrelse på mobil",
+    "panel_gap": "Gap between tiles",
+    "tall_column_width": "Tall tile width",
     "mobile_pagination": "Sideinddeling på mobil",
     "open_row_by_default": "Åbn række som standard",
     "page": "Side",

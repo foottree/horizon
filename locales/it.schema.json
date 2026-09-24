@@ -467,6 +467,8 @@
     "layout_style": "Stile",
     "length": "Lunghezza",
     "mobile_card_size": "Dimensione scheda su dispositivo mobile",
+    "panel_gap": "Gap between tiles",
+    "tall_column_width": "Tall tile width",
     "mobile_pagination": "Impaginazione su dispositivo mobile",
     "open_row_by_default": "Apri riga per impostazione predefinita",
     "page": "Pagina",

@@ -463,6 +463,8 @@
     "layout_style": "Estilo",
     "length": "Comprimento",
     "mobile_card_size": "Tamanho do cartão em telemóvel",
+    "panel_gap": "Gap between tiles",
+    "tall_column_width": "Tall tile width",
     "mobile_pagination": "Paginação em telemóvel",
     "open_row_by_default": "Abrir linha por predefinição",
     "page": "Página",

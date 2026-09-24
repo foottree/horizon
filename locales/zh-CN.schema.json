@@ -468,6 +468,8 @@
     "layout_style": "样式",
     "length": "长度",
     "mobile_card_size": "移动设备卡尺寸",
+    "panel_gap": "Gap between tiles",
+    "tall_column_width": "Tall tile width",
     "mobile_pagination": "移动设备分页",
     "open_row_by_default": "默认打开行",
     "page": "页面",

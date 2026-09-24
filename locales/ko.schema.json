@@ -487,6 +487,8 @@
     "collection_title_case": "컬렉션 이름 대/소문자",
     "inventory_threshold": "재고 부족 기준",
     "mobile_card_size": "모바일 카드 사이즈",
+    "panel_gap": "Gap between tiles",
+    "tall_column_width": "Tall tile width",
     "page": "페이지",
     "product_and_card_title_case": "제품 및 카드 이름 대/소문자",
     "product_title_case": "제품 이름 대/소문자",

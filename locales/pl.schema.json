@@ -487,6 +487,8 @@
     "collection_title_case": "Wielkość liter w tytule kolekcji",
     "inventory_threshold": "Próg niskiego stanu zapasów",
     "mobile_card_size": "Rozmiar karty na urządzeniach mobilnych",
+    "panel_gap": "Gap between tiles",
+    "tall_column_width": "Tall tile width",
     "page": "Strona",
     "product_and_card_title_case": "Wielkość liter w tytule produktu i karty",
     "product_title_case": "Wielkość liter w tytule produktu",

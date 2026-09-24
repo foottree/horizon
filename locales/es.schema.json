@@ -488,6 +488,8 @@
     "collection_title_case": "Mayúsculas/minúsculas del título de la colección",
     "inventory_threshold": "Umbral de existencias bajas",
     "mobile_card_size": "Tamaño de tarjeta en móviles",
+    "panel_gap": "Gap between tiles",
+    "tall_column_width": "Tall tile width",
     "product_and_card_title_case": "Mayúsculas/minúsculas en títulos de productos y tarjetas",
     "product_title_case": "Mayúsculas/minúsculas del título del producto",
     "reflection_opacity": "Opacidad del reflejo",

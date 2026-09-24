@@ -465,6 +465,8 @@
     "layout_style": "สไตล์",
     "length": "ความยาว",
     "mobile_card_size": "ขนาดการ์ดบนมือถือ",
+    "panel_gap": "Gap between tiles",
+    "tall_column_width": "Tall tile width",
     "mobile_pagination": "การแบ่งหน้าบนมือถือ",
     "open_row_by_default": "เปิดแถวเป็นค่าเริ่มต้น",
     "page": "หน้า",

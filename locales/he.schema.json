@@ -906,6 +906,8 @@
     "menu": "תפריט",
     "minimum_height": "גובה מינימלי",
     "mobile_card_size": "גודל כרטיס בנייד",
+    "panel_gap": "Gap between tiles",
+    "tall_column_width": "Tall tile width",
     "mobile_columns": "עמודות בנייד",
     "mobile_height": "גובה בנייד",
     "mobile_logo_image": "לוגו לנייד",

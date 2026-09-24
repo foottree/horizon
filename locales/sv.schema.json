@@ -467,6 +467,8 @@
     "layout_style": "Stil",
     "length": "Längd",
     "mobile_card_size": "Kortstorlek för mobil",
+    "panel_gap": "Gap between tiles",
+    "tall_column_width": "Tall tile width",
     "mobile_pagination": "Paginering för mobil",
     "open_row_by_default": "Öppna rad som standard",
     "page": "Sida",

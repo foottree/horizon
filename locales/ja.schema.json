@@ -487,6 +487,8 @@
     "collection_title_case": "コレクション名の大文字/小文字",
     "inventory_threshold": "在庫わずかのしきい値",
     "mobile_card_size": "モバイルでのカードサイズ",
+    "panel_gap": "Gap between tiles",
+    "tall_column_width": "Tall tile width",
     "page": "ページ",
     "product_and_card_title_case": "商品名とカード名の大文字/小文字",
     "product_title_case": "商品名の大文字/小文字",

@@ -487,6 +487,8 @@
     "collection_title_case": "Koleksiyon başlığı büyük/küçük harf",
     "inventory_threshold": "Düşük stok eşiği",
     "mobile_card_size": "Mobil kart boyutu",
+    "panel_gap": "Gap between tiles",
+    "tall_column_width": "Tall tile width",
     "page": "Sayfa",
     "product_and_card_title_case": "Ürün ve kart başlığı büyük/küçük harf",
     "product_title_case": "Ürün başlığı büyük/küçük harf",

@@ -1354,6 +1354,19 @@
   color: rgb(255 255 255 / 0.82);
 }
 
+/* Stock lays the legal bar out as two EQUAL columns (sections/footer-utilities.liquid,
+   .utilities--blocks-2), so the copyright was capped at half the row and wrapped onto a second
+   line from about 1600px down, while the payment column sat on ~300px of unused space. Sizing
+   both columns to their content puts the sentence back on one line and leaves the slack between
+   the two groups. The class is doubled because that section's own {% stylesheet %} loads after
+   custom.css, so a single class would lose the tie. */
+@media screen and (min-width: 750px) {
+  .utilities.utilities--blocks-2 {
+    grid-template-columns: auto auto;
+    justify-content: space-between;
+  }
+}
+
 /* Legal bar: the logo and payment-marks placeholders need fixed pixel widths that
    blocks/image.liquid has no setting for (only percentage-based custom_width). max-width: 100%
    keeps them from overflowing a narrow phone viewport. ft-footer-lockup/ft-payment-group are this

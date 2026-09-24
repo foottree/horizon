@@ -487,6 +487,8 @@
     "collection_title_case": "Velká/malá písmena v názvu kolekce",
     "inventory_threshold": "Prahová hodnota pro nízké zásoby",
     "mobile_card_size": "Velikost karty na mobilu",
+    "panel_gap": "Gap between tiles",
+    "tall_column_width": "Tall tile width",
     "page": "Stránka",
     "product_and_card_title_case": "Velká/malá písmena v názvech produktů a karet",
     "product_title_case": "Velká/malá písmena v názvu produktu",

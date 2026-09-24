@@ -487,6 +487,8 @@
     "collection_title_case": "Schreibweise des Kollektionstitels",
     "inventory_threshold": "Schwellenwert für niedrigen Lagerbestand",
     "mobile_card_size": "Mobile Kartengröße",
+    "panel_gap": "Gap between tiles",
+    "tall_column_width": "Tall tile width",
     "page": "Seite",
     "product_and_card_title_case": "Schreibweise für Produkt- und Kartentitel",
     "product_title_case": "Schreibweise des Produkttitels",

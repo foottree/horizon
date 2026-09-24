@@ -463,6 +463,8 @@
     "layout_style": "Style",
     "length": "Longueur",
     "mobile_card_size": "Taille de la carte sur mobile",
+    "panel_gap": "Gap between tiles",
+    "tall_column_width": "Tall tile width",
     "mobile_pagination": "Pagination sur mobile",
     "open_row_by_default": "Ouvrir la rangée par défaut",
     "page": "Page",

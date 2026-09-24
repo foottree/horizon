@@ -1004,6 +1004,8 @@
     "menu": "Menu",
     "minimum_height": "Minimum height",
     "mobile_card_size": "Mobile card size",
+    "panel_gap": "Gap between tiles",
+    "tall_column_width": "Tall tile width",
     "mobile_columns": "Mobile columns",
     "mobile_height": "Mobile height",
     "mobile_logo_image": "Mobile logo",

@@ -463,6 +463,8 @@
     "layout_style": "樣式",
     "length": "長度",
     "mobile_card_size": "行動版卡片大小",
+    "panel_gap": "Gap between tiles",
+    "tall_column_width": "Tall tile width",
     "mobile_pagination": "行動版分頁",
     "open_row_by_default": "預設展開列",
     "page_transition_enabled": "頁面轉場",

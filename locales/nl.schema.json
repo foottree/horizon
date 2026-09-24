@@ -464,6 +464,8 @@
     "layout_style": "Stijl",
     "length": "Lengte",
     "mobile_card_size": "Kaartgrootte op mobiel",
+    "panel_gap": "Gap between tiles",
+    "tall_column_width": "Tall tile width",
     "mobile_pagination": "Paginering op mobiel",
     "open_row_by_default": "Rij standaard openen",
     "page": "Pagina",
