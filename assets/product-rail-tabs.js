@@ -36,6 +36,47 @@ class ProductRailTabs extends Component {
     panels.forEach((panel, i) => {
       panel.hidden = i !== targetIndex;
     });
+
+    this.updateNavArrows(targetIndex);
+  }
+
+  /**
+   * The header nav arrows (sections/product-rail-tabs.liquid's `.product-rail-tabs__nav`,
+   * copied from sections/video-carousel.liquid's own header arrows) are shared by every tab -
+   * there's only one arrow pair, sitting in the section header, not one per panel - so they
+   * have to be re-pointed at whichever tab's carousel is now active, and hidden outright when
+   * that tab renders as a contained grid with nothing to scroll (see is_desktop_grid in the
+   * Liquid). The active tab BUTTON carries a `data-carousel-nav-id` attribute set by Liquid
+   * (blank for a grid tab) naming the DOM id of that tab's `<slideshow-component>`; `on:click`
+   * is read fresh off the button on every click (see assets/component.js), so rewriting the
+   * attribute here is enough to retarget it - no need to touch the slideshow itself.
+   *
+   * @param {number} index
+   */
+  updateNavArrows(index) {
+    const { tabs } = this.refs;
+    if (!Array.isArray(tabs) || !tabs[index]) return;
+
+    const navId = this.dataset.navId;
+    if (!navId) return;
+
+    const nav = document.getElementById(navId);
+    if (!nav) return;
+
+    const slideshowId = tabs[index].dataset.carouselNavId;
+
+    if (!slideshowId) {
+      nav.hidden = true;
+      return;
+    }
+
+    nav.hidden = false;
+
+    const previous = nav.querySelector('.product-rail-tabs__nav-arrow--previous');
+    const next = nav.querySelector('.product-rail-tabs__nav-arrow--next');
+
+    previous?.setAttribute('on:click', `#${slideshowId}/previous`);
+    next?.setAttribute('on:click', `#${slideshowId}/next`);
   }
 
   /**

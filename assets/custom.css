@@ -657,9 +657,11 @@
 }
 
 /* level-2 group headings in the nested panel: 14px subdued by default, smaller than their own
-   links; lift to 18px so the hierarchy reads top-down */
+   links. They sit one step above the level-3 links under them, so they track the header menu
+   block's Submenu size setting and stay 2px larger than it. With the setting on Auto that is
+   16 + 2 = 18px, the value this rule used to hard-code. */
 #header-component .menu-drawer__submenu .menu-drawer__menu-item--parent {
-  font-size: var(--font-size--lg);
+  font-size: calc(var(--ft-submenu-font-size, 1rem) + 2px);
 }
 
 /* level-2 headings and level-3 links use the same face, weight and ink as the top-level rows;
@@ -679,7 +681,12 @@
    doesn't grow a summary row taller than its sibling links; align-items: center (inherited from
    .menu-drawer__menu-item) then centres each label within that fixed height identically. */
 #header-component .menu-drawer__menu-item--mainlist {
-  font-size: var(--font-size--xl);
+  /* The drawer's three levels step 20 / 18 / 16, which is its own hierarchy - the desktop bar
+     runs 16px, so the Top level size setting is the wrong thing to follow here or the drawer's
+     first level would end up smaller than the second. All three levels hang off the Submenu
+     size setting instead: this one 4px above it, the level-2 headings 2px above, the level-3
+     links exactly on it. On Auto that reproduces 20 / 18 / 16 unchanged. */
+  font-size: calc(var(--ft-submenu-font-size, 1rem) + 4px);
   min-height: 56px;
 }
 

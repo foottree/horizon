@@ -67,6 +67,50 @@
   assign ink_soft_color = settings.color_palette.color8
 -%}
 
+{%- liquid
+  # Header nav arrows (sections/video-carousel.liquid's "More than 10,000 happy customers"
+  # arrows, reused here - see the header markup below and assets/product-rail-tabs.js's
+  # updateNavArrows): there's only one arrow pair, shared by every tab, so it has to be wired
+  # to whichever tab is currently active and updated on every tab switch instead of being
+  # baked into one fixed carousel like video-carousel's single rail. The FIRST visible tab
+  # decides the INITIAL render (index 0 is always the active tab on first paint - see
+  # aria-selected below), so its card_count/grid-vs-carousel state has to be known here,
+  # before the header markup, even though the tab loop below recomputes the exact same thing
+  # per tab (Liquid can't share a later loop's variables with code above it) to drive the
+  # data-carousel-nav-id attribute JS reads on every subsequent switch.
+  assign render_header_arrows = true
+  if section.settings.hide_arrows == true
+    assign render_header_arrows = false
+  endif
+
+  assign nav_first_tab_collection = null
+  assign nav_first_tab_max_items = 0
+  for i in (1..4)
+    assign nav_label_key = 'tab_' | append: i | append: '_label'
+    assign nav_tab_label = section.settings[nav_label_key]
+    if nav_tab_label != blank
+      assign nav_collection_key = 'tab_' | append: i | append: '_collection'
+      assign nav_max_products_key = 'tab_' | append: i | append: '_max_products'
+      assign nav_first_tab_collection = section.settings[nav_collection_key]
+      assign nav_first_tab_max_items = section.settings[nav_max_products_key]
+      break
+    endif
+  endfor
+
+  assign nav_first_card_count = 4
+  if nav_first_tab_collection != blank and nav_first_tab_collection.products.size > 0
+    assign nav_first_card_count = nav_first_tab_collection.products.size | at_most: nav_first_tab_max_items
+  endif
+
+  assign nav_first_is_grid = false
+  if section.settings.desktop_layout == 'auto' and nav_first_card_count <= 4
+    assign nav_first_is_grid = true
+  endif
+
+  assign nav_id = 'product-rail-tabs-nav-' | append: section.id
+  assign nav_first_slideshow_id = 'product-rail-tabs-desktop-' | append: section.id | append: '-0'
+-%}
+
 <div
   class="section-background{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
 ></div>
@@ -89,7 +133,7 @@
   "
   data-testid="product-rail-tabs"
 >
-  {%- if section.settings.heading != blank or section.settings.description != blank or section.settings.link != blank -%}
+  {%- if section.settings.heading != blank or section.settings.description != blank or section.settings.link != blank or render_header_arrows -%}
     <div class="product-rail-tabs__header">
       <div class="product-rail-tabs__header-text">
         {%- if section.settings.heading != blank -%}
@@ -102,25 +146,68 @@
           <div class="product-rail-tabs__description">{{ section.settings.description }}</div>
         {%- endif -%}
       </div>
-      {%- if section.settings.link != blank -%}
-        <a
-          href="{{ section.settings.link }}"
-          class="product-rail-tabs__link"
-        >
-          <span>{{ section.settings.link_label }}</span>
-          <span
-            class="product-rail-tabs__link-arrow"
-            aria-hidden="true"
-          >
-            {{- 'icon-arrow.svg' | inline_asset_content -}}
-          </span>
-        </a>
+      {%- if section.settings.link != blank or render_header_arrows -%}
+        <div class="product-rail-tabs__header-actions">
+          {%- if section.settings.link != blank -%}
+            <a
+              href="{{ section.settings.link }}"
+              class="product-rail-tabs__link"
+            >
+              <span>{{ section.settings.link_label }}</span>
+              <span
+                class="product-rail-tabs__link-arrow"
+                aria-hidden="true"
+              >
+                {{- 'icon-arrow.svg' | inline_asset_content -}}
+              </span>
+            </a>
+          {%- endif -%}
+          {%- if render_header_arrows -%}
+            {%- comment -%}
+              Hidden on mobile (hidden--mobile, matching video-carousel's own header arrows)
+              and hidden here on desktop whenever the initially-active (first visible) tab is
+              a grid with nothing to scroll - assets/product-rail-tabs.js's updateNavArrows
+              toggles this same `hidden` attribute (see the [hidden] override in the
+              stylesheet below) as the shopper switches tabs, and rewrites the buttons'
+              on:click target to the newly active tab's own carousel id.
+            {%- endcomment -%}
+            <div
+              id="{{ nav_id }}"
+              class="product-rail-tabs__nav hidden--mobile"
+              {% if nav_first_is_grid %}hidden{% endif %}
+            >
+              <button
+                type="button"
+                class="product-rail-tabs__nav-arrow product-rail-tabs__nav-arrow--previous flip-x"
+                aria-label="{{ 'accessibility.slideshow_previous' | t }}"
+                on:click="#{{ nav_first_slideshow_id }}/previous"
+              >
+                <span class="svg-wrapper icon-arrow" aria-hidden="true">
+                  {{- 'icon-arrow.svg' | inline_asset_content -}}
+                </span>
+              </button>
+              <button
+                type="button"
+                class="product-rail-tabs__nav-arrow product-rail-tabs__nav-arrow--next"
+                aria-label="{{ 'accessibility.slideshow_next' | t }}"
+                on:click="#{{ nav_first_slideshow_id }}/next"
+              >
+                <span class="svg-wrapper icon-arrow" aria-hidden="true">
+                  {{- 'icon-arrow.svg' | inline_asset_content -}}
+                </span>
+              </button>
+            </div>
+          {%- endif -%}
+        </div>
       {%- endif -%}
     </div>
   {%- endif -%}
 
   <product-rail-tabs
     class="product-rail-tabs__interactive force-full-width{% if section.settings.show_arrows %} product-rail-tabs__interactive--arrows{% endif %}"
+    {% if render_header_arrows %}
+      data-nav-id="{{ nav_id }}"
+    {% endif %}
   >
     <div
       class="product-rail-tabs__tablist-wrap"
@@ -144,6 +231,30 @@
               continue
             endif
             assign visible_tab_index = visible_tab_index | plus: 1
+
+            # Header nav arrows drive whichever tab is active (see the header markup above
+            # and assets/product-rail-tabs.js's updateNavArrows) - JS reads this data
+            # attribute off the active tab BUTTON on every switch to learn the carousel id to
+            # target, or that the tab is a grid with nothing to scroll (blank attribute, so
+            # the arrows hide instead). Recomputed from the same collection/max_products
+            # settings the panel loop below reads, since Liquid can't share that loop's own
+            # card_count/is_desktop_grid with this earlier one.
+            assign nav_tab_collection_key = 'tab_' | append: i | append: '_collection'
+            assign nav_tab_max_products_key = 'tab_' | append: i | append: '_max_products'
+            assign nav_tab_collection = section.settings[nav_tab_collection_key]
+            assign nav_tab_max_items = section.settings[nav_tab_max_products_key]
+            assign nav_tab_card_count = 4
+            if nav_tab_collection != blank and nav_tab_collection.products.size > 0
+              assign nav_tab_card_count = nav_tab_collection.products.size | at_most: nav_tab_max_items
+            endif
+            assign nav_tab_is_grid = false
+            if section.settings.desktop_layout == 'auto' and nav_tab_card_count <= 4
+              assign nav_tab_is_grid = true
+            endif
+            assign nav_tab_slideshow_id = ''
+            unless nav_tab_is_grid
+              assign nav_tab_slideshow_id = 'product-rail-tabs-desktop-' | append: section.id | append: '-' | append: visible_tab_index
+            endunless
           -%}
           <button
             type="button"
@@ -154,6 +265,7 @@
             tabindex="{% if visible_tab_index == 0 %}0{% else %}-1{% endif %}"
             class="product-rail-tabs__tab"
             ref="tabs[]"
+            data-carousel-nav-id="{{ nav_tab_slideshow_id }}"
             on:click="/selectTab/{{ visible_tab_index }}"
             on:keydown="/handleKeydown"
           >
@@ -201,6 +313,12 @@
         if section.settings.desktop_layout == 'auto' and card_count <= 4
           assign is_desktop_grid = true
         endif
+
+        # DOM id the header nav arrows target when this panel is active and NOT a grid (see
+        # the header markup and the tablist loop above, and assets/product-rail-tabs.js) -
+        # matches nav_tab_slideshow_id's naming there exactly.
+        assign desktop_slideshow_id = 'product-rail-tabs-desktop-' | append: section.id | append: '-' | append: visible_panel_index
+        assign desktop_slideshow_attributes = 'id="' | append: desktop_slideshow_id | append: '"'
 
         if tab_collection != blank and tab_collection.products.size > 0
           for product in tab_collection.products limit: max_items
@@ -295,6 +413,7 @@
               initial_slide: 0,
               slide_count: card_count,
               slideshow_gutters: 'start end',
+              attributes: desktop_slideshow_attributes,
               controls: desktop_controls
             -%}
           </div>
@@ -399,6 +518,64 @@
   }
 
   .product-rail-tabs__link-arrow svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .product-rail-tabs__header-actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-shrink: 0;
+  }
+
+  /* Nav arrows, matching sections/video-carousel.liquid's header arrows exactly (see
+     .video-carousel__nav-arrow there for the 40px/16px/1px sizing rationale) - kept as its
+     own scoped copy rather than a shared class, the same way every other rule in this
+     stylesheet is scoped to .product-rail-tabs rather than pulled from assets/custom.css. */
+  .product-rail-tabs__nav {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-shrink: 0;
+  }
+
+  /* [hidden] has to be re-declared here to win over the plain-class `display: flex` above -
+     the same pattern .product-rail-tabs__panel[hidden] below already relies on - since
+     assets/product-rail-tabs.js toggles this element's `hidden` property (not a Liquid
+     if-block) as the shopper switches between carousel and grid tabs. */
+  .product-rail-tabs__nav[hidden] {
+    display: none;
+  }
+
+  .product-rail-tabs__nav-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    padding: 0;
+    background: transparent;
+    border: 1px solid var(--product-rail-tabs-track-color, #e0dcd2);
+    border-radius: 50%;
+    color: var(--product-rail-tabs-accent-color, #4a6a1d);
+    cursor: pointer;
+    transition: background-color 180ms var(--animation-easing, ease), color 180ms var(--animation-easing, ease);
+  }
+
+  .product-rail-tabs__nav-arrow:hover {
+    background: var(--product-rail-tabs-accent-color, #4a6a1d);
+    color: var(--color-background, #fff);
+  }
+
+  .product-rail-tabs__nav-arrow .svg-wrapper {
+    display: flex;
+    width: 16px;
+    height: 16px;
+  }
+
+  .product-rail-tabs__nav-arrow svg {
     width: 100%;
     height: 100%;
   }
@@ -826,6 +1003,16 @@
       "step": 5,
       "unit": "%",
       "default": 75
+    },
+    {
+      "type": "header",
+      "content": "t:content.carousel_navigation"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_arrows",
+      "label": "Hide arrows",
+      "default": false
     },
     {
       "type": "header",
