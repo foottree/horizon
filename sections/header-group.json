@@ -66,6 +66,7 @@
             "background_color": "{{ settings.color_palette.background }}",
             "text_color": "",
             "type_font_primary_size": "1rem",
+            "submenu_font_size": "1rem",
             "menu_font_style": "inverse",
             "type_font_primary_link": "subheading",
             "type_case_primary_link": "none",
