@@ -91,6 +91,38 @@
   margin-inline: auto;
 }
 
+/* Foot Tree gutter: one fluid inset every homepage section derives from, so the narrow
+   sections (Shop by Collection, Bestsellers, Customer reviews, Social videos, Footer) and
+   the full-bleed panels (Hero, New Arrivals, Why Foot Tree, Corporate - see their own
+   css_class-scoped rules further down this file) line up past 1440px instead of only at
+   exactly 1440px. Floors at 40px (narrow viewports), holds 100px - the Figma gutter, 1240px
+   content - from 1240 to 1600px wide, then grows again so content caps at 1600px instead of
+   stretching indefinitely. >=750px only, so mobile keeps today's fixed 78rem/16px behaviour
+   untouched (see the unconditional .section--narrow rule above, which this overrides only
+   above the breakpoint). */
+@media screen and (min-width: 750px) {
+  :root {
+    --ft-gutter: max(40px, min(100px, calc((100vw - 1240px) / 2)), calc((100vw - 1600px) / 2));
+  }
+
+  /* Replaces the fixed 78rem cap with the fluid gutter above - at 1440 wide this still
+     resolves to 1240px (100vw - 2*100px), 8px under the old 1248px cap, matching the
+     Figma content width exactly; at 1920 it grows to 1600px instead of staying capped. */
+  .section--narrow {
+    --page-content-width: calc(100vw - (var(--ft-gutter) * 2));
+  }
+
+  /* Kept in sync with the container above rather than dropped: .section > * already clips
+     to --page-content-width via the grid track (assets/base.css), so this inner max-width
+     is a belt-and-braces clamp, not the thing actually sizing the column - but left at a
+     stale 78rem it would still win as the smaller value past ~1328px wide and silently cap
+     the content column again, undoing the fluid width above. */
+  .section--narrow .section-content-wrapper,
+  .section--narrow > .section-content {
+    max-width: var(--page-content-width);
+  }
+}
+
 /* ---- Header ---- */
 
 /* Wordmark is the uploaded logo file (config/settings_data.json), not text. */
@@ -1134,6 +1166,20 @@
   padding-inline: 22px;
 }
 
+/* Gutter alignment: both inline edges of the hero copy are the "outer" edge here (the panel
+   sits on the photo rather than beside it, so there's no inner edge to keep fixed unlike the
+   other full-bleed panels below). templates/index.json sets padding-inline-start/end: 100 on
+   each _slide block, rendered inline as --padding-inline-start/-end (snippets/spacing-style.
+   liquid, consumed by .spacing-style in assets/base.css) - !important is required to beat
+   that inline style, same as the --header-template-columns/--ratio overrides elsewhere in
+   this file. */
+@media screen and (min-width: 750px) {
+  #MainContent .ft-hero .slide__content {
+    --padding-inline-start: var(--ft-gutter) !important;
+    --padding-inline-end: var(--ft-gutter) !important;
+  }
+}
+
 @media screen and (max-width: 749px) {
   #MainContent .ft-hero slideshow-slides {
     min-height: auto;
@@ -1160,6 +1206,34 @@
   }
 }
 
+/* ---- New Arrivals spotlight (homepage section 02) ----
+   templates/index.json's new_arrivals_spotlight/content group sets padding-inline-start: 80
+   (the left/outer edge - content sits left of the image, block_order: content, img_lifestyle)
+   and padding-inline-end: 56 (the inner edge, facing the image - left alone). The block's own
+   css_class is blank, so it has no clean literal class to hook; its background_color IS set
+   (color_palette.background), so snippets/group.liquid adds `color-custom-{{ block.id }}`,
+   and static blocks' ids render as `<hash>__<key>` (see the Corporate door comment below),
+   giving a class containing `__content` to match on. */
+@media screen and (min-width: 750px) {
+  .ft-new-arrivals [class*='__content'] {
+    --padding-inline-start: var(--ft-gutter) !important;
+  }
+}
+
+/* ---- Why Foot Tree (homepage section 04) ----
+   templates/index.json's why_foot_tree/panel sets padding-inline-end: 100 (the right/outer
+   edge - block_order: img_archive, panel, so the panel sits right of the archive photo) and
+   padding-inline-start: 72 (the inner edge, facing the photo - left alone). Unlike New
+   Arrivals' content block, this one's css_class is the literal "panel" (settings.css_class is
+   rendered as-is in snippets/group.liquid), so no `[class*=__key]` hook is needed - the
+   section's own custom_css array (templates/index.json) already targets it the same way
+   (`.ft-why-foot-tree .panel`). */
+@media screen and (min-width: 750px) {
+  .ft-why-foot-tree .panel {
+    --padding-inline-end: var(--ft-gutter) !important;
+  }
+}
+
 /* ---- Corporate door (homepage section 05) -------------------------------------------------
    The section is built from stock blocks in templates/index.json; these rules used to live in
    its `custom_css` setting, which the editor caps at 500 characters (the rules are joined with
@@ -1169,6 +1243,14 @@
 @media (min-width: 750px) {
   .ft-corporate.section {
     --section-min-height: 415px;
+  }
+
+  /* Gutter alignment: block_order is panel, photo (panel sits left of the photo), so
+     padding-inline-start: 100 is the outer/left edge - padding-inline-end: 56, facing the
+     photo, is left alone. Unlike the img_archive/bar/photo/cta blocks below, "panel" is a
+     literal css_class (settings.css_class rendered as-is), same as why_foot_tree's panel. */
+  .ft-corporate .panel {
+    --padding-inline-start: var(--ft-gutter) !important;
   }
 }
 
