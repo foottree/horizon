@@ -42,3 +42,6 @@ var(--font-
     --menu-child-font-size: var(--menu-font-xl--size); --menu-child-font-line-height: var(--menu-font-xl--line-height);
     --menu-child-font-color: var(--color-foreground); --menu-child-active-font-color: var(--color-foreground-subdued);
 {% endcase %}
+{%- if settings.submenu_font_size != blank -%}
+  --menu-child-font-size: {{ settings.submenu_font_size }};
+{%- endif -%}
