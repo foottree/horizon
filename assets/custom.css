@@ -208,10 +208,12 @@
      19.2px - too wide for a pill this size. */
   gap: 2px;
   height: 32px;
-  /* the client asked for the pill about 20% wider than its content demands (185 -> 221px),
-     so the extra width lives in its own padding rather than a fixed min-width - the box
-     still grows if the label is ever changed */
-  padding-inline: 24px;
+  /* the client asked for the pill about 20% wider than its content demands (185 -> 221px).
+     The extra width is a min-width rather than padding, because the search icon and label
+     sit at the left and the caret is pushed to the right edge (see the disclosure rule
+     below) - the slack has to fall between them, not around them. */
+  min-width: 221px;
+  padding-inline: 12px;
   border: 1px solid var(--color-foreground);
   border-radius: 0;
   background-color: #ffffff;
@@ -245,6 +247,9 @@
   pointer-events: auto;
   transform: none;
   padding: 0;
+  /* hold the caret against the right edge so the icon and label read as one left-aligned
+     group, the way a real search field does */
+  margin-inline-start: auto;
 }
 
 /* Mobile menu drawer close (X): icon-close-menu.svg is a full-bleed X glyph,
@@ -1339,8 +1344,10 @@
 .footer-content .menu__item a {
   font-family: var(--font-body--family);
   font-weight: 400;
-  font-size: 1.25rem; /* 20px */
-  line-height: 1.6;
+  /* follows Typography > Paragraph size in theme settings rather than the Figma's fixed
+     20px, so the merchant's own slider drives the footer links (the Figma value is 20) */
+  font-size: var(--font-paragraph--size);
+  line-height: var(--font-paragraph--line-height, 1.6);
   color: rgb(255 255 255 / 0.82);
 }
 
