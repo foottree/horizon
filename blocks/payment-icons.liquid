@@ -19,6 +19,18 @@
     class="payment-icons__list"
     role="list"
   >
+    {%- comment -%}
+      HitPay is the store's own gateway, not one of Shopify's known payment types, so it has
+      no `payment_type_svg_tag` icon. It ships as a theme asset drawn in the same 38x24 frame
+      Shopify uses (white card, 2.5px radius, 7%-black hairline) so it sits flush with the
+      rest of the row, and leads the list at the client's request.
+    {%- endcomment -%}
+    {%- if block_settings.show_hitpay -%}
+      <li class="payment-icons__item">
+        {{ 'icon-payment-hitpay.svg' | inline_asset_content }}
+      </li>
+    {%- endif -%}
+
     {%- for type in shop.enabled_payment_types -%}
       <li class="payment-icons__item">
         {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
@@ -53,6 +65,12 @@
   "name": "t:names.payment_icons",
   "tag": null,
   "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_hitpay",
+      "label": "Show HitPay",
+      "default": true
+    },
     {
       "type": "select",
       "id": "horizontal_alignment",
