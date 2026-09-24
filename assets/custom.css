@@ -208,7 +208,10 @@
      19.2px - too wide for a pill this size. */
   gap: 2px;
   height: 32px;
-  padding-inline: 6px;
+  /* the client asked for the pill about 20% wider than its content demands (185 -> 221px),
+     so the extra width lives in its own padding rather than a fixed min-width - the box
+     still grows if the label is ever changed */
+  padding-inline: 24px;
   border: 1px solid var(--color-foreground);
   border-radius: 0;
   background-color: #ffffff;
