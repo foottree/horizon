@@ -1,0 +1,5 @@
+# Claude Code workspace settings: local to this machine, not part of the theme.
+.claude/
+
+# Agents occasionally drop a scratch folder here; it must never reach the theme.
+SCRATCH/
