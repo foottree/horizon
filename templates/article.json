@@ -9,6 +9,12 @@
  */
 {
   "sections": {
+    "breadcrumb": {
+      "type": "breadcrumb",
+      "settings": {
+        "menu": "main-menu"
+      }
+    },
     "section": {
       "type": "main-blog-post",
       "blocks": {
@@ -93,6 +99,7 @@
     }
   },
   "order": [
+    "breadcrumb",
     "section"
   ]
 }

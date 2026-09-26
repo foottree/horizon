@@ -9,6 +9,12 @@
  */
 {
   "sections": {
+    "breadcrumb": {
+      "type": "breadcrumb",
+      "settings": {
+        "menu": "main-menu"
+      }
+    },
     "main": {
       "type": "main-404",
       "blocks": {
@@ -266,6 +272,7 @@
     }
   },
   "order": [
+    "breadcrumb",
     "main",
     "product_list_iA96Tq"
   ]

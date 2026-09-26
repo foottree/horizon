@@ -9,6 +9,12 @@
  */
 {
   "sections": {
+    "breadcrumb": {
+      "type": "breadcrumb",
+      "settings": {
+        "menu": "main-menu"
+      }
+    },
     "search": {
       "type": "search-header",
       "blocks": {
@@ -175,6 +181,7 @@
     }
   },
   "order": [
+    "breadcrumb",
     "search",
     "main"
   ]

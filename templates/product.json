@@ -9,6 +9,12 @@
  */
 {
   "sections": {
+    "breadcrumb": {
+      "type": "breadcrumb",
+      "settings": {
+        "menu": "main-menu"
+      }
+    },
     "main": {
       "type": "product-information",
       "blocks": {
@@ -409,6 +415,7 @@
     }
   },
   "order": [
+    "breadcrumb",
     "main",
     "product_recommendations_qggXJq"
   ]

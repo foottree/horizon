@@ -8,6 +8,7 @@
   @param {boolean} [should_render_clear] - Whether to render the clear button
   @param {boolean} [show_swatch_label] - Whether to show the swatch label
   @param {boolean} [in_drawer] - Whether the filter is in a drawer
+  @param {string} [pill_filter_labels] - Comma-separated filter labels that should render as a pill grid
 {%- enddoc -%}
 
 {% render 'variant-picker-styles' %}
@@ -23,6 +24,21 @@
   assign is_image = false
   if filter.presentation == 'image'
     assign is_image = true
+  endif
+
+  # A merchant-named list of filter labels (matched trimmed/case-insensitive) that should
+  # render as a pill grid instead of checkbox rows, e.g. "Size (EU)".
+  assign use_pill_filter = false
+  assign filter_label_normalized = filter.label | strip | downcase
+  if pill_filter_labels != blank and filter.type != 'boolean'
+    assign pill_filter_names = pill_filter_labels | split: ','
+    for pill_filter_name in pill_filter_names
+      assign pill_filter_name_normalized = pill_filter_name | strip | downcase
+      if pill_filter_name_normalized == filter_label_normalized
+        assign use_pill_filter = true
+        break
+      endif
+    endfor
   endif
 %}
 
@@ -136,6 +152,9 @@
           if filter.values.size > max_visible_values and should_render_for_swatch == false
             assign render_show_more = true
           endif
+          if use_pill_filter
+            assign render_show_more = false
+          endif
         %}
         {% liquid
           if render_show_more
@@ -156,6 +175,10 @@
 
           if filter.type == 'boolean'
             assign should_use_pills = false
+          endif
+
+          if use_pill_filter
+            assign should_use_pills = true
           endif
         %}
 
@@ -191,7 +214,7 @@
           %}
           <ul
             id="filters-list-{{ sectionId }}-{{ filter.param_name | escape | replace: '.', '-' }}"
-            class="facets__inputs-list{% if should_use_pills %} facets__inputs-list--grid{% endif %} list-unstyled{% if is_swatch %} facets__inputs-list--swatches{% if show_swatch_label %} facets__inputs-list--swatches-grid{% endif %}{% endif %}{% if is_image %} facets__inputs-list--images{% endif %}"
+            class="facets__inputs-list{% if should_use_pills %}{% if use_pill_filter %} facets__inputs-list--size-pills{% else %} facets__inputs-list--grid{% endif %}{% endif %} list-unstyled{% if is_swatch %} facets__inputs-list--swatches{% if show_swatch_label %} facets__inputs-list--swatches-grid{% endif %}{% endif %}{% if is_image %} facets__inputs-list--images{% endif %}"
             {% if is_swatch %}
               style="--swatch-columns: {{ swatch_columns }};"
             {% endif %}
@@ -329,7 +352,7 @@
                 {% else %}
                   {% if should_use_pills %}
                     <div
-                      class="facets__pill-wrapper"
+                      class="facets__pill-wrapper{% if use_pill_filter %} facets__pill-wrapper--size-grid{% endif %}"
                       on:keydown="#facet-inputs-component-{{ filter.param_name | escape | replace: '.', '-' }}/handleKeyDown"
                     >
                       <input
@@ -349,11 +372,21 @@
                         tabindex="-1"
                       >
                       <label
-                        class="facets__pill-label"
+                        class="facets__pill-label{% if use_pill_filter %} facets__pill-label--size-grid{% endif %}"
                         for="{{ input_id }}"
                         tabindex="0"
                       >
-                        {{- value.label }}
+                        {% if use_pill_filter %}
+                          <span class="facets__pill-label-text">{{- value.label -}}</span>
+                          <span
+                            class="facets__pill-remove-icon"
+                            aria-hidden="true"
+                          >
+                            {{- 'icon-close.svg' | inline_asset_content -}}
+                          </span>
+                        {% else %}
+                          {{- value.label }}
+                        {% endif %}
                         {% if is_disabled %}
                           <svg
                             aria-hidden="true"
@@ -638,6 +671,84 @@
     display: block;
     opacity: 0;
     cursor: pointer;
+  }
+
+  /* Pill grid (facets rendered as pills via the "Filters to show as pills" setting) */
+  .facets__inputs-wrapper .facets__inputs-list.facets__inputs-list--size-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .facets__inputs-list--size-pills .facets__inputs-list-item {
+    flex: 0 0 auto;
+  }
+
+  .facets__pill-wrapper--size-grid {
+    flex: 0 0 auto;
+  }
+
+  .facets__pill-label--size-grid {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 60px;
+    min-width: 60px;
+    height: 48px;
+    border-radius: 8px;
+    box-shadow: inset 0 0 0 1.5px var(--color-variant-border);
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-size: var(--font-size--xl);
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    outline-color: var(--color-foreground);
+    transition: width var(--animation-speed) var(--animation-easing),
+      padding var(--animation-speed) var(--animation-easing),
+      color var(--animation-speed) var(--animation-easing),
+      background-color var(--animation-speed) var(--animation-easing),
+      box-shadow var(--animation-speed) var(--animation-easing);
+  }
+
+  .facets__pill-label-text {
+    white-space: nowrap;
+  }
+
+  .facets__pill-remove-icon {
+    display: none;
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
+  }
+
+  .facets__pill-remove-icon svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .facets__pill-input:not(:checked) + .facets__pill-label--size-grid:hover {
+    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-5));
+  }
+
+  .facets__pill-input:checked + .facets__pill-label--size-grid {
+    width: auto;
+    padding-inline: 14px;
+    box-shadow: none;
+    background-color: var(--color-primary-button-background);
+    color: var(--color-primary-button-text);
+  }
+
+  .facets__pill-input:checked + .facets__pill-label--size-grid .facets__pill-remove-icon {
+    display: inline-flex;
+  }
+
+  .facets__pill-input:disabled + .facets__pill-label--size-grid {
+    opacity: var(--disabled-opacity);
+    cursor: not-allowed;
   }
 
   /* Swatches */

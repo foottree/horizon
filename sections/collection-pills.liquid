@@ -1,0 +1,309 @@
+{% comment %}
+  Collection pill row (Figma "Category / Desktop 1440", the "Collections" row under the
+  breadcrumb). Reads collection.metafields.custom.related_collections (list.collection_reference,
+  already populated in the store on women / mary-janes / loafers / flats / sporty / slip-ons /
+  heels, each holding the same 7 collections in the same order: Women, Mary Janes, Loafers,
+  Flats, Sporty, Slip-ons, Heels) and renders one pill per entry. The pill matching the
+  collection currently being viewed (compared by handle) is rendered as the active, unlinked
+  state and carries aria-current="page"; every other pill is a plain link to that collection.
+
+  If the metafield is empty or missing on the collection being viewed - including when this
+  section is rendered on a template that has no `collection` object at all - nothing is
+  rendered: no section background, no padding, no empty nav.
+
+  Mobile (client asked for the sunnystep.com feel): the row bleeds to the screen edge (like
+  the mobile carousels in sections/collection-rail.liquid / review-cards.liquid) but the
+  scrolling list itself is padded by --util-page-margin-offset so the first pill still lines
+  up with the page gutter and the last pill has matching breathing room, not flush with the
+  edge. It scrolls on one line (flex-wrap: nowrap) with momentum and a hidden scrollbar, and a
+  tiny {% javascript %} nudges the active pill into view on load if it started off-screen,
+  without touching the page's own scroll position. Desktop (>=750px) sits in the normal content
+  column and wraps instead of scrolling if it ever overflows there.
+{% endcomment %}
+
+{%- liquid
+  assign related_collections = collection.metafields.custom.related_collections.value
+-%}
+
+{%- if related_collections != blank and related_collections.size > 0 -%}
+  {%- liquid
+    if section.settings.background_color != blank
+      render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
+    endif
+  -%}
+
+  <div class="section-background{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"></div>
+
+  <div
+    class="
+      section
+      section--{{ section.settings.section_width }}
+      {% if section.settings.background_color != blank %}color-custom-{{ section.id }}{% endif %}
+      collection-pills
+      spacing-style
+    "
+    style="
+      {% render 'spacing-style', settings: section.settings %}
+      --collection-pills-label-color: {{ settings.color_palette.color8 }};
+      --collection-pills-active-label-color: {{ settings.color_palette.background }};
+    "
+    data-testid="collection-pills"
+  >
+    <nav class="collection-pills__nav" aria-label="Collections">
+      <ul class="collection-pills__list">
+        {%- for related_collection in related_collections -%}
+          {%- liquid
+            assign is_active = false
+            if related_collection.handle == collection.handle
+              assign is_active = true
+            endif
+
+            if forloop.first
+              assign pill_label = section.settings.first_pill_label | default: related_collection.title
+            else
+              assign pill_label = related_collection.title
+            endif
+          -%}
+          <li class="collection-pills__item">
+            {%- if is_active -%}
+              <span class="collection-pills__pill collection-pills__pill--active" aria-current="page">{{ pill_label }}</span>
+            {%- else -%}
+              <a href="{{ related_collection.url }}" class="collection-pills__pill">{{ pill_label }}</a>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+  </div>
+{%- endif -%}
+
+{% javascript %}
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.collection-pills__list').forEach((list) => {
+      const active = list.querySelector('[aria-current="page"]');
+      if (!active) return;
+
+      // Only nudge the list's own horizontal scroll position - never the page.
+      const overflowEnd = active.offsetLeft + active.offsetWidth - (list.scrollLeft + list.clientWidth);
+      const overflowStart = list.scrollLeft - active.offsetLeft;
+
+      if (overflowEnd > 0) {
+        list.scrollLeft += overflowEnd + 16;
+      } else if (overflowStart > 0) {
+        list.scrollLeft -= overflowStart - 16;
+      }
+    });
+  });
+{% endjavascript %}
+
+{% stylesheet %}
+  .collection-pills__nav {
+    display: block;
+  }
+
+  .collection-pills__list {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .collection-pills__list::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+
+  .collection-pills__item {
+    flex-shrink: 0;
+  }
+
+  .collection-pills__pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    border-radius: 999px;
+    padding: 10px 20px;
+    border: 1.5px solid #d5d1c9;
+    background-color: transparent;
+    color: var(--collection-pills-label-color, #5c5a52);
+    font-family: var(--font-accent--family);
+    font-weight: var(--font-accent--weight);
+    font-size: 15px;
+    line-height: 20px;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  a.collection-pills__pill:is(:hover, :focus-visible) {
+    border-color: #5c5a52;
+  }
+
+  .collection-pills__pill--active {
+    background-color: #3b3a34;
+    border-color: transparent;
+    color: var(--collection-pills-active-label-color, #ffffff);
+    cursor: default;
+  }
+
+  /* Mobile: single line, draggable, momentum scroll, hidden scrollbar. The nav bleeds to the
+     screen edge (same trick as .collection-rail__mobile / .review-cards__mobile) while the
+     list itself keeps the page gutter as scroll padding, so the first pill lines up with the
+     page content above/below it and the last pill isn't flush against the edge. */
+  @media screen and (max-width: 749px) {
+    .collection-pills .collection-pills__nav {
+      grid-column: 1 / -1;
+    }
+
+    .collection-pills__list {
+      padding-inline: var(--util-page-margin-offset, var(--page-margin, 16px));
+    }
+  }
+
+  /* Desktop: back in the normal content column: wrap instead of scrolling if it overflows. */
+  @media screen and (min-width: 750px) {
+    .collection-pills__list {
+      flex-wrap: wrap;
+      overflow-x: visible;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Collection Pills",
+  "class": "section-collection-pills",
+  "settings": [
+    {
+      "type": "text",
+      "id": "first_pill_label",
+      "label": "First pill label",
+      "default": "All",
+      "info": "Relabels only the first pill in the row. Leave blank to use that collection's own title."
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Width",
+      "options": [
+        {
+          "value": "narrow",
+          "label": "Narrow"
+        },
+        {
+          "value": "page-width",
+          "label": "Page"
+        },
+        {
+          "value": "full-width",
+          "label": "Full width"
+        }
+      ],
+      "default": "narrow"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "placeholder": "Default"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_mobile_padding",
+      "label": "Custom mobile padding",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "mobile-padding-block-start",
+      "label": "Top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.custom_mobile_padding == true }}"
+    },
+    {
+      "type": "range",
+      "id": "mobile-padding-block-end",
+      "label": "Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.custom_mobile_padding == true }}"
+    },
+    {
+      "type": "range",
+      "id": "mobile-padding-inline-start",
+      "label": "Left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.custom_mobile_padding == true }}"
+    },
+    {
+      "type": "range",
+      "id": "mobile-padding-inline-end",
+      "label": "Right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.custom_mobile_padding == true }}"
+    }
+  ],
+  "disabled_on": {
+    "groups": [
+      "header",
+      "footer"
+    ]
+  },
+  "presets": [
+    {
+      "name": "Collection Pills"
+    }
+  ]
+}
+{% endschema %}

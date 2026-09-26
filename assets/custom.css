@@ -1080,11 +1080,20 @@
 
 .product-badges .product-badges__badge {
   --badge-font-size: var(--font-size--sm); /* 14px, as drawn; the 16px floor applies to running copy */
-  --badge-rectangle-padding-block: 7px;
+  --badge-rectangle-padding-block: 4px;
   --badge-rectangle-padding-inline: 12px;
 
   line-height: 1.5;
   white-space: nowrap;
+}
+
+/* Phones: the chip sits on a much smaller card, so it drops a step to keep its share of the
+   photo the same as on desktop. It is a label on an image, not running copy, so the 16px
+   minimum for reading text does not apply. */
+@media screen and (max-width: 749px) {
+  .product-badges .product-badges__badge {
+    --badge-font-size: var(--font-size--xs);
+  }
 }
 
 /* ---- Hero slideshow (Figma homepage hero) ----
@@ -1453,5 +1462,65 @@
     max-height: calc(100dvh - var(--header-height, 0px) - 48px);
     overflow-y: auto;
     overscroll-behavior: contain;
+  }
+}
+
+/* Figma "Category / Desktop 1440": sidebar 280px + 40px gap + results 920px = 1240px content
+   column. The row's own container (sections/main-collection.liquid's <results-list class="section
+   product-grid-container">) does not carry a section_width setting - it just inherits the
+   theme's flat page-margin box (settings.page_width, ~1360px at 1440 wide, 40px inset), not the
+   --ft-gutter box the breadcrumb/title above it resolve to (1240px, 100px inset - see
+   .section--narrow up top). Left as-is the row would sit 60px further left than the title.
+   Giving it the same --page-width the narrow sections use closes that gap; :has() keeps this
+   scoped to collection pages using the vertical filter block only, so search (always horizontal
+   filters, see sections/search-results.liquid) is untouched. */
+@media screen and (min-width: 750px) {
+  .product-grid-container:has(.facets-block-wrapper--vertical) {
+    --page-width: calc(100vw - (var(--ft-gutter) * 2) + (var(--page-margin) * 2));
+  }
+}
+
+/* Inside that 1240px column: the shared 12-column formula in
+   snippets/collection-wrapper-styles.liquid divides evenly, which is what gives today's 320px
+   sidebar / 16px-ish gap instead of the Figma's fixed 280/40. Replacing it with an explicit
+   two-track grid for this case is simpler than fighting --facets-vertical-col-width /
+   --full-width-column-number to land on non-dividing numbers. !important guards against the
+   shared file's own rules (bundled after this stylesheet, at equal or higher selector
+   specificity) winning the cascade instead. 990px matches --facets-vertical-col-width's own
+   "desktop" breakpoint in that file; below it (tablet, 750-989px) keeps the existing fluid
+   sidebar, and below 750px the filters are a drawer, not a column, so nothing here applies. */
+@media screen and (min-width: 990px) {
+  .collection-wrapper:has(.facets-block-wrapper--vertical) {
+    grid-template-columns: 280px 1fr !important;
+    column-gap: 40px !important;
+    /* .grid (the shared base class .collection-wrapper also carries) names its 14 columns via
+       grid-template-areas, not just grid-template-columns; left in place, those area names
+       still request their 14 columns and the grid silently grows implicit tracks to provide
+       them, undoing the two-track override above. Cleared here since this scoped grid places
+       everything by line number instead. */
+    grid-template-areas: none !important;
+  }
+
+  .collection-wrapper:has(.facets-block-wrapper--vertical) .facets-block-wrapper--vertical {
+    grid-column: 1 !important;
+    /* The block's own facets_margin_right setting (see blocks/filters.liquid) still renders a
+       gap in the horizontal filter style; zeroed here so it does not add to the 40px column-gap
+       above. */
+    margin-inline-end: 0 !important;
+  }
+
+  .collection-wrapper:has(.facets-block-wrapper--vertical)
+    .facets-block-wrapper--vertical:not(.hidden)
+    ~ .main-collection-grid {
+    grid-column: 2 !important;
+  }
+
+  /* The sort/grid-density bar above the sidebar+grid row (blocks/filters.liquid's
+     .facets-controls-wrapper) places itself with the same named lines as the shared 12-column
+     grid ("column-1 / column-12"). Those names do not exist in the two-track grid above either,
+     which is the other half of the implicit-column growth this file works around; a plain
+     line-number span keeps it spanning the full row without resurrecting that. */
+  .collection-wrapper:has(.facets-block-wrapper--vertical) .facets-controls-wrapper {
+    grid-column: 1 / -1 !important;
   }
 }

@@ -1,0 +1,195 @@
+{% comment %}
+  Breadcrumb (Figma "Category / Desktop 1440"): a single left-aligned line, Home / Parent / Current,
+  full-width row, content constrained by the same --ft-gutter mechanism as the homepage's narrow
+  sections (assets/custom.css) so its left edge lines up with the collection title below it.
+
+  The middle crumb (the collection/product's parent) has no structural source on the object itself -
+  a Shopify collection has no parent collection - so it is resolved by walking the chosen navigation
+  menu (default main-menu, a link_list setting) two levels deep: for each top-level item, look at its
+  child links for one whose URL matches the current collection (or, for a product, any collection in
+  product.collections). The matching top-level item becomes the middle crumb, linked to its own URL.
+  No match falls back to Home / <title> with no middle crumb, per spec.
+
+  Reusable across templates (see the schema's presets and disabled_on): collection, product, page,
+  blog, article, search and 404 are the ones asked for. Add the section to another template's JSON
+  by giving it its own key under "sections" (type: "breadcrumb") and listing that key early in
+  "order", the same way it is wired into templates/collection.json.
+{% endcomment %}
+
+{%- liquid
+  assign menu = section.settings.menu
+  assign home_title = 'Home'
+  assign home_url = routes.root_url
+  assign crumb2_title = blank
+  assign crumb2_url = blank
+  assign current_title = blank
+  assign found_parent = false
+
+  case template.name
+    when 'collection'
+      assign current_title = collection.title
+      for top_link in menu.links
+        unless found_parent
+          for child_link in top_link.links
+            if child_link.url == collection.url
+              assign crumb2_title = top_link.title
+              assign crumb2_url = top_link.url
+              assign found_parent = true
+            endif
+          endfor
+        endunless
+      endfor
+
+    when 'product'
+      assign current_title = product.title
+      for product_collection in product.collections
+        unless found_parent
+          for top_link in menu.links
+            unless found_parent
+              for child_link in top_link.links
+                if child_link.url == product_collection.url
+                  assign crumb2_title = top_link.title
+                  assign crumb2_url = top_link.url
+                  assign found_parent = true
+                endif
+              endfor
+            endunless
+          endfor
+        endunless
+      endfor
+
+    when 'page'
+      assign current_title = page.title
+
+    when 'blog'
+      assign current_title = blog.title
+
+    when 'article'
+      assign current_title = article.title
+
+    when 'search'
+      if search.performed and search.terms != blank
+        assign current_title = 'Search results for "' | append: search.terms | append: '"'
+      else
+        assign current_title = 'Search'
+      endif
+
+    when '404'
+      assign current_title = 'Page not found'
+
+    else
+      assign current_title = page_title
+  endcase
+-%}
+
+<div class="section-background"></div>
+<div
+  class="section section--narrow breadcrumb-section"
+  style="--breadcrumb-ink-soft: {{ settings.color_palette.color8 }};"
+  data-testid="breadcrumb"
+>
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <ol class="breadcrumb__list">
+      <li class="breadcrumb__item">
+        <a class="breadcrumb__link" href="{{ home_url }}">{{ home_title }}</a>
+      </li>
+      {%- if crumb2_title != blank -%}
+        <li class="breadcrumb__item">
+          <a class="breadcrumb__link" href="{{ crumb2_url }}">{{ crumb2_title }}</a>
+        </li>
+      {%- endif -%}
+      <li class="breadcrumb__item" aria-current="page">{{ current_title }}</li>
+    </ol>
+  </nav>
+</div>
+
+{%- capture breadcrumb_ld_items -%}
+  {
+    "@type": "ListItem",
+    "position": 1,
+    "name": {{ home_title | json }},
+    "item": {{ request.origin | append: home_url | json }}
+  }
+  {%- if crumb2_title != blank -%}
+    ,
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": {{ crumb2_title | json }},
+      "item": {{ request.origin | append: crumb2_url | json }}
+    }
+  {%- endif -%}
+{%- endcapture -%}
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [{{ breadcrumb_ld_items }}]
+  }
+</script>
+
+{% stylesheet %}
+  .breadcrumb-section {
+    padding-block: 28px;
+  }
+
+  .breadcrumb__list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-family: var(--font-body--family);
+    font-weight: var(--font-body--weight, 400);
+    font-size: 12px;
+    line-height: 1;
+    color: var(--breadcrumb-ink-soft, #5c5a52);
+  }
+
+  .breadcrumb__item + .breadcrumb__item::before {
+    content: '/';
+    margin-inline: 8px;
+  }
+
+  .breadcrumb__link {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .breadcrumb__link:hover {
+    text-decoration: underline;
+  }
+
+  .breadcrumb__item[aria-current='page'] {
+    color: var(--breadcrumb-ink-soft, #5c5a52);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Breadcrumb",
+  "class": "section-breadcrumb",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu",
+      "info": "Used to find the parent category for collection and product pages."
+    }
+  ],
+  "disabled_on": {
+    "groups": [
+      "header",
+      "footer"
+    ]
+  },
+  "presets": [
+    {
+      "name": "Breadcrumb"
+    }
+  ]
+}
+{% endschema %}
