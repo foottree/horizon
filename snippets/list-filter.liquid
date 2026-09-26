@@ -378,12 +378,6 @@
                       >
                         {% if use_pill_filter %}
                           <span class="facets__pill-label-text">{{- value.label -}}</span>
-                          <span
-                            class="facets__pill-remove-icon"
-                            aria-hidden="true"
-                          >
-                            {{- 'icon-close.svg' | inline_asset_content -}}
-                          </span>
                         {% else %}
                           {{- value.label }}
                         {% endif %}
@@ -693,14 +687,18 @@
     align-items: center;
     justify-content: center;
     gap: 6px;
-    width: 60px;
-    min-width: 60px;
-    height: 48px;
+    /* The Figma draws these 60x48 at 20px, but that was against a sidebar with no inner
+       padding on the list. At the real 280px sidebar the 20px label pushed the grid down to
+       three across and read heavy against the rest of the filter column, so the label steps
+       down and the pill narrows just enough to seat four per row again. */
+    width: 56px;
+    min-width: 56px;
+    height: 44px;
     border-radius: 8px;
     box-shadow: inset 0 0 0 1.5px var(--color-variant-border);
     background-color: var(--color-background);
     color: var(--color-foreground);
-    font-size: var(--font-size--xl);
+    font-size: var(--font-size--md);
     font-weight: 600;
     line-height: 1;
     white-space: nowrap;
@@ -717,33 +715,14 @@
     white-space: nowrap;
   }
 
-  .facets__pill-remove-icon {
-    display: none;
-    width: 12px;
-    height: 12px;
-    flex-shrink: 0;
-  }
-
-  .facets__pill-remove-icon svg {
-    display: block;
-    width: 100%;
-    height: 100%;
-  }
-
   .facets__pill-input:not(:checked) + .facets__pill-label--size-grid:hover {
     background-color: rgb(var(--color-foreground-rgb) / var(--opacity-5));
   }
 
   .facets__pill-input:checked + .facets__pill-label--size-grid {
-    width: auto;
-    padding-inline: 14px;
     box-shadow: none;
     background-color: var(--color-primary-button-background);
     color: var(--color-primary-button-text);
-  }
-
-  .facets__pill-input:checked + .facets__pill-label--size-grid .facets__pill-remove-icon {
-    display: inline-flex;
   }
 
   .facets__pill-input:disabled + .facets__pill-label--size-grid {
