@@ -388,7 +388,7 @@
         "enable_mobile_gap": true,
         "mobile_gap": 32,
         "section_width": "narrow",
-        "background_color": "",
+        "background_color": "#f0f0f0",
         "border": "solid",
         "border_width": 0,
         "border_opacity": 100,

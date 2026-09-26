@@ -1462,6 +1462,16 @@
     max-height: calc(100dvh - var(--header-height, 0px) - 48px);
     overflow-y: auto;
     overscroll-behavior: contain;
+
+    /* The max-height above is only a safety net for a filter list taller than the viewport, so
+       the scrollbar is chrome we never want to see: on a short window it drew a full-height
+       track down the middle of the page. Hidden the same way the collection pill row hides its
+       own, which keeps the column scrollable by wheel and touch without the visible track. */
+    scrollbar-width: none;
+  }
+
+  .facets.facets--vertical::-webkit-scrollbar {
+    display: none;
   }
 }
 
@@ -1588,31 +1598,5 @@
 @media screen and (max-width: 749px) {
   .ft-benefits-bar .text-icon-block {
     width: 100%;
-  }
-}
-
-
-/* The grey panel is CONTAINED, not full bleed. Stock paints the section background on a
-   separate full-width element behind the section, so giving the section a border as well drew
-   the border at the content width and left two stray vertical lines inside an edge-to-edge grey
-   band. The full-bleed layer is switched off and the panel, its border and its radius move onto
-   the section's own content wrapper, so the grey box starts and ends on the same line as the
-   breadcrumb, title and pill row above it. */
-.ft-benefits-bar .section-background {
-  display: none;
-}
-
-.ft-benefits-bar .section-content-wrapper {
-  border: 1px solid #e0dcd2; /* palette color3, line */
-  border-radius: 8px;
-  background-color: #f0f0f0; /* not in the palette; the Figma's own panel grey */
-  padding-block: 40px;
-  padding-inline: 40px;
-}
-
-@media screen and (max-width: 749px) {
-  .ft-benefits-bar .section-content-wrapper {
-    padding-block: 28px;
-    padding-inline: 20px;
   }
 }
