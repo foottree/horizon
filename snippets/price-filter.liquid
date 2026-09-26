@@ -72,6 +72,13 @@
       {% assign min_input_max_value = filter.max_value.value | default: filter.range_max %}
       {% assign max_input_min_value = filter.min_value.value | default: 0 %}
 
+      {% assign slider_min_value = filter.min_value.value | default: 0 %}
+      {% assign slider_max_value = filter.max_value.value | default: filter.range_max %}
+      {% assign has_price_slider = false %}
+      {% if filter.range_max > 0 %}
+        {% assign has_price_slider = true %}
+      {% endif %}
+
       <price-facet-component
         class="
           price-facet
@@ -84,6 +91,36 @@
         data-currency="{{ localization.country.currency.iso_code }}"
         on:change="/updatePriceFilterAndResults"
       >
+        {% if has_price_slider %}
+          <div class="price-facet__slider" ref="slider">
+            <div class="price-facet__slider-track">
+              <div class="price-facet__slider-range" ref="sliderRange"></div>
+            </div>
+            <input
+              type="range"
+              class="price-facet__range price-facet__range--min"
+              ref="minRange"
+              min="0"
+              max="{{ filter.range_max }}"
+              step="1"
+              value="{{ slider_min_value }}"
+              aria-label="{{ 'accessibility.price_filter_low' | t }}"
+              aria-valuetext="{{ slider_min_value | money }}"
+            >
+            <input
+              type="range"
+              class="price-facet__range price-facet__range--max"
+              ref="maxRange"
+              min="0"
+              max="{{ filter.range_max }}"
+              step="1"
+              value="{{ slider_max_value }}"
+              aria-label="{{ 'accessibility.price_filter_high' | t }}"
+              aria-valuetext="{{ slider_max_value | money }}"
+            >
+          </div>
+        {% endif %}
+
         <div class="facets__inputs-wrapper facets__inputs-wrapper--row">
           <div
             class="price-facet__inputs-wrapper"
@@ -244,5 +281,96 @@
     color: var(--facets-input-label-color);
     padding: var(--input-padding-y) var(--input-padding-x);
     transform: none;
+  }
+
+  .price-facet__slider {
+    position: relative;
+    height: 20px;
+    margin: var(--padding-xs) 8px var(--padding-sm);
+  }
+
+  .price-facet__slider-track {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--color-border);
+    border-radius: var(--style-border-radius-round, 999px);
+    transform: translateY(-50%);
+  }
+
+  .price-facet__slider-range {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    background: var(--color-primary-button-background);
+    border-radius: inherit;
+  }
+
+  /*
+    Specificity note: base.css's `input:not([type='checkbox'], [type='radio'])` rule sets an
+    opaque `background-color`, and its `:not()` argument gives it higher specificity than a
+    single class. `.price-facet__slider .price-facet__range` below is used (rather than
+    `.price-facet__range` alone) so the transparent background actually wins; otherwise the
+    thumb paints as an opaque box that hides the track and highlighted span underneath it.
+  */
+  .price-facet__slider .price-facet__range {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    margin: 0;
+    background: transparent;
+    pointer-events: none;
+    transform: translateY(-50%);
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .price-facet__range--max {
+    z-index: 2;
+  }
+
+  .price-facet__range::-webkit-slider-runnable-track {
+    -webkit-appearance: none;
+    background: transparent;
+  }
+
+  .price-facet__range::-moz-range-track {
+    background: transparent;
+  }
+
+  .price-facet__range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    pointer-events: auto;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--color-primary-button-background);
+    border: 2px solid var(--color-background);
+    box-shadow: 0 0 0 1px var(--color-border);
+    cursor: pointer;
+  }
+
+  .price-facet__range::-moz-range-thumb {
+    pointer-events: auto;
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--color-background);
+    border-radius: 50%;
+    background: var(--color-primary-button-background);
+    box-shadow: 0 0 0 1px var(--color-border);
+    cursor: pointer;
+  }
+
+  .price-facet__range:focus-visible::-webkit-slider-thumb {
+    outline: 2px solid var(--color-primary-button-background);
+    outline-offset: 2px;
+  }
+
+  .price-facet__range:focus-visible::-moz-range-thumb {
+    outline: 2px solid var(--color-primary-button-background);
+    outline-offset: 2px;
   }
 {% endstylesheet %}

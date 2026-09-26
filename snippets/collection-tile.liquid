@@ -12,9 +12,10 @@
   @param {string} [label] - Optional override for the tile's title (defaults to collection.title).
   @param {object} [image] - Optional override image (defaults to the collection's own image).
   @param {string} [tile_slot] - one of 'big' | 'small-a' | 'small-b' | 'tall'. Sets the desktop
-    grid position and the image's aspect ratio/sizes. Ignored on mobile, where every tile renders
-    at a uniform 3:4 ratio (see the `.collection-rail__mobile` override in the section's
-    stylesheet).
+    grid position and the image's `sizes` attribute; the image itself just covers whatever
+    height the grid gives that slot (see the section's `.collection-rail__panel` stylesheet).
+    Ignored on mobile, where every tile renders at a uniform 3:4 ratio (see the
+    `.collection-rail__mobile` override in the section's stylesheet).
   @param {string} [block_attributes] - `block.shopify_attributes` for the block this tile
     represents, so the theme editor can select it in the live preview.
 
@@ -93,7 +94,12 @@
   }
 
   .collection-rail__tile-image img {
-    display: block;
+    /* Absolutely positioned so the <img>'s own intrinsic width/height (Shopify's
+       image_tag always sets these) never contributes to the desktop panel's grid-row
+       auto-sizing - see the panel's own stylesheet in collection-rail.liquid, which sizes
+       the rows from the panel's aspect-ratio, not from any tile's photo dimensions. */
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -108,19 +114,6 @@
     position: absolute;
     inset: 0;
     background: linear-gradient(#fff7e2, #e7e2d8);
-  }
-
-  .collection-rail__tile--big .collection-rail__tile-image {
-    aspect-ratio: 588 / 347;
-  }
-
-  .collection-rail__tile--small-a .collection-rail__tile-image,
-  .collection-rail__tile--small-b .collection-rail__tile-image {
-    aspect-ratio: 282 / 300;
-  }
-
-  .collection-rail__tile--tall .collection-rail__tile-image {
-    aspect-ratio: 588 / 671;
   }
 
   .collection-rail__tile-label {

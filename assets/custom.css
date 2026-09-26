@@ -277,7 +277,9 @@
 .header-actions__cart-icon {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  /* The opening parenthesis carries about 11px of its own side bearing at this size, so the
+     flex gap is pulled negative to land the count ~6px from the bag rather than ~17px. */
+  gap: 0;
 }
 
 .header-actions__cart-icon .cart-bubble,
@@ -300,8 +302,9 @@
 }
 
 .header-actions__cart-icon .cart-bubble__text {
+  margin-inline-start: -5px;
   font-family: var(--font-body--family);
-  font-size: var(--font-size--lg);
+  font-size: var(--font-size--sm);
   font-weight: 500;
   line-height: 1;
 }
@@ -355,9 +358,10 @@
     font-size: var(--font-size--sm);
   }
 
-  /* 16px between search, account and bag on phones, matching the count-to-burger gap. */
+  /* ~13px between the search and bag glyphs on phones (measured edge to edge on the
+     rendered icons, not the 44px tap targets, which are allowed to overlap slightly). */
   #header-component .account-button + .header-actions__action {
-    margin-inline-start: 5px;
+    margin-inline-start: 2px;
   }
 
   #header-component .header__columns header-actions {
@@ -374,14 +378,20 @@
   height: var(--icon-size-sm);
 }
 
-/* The X that replaces the burger while the drawer is open: matches the header's own search
-   icon glyph box (22px, --icon-size-md) rather than the burger's --icon-size-sm, which read too
-   small/thin next to the search and bag icons on the same row. Stroke width already matches
-   (both inherit the shared --icon-stroke-width custom property). */
+/* The X that replaces the burger while the drawer is open. icon-close-menu.svg draws its X
+   inside only the middle half of its own 24x24 viewBox (the search/cart glyphs use closer to
+   three-quarters of theirs), so boxing it at the same --icon-size-md as those two still left
+   its actual ink noticeably smaller - which, with the same stroke width applied over a smaller
+   shape, read as a heavier, chunkier mark rather than a matching one. Sizing the box up to 1.5x
+   --icon-size-md brings its ink in line with the search/cart glyphs' size, and knocking the
+   stroke width down to a matching fraction (var(--icon-stroke-width) is ~1.5px; 2/3 of that
+   scaled by the same 1.5x lands back on ~1.5px rendered) keeps the line itself the same
+   weight. */
 #header-component .header__icon--summary .header-drawer-icon--close,
 #header-component .header__icon--summary .header-drawer-icon--close > svg {
-  width: var(--icon-size-md);
-  height: var(--icon-size-md);
+  width: calc(var(--icon-size-md) * 1.5);
+  height: calc(var(--icon-size-md) * 1.5);
+  --icon-stroke-width: calc(var(--icon-stroke-width) * 2 / 3);
 }
 
 /* Keep a full-width tap target for the burger while the icon hugs the right edge. */
@@ -480,15 +490,17 @@
   background-color: var(--color-background);;
 }
 
-/* Rows: 56px tall, 24px inline padding, Plus Jakarta Sans Medium 18px ink, no underline.
-   The size is the header menu block's "Submenu size" setting when one is chosen; 18px is the
-   Auto fallback. Stock's --menu-child-font-size is not read here because its Auto value comes
-   from the Submenu style preset (14px), which is not what this panel is drawn at. */
+/* Rows: 40px tall (down from the original 56px - about a third less row height while
+   staying at a comfortable tap/click size), 24px inline padding, Plus Jakarta Sans Medium
+   18px ink, no underline. The size is the header menu block's "Submenu size" setting when
+   one is chosen; 18px is the Auto fallback. Stock's --menu-child-font-size is not read here
+   because its Auto value comes from the Submenu style preset (14px), which is not what this
+   panel is drawn at. */
 #header-component .dropdown-menu__link {
   position: relative;
   display: flex;
   align-items: center;
-  min-height: 56px;
+  min-height: 40px;
   padding-inline: 24px;
   padding-block: 0;
   font-family: var(--font-body--family);
@@ -510,10 +522,12 @@
 }
 
 
-/* Divider + "Shop all <parent>" row (rendered only inside dropdown-style submenus). */
+/* Divider + "Shop all <parent>" row (rendered only inside dropdown-style submenus).
+   Margin scaled down with the row rhythm above (was 8px against 56px rows) so it still
+   reads as a deliberate break rather than a leftover gap. */
 #header-component .dropdown-menu__divider {
   height: 1px;
-  margin-block: 8px;
+  margin-block: 6px;
   margin-inline: 24px;
   padding: 0;
   list-style: none;
@@ -1419,5 +1433,25 @@
 
   .ft-payment-group .payment-icons__list {
     justify-content: center;
+  }
+}
+
+
+/* ---- Collection page ---- */
+
+/* The vertical filter column is much shorter than the product grid beside it, so it scrolls
+   out of view almost immediately. Sticking it under the header keeps the filters reachable
+   the whole way down. It gets its own scrollbar only if the filter list is taller than the
+   viewport, and align-self stops the sticky element from being stretched to the grid's full
+   height (a stretched item has nothing left to stick within). Desktop only: on mobile the
+   filters are a drawer, not a column. */
+@media screen and (min-width: 750px) {
+  .facets.facets--vertical {
+    position: sticky;
+    top: calc(var(--header-height, 0px) + 24px);
+    align-self: start;
+    max-height: calc(100dvh - var(--header-height, 0px) - 48px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
   }
 }

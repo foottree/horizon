@@ -24,9 +24,15 @@
   @media screen and (min-width: 750px) {
     {% case section.settings.layout_type %}
       {% when 'grid' %}
-        .product-grid--{{ section.id }}:is(.product-grid--grid) {
-          --product-grid-columns-desktop: repeat(auto-fill, minmax({{ product_card_size }}, 1fr));
-        }
+        {% if section.settings.columns %}
+          .product-grid--{{ section.id }}:is(.product-grid--grid) {
+            --product-grid-columns-desktop: repeat({{ section.settings.columns }}, 1fr);
+          }
+        {% else %}
+          .product-grid--{{ section.id }}:is(.product-grid--grid) {
+            --product-grid-columns-desktop: repeat(auto-fill, minmax({{ product_card_size }}, 1fr));
+          }
+        {% endif %}
 
 
       {% when 'organic' %}
@@ -52,15 +58,17 @@
         }
     {% endcase %}
 
-    /* This logic helps prevent displaying one column for an large or extra-large product card size on a small screen. We want it to display at least two columns. */
-    {% case section.settings.product_card_size %}
-      {% when 'extra-large' or 'large' %}
-        @container product-grid (max-width: calc({{ product_card_size }} * 3 + {{ section.settings.columns_gap_horizontal }}px * 2)) {
-          .product-grid--{{ section.id }}:is(.product-grid--grid) {
-            --product-grid-columns-desktop: repeat(2, 1fr);
+    {% unless section.settings.columns %}
+      /* This logic helps prevent displaying one column for an large or extra-large product card size on a small screen. We want it to display at least two columns. */
+      {% case section.settings.product_card_size %}
+        {% when 'extra-large' or 'large' %}
+          @container product-grid (max-width: calc({{ product_card_size }} * 3 + {{ section.settings.columns_gap_horizontal }}px * 2)) {
+            .product-grid--{{ section.id }}:is(.product-grid--grid) {
+              --product-grid-columns-desktop: repeat(2, 1fr);
+            }
           }
-        }
-    {% endcase %}
+      {% endcase %}
+    {% endunless %}
 
     /* When zoomed out, fit as many 100px-wide columns as possible */
     .product-grid--{{ section.id }}[product-grid-view='zoom-out'] {
@@ -74,6 +82,27 @@
       padding-block-end: var(--zoom-out-padding-block-end, 0);
     }
   }
+
+  {% if section.settings.columns %}
+    {% comment %}
+      The section sets an explicit desktop column count (columns). At the theme's desktop
+      breakpoint (990px) and wider that count is exact and never reduced: cards simply get
+      wider as the container grows. Between the mobile breakpoint (750px) and 990px (tablet
+      widths), cap the column count at 3 so a 4-, 5- or 6-column grid doesn't squash cards
+      on a tablet or small laptop screen.
+    {% endcomment %}
+    {% assign tablet_columns = section.settings.columns %}
+    {% if tablet_columns > 3 %}
+      {% assign tablet_columns = 3 %}
+    {% endif %}
+    {% if tablet_columns != section.settings.columns %}
+      @media screen and (min-width: 750px) and (max-width: 989px) {
+        .product-grid--{{ section.id }}:is(.product-grid--grid) {
+          --product-grid-columns-desktop: repeat({{ tablet_columns }}, 1fr);
+        }
+      }
+    {% endif %}
+  {% endif %}
 {% endstyle %}
 <div
   id="ResultsList"

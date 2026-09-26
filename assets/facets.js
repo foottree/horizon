@@ -325,6 +325,10 @@ if (!customElements.get('facet-inputs-component')) {
  * @typedef {Object} PriceFacetRefs
  * @property {HTMLInputElement} minInput - The minimum price input
  * @property {HTMLInputElement} maxInput - The maximum price input
+ * @property {HTMLElement | undefined} slider - The dual-handle slider wrapper, absent when the filter has no range
+ * @property {HTMLElement | undefined} sliderRange - The highlighted span between the two handles
+ * @property {HTMLInputElement | undefined} minRange - The minimum price range handle
+ * @property {HTMLInputElement | undefined} maxRange - The maximum price range handle
  */
 
 /**
@@ -336,17 +340,142 @@ class PriceFacetComponent extends Component {
   currency;
   /** @type {string} */
   moneyFormat;
+  /** @type {string} */
+  fullMoneyFormat;
 
   connectedCallback() {
     super.connectedCallback();
     this.addEventListener('keydown', this.#onKeyDown);
+    this.addEventListener('input', this.#onRangeOrInputChange);
     this.currency = this.dataset.currency ?? 'USD';
-    this.moneyFormat = this.#extractMoneyPlaceholder(this.dataset.moneyFormat ?? '{{amount}}');
+    this.fullMoneyFormat = this.dataset.moneyFormat ?? '{{amount}}';
+    this.moneyFormat = this.#extractMoneyPlaceholder(this.fullMoneyFormat);
+
+    const { minRange, maxRange } = this.refs;
+    if (minRange && maxRange) {
+      this.#updateSliderFill(minRange.valueAsNumber, maxRange.valueAsNumber);
+      this.#updateRangeAriaValueText(minRange, maxRange);
+    }
+  }
+
+  /**
+   * Called after the Section Rendering API morphs this component's subtree (for example, after a
+   * facets request re-renders with the applied filter values). The refreshed markup carries the
+   * server's `value` attributes but not the JS-only inline styles on the highlighted span, so the
+   * fill and aria-valuetext are recomputed here to match.
+   */
+  updatedCallback() {
+    super.updatedCallback();
+
+    const { minRange, maxRange } = this.refs;
+    if (minRange && maxRange) {
+      this.#updateSliderFill(minRange.valueAsNumber, maxRange.valueAsNumber);
+      this.#updateRangeAriaValueText(minRange, maxRange);
+    }
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
     this.removeEventListener('keydown', this.#onKeyDown);
+    this.removeEventListener('input', this.#onRangeOrInputChange);
+  }
+
+  /**
+   * Handles live `input` events from either the range handles (drag/keyboard, fires continuously)
+   * or the text inputs (typing). Keeps the slider and the text inputs in sync without triggering
+   * a results refresh; the refresh happens separately on the range's `change` event, which bubbles
+   * to this component's existing `on:change="/updatePriceFilterAndResults"` handler.
+   * @param {Event} event
+   */
+  #onRangeOrInputChange = (event) => {
+    const { minRange, maxRange, minInput, maxInput } = this.refs;
+    if (!minRange || !maxRange) return;
+
+    const target = event.target;
+
+    if (target === minRange || target === maxRange) {
+      this.#syncInputsFromRange(target);
+    } else if (target === minInput || target === maxInput) {
+      this.#syncRangeFromInput(target);
+    }
+  };
+
+  /**
+   * Updates the text inputs and the highlighted span to match the dragged/moved range handle,
+   * preventing the min handle from passing the max handle and vice versa.
+   * @param {HTMLInputElement} target - The range handle that changed
+   */
+  #syncInputsFromRange(target) {
+    const { minRange, maxRange, minInput, maxInput } = this.refs;
+    if (!minRange || !maxRange) return;
+
+    let minValue = minRange.valueAsNumber;
+    let maxValue = maxRange.valueAsNumber;
+
+    if (target === minRange && minValue > maxValue) {
+      minValue = maxValue;
+      minRange.value = String(minValue);
+    } else if (target === maxRange && maxValue < minValue) {
+      maxValue = minValue;
+      maxRange.value = String(maxValue);
+    }
+
+    if (minInput) minInput.value = formatMoney(minValue, this.moneyFormat, this.currency);
+    if (maxInput) maxInput.value = formatMoney(maxValue, this.moneyFormat, this.currency);
+
+    this.#updateRangeAriaValueText(minRange, maxRange);
+    this.#updateSliderFill(minValue, maxValue);
+  }
+
+  /**
+   * Moves the matching range handle as the user types into a text input, keeping the two
+   * handles from crossing.
+   * @param {HTMLInputElement} target - The text input that changed
+   */
+  #syncRangeFromInput(target) {
+    const { minRange, maxRange, minInput, maxInput } = this.refs;
+    if (!minRange || !maxRange) return;
+    if (target.value.trim() === '') return;
+
+    const value = this.#parseDisplayValue(target.value, this.currency);
+
+    if (target === minInput) {
+      minRange.value = String(Math.min(Math.max(value, 0), maxRange.valueAsNumber));
+    } else if (target === maxInput) {
+      const rangeMax = Number(maxRange.max) || 0;
+      maxRange.value = String(Math.max(Math.min(value, rangeMax), minRange.valueAsNumber));
+    }
+
+    this.#updateRangeAriaValueText(minRange, maxRange);
+    this.#updateSliderFill(minRange.valueAsNumber, maxRange.valueAsNumber);
+  }
+
+  /**
+   * Positions the highlighted span between the two handles.
+   * @param {number} minValue - The current minimum value, in the currency's minor units
+   * @param {number} maxValue - The current maximum value, in the currency's minor units
+   */
+  #updateSliderFill(minValue, maxValue) {
+    const { minRange, sliderRange } = this.refs;
+    if (!minRange || !sliderRange) return;
+
+    const rangeMax = Number(minRange.max) || 1;
+    const startPercent = (minValue / rangeMax) * 100;
+    const endPercent = (maxValue / rangeMax) * 100;
+
+    sliderRange.style.left = `${startPercent}%`;
+    sliderRange.style.right = `${100 - endPercent}%`;
+  }
+
+  /**
+   * Keeps each handle's `aria-valuetext` announcing the fully formatted, currency-symbol price
+   * rather than the raw minor-unit number.
+   * @param {HTMLInputElement} minRange
+   * @param {HTMLInputElement} maxRange
+   */
+  #updateRangeAriaValueText(minRange, maxRange) {
+    minRange.setAttribute('aria-valuetext', formatMoney(minRange.valueAsNumber, this.fullMoneyFormat, this.currency));
+    maxRange.setAttribute('aria-valuetext', formatMoney(maxRange.valueAsNumber, this.fullMoneyFormat, this.currency));
   }
 
   /**
@@ -371,21 +500,49 @@ class PriceFacetComponent extends Component {
   };
 
   /**
-   * Updates price filter and results
+   * Updates price filter and results.
+   *
+   * @param {Event} [event] - The triggering change event, when dispatched via
+   * `on:change="/updatePriceFilterAndResults"`. Used only to detect whether a range handle
+   * (rather than a text input) triggered this call. Note: the dispatcher in `component.js` proxies
+   * `event.target` to the closest `on:change` ancestor (this component itself), so the real origin
+   * has to be read from `composedPath()`, which is passed through unproxied.
    */
-  updatePriceFilterAndResults() {
-    const { minInput, maxInput } = this.refs;
+  updatePriceFilterAndResults(event) {
+    const { minInput, maxInput, minRange, maxRange } = this.refs;
 
     this.#adjustToValidValues(minInput);
     this.#adjustToValidValues(maxInput);
 
+    // A keyboard press on a range handle commits a `change` per key press (there's no separate
+    // "drag end" gesture for discrete steps), so holding or repeatedly tapping an arrow key can
+    // fire this several times a second. Debouncing just the fetch (not the clamping above) avoids
+    // hammering the server with overlapping requests, whose responses can resolve out of order and
+    // briefly snap the handle back to a stale value.
+    const origin = event && typeof event.composedPath === 'function' ? event.composedPath()[0] : undefined;
+    const isRangeChange = origin === minRange || origin === maxRange;
+
+    if (isRangeChange) {
+      this.#debouncedApplyFilters();
+    } else {
+      this.#applyFilters();
+    }
+  }
+
+  /**
+   * Applies the current filter values and re-renders results.
+   */
+  #applyFilters = () => {
     const facetsForm = this.closest('facets-form-component');
     if (!(facetsForm instanceof FacetsFormComponent)) return;
 
     facetsForm.updateFilters();
     this.#setMinAndMaxValues();
     this.#updateSummary();
-  }
+  };
+
+  /** @type {() => void} */
+  #debouncedApplyFilters = debounce(() => this.#applyFilters(), 300);
 
   /**
    * Parses a formatted money value into minor units

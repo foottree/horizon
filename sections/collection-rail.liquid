@@ -249,11 +249,36 @@
   .collection-rail__panel {
     display: grid;
     grid-template-columns: repeat(2, 1fr) repeat(2, var(--collection-rail-tall-column, 0.85fr));
-    grid-template-rows: auto auto;
+    /* The Figma panel draws the left stack's two rows at 347px and 300px tall. Splitting the
+       rows by that same 347:300 weight - instead of sizing each row from its own tiles'
+       aspect ratios - is what makes the tall tile (which spans both rows plus the gap) finish
+       exactly level with the left stack: its grid area is row1 + gap + row2 by construction,
+       whatever the tall-column width or gap is set to. */
+    grid-template-rows: 347fr 300fr;
     gap: var(--collection-rail-panel-gap, 16px);
+    /* Panel width : height as drawn in Figma (588 big + 16 gap + 588 tall wide, 347 + 16 + 300
+       tall) - the panel's own ratio, not any one tile's, so the two rows keep their 347:300
+       split (after the real gap is subtracted) no matter how the columns are split between
+       tall_column_width settings. */
+    aspect-ratio: 1192 / 663;
     grid-template-areas:
       'big big tall tall'
       'smalla smallb tall tall';
+  }
+
+  /* Let each tile stretch to fill its grid area and let its image cover that area (below),
+     instead of each tile's image imposing its own aspect ratio - see collection-tile.liquid.
+     The caption stays out of this stretch: it's a second flex child sized to its own content,
+     so the image only gets the row height left over once the caption's height is subtracted. */
+  .collection-rail__panel .collection-rail__tile {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .collection-rail__panel .collection-rail__tile-image {
+    flex: 1;
+    min-height: 0;
   }
 
   .collection-rail__panel .collection-rail__tile--big {

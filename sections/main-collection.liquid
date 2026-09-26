@@ -139,6 +139,16 @@
       "visible_if": "{{ section.settings.layout_type == 'grid' }}"
     },
     {
+      "type": "range",
+      "id": "columns",
+      "label": "t:settings.columns",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 3,
+      "visible_if": "{{ section.settings.layout_type == 'grid' }}"
+    },
+    {
       "type": "select",
       "id": "mobile_product_card_size",
       "label": "t:settings.mobile_card_size",
