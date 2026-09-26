@@ -1524,3 +1524,69 @@
     grid-column: 1 / -1 !important;
   }
 }
+
+/* ---- Collection page: Benefits Bar ----
+   Figma "Category / Desktop 1440" benefits row, built entirely from four Text Icon blocks
+   (blocks/text-icon.liquid) plus three divider blocks (blocks/_divider.liquid) inside the
+   generic flexible section (sections/section.liquid), wired in as "benefits_bar" in
+   templates/collection.json. #f0f0f0 (background) and #e0dcd2 (border/divider, matches
+   settings.color_palette.color3 exactly) are hardcoded in that JSON because section/block
+   color settings take a literal value, not a live reference to the palette; #f0f0f0 itself has
+   no palette match at all. The same applies to the ink (#262622, palette foreground) and
+   ink-soft (#5c5a52, palette color8) below - both exact palette values, hardcoded because the
+   two colours/sizes below live inside a SINGLE richtext field per block (there is no separate
+   title/description setting), so the title is authored as <strong> and the description as a
+   plain paragraph and this rule gives each its own size/colour. */
+.ft-benefits-bar .text-icon-block .text-block strong {
+  font-weight: 700;
+  font-size: 18px;
+  color: #262622;
+}
+
+.ft-benefits-bar .text-icon-block .text-block p {
+  margin: 0;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #5c5a52;
+}
+
+.ft-benefits-bar .text-icon-block .text-block p:has(strong) {
+  margin-block-end: 4px;
+}
+
+/* Desktop only: the divider block (blocks/_divider.liquid) draws both a border-bottom and a
+   border-right on its inner line and relies on context to show only one of them - stretched to
+   a defined height (as it is here, a row of siblings) the border-right becomes the visible
+   vertical stroke. Its own settings only offer percentage length though, so the fixed 56px from
+   the Figma is set directly: align-self is pulled off "stretch" (its own hardcoded default) so
+   it does not grow to match the tallest item, and flex-basis is zeroed so the border-bottom
+   collapses to nothing. Left unscoped to desktop, "vertical_on_mobile" on the section still
+   keeps this same divider in the DOM once items stack, and this override would show as a stray
+   56px vertical stub between them (see the mobile rule below, which is where the divider
+   returns to its default, self-adapting horizontal-line behaviour instead). */
+@media screen and (min-width: 750px) {
+  .ft-benefits-bar .divider {
+    align-self: center;
+  }
+
+  .ft-benefits-bar .divider__line {
+    flex-basis: 0;
+    min-height: 56px;
+    border-bottom: none;
+  }
+}
+
+/* Mobile (<750px): four items across 390px does not work, so the section's own
+   "vertical_on_mobile" setting stacks the four Text Icon blocks into a single column instead of
+   the client's alternative (two-by-two) - simpler, and it keeps every item's own width fixed at
+   100% (below) instead of fighting the flex system for a two-column grid. The divider block is
+   left to its own default CSS here (no override, unlike the desktop rule above): stretched to
+   the row's width instead of its height, its border-bottom becomes the visible line and its
+   border-right collapses away, so it "adapts" into a plain horizontal rule between the stacked
+   items rather than leaving the desktop's vertical stub. */
+@media screen and (max-width: 749px) {
+  .ft-benefits-bar .text-icon-block {
+    width: 100%;
+  }
+}

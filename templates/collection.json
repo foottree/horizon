@@ -98,7 +98,7 @@
         "border_opacity": 100,
         "border_radius": 0,
         "padding-block-start": 48,
-        "padding-block-end": 48
+        "padding-block-end": 12
       }
     },
     "main": {
@@ -237,13 +237,174 @@
     },
     "collection_pills": {
       "type": "collection-pills",
-      "settings": {}
+      "settings": {
+        "padding-block-start": 12
+      }
+    },
+    "benefits_bar": {
+      "type": "section",
+      "blocks": {
+        "text_icon_1": {
+          "type": "text-icon",
+          "settings": {
+            "icon_position": "left",
+            "icon": "truck",
+            "icon_width": 32,
+            "text": "<p><strong>Free Local Shipping</strong></p><p>Free on all orders above $100 within Singapore</p>",
+            "text_width": "100%",
+            "max_width": "none",
+            "alignment": "center",
+            "type_preset": "rte",
+            "content_direction": "column",
+            "vertical_on_mobile": false,
+            "reverse_on_mobile": false,
+            "horizontal_alignment_flex_direction_column": "center",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 16,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          }
+        },
+        "divider_1": {
+          "type": "_divider",
+          "settings": {
+            "thickness": 1,
+            "divider_color": "#e0dcd2",
+            "width_percent": 100,
+            "padding-block-start": 0,
+            "padding-block-end": 0
+          }
+        },
+        "text_icon_2": {
+          "type": "text-icon",
+          "settings": {
+            "icon_position": "left",
+            "icon": "lock",
+            "icon_width": 32,
+            "text": "<p><strong>Secure Checkout</strong></p><p>Enjoy fast, secure, and encrypted payments with your preferred payment method</p>",
+            "text_width": "100%",
+            "max_width": "none",
+            "alignment": "center",
+            "type_preset": "rte",
+            "content_direction": "column",
+            "vertical_on_mobile": false,
+            "reverse_on_mobile": false,
+            "horizontal_alignment_flex_direction_column": "center",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 16,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          }
+        },
+        "divider_2": {
+          "type": "_divider",
+          "settings": {
+            "thickness": 1,
+            "divider_color": "#e0dcd2",
+            "width_percent": 100,
+            "padding-block-start": 0,
+            "padding-block-end": 0
+          }
+        },
+        "text_icon_3": {
+          "type": "text-icon",
+          "settings": {
+            "icon_position": "left",
+            "icon": "map_pin",
+            "icon_width": 32,
+            "text": "<p><strong>Visit our Flagship Store</strong></p><p>City Square Mall #03-15</p>",
+            "text_width": "100%",
+            "max_width": "none",
+            "alignment": "center",
+            "type_preset": "rte",
+            "content_direction": "column",
+            "vertical_on_mobile": false,
+            "reverse_on_mobile": false,
+            "horizontal_alignment_flex_direction_column": "center",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 16,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          }
+        },
+        "divider_3": {
+          "type": "_divider",
+          "settings": {
+            "thickness": 1,
+            "divider_color": "#e0dcd2",
+            "width_percent": 100,
+            "padding-block-start": 0,
+            "padding-block-end": 0
+          }
+        },
+        "text_icon_4": {
+          "type": "text-icon",
+          "settings": {
+            "icon_position": "left",
+            "icon": "return",
+            "icon_width": 32,
+            "text": "<p><strong>14-Day Comfort Guarantee</strong></p><p>Exchange your unworn pair in-store, no questions asked</p>",
+            "text_width": "100%",
+            "max_width": "none",
+            "alignment": "center",
+            "type_preset": "rte",
+            "content_direction": "column",
+            "vertical_on_mobile": false,
+            "reverse_on_mobile": false,
+            "horizontal_alignment_flex_direction_column": "center",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 16,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          }
+        }
+      },
+      "block_order": [
+        "text_icon_1",
+        "divider_1",
+        "text_icon_2",
+        "divider_2",
+        "text_icon_3",
+        "divider_3",
+        "text_icon_4"
+      ],
+      "name": "Benefits Bar",
+      "settings": {
+        "content_direction": "row",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "center",
+        "vertical_alignment": "flex-start",
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 32,
+        "enable_mobile_gap": true,
+        "mobile_gap": 32,
+        "section_width": "narrow",
+        "background_color": "#f0f0f0",
+        "border": "solid",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_color": "#e0dcd2",
+        "border_radius": 0,
+        "padding-block-start": 48,
+        "padding-block-end": 48,
+        "css_class": "ft-benefits-bar"
+      }
     }
   },
   "order": [
     "breadcrumb",
     "section",
     "collection_pills",
-    "main"
+    "main",
+    "benefits_bar"
   ]
 }
