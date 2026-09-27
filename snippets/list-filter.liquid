@@ -9,6 +9,7 @@
   @param {boolean} [show_swatch_label] - Whether to show the swatch label
   @param {boolean} [in_drawer] - Whether the filter is in a drawer
   @param {string} [pill_filter_labels] - Comma-separated filter labels that should render as a pill grid
+  @param {string} [text_filter_labels] - Comma-separated filter labels that must ignore a derived swatch
 {%- enddoc -%}
 
 {% render 'variant-picker-styles' %}
@@ -36,6 +37,21 @@
       assign pill_filter_name_normalized = pill_filter_name | strip | downcase
       if pill_filter_name_normalized == filter_label_normalized
         assign use_pill_filter = true
+        break
+      endif
+    endfor
+  endif
+
+  # Shopify derives a swatch for any metafield filter whose metaobject carries a colour field.
+  # The Features metaobject holds badge_background_color for rendering the chips on a card, so
+  # every Feature filters as an identical olive square with no label. This list names the filters
+  # that must ignore that derived swatch and render as ordinary labelled rows instead.
+  if text_filter_labels != blank and is_swatch
+    assign text_filter_names = text_filter_labels | split: ','
+    for text_filter_name in text_filter_names
+      assign text_filter_name_normalized = text_filter_name | strip | downcase
+      if text_filter_name_normalized == filter_label_normalized
+        assign is_swatch = false
         break
       endif
     endfor
@@ -698,7 +714,7 @@
     box-shadow: inset 0 0 0 1.5px var(--color-variant-border);
     background-color: var(--color-background);
     color: var(--color-foreground);
-    font-size: var(--font-size--md);
+    font-size: var(--font-size--sm);
     font-weight: 600;
     line-height: 1;
     white-space: nowrap;

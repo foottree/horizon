@@ -1448,32 +1448,9 @@
 
 /* ---- Collection page ---- */
 
-/* The vertical filter column is much shorter than the product grid beside it, so it scrolls
-   out of view almost immediately. Sticking it under the header keeps the filters reachable
-   the whole way down. It gets its own scrollbar only if the filter list is taller than the
-   viewport, and align-self stops the sticky element from being stretched to the grid's full
-   height (a stretched item has nothing left to stick within). Desktop only: on mobile the
-   filters are a drawer, not a column. */
-@media screen and (min-width: 750px) {
-  .facets.facets--vertical {
-    position: sticky;
-    top: calc(var(--header-height, 0px) + 24px);
-    align-self: start;
-    max-height: calc(100dvh - var(--header-height, 0px) - 48px);
-    overflow-y: auto;
-    overscroll-behavior: contain;
-
-    /* The max-height above is only a safety net for a filter list taller than the viewport, so
-       the scrollbar is chrome we never want to see: on a short window it drew a full-height
-       track down the middle of the page. Hidden the same way the collection pill row hides its
-       own, which keeps the column scrollable by wheel and touch without the visible track. */
-    scrollbar-width: none;
-  }
-
-  .facets.facets--vertical::-webkit-scrollbar {
-    display: none;
-  }
-}
+/* The filter column deliberately does NOT stick. Pinning it means capping its height to the
+   viewport, and a capped column clips an expanded filter group where the shopper cannot reach
+   it. A column that scrolls away with the page is the lesser cost. */
 
 /* Figma "Category / Desktop 1440": sidebar 280px + 40px gap + results 920px = 1240px content
    column. The row's own container (sections/main-collection.liquid's <results-list class="section
@@ -1599,4 +1576,19 @@
   .ft-benefits-bar .text-icon-block {
     width: 100%;
   }
+}
+
+/* Filter typography: stock sizes the column's own headings off heading tokens, which put the
+   "Filters" title at 24px Lora and the group headings up to 24px, far heavier than the 16px
+   body the rest of the page runs at. Both step down so the column reads as supporting furniture
+   rather than competing with the collection title above it. The title is NOT inside
+   .facets--vertical (stock renders it in its own .facets-controls-wrapper alongside the column),
+   so it is targeted on its own class. */
+.facets--filters-title {
+  font-size: var(--font-size--lg);
+}
+
+.facets--vertical .facets__label,
+.facets-mobile-wrapper .facets__label {
+  font-size: var(--font-paragraph--size);
 }
