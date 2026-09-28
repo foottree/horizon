@@ -226,7 +226,7 @@
         "columns": 3,
         "mobile_product_card_size": "small",
         "product_grid_width": "centered",
-        "full_width_on_mobile": true,
+        "full_width_on_mobile": false,
         "columns_gap_horizontal": 20,
         "columns_gap_vertical": 36,
         "padding-inline-start": 0,
