@@ -300,7 +300,7 @@
               "name": "t:names.button",
               "settings": {
                 "label": "Shop Wide-Fit Shoes",
-                "link": "shopify://collections/wide-fit-specials",
+                "link": "shopify://collections/wide-feet-bunions",
                 "open_in_new_tab": false,
                 "style_class": "button",
                 "custom_button_background": "{{ settings.color_palette.foreground }}",
@@ -511,7 +511,7 @@
       "blocks": {
         "tile_women_mary_janes": {
           "type": "collection_tile",
-          "name": "Mary Janes",
+          "name": "Women's Mary Janes",
           "settings": {
             "collection": "women-mary-janes",
             "label": ""
@@ -519,7 +519,7 @@
         },
         "tile_women_loafers": {
           "type": "collection_tile",
-          "name": "Loafers",
+          "name": "Women's Loafers",
           "settings": {
             "collection": "women-loafers",
             "label": ""
@@ -527,7 +527,7 @@
         },
         "tile_women_heels": {
           "type": "collection_tile",
-          "name": "Heels",
+          "name": "Women's Heels",
           "settings": {
             "collection": "women-heels",
             "label": ""
@@ -535,7 +535,7 @@
         },
         "tile_women_sneakers": {
           "type": "collection_tile",
-          "name": "Sporty",
+          "name": "Women's Sneakers",
           "settings": {
             "collection": "women-sneakers",
             "label": ""
@@ -543,7 +543,7 @@
         },
         "tile_women_flats": {
           "type": "collection_tile",
-          "name": "Casual Weekend",
+          "name": "Women's Flats",
           "settings": {
             "collection": "women-flats",
             "label": ""
@@ -551,7 +551,7 @@
         },
         "tile_women_slip_ons": {
           "type": "collection_tile",
-          "name": "Work Essentials",
+          "name": "Women's Slip-Ons",
           "settings": {
             "collection": "women-slip-ons",
             "label": ""
@@ -559,7 +559,7 @@
         },
         "tile_men_dress_formal": {
           "type": "collection_tile",
-          "name": "Active & Outdoor",
+          "name": "Men's Dress & Formal",
           "settings": {
             "collection": "men-dress-formal",
             "label": ""
@@ -567,7 +567,7 @@
         },
         "tile_men_loafers": {
           "type": "collection_tile",
-          "name": "Travel Comfort",
+          "name": "Men's Loafers",
           "settings": {
             "collection": "men-loafers",
             "label": ""
@@ -575,7 +575,7 @@
         },
         "tile_men_slip_ons": {
           "type": "collection_tile",
-          "name": "Bridal Collection",
+          "name": "Men's Slip-Ons",
           "settings": {
             "collection": "men-slip-ons",
             "label": ""
@@ -583,7 +583,7 @@
         },
         "tile_men_sneakers": {
           "type": "collection_tile",
-          "name": "Rainy Day Picks",
+          "name": "Men's Sneakers",
           "settings": {
             "collection": "men-sneakers",
             "label": ""
@@ -591,7 +591,7 @@
         },
         "tile_men_boots": {
           "type": "collection_tile",
-          "name": "Wide Fit Specials",
+          "name": "Men's Boots",
           "settings": {
             "collection": "men-boots",
             "label": ""
@@ -599,7 +599,7 @@
         },
         "tile_insoles": {
           "type": "collection_tile",
-          "name": "New Season Styles",
+          "name": "Insoles",
           "settings": {
             "collection": "insoles",
             "label": ""
