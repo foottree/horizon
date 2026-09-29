@@ -509,23 +509,23 @@
     "collection_rail": {
       "type": "collection-rail",
       "blocks": {
-        "tile_mary_janes": {
+        "tile_women_mary_janes": {
           "type": "collection_tile",
           "name": "Mary Janes",
           "settings": {
-            "collection": "mary-janes",
-            "label": "Everyday Mary Janes"
-          }
-        },
-        "tile_loafers": {
-          "type": "collection_tile",
-          "name": "Loafers",
-          "settings": {
-            "collection": "loafers",
+            "collection": "women-mary-janes",
             "label": ""
           }
         },
-        "tile_heels": {
+        "tile_women_loafers": {
+          "type": "collection_tile",
+          "name": "Loafers",
+          "settings": {
+            "collection": "women-loafers",
+            "label": ""
+          }
+        },
+        "tile_women_heels": {
           "type": "collection_tile",
           "name": "Heels",
           "settings": {
@@ -533,92 +533,92 @@
             "label": ""
           }
         },
-        "tile_sporty": {
+        "tile_women_sneakers": {
           "type": "collection_tile",
           "name": "Sporty",
           "settings": {
-            "collection": "sporty",
+            "collection": "women-sneakers",
             "label": ""
           }
         },
-        "tile_casual_weekend": {
+        "tile_women_flats": {
           "type": "collection_tile",
           "name": "Casual Weekend",
           "settings": {
-            "collection": "casual-weekend",
+            "collection": "women-flats",
             "label": ""
           }
         },
-        "tile_work_essentials": {
+        "tile_women_slip_ons": {
           "type": "collection_tile",
           "name": "Work Essentials",
           "settings": {
-            "collection": "work-essentials",
+            "collection": "women-slip-ons",
             "label": ""
           }
         },
-        "tile_active_outdoor": {
+        "tile_men_dress_formal": {
           "type": "collection_tile",
           "name": "Active & Outdoor",
           "settings": {
-            "collection": "active-outdoor",
+            "collection": "men-dress-formal",
             "label": ""
           }
         },
-        "tile_travel_comfort": {
+        "tile_men_loafers": {
           "type": "collection_tile",
           "name": "Travel Comfort",
           "settings": {
-            "collection": "travel-comfort",
+            "collection": "men-loafers",
             "label": ""
           }
         },
-        "tile_bridal_collection": {
+        "tile_men_slip_ons": {
           "type": "collection_tile",
           "name": "Bridal Collection",
           "settings": {
-            "collection": "bridal-collection",
+            "collection": "men-slip-ons",
             "label": ""
           }
         },
-        "tile_rainy_day_picks": {
+        "tile_men_sneakers": {
           "type": "collection_tile",
           "name": "Rainy Day Picks",
           "settings": {
-            "collection": "rainy-day-picks",
+            "collection": "men-sneakers",
             "label": ""
           }
         },
-        "tile_wide_fit_specials": {
+        "tile_men_boots": {
           "type": "collection_tile",
           "name": "Wide Fit Specials",
           "settings": {
-            "collection": "wide-fit-specials",
+            "collection": "men-boots",
             "label": ""
           }
         },
-        "tile_new_season_styles": {
+        "tile_insoles": {
           "type": "collection_tile",
           "name": "New Season Styles",
           "settings": {
-            "collection": "new-season-styles",
+            "collection": "insoles",
             "label": ""
           }
         }
       },
       "block_order": [
-        "tile_mary_janes",
-        "tile_loafers",
-        "tile_heels",
-        "tile_sporty",
-        "tile_casual_weekend",
-        "tile_work_essentials",
-        "tile_active_outdoor",
-        "tile_travel_comfort",
-        "tile_bridal_collection",
-        "tile_rainy_day_picks",
-        "tile_wide_fit_specials",
-        "tile_new_season_styles"
+        "tile_women_mary_janes",
+        "tile_women_loafers",
+        "tile_women_heels",
+        "tile_women_sneakers",
+        "tile_women_flats",
+        "tile_women_slip_ons",
+        "tile_men_dress_formal",
+        "tile_men_loafers",
+        "tile_men_slip_ons",
+        "tile_men_sneakers",
+        "tile_men_boots",
+        "tile_insoles"
       ],
       "name": "Shop by Collection rail",
       "settings": {
