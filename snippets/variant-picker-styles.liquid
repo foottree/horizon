@@ -510,16 +510,19 @@
     background-color: inherit;
   }
 
-  /* Size guide: the mockup puts it on the size label's row. A <legend> takes phrasing content
-     only, so the link is a sibling pinned onto that row instead of a child of the legend. */
-  .variant-option--with-size-guide {
-    position: relative;
+  /* Size guide: the mockup puts it on the size label's row, so the legend becomes the row.
+     The dialog component wraps the whole fieldset, because the trigger lives in the legend
+     and the dialog cannot (a <legend> takes phrasing content only). */
+  .size-guide {
+    display: block;
   }
 
-  .size-guide {
-    position: absolute;
-    inset-block-start: 0;
-    inset-inline-end: 0;
+  .variant-option--with-size-guide legend {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--margin-md);
+    width: 100%;
   }
 
   .size-guide__trigger {

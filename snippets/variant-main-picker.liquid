@@ -60,8 +60,12 @@
           # visible label changes: the form field name and the data attributes below keep the
           # real option name, or the variant lookup breaks.
           assign option_label = product_option.name
+          assign has_size_guide = false
           if product_option.name == 'Size'
             assign option_label = 'Size (EU)'
+            if block_settings.size_guide_content != blank
+              assign has_size_guide = true
+            endif
           endif
 
           assign swatch_count = product_option.values | map: 'swatch' | compact | size
@@ -96,8 +100,11 @@
             </span>
           </div>
         {%- elsif variant_style == 'swatch' or block_settings.variant_style == 'buttons' -%}
+          {%- if has_size_guide -%}
+            {% render 'size-guide-dialog', part: 'open', settings: block_settings, id: block.id %}
+          {%- endif -%}
           <fieldset
-            class="variant-option variant-option--buttons{% if variant_style == 'swatch' %} variant-option--swatches{% else %} variant-option--{{ settings.variant_button_width }}{% endif %}{% if product_option.name == 'Size' %} variant-option--with-size-guide{% endif %}"
+            class="variant-option variant-option--buttons{% if variant_style == 'swatch' %} variant-option--swatches{% else %} variant-option--{{ settings.variant_button_width }}{% endif %}{% if has_size_guide %} variant-option--with-size-guide{% endif %}"
             data-fieldset-index="{{ fieldset_index }}"
             ref="fieldsets[]"
             {{ option_id_attribute }}
@@ -107,10 +114,10 @@
               {%- if variant_style == 'swatch' -%}
                 <span class="variant-option__swatch-value">{{ product_option.selected_value }}</span>
               {%- endif %}
+              {%- if has_size_guide -%}
+                {% render 'size-guide-dialog', part: 'trigger', settings: block_settings, id: block.id %}
+              {%- endif -%}
             </legend>
-            {%- if product_option.name == 'Size' -%}
-              {% render 'size-guide-dialog', settings: block_settings, id: block.id %}
-            {%- endif -%}
             {%- for product_option_value in product_option.values -%}
               {% if product_option_value.size > longest_value and option_id_attribute %}
                 {% assign longest_value = product_option_value.size %}
@@ -185,6 +192,9 @@
               {% endstyle %}
             {% endif %}
           </fieldset>
+          {%- if has_size_guide -%}
+            {% render 'size-guide-dialog', part: 'close', settings: block_settings, id: block.id %}
+          {%- endif -%}
           {%- assign fieldset_index = fieldset_index | plus: 1 -%}
         {%- elsif block_settings.variant_style == 'dropdowns' -%}
           {%

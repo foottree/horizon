@@ -1,65 +1,66 @@
 {%- doc -%}
-  The "Size Guide" link that sits on the same row as the size option's label in the variant
-  picker, plus the dialog it opens.
+  The "Size Guide" link that sits on the size option's own label row in the variant picker,
+  and the dialog it opens.
 
-  It lives inside the size option's fieldset rather than beside it, because a <legend> may only
-  hold phrasing content: the link is positioned onto the legend's row by
-  `snippets/variant-picker-styles.liquid`, not nested inside it.
+  Rendered in three parts because a <legend> may only contain phrasing content: the dialog
+  component opens before the fieldset, the trigger goes inside the legend (a <button> is
+  phrasing content, a <dialog> is not), and the dialog itself closes after the fieldset. All
+  three are needed for the trigger's declarative on:click to find its dialog.
 
-  Renders nothing when the block has no popup content, so a picker that has not been given a
-  size guide shows no dead link.
-
+  @param {string} part - 'open', 'trigger' or 'close'
   @param {object} settings - The variant picker block's settings
-  @param {string} id - The block id, used to make the dialog heading id unique
+  @param {string} id - The block id, so two pickers on one page get distinct heading ids
 
   @example
-  {% render 'size-guide-dialog', settings: block_settings, id: block.id %}
+  {% render 'size-guide-dialog', part: 'open', settings: block_settings, id: block.id %}
 {%- enddoc -%}
 
-{%- if settings.size_guide_content != blank -%}
-  {%- liquid
-    assign size_guide_label = settings.size_guide_text | default: 'Size Guide'
-    assign size_guide_heading_id = 'size-guide-heading-' | append: id
-  -%}
+{%- liquid
+  assign size_guide_label = settings.size_guide_text | default: 'Size Guide'
+  assign size_guide_heading_id = 'size-guide-heading-' | append: id
+-%}
 
-  <script
-    src="{{ 'dialog.js' | asset_url }}"
-    type="module"
-  ></script>
+{%- case part -%}
+  {%- when 'open' -%}
+    <script
+      src="{{ 'dialog.js' | asset_url }}"
+      type="module"
+    ></script>
 
-  {% render 'dialog-styles' %}
+    {% render 'dialog-styles' %}
 
-  <dialog-component class="size-guide">
+    <dialog-component class="size-guide">
+  {%- when 'trigger' -%}
     <button
       on:click="/showDialog"
       class="button button-unstyled size-guide__trigger"
     >
       {{- size_guide_label -}}
     </button>
-
-    <dialog
-      ref="dialog"
-      class="size-guide__content dialog-modal color-custom-popover"
-      scroll-lock
-      aria-labelledby="{{ size_guide_heading_id }}"
-    >
-      <h2
-        id="{{ size_guide_heading_id }}"
-        class="visually-hidden"
+  {%- when 'close' -%}
+      <dialog
+        ref="dialog"
+        class="size-guide__content dialog-modal color-custom-popover"
+        scroll-lock
+        aria-labelledby="{{ size_guide_heading_id }}"
       >
-        {{ size_guide_label }}
-      </h2>
-      <div class="size-guide__inner">
-        {{ settings.size_guide_content }}
-      </div>
-      <button
-        ref="closeButton"
-        on:click="/closeDialog"
-        class="button button-unstyled close-button size-guide__close"
-        aria-label="{{ 'accessibility.close_dialog' | t }}"
-      >
-        {{- 'icon-close.svg' | inline_asset_content -}}
-      </button>
-    </dialog>
-  </dialog-component>
-{%- endif -%}
+        <h2
+          id="{{ size_guide_heading_id }}"
+          class="visually-hidden"
+        >
+          {{ size_guide_label }}
+        </h2>
+        <div class="size-guide__inner">
+          {{ settings.size_guide_content }}
+        </div>
+        <button
+          ref="closeButton"
+          on:click="/closeDialog"
+          class="button button-unstyled close-button size-guide__close"
+          aria-label="{{ 'accessibility.close_dialog' | t }}"
+        >
+          {{- 'icon-close.svg' | inline_asset_content -}}
+        </button>
+      </dialog>
+    </dialog-component>
+{%- endcase -%}
