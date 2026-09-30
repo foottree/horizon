@@ -359,9 +359,7 @@
    actual tap target below 44px. */
 @media screen and (max-width: 749px) {
   .header-actions__cart-icon {
-    /* --gap-3xs (0.125rem) is the smallest gap token Horizon defines; the count still clears
-       the bag because the "(" carries its own side bearing on top of this. */
-    gap: var(--gap-3xs);
+    gap: 4px;
     min-height: var(--minimum-touch-target);
   }
 
