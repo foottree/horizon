@@ -1592,3 +1592,17 @@
 .facets-mobile-wrapper .facets__label {
   font-size: var(--font-paragraph--size);
 }
+
+/* ---- Product page: Size Guide link ----
+   The link is the stock popup-link block, which sets its own colour (foreground) and exposes no
+   colour setting. The design wants the palette green (color4), the same token the rest of this
+   file reaches through the primary button colour. Scoped to the product details column, the only
+   place popup-link is used. The stock hover dim is a colour change, which this rule would
+   override, so hover dims the whole link instead. */
+.product-details .popup-link__button {
+  color: var(--color-primary-button-background);
+}
+
+.product-details .popup-link__button:hover {
+  opacity: var(--opacity-70);
+}

@@ -1,0 +1,173 @@
+{%- doc -%}
+  The HOW IT FITS bar for the product page: an eyebrow, a five-pill scale and three end/middle
+  labels. The lit pill comes from the product metafield custom.how_it_fits (a single line text
+  field limited to Runs small, Runs slightly small, True to size, Runs slightly large, Runs large).
+
+  Renders nothing at all - no wrapper, no eyebrow, no empty bar - when the metafield is blank or
+  holds a value that is not one of those five choices.
+{%- enddoc -%}
+
+{%- liquid
+  assign block_settings = block.settings
+  assign fit_value = closest.product.metafields.custom.how_it_fits.value | strip | downcase
+  assign fit_choices = 'Runs small,Runs slightly small,True to size,Runs slightly large,Runs large' | split: ','
+
+  assign active_position = 0
+  assign active_label = ''
+  for fit_choice in fit_choices
+    assign fit_choice_key = fit_choice | downcase
+    if fit_value == fit_choice_key
+      assign active_position = forloop.index
+      assign active_label = fit_choice
+    endif
+  endfor
+-%}
+
+{%- if active_position > 0 -%}
+  <div
+    class="fit-scale spacing-style"
+    style="
+      {% render 'spacing-style', settings: block_settings %}
+      --fit-scale-eyebrow-color: {{ settings.color_palette.color4 }};
+    "
+    {{ block.shopify_attributes }}
+  >
+    {%- if block_settings.heading != blank -%}
+      <p class="fit-scale__eyebrow">{{ block_settings.heading }}</p>
+    {%- endif -%}
+
+    <div class="fit-scale__bar" aria-hidden="true">
+      {%- for fit_pill in (1..5) -%}
+        <span class="fit-scale__pill{% if fit_pill == active_position %} fit-scale__pill--active{% endif %}"></span>
+      {%- endfor -%}
+    </div>
+
+    <div class="fit-scale__labels" aria-hidden="true">
+      <span>Runs small</span>
+      <span>True to size</span>
+      <span>Runs large</span>
+    </div>
+
+    <p class="visually-hidden">
+      Fit: {{ active_label }}. Point {{ active_position }} of 5 on a scale from Runs small to Runs large.
+    </p>
+  </div>
+{%- endif -%}
+
+{% stylesheet %}
+  .fit-scale {
+    /* No palette token is #d9d9d6 (the nearest, color3, is #e0dcd2), so the inactive pill keeps
+       the design's own value. The lit pill and the labels use the palette foreground. */
+    --fit-scale-pill-inactive: #d9d9d6;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .fit-scale__eyebrow {
+    margin: 0;
+    font-family: var(--font-subheading--family);
+    font-weight: var(--font-subheading--weight);
+    font-size: 0.8125rem;
+    line-height: 1.2;
+    letter-spacing: var(--letter-spacing--body-loose);
+    text-transform: uppercase;
+    color: var(--fit-scale-eyebrow-color, currentcolor);
+  }
+
+  .fit-scale__bar {
+    display: flex;
+    gap: 6px;
+  }
+
+  .fit-scale__pill {
+    flex: 1;
+    height: 10px;
+    border-radius: 5px;
+    background-color: var(--fit-scale-pill-inactive);
+  }
+
+  .fit-scale__pill--active {
+    background-color: var(--color-foreground);
+  }
+
+  .fit-scale__labels {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    font-size: 0.875rem;
+    line-height: 1.2;
+    color: var(--color-foreground);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "How it fits",
+  "tag": null,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Shows where the product sits on the fit scale, read from the product metafield custom.how_it_fits. Nothing is shown when that metafield is empty."
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:settings.heading",
+      "default": "How it fits"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "How it fits",
+      "category": "t:categories.product"
+    }
+  ]
+}
+{% endschema %}

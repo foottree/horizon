@@ -246,14 +246,123 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
+            },
+            "popup_link_sizeguide": {
+              "type": "popup-link",
+              "settings": {
+                "behavior": "default",
+                "heading": "Size Guide",
+                "type_preset": "",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "text_sizeguide_title": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Size guide</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "h4",
+                    "padding-block-end": 16
+                  }
+                },
+                "text_sizeguide_note": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Our full size and width chart is coming soon.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left"
+                  }
+                }
+              },
+              "block_order": [
+                "text_sizeguide_title",
+                "text_sizeguide_note"
+              ]
+            },
+            "fit_scale_howfits": {
+              "type": "fit-scale",
+              "settings": {
+                "heading": "How it fits",
+                "padding-block-start": 20,
+                "padding-block-end": 12,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "accordion_pdpinfo": {
+              "type": "accordion",
+              "settings": {
+                "icon": "plus",
+                "dividers": true,
+                "divider_color": "{{ settings.color_palette.color3 }}",
+                "type_preset": "h6",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "accordion_row_specs": {
+                  "type": "_accordion-row-dynamic",
+                  "settings": {
+                    "heading": "SPECIFICATIONS",
+                    "content": "{{ closest.product.metafields.custom.specifications }}",
+                    "open_by_default": false,
+                    "icon": "none",
+                    "width": 20
+                  },
+                  "blocks": {}
+                },
+                "accordion_row_care": {
+                  "type": "_accordion-row-dynamic",
+                  "settings": {
+                    "heading": "CARE GUIDE",
+                    "content": "<p>Avoid direct sunlight and extreme moisture</p><p>Use a soft cloth to wipe away dirt and dust</p><p>Condition leather occasionally to maintain finish</p>",
+                    "open_by_default": false,
+                    "icon": "none",
+                    "width": 20
+                  },
+                  "blocks": {}
+                },
+                "accordion_row_shipping": {
+                  "type": "_accordion-row-dynamic",
+                  "settings": {
+                    "heading": "SHIPPING & EXCHANGES",
+                    "content": "<p>Free delivery over S$100 · 2-4 working days</p><p>14-day free size exchange, in store</p><p>Returns accepted within 14 days of delivery</p>",
+                    "open_by_default": false,
+                    "icon": "none",
+                    "width": 20
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "accordion_row_specs",
+                "accordion_row_care",
+                "accordion_row_shipping"
+              ]
             }
           },
           "block_order": [
             "group_icgrde",
             "divider_VJhene",
+            "popup_link_sizeguide",
             "variant_picker_R3rGDr",
+            "fit_scale_howfits",
             "buy_buttons_eYQEYi",
-            "text_aEtTtq"
+            "text_aEtTtq",
+            "accordion_pdpinfo"
           ]
         },
         "disclosures": {
