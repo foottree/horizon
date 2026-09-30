@@ -1606,3 +1606,19 @@
 .product-details .popup-link__button:hover {
   opacity: var(--opacity-70);
 }
+
+/* ---- Product page: the "Why this pair works" icon badges ----
+   The badge is a 42px icon in 15px of padding, which reads as a 72px disc. That is right on
+   desktop where four cards sit in a row, but on a phone the cards go full width and the disc
+   dominates the card. icon-or-image sets the size as width/height attributes on the svg, which a
+   CSS rule overrides without needing !important. */
+@media screen and (max-width: 749px) {
+  .ft-pdp-why .ft-why-badge {
+    padding: 11px;
+  }
+
+  .ft-pdp-why .ft-why-badge svg {
+    width: 28px;
+    height: 28px;
+  }
+}

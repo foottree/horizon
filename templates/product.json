@@ -401,7 +401,8 @@
                 "padding-block-start": 15,
                 "padding-block-end": 15,
                 "padding-inline-start": 15,
-                "padding-inline-end": 15
+                "padding-inline-end": 15,
+                "css_class": "ft-why-badge"
               }
             },
             "title_1": {
@@ -495,7 +496,8 @@
                 "padding-block-start": 15,
                 "padding-block-end": 15,
                 "padding-inline-start": 15,
-                "padding-inline-end": 15
+                "padding-inline-end": 15,
+                "css_class": "ft-why-badge"
               }
             },
             "title_2": {
@@ -589,7 +591,8 @@
                 "padding-block-start": 15,
                 "padding-block-end": 15,
                 "padding-inline-start": 15,
-                "padding-inline-end": 15
+                "padding-inline-end": 15,
+                "css_class": "ft-why-badge"
               }
             },
             "title_3": {
@@ -683,7 +686,8 @@
                 "padding-block-start": 15,
                 "padding-block-end": 15,
                 "padding-inline-start": 15,
-                "padding-inline-end": 15
+                "padding-inline-end": 15,
+                "css_class": "ft-why-badge"
               }
             },
             "title_4": {
