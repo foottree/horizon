@@ -1,0 +1,65 @@
+{%- doc -%}
+  The "Size Guide" link that sits on the same row as the size option's label in the variant
+  picker, plus the dialog it opens.
+
+  It lives inside the size option's fieldset rather than beside it, because a <legend> may only
+  hold phrasing content: the link is positioned onto the legend's row by
+  `snippets/variant-picker-styles.liquid`, not nested inside it.
+
+  Renders nothing when the block has no popup content, so a picker that has not been given a
+  size guide shows no dead link.
+
+  @param {object} settings - The variant picker block's settings
+  @param {string} id - The block id, used to make the dialog heading id unique
+
+  @example
+  {% render 'size-guide-dialog', settings: block_settings, id: block.id %}
+{%- enddoc -%}
+
+{%- if settings.size_guide_content != blank -%}
+  {%- liquid
+    assign size_guide_label = settings.size_guide_text | default: 'Size Guide'
+    assign size_guide_heading_id = 'size-guide-heading-' | append: id
+  -%}
+
+  <script
+    src="{{ 'dialog.js' | asset_url }}"
+    type="module"
+  ></script>
+
+  {% render 'dialog-styles' %}
+
+  <dialog-component class="size-guide">
+    <button
+      on:click="/showDialog"
+      class="button button-unstyled size-guide__trigger"
+    >
+      {{- size_guide_label -}}
+    </button>
+
+    <dialog
+      ref="dialog"
+      class="size-guide__content dialog-modal color-custom-popover"
+      scroll-lock
+      aria-labelledby="{{ size_guide_heading_id }}"
+    >
+      <h2
+        id="{{ size_guide_heading_id }}"
+        class="visually-hidden"
+      >
+        {{ size_guide_label }}
+      </h2>
+      <div class="size-guide__inner">
+        {{ settings.size_guide_content }}
+      </div>
+      <button
+        ref="closeButton"
+        on:click="/closeDialog"
+        class="button button-unstyled close-button size-guide__close"
+        aria-label="{{ 'accessibility.close_dialog' | t }}"
+      >
+        {{- 'icon-close.svg' | inline_asset_content -}}
+      </button>
+    </dialog>
+  </dialog-component>
+{%- endif -%}

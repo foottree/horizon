@@ -178,12 +178,14 @@
               "type": "variant-picker",
               "settings": {
                 "variant_style": "buttons",
-                "show_swatches": false,
+                "show_swatches": true,
                 "alignment": "left",
                 "padding-block-start": 0,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
-                "padding-inline-end": 0
+                "padding-inline-end": 0,
+                "size_guide_text": "Size Guide →",
+                "size_guide_content": "<p>Our full size and width chart is coming soon.</p>"
               },
               "blocks": {}
             },
@@ -241,44 +243,6 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
-            },
-            "popup_link_sizeguide": {
-              "type": "popup-link",
-              "settings": {
-                "behavior": "default",
-                "heading": "Size Guide",
-                "type_preset": "",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {
-                "text_sizeguide_title": {
-                  "type": "text",
-                  "settings": {
-                    "text": "<p>Size guide</p>",
-                    "width": "100%",
-                    "max_width": "normal",
-                    "alignment": "left",
-                    "type_preset": "h4",
-                    "padding-block-end": 16
-                  }
-                },
-                "text_sizeguide_note": {
-                  "type": "text",
-                  "settings": {
-                    "text": "<p>Our full size and width chart is coming soon.</p>",
-                    "width": "100%",
-                    "max_width": "normal",
-                    "alignment": "left"
-                  }
-                }
-              },
-              "block_order": [
-                "text_sizeguide_title",
-                "text_sizeguide_note"
-              ]
             },
             "fit_scale_howfits": {
               "type": "fit-scale",
@@ -352,7 +316,6 @@
           "block_order": [
             "group_icgrde",
             "divider_VJhene",
-            "popup_link_sizeguide",
             "variant_picker_R3rGDr",
             "fit_scale_howfits",
             "buy_buttons_eYQEYi",

@@ -88,7 +88,7 @@
     "quick_add": false,
     "product_corner_radius": 0,
     "card_corner_radius": 4,
-    "show_variant_image": false,
+    "show_variant_image": true,
     "variant_swatch_width": 32,
     "variant_swatch_height": 32,
     "variant_swatch_radius": 6,

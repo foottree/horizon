@@ -509,4 +509,56 @@
   .variant-option__button-label--has-swatch:has([data-option-available='false']):has(:checked):hover {
     background-color: inherit;
   }
+
+  /* Size guide: the mockup puts it on the size label's row. A <legend> takes phrasing content
+     only, so the link is a sibling pinned onto that row instead of a child of the legend. */
+  .variant-option--with-size-guide {
+    position: relative;
+  }
+
+  .size-guide {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-end: 0;
+  }
+
+  .size-guide__trigger {
+    font-family: var(--font-subheading--family);
+    font-weight: var(--font-subheading--weight);
+    font-size: var(--font-size--sm);
+    color: var(--color-primary-button-background);
+  }
+
+  .size-guide__trigger:hover {
+    opacity: var(--opacity-70);
+  }
+
+  .size-guide__content {
+    box-shadow: var(--shadow-popover);
+    border: var(--style-border-popover);
+    border-radius: var(--style-border-radius-popover);
+    background-color: var(--color-background);
+    padding: var(--padding-4xl) var(--padding-xl) var(--padding-xl);
+    max-width: var(--normal-content-width);
+    max-height: var(--modal-max-height);
+
+    @media screen and (min-width: 750px) {
+      padding: var(--padding-5xl);
+    }
+  }
+
+  .size-guide__content[open] {
+    animation: modalSlideInTop var(--animation-speed) var(--animation-easing) forwards;
+  }
+
+  .size-guide__content.dialog-closing {
+    animation: modalSlideOutTop var(--animation-speed) var(--animation-easing) forwards;
+  }
+
+  .size-guide__close {
+    top: var(--margin-2xs);
+    right: var(--margin-2xs);
+    opacity: 0.8;
+    animation: none;
+  }
 {% endstylesheet %}
