@@ -37,12 +37,21 @@
     assign sizes_attribute = '(min-width: 750px) [viewport_width]vw, 75vw' | replace: '[viewport_width]', viewport_width
     assign image_sizes = sizes_attribute | strip
   elsif section.settings.product_card_size
+    # Upstream 4.2.0 sends 50vw for the 'small' (2-up) mobile grid. The grid density control is
+    # enabled on this store, so a shopper can drop the mobile grid to one column at runtime and a
+    # 50vw image would then upscale 2x. 75vw is the toggle-safe floor. 'large' is already 1-up, so
+    # it keeps upstream's 100vw.
+    assign mobile_image_size = '100vw'
+    if section.settings.mobile_product_card_size == 'small'
+      assign mobile_image_size = '75vw'
+    endif
+
     capture card_size
       render 'util-product-grid-card-size', section: section
     endcapture
     assign card_size = card_size | strip | replace: 'px', '' | plus: 0
     capture sizes_attribute
-      render 'util-autofill-img-size-attr', card_size: card_size, card_gap: section.settings.columns_gap_horizontal
+      render 'util-autofill-img-size-attr', card_size: card_size, card_gap: section.settings.columns_gap_horizontal, mobile_size: mobile_image_size
     endcapture
     assign image_sizes = sizes_attribute | strip
   endif
@@ -311,25 +320,25 @@
     .product-grid[data-product-card-size='extra-large']
       .card-gallery.card-gallery--badge-top-right
       .product-card-gallery__title-placeholder {
-      padding-right: calc(var(--padding-3xl) + 50px);
+      padding-inline-end: calc(var(--padding-3xl) + 50px);
     }
 
     .product-grid[data-product-card-size='large']
       .card-gallery.card-gallery--badge-top-right
       .product-card-gallery__title-placeholder {
-      padding-right: calc(var(--padding-2xl) + 50px);
+      padding-inline-end: calc(var(--padding-2xl) + 50px);
     }
 
     .product-grid[data-product-card-size='medium']
       .card-gallery.card-gallery--badge-top-right
       .product-card-gallery__title-placeholder {
-      padding-right: calc(var(--padding-xl) + 50px);
+      padding-inline-end: calc(var(--padding-xl) + 50px);
     }
 
     .product-grid[data-product-card-size='small']
       .card-gallery.card-gallery--badge-top-right
       .product-card-gallery__title-placeholder {
-      padding-right: calc(var(--padding-sm) + 50px);
+      padding-inline-end: calc(var(--padding-sm) + 50px);
     }
 
     .product-grid[data-product-card-size='extra-large']
@@ -390,7 +399,7 @@
     .product-grid[data-product-card-size]
       .card-gallery.card-gallery--badge-top-right
       .product-card-gallery__title-placeholder {
-      padding-right: calc(var(--padding-sm) + 50px);
+      padding-inline-end: calc(var(--padding-sm) + 50px);
     }
 
     .product-grid[data-product-card-size]
@@ -436,6 +445,10 @@
 
     @container (max-width: 249px) {
       padding-inline: 0 var(--padding-sm);
+
+      [dir='rtl'] & {
+        padding-inline: var(--padding-sm) 0;
+      }
     }
   }
 

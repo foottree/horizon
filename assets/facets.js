@@ -347,6 +347,8 @@ class PriceFacetComponent extends Component {
     super.connectedCallback();
     this.addEventListener('keydown', this.#onKeyDown);
     this.addEventListener('input', this.#onRangeOrInputChange);
+    this.addEventListener('focusin', this.#onFocusIn);
+    this.addEventListener('focusout', this.#onFocusOut);
     this.currency = this.dataset.currency ?? 'USD';
     this.fullMoneyFormat = this.dataset.moneyFormat ?? '{{amount}}';
     this.moneyFormat = this.#extractMoneyPlaceholder(this.fullMoneyFormat);
@@ -378,6 +380,8 @@ class PriceFacetComponent extends Component {
     super.disconnectedCallback();
     this.removeEventListener('keydown', this.#onKeyDown);
     this.removeEventListener('input', this.#onRangeOrInputChange);
+    this.removeEventListener('focusin', this.#onFocusIn);
+    this.removeEventListener('focusout', this.#onFocusOut);
   }
 
   /**
@@ -477,6 +481,29 @@ class PriceFacetComponent extends Component {
     minRange.setAttribute('aria-valuetext', formatMoney(minRange.valueAsNumber, this.fullMoneyFormat, this.currency));
     maxRange.setAttribute('aria-valuetext', formatMoney(maxRange.valueAsNumber, this.fullMoneyFormat, this.currency));
   }
+
+  /**
+   * Marks the focused price input so a section morph triggered by the other price input
+   * refreshes server-owned attributes without clobbering digits the shopper is still typing.
+   * skipsValueUpdate wants the marker on both nodes plus live focus; PRESERVED_ATTRIBUTES
+   * supplies the incoming node's copy, and it ignores empty values, hence 'true' and not ''.
+   * @param {FocusEvent} event
+   */
+  #onFocusIn = (event) => {
+    if (!(event.target instanceof HTMLInputElement)) return;
+    event.target.setAttribute('data-skip-value-update', 'true');
+  };
+
+  /**
+   * Clears the marker when the edit ends. Hygiene rather than load-bearing: skipsValueUpdate
+   * requires live focus too, so a marker left behind is inert once focus moves on.
+   * `change` fires before `focusout`, so the typed value is already applied by this point.
+   * @param {FocusEvent} event
+   */
+  #onFocusOut = (event) => {
+    if (!(event.target instanceof HTMLInputElement)) return;
+    event.target.removeAttribute('data-skip-value-update');
+  };
 
   /**
    * Extracts the placeholder from a money format string, removing currency symbols.
@@ -1083,7 +1110,7 @@ class FacetStatusComponent extends Component {
     const currency = facetStatus.dataset.currency || '';
     const minInputNum = this.#parseCents(minInputValue, '0', currency);
     const maxInputNum = this.#parseCents(maxInputValue, facetStatus.dataset.rangeMax, currency);
-    facetStatus.innerHTML = `${this.#formatMoney(minInputNum)}–${this.#formatMoney(maxInputNum)}`;
+    facetStatus.innerHTML = `<bdi>${this.#formatMoney(minInputNum)}–${this.#formatMoney(maxInputNum)}</bdi>`;
   }
 
   /**
