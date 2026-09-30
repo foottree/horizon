@@ -359,7 +359,10 @@
    actual tap target below 44px. */
 @media screen and (max-width: 749px) {
   .header-actions__cart-icon {
-    gap: 4px;
+    /* The count carries margin-inline-start: -5px to cancel the "(" side bearing, so the net
+       spacing is this value minus 5. At 4px that came out to -1px, i.e. the boxes overlapped
+       and only the glyph bearing separated them, which read as no gap at all. 8px nets +3px. */
+    gap: 8px;
     min-height: var(--minimum-touch-target);
   }
 
