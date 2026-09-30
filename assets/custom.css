@@ -1645,3 +1645,20 @@
     height: 26px;
   }
 }
+
+/* ---- Tap highlight ----
+   iOS paints a grey flash over anything tappable. On the chunky controls it reads as a second
+   selected state sitting next to the real one: tap a size and the pill flashes grey before the
+   black selected state lands. Everything listed here already shows :hover, :active or a checked
+   state, so the flash tells the user nothing they are not already being told. Plain text links
+   keep theirs, where the flash is the only feedback a tap gets. */
+summary,
+.details__header,
+.variant-option__button-label,
+.swatch,
+.size-guide__trigger,
+.quantity-selector button,
+.button,
+.button-unstyled {
+  -webkit-tap-highlight-color: transparent;
+}
