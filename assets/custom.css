@@ -1592,3 +1592,61 @@
 .facets-mobile-wrapper .facets__label {
   font-size: var(--font-paragraph--size);
 }
+
+/* ---- For Organisations page (templates/page.wholesale.json) ----------------------------------
+   Hero, sector strip and closing band are stock section/group/text/button blocks (and the stock
+   marquee), so what the template settings cannot say is said here. Sizes stay with the theme's
+   type tokens; only the button shape/height and the hero's fixed height live here. */
+
+@media (min-width: 750px) {
+  .ft-fo-hero.section {
+    --section-min-height: 640px;
+  }
+
+  /* left/outer edge of the copy panel sits on the page gutter, like the other full-bleed panels */
+  .ft-fo-hero .fo-copy {
+    --padding-inline-start: var(--ft-gutter) !important;
+  }
+}
+
+.ft-fo-hero [class*='hero_image'] .image-block__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 749px) {
+  .ft-fo-hero [class*='hero_image'] .image-block__image {
+    --ratio: 4 / 3 !important;
+    height: auto;
+  }
+}
+
+/* 64px CTAs, radius 8, 2px outline for the transparent one (palette color7 on color4) */
+.ft-fo-hero .button-custom,
+.ft-fo-band .button-custom {
+  --button-border-width: 2px;
+
+  min-height: 64px;
+  white-space: nowrap;
+  padding-block: 0;
+  padding-inline: 32px;
+  font-family: var(--font-accent--family);
+  font-weight: var(--font-accent--weight);
+  font-size: var(--font-size--lg);
+  border-radius: 8px;
+}
+
+.ft-fo-band .button-custom {
+  padding-inline: 36px;
+}
+
+.ft-fo-band .text-block p {
+  max-width: 760px;
+  margin-inline: auto;
+}
+
+/* sector strip: hairline top and bottom (palette color3) on the marquee band */
+[id$='__fo_strip'] marquee-component {
+  border-block: 1px solid #e0dcd2; /* settings.color_palette.color3 */
+}

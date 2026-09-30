@@ -1,0 +1,792 @@
+{% comment %}
+  Request a quotation (For Organisations page, section 05 in the client's Figma): a two-column
+  band. Left, a Shopify contact form with eight fixed fields; right, a contact rail (repeatable
+  label/value blocks) over an olive "already an account customer?" card.
+
+  Why not blocks/contact-form.liquid: its fields are fixed to name/email/phone/message. This form
+  needs organisation, sector, volume and a fitting-day checkbox.
+
+  Field names matter. contact[email] and contact[body] are the two Shopify treats specially (the
+  reply-to address and the message). Every other field is a free-form contact[Label] and arrives
+  in the notification email under that label, so labels are part of the data - do not rename the
+  name attributes casually.
+
+  The two <select> option lists are textarea settings (one option per line) so the client can edit
+  them. The section id (setting `anchor_id`, default "quotation") is what the page's hero and
+  closing-band buttons link to; the form carries the same id plus "-form", which is where Shopify
+  returns the shopper after posting.
+
+  The base.css rule input:not([type='checkbox'], [type='radio']) has specificity (0,1,1), which
+  beats a plain class - so the control classes are doubled (.wq-control.wq-control) to win.
+
+  Type: .h2 / .h3 presets for headings, --font-size--* tokens for everything else.
+{% endcomment %}
+
+{%- liquid
+  if section.settings.background_color != blank
+    render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
+  endif
+
+  assign anchor = section.settings.anchor_id | default: 'quotation' | handleize
+  assign form_dom_id = anchor | append: '-form'
+  assign login_url = section.settings.account_button_link | default: routes.account_login_url
+
+  assign sector_list = section.settings.sector_options | newline_to_br | split: '<br />'
+  assign pairs_list = section.settings.pairs_options | newline_to_br | split: '<br />'
+-%}
+
+<div
+  class="section-background{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
+></div>
+
+<div
+  id="{{ anchor }}"
+  class="
+    section
+    section--narrow
+    {% if section.settings.background_color != blank %}color-custom-{{ section.id }}{% endif %}
+    wholesale-quote
+    spacing-style
+  "
+  style="
+    {% render 'spacing-style', settings: section.settings %}
+    --wq-accent: {{ settings.color_palette.color4 }};
+    --wq-accent-dark: {{ settings.color_palette.color1 }};
+    --wq-sand: {{ settings.color_palette.color7 }};
+    --wq-line: {{ settings.color_palette.color3 }};
+    --wq-soft: {{ settings.color_palette.color8 }};
+    --wq-ink: {{ settings.color_palette.foreground }};
+    --wq-paper: {{ settings.color_palette.background }};
+  "
+  data-testid="wholesale-quote"
+>
+  <div class="wholesale-quote__layout">
+    <div class="wholesale-quote__main">
+      <div class="wholesale-quote__intro">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="wholesale-quote__eyebrow">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="h2 wholesale-quote__title">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.intro != blank -%}
+          <p class="wholesale-quote__lead">{{ section.settings.intro }}</p>
+        {%- endif -%}
+      </div>
+
+      {%- form 'contact', id: form_dom_id, class: 'wq-form' -%}
+        {%- if form.posted_successfully? -%}
+          <div
+            class="wq-message wq-message--success"
+            role="status"
+            tabindex="-1"
+          >
+            {{ section.settings.success_message }}
+          </div>
+        {%- endif -%}
+
+        {%- if form.errors -%}
+          <div
+            class="wq-message wq-message--error"
+            role="alert"
+            tabindex="-1"
+          >
+            {{ form.errors | default_errors }}
+          </div>
+        {%- endif -%}
+
+        <div class="wq-row">
+          <div class="wq-field">
+            <label class="wq-label" for="{{ form_dom_id }}-organisation">Organisation *</label>
+            <input
+              class="wq-control wq-control"
+              type="text"
+              id="{{ form_dom_id }}-organisation"
+              name="contact[Organisation]"
+              autocomplete="organization"
+              placeholder="e.g. Peapes General Hospital"
+              required
+            >
+          </div>
+          <div class="wq-field">
+            <label class="wq-label" for="{{ form_dom_id }}-name">Your name *</label>
+            <input
+              class="wq-control wq-control"
+              type="text"
+              id="{{ form_dom_id }}-name"
+              name="contact[Name]"
+              autocomplete="name"
+              placeholder="Who we should reply to"
+              value="{% if customer %}{{ customer.name }}{% endif %}"
+              required
+            >
+          </div>
+        </div>
+
+        <div class="wq-row">
+          <div class="wq-field">
+            <label class="wq-label" for="{{ form_dom_id }}-email">Work email *</label>
+            <input
+              class="wq-control wq-control"
+              type="email"
+              id="{{ form_dom_id }}-email"
+              name="contact[email]"
+              autocomplete="email"
+              spellcheck="false"
+              autocapitalize="off"
+              placeholder="name@organisation.com.sg"
+              value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+              required
+            >
+          </div>
+          <div class="wq-field">
+            <label class="wq-label" for="{{ form_dom_id }}-phone">Mobile or WhatsApp *</label>
+            <input
+              class="wq-control wq-control"
+              type="tel"
+              id="{{ form_dom_id }}-phone"
+              name="contact[Phone]"
+              autocomplete="tel"
+              placeholder="+65 9123 4567"
+              required
+            >
+          </div>
+        </div>
+
+        <div class="wq-row">
+          <div class="wq-field">
+            <label class="wq-label" for="{{ form_dom_id }}-sector">Sector *</label>
+            <div class="wq-select">
+              <select
+                class="wq-control wq-control"
+                id="{{ form_dom_id }}-sector"
+                name="contact[Sector]"
+                required
+              >
+                <option value="" selected disabled>Choose the closest</option>
+                {%- for option in sector_list -%}
+                  {%- assign option_text = option | strip -%}
+                  {%- if option_text != blank -%}
+                    <option value="{{ option_text | escape }}">{{ option_text | escape }}</option>
+                  {%- endif -%}
+                {%- endfor -%}
+              </select>
+            </div>
+          </div>
+          <div class="wq-field">
+            <label class="wq-label" for="{{ form_dom_id }}-pairs">Roughly how many pairs a year?</label>
+            <div class="wq-select">
+              <select
+                class="wq-control wq-control"
+                id="{{ form_dom_id }}-pairs"
+                name="contact[Annual pairs]"
+              >
+                <option value="" selected>Choose a range</option>
+                {%- for option in pairs_list -%}
+                  {%- assign option_text = option | strip -%}
+                  {%- if option_text != blank -%}
+                    <option value="{{ option_text | escape }}">{{ option_text | escape }}</option>
+                  {%- endif -%}
+                {%- endfor -%}
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="wq-field">
+          <label class="wq-label" for="{{ form_dom_id }}-body">What do your team do, and what is the floor like?</label>
+          <textarea
+            class="wq-control wq-control wq-control--textarea"
+            id="{{ form_dom_id }}-body"
+            name="contact[body]"
+            rows="3"
+            placeholder="Shifts, wet or dry floors, any uniform specification, whether staff are currently complaining about anything."
+          >{{ form.body }}</textarea>
+        </div>
+
+        {%- if section.settings.fitting_label != blank -%}
+          <div class="wq-check">
+            <input
+              class="wq-check__box wq-check__box"
+              type="checkbox"
+              id="{{ form_dom_id }}-fitting"
+              name="contact[On-site fitting day]"
+              value="Yes"
+            >
+            <label class="wq-check__label" for="{{ form_dom_id }}-fitting">{{ section.settings.fitting_label }}</label>
+          </div>
+        {%- endif -%}
+
+        <div class="wq-actions">
+          <button type="submit" class="wq-submit wq-submit">{{ section.settings.submit_label }}</button>
+        </div>
+
+        {%- if section.settings.legal != blank -%}
+          <div class="wq-legal">{{ section.settings.legal }}</div>
+        {%- endif -%}
+      {%- endform -%}
+    </div>
+
+    <aside class="wholesale-quote__rail">
+      <div class="wq-card">
+        {%- if section.settings.contact_heading != blank -%}
+          <h3 class="h3 wq-card__title">{{ section.settings.contact_heading }}</h3>
+        {%- endif -%}
+        {%- for block in section.blocks -%}
+          <div class="wq-contact" {{ block.shopify_attributes }}>
+            {%- if block.settings.label != blank -%}
+              <p class="wq-contact__label">{{ block.settings.label }}</p>
+            {%- endif -%}
+            {%- if block.settings.value != blank -%}
+              <div class="wq-contact__value">{{ block.settings.value }}</div>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+
+      {%- if section.settings.account_heading != blank -%}
+        <div class="wq-card wq-card--account">
+          <h3 class="h3 wq-card__title">{{ section.settings.account_heading }}</h3>
+          {%- if section.settings.account_text != blank -%}
+            <p class="wq-card__text">{{ section.settings.account_text }}</p>
+          {%- endif -%}
+          {%- if section.settings.account_button_label != blank -%}
+            <a class="wq-account-button" href="{{ login_url }}">{{ section.settings.account_button_label }}</a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </aside>
+  </div>
+</div>
+
+{% stylesheet %}
+  .wholesale-quote__layout {
+    display: grid;
+    grid-template-columns: minmax(0, 756fr) minmax(0, 420fr);
+    align-items: start;
+    column-gap: 4rem;
+  }
+
+  .wholesale-quote__main {
+    display: flex;
+    flex-direction: column;
+    gap: 1.625rem;
+    min-width: 0;
+  }
+
+  .wholesale-quote__intro {
+    display: flex;
+    flex-direction: column;
+    gap: 1.625rem;
+  }
+
+  .wholesale-quote__eyebrow {
+    margin: 0;
+    font-family: var(--font-subheading--family);
+    font-weight: var(--font-subheading--weight);
+    font-size: var(--font-size--xs);
+    line-height: 1.3;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--wq-accent);
+  }
+
+  .wholesale-quote__title {
+    margin: 0;
+  }
+
+  .wholesale-quote__lead {
+    margin: 0;
+    font-size: var(--font-size--xl);
+    line-height: var(--line-height--body-loose);
+    color: var(--wq-soft);
+  }
+
+  .wq-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.625rem;
+  }
+
+  .wq-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+
+  .wq-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    min-width: 0;
+  }
+
+  .wq-label {
+    font-family: var(--font-accent--family);
+    font-weight: var(--font-accent--weight);
+    font-size: var(--font-size--lg);
+    line-height: var(--line-height--body-normal);
+    color: var(--wq-ink);
+  }
+
+  /* doubled classes: base.css input:not([type='checkbox'], [type='radio']) is (0,1,1) */
+  .wq-control.wq-control {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 3.75rem;
+    padding: 0 1.25rem;
+    font-family: var(--font-body--family);
+    font-size: var(--font-size--xl);
+    line-height: var(--line-height--body-loose);
+    color: var(--wq-ink);
+    background-color: var(--wq-paper);
+    border: 1px solid var(--wq-line);
+    border-radius: 8px;
+    box-shadow: none;
+  }
+
+  .wq-control.wq-control::placeholder {
+    color: var(--wq-soft);
+    opacity: 1;
+  }
+
+  /* base.css hides the placeholder once a field has a value; keep that behaviour */
+  .wq-control.wq-control:not(:placeholder-shown)::placeholder {
+    opacity: 0;
+  }
+
+  .wq-control.wq-control:focus-visible {
+    outline: 2px solid var(--wq-accent);
+    outline-offset: 2px;
+  }
+
+  .wq-control--textarea.wq-control--textarea {
+    min-height: 9.375rem;
+    padding-block: 1.125rem 0.75rem;
+    resize: vertical;
+  }
+
+  .wq-select {
+    position: relative;
+  }
+
+  .wq-select select.wq-control.wq-control {
+    appearance: none;
+    padding-inline-end: 3rem;
+    cursor: pointer;
+    text-overflow: ellipsis;
+  }
+
+  .wq-select select.wq-control.wq-control:has(option[value='']:checked) {
+    color: var(--wq-soft);
+  }
+
+  .wq-select::after {
+    content: '\25BE';
+    position: absolute;
+    inset-block: 0;
+    inset-inline-end: 1.25rem;
+    display: flex;
+    align-items: center;
+    font-size: var(--font-size--lg);
+    color: var(--wq-accent);
+    pointer-events: none;
+  }
+
+  .wq-check {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.875rem;
+    padding-block-start: 0.25rem;
+  }
+
+  .wq-check__box.wq-check__box {
+    flex: none;
+    box-sizing: border-box;
+    width: 1.75rem;
+    height: 1.75rem;
+    margin: 0;
+    background-color: var(--wq-paper);
+    border: 2px solid var(--wq-accent);
+    border-radius: 6px;
+  }
+
+  .wq-check__box.wq-check__box:checked {
+    background-color: var(--wq-accent);
+    border-color: var(--wq-accent);
+  }
+
+  .wq-check__box.wq-check__box:focus-visible {
+    outline: 2px solid var(--wq-accent);
+    outline-offset: 2px;
+  }
+
+  .wq-check__label {
+    font-size: var(--font-size--xl);
+    line-height: var(--line-height--body-loose);
+    color: var(--wq-ink);
+    cursor: pointer;
+  }
+
+  .wq-submit.wq-submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 4rem;
+    padding: 0 2.5rem;
+    font-family: var(--font-accent--family);
+    font-weight: var(--font-accent--weight);
+    font-size: var(--font-size--lg);
+    line-height: var(--line-height--body-normal);
+    color: var(--wq-paper);
+    background: var(--wq-accent);
+    border: 0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 180ms var(--animation-easing, ease);
+  }
+
+  .wq-submit.wq-submit:hover {
+    background: var(--wq-accent-dark);
+  }
+
+  .wq-legal {
+    font-size: var(--font-size--md);
+    line-height: var(--line-height--body-loose);
+    color: var(--wq-soft);
+  }
+
+  .wq-legal > * {
+    margin: 0;
+  }
+
+  .wq-legal a {
+    color: inherit;
+    text-decoration: underline;
+  }
+
+  .wq-message {
+    padding: 1rem 1.25rem;
+    font-size: var(--font-size--lg);
+    line-height: var(--line-height--body-normal);
+    border-radius: 8px;
+  }
+
+  .wq-message--success {
+    color: var(--wq-accent-dark);
+    background: var(--wq-paper);
+    border: 1px solid var(--wq-accent);
+  }
+
+  .wq-message--error {
+    color: var(--color-error);
+    background: var(--wq-paper);
+    border: 1px solid var(--color-error);
+  }
+
+  .wholesale-quote__rail {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    min-width: 0;
+  }
+
+  .wq-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1.125rem;
+    padding: 2rem;
+    background: var(--wq-paper);
+    border: 1px solid var(--wq-line);
+    border-radius: 8px;
+  }
+
+  .wq-card .wq-card__title {
+    margin: 0;
+  }
+
+  .wq-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .wq-contact__label {
+    margin: 0;
+    font-family: var(--font-subheading--family);
+    font-weight: var(--font-subheading--weight);
+    font-size: var(--font-size--xs);
+    line-height: 1.3;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--wq-accent);
+  }
+
+  .wq-contact__value {
+    font-size: var(--font-size--xl);
+    line-height: var(--line-height--body-loose);
+    color: var(--wq-ink);
+    overflow-wrap: anywhere;
+  }
+
+  .wq-contact__value > * {
+    margin: 0;
+  }
+
+  .wq-contact__value a {
+    color: inherit;
+  }
+
+  .wq-card.wq-card--account {
+    gap: 0.875rem;
+    background: var(--wq-accent);
+    border-color: var(--wq-accent);
+  }
+
+  .wq-card--account .wq-card__title.h3 {
+    color: var(--wq-paper);
+  }
+
+  .wq-card__text {
+    margin: 0;
+    font-size: var(--font-size--xl);
+    line-height: var(--line-height--body-loose);
+    color: var(--wq-sand);
+  }
+
+  .wq-card--account .wq-account-button {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3.75rem;
+    margin-block-start: 0.5rem;
+    padding: 0 1.75rem;
+    font-family: var(--font-accent--family);
+    font-weight: var(--font-accent--weight);
+    font-size: var(--font-size--lg);
+    line-height: var(--line-height--body-normal);
+    color: var(--wq-accent-dark);
+    background: var(--wq-sand);
+    border-radius: 8px;
+    text-decoration: none;
+  }
+
+  @media screen and (max-width: 989px) {
+    .wholesale-quote__layout {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: 2.5rem;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .wq-row {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 1.625rem;
+    }
+
+    .wq-card {
+      padding: 1.5rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Wholesale quotation form",
+  "class": "section-wholesale-quote",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Form"
+    },
+    {
+      "type": "text",
+      "id": "anchor_id",
+      "label": "Anchor id",
+      "info": "Buttons elsewhere on the page link to #this-id.",
+      "default": "quotation"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Request a quotation"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Tell us about your team"
+    },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Intro",
+      "default": "Six questions. No account, no login, no obligation — we reply within one working day with an indicative quotation and a suggested shortlist."
+    },
+    {
+      "type": "textarea",
+      "id": "sector_options",
+      "label": "Sector options",
+      "info": "One per line.",
+      "default": "Healthcare\nF&B\nAviation\nTransport\nSecurity\nCorporate\nOther"
+    },
+    {
+      "type": "textarea",
+      "id": "pairs_options",
+      "label": "Pairs-per-year options",
+      "info": "One per line.",
+      "default": "Under 50\n50 to 200\n200 to 500\n500 to 1,000\nOver 1,000"
+    },
+    {
+      "type": "text",
+      "id": "fitting_label",
+      "label": "Fitting-day checkbox label",
+      "info": "Leave blank to hide the checkbox.",
+      "default": "Please quote an on-site fitting day as well. We will bring the full width run to you."
+    },
+    {
+      "type": "text",
+      "id": "submit_label",
+      "label": "Button label",
+      "default": "Send my request"
+    },
+    {
+      "type": "richtext",
+      "id": "legal",
+      "label": "Privacy line",
+      "default": "<p>We use your details only to answer this enquiry. Peapes Footwear Pte Ltd, UEN [XXXXXXXXX]. See our privacy notice for how long we keep it and who to contact.</p>"
+    },
+    {
+      "type": "textarea",
+      "id": "success_message",
+      "label": "Success message",
+      "default": "Thank you. We have your request and will reply within one working day."
+    },
+    {
+      "type": "header",
+      "content": "Contact rail"
+    },
+    {
+      "type": "text",
+      "id": "contact_heading",
+      "label": "Contact card heading",
+      "default": "Rather just talk to someone?"
+    },
+    {
+      "type": "text",
+      "id": "account_heading",
+      "label": "Account card heading",
+      "info": "Leave blank to hide the account card.",
+      "default": "Already an account customer?"
+    },
+    {
+      "type": "textarea",
+      "id": "account_text",
+      "label": "Account card text",
+      "default": "Log in to see your contract pricing, reorder from your held size run, and download past invoices."
+    },
+    {
+      "type": "text",
+      "id": "account_button_label",
+      "label": "Account button label",
+      "default": "Log in to my account"
+    },
+    {
+      "type": "url",
+      "id": "account_button_link",
+      "label": "Account button link",
+      "info": "Blank uses the store's customer login page."
+    },
+    {
+      "type": "header",
+      "content": "Section"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "placeholder": "Default"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Padding top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "contact",
+      "name": "Contact detail",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Call"
+        },
+        {
+          "type": "richtext",
+          "id": "value",
+          "label": "Value",
+          "default": "<p>+65 [XXXX XXXX]</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wholesale quotation form",
+      "blocks": [
+        {
+          "type": "contact",
+          "settings": {
+            "label": "WhatsApp",
+            "value": "<p>+65 [XXXX XXXX] — fastest, weekdays 9am to 6pm</p>"
+          }
+        },
+        {
+          "type": "contact",
+          "settings": {
+            "label": "Call",
+            "value": "<p>+65 [XXXX XXXX]</p>"
+          }
+        },
+        {
+          "type": "contact",
+          "settings": {
+            "label": "Email",
+            "value": "<p>corporate@foottree.com</p>"
+          }
+        },
+        {
+          "type": "contact",
+          "settings": {
+            "label": "Visit",
+            "value": "<p>City Square Mall, 180 Kitchener Road #03-15, daily 11am – 9pm</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

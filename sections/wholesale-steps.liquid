@@ -1,0 +1,368 @@
+{% comment %}
+  "How it works" (For Organisations page, section 03 in the client's Figma): a heading + intro, then a
+  row of step cards - a pale visual panel with an inline-SVG illustration, an auto-numbered "01".."04",
+  a title and a line of copy. Steps are section-local blocks (a section cannot read a theme block's
+  settings), each with a `step_visual` select so the art travels with the step when the client
+  reorders them.
+
+  The four illustrations are drawn from the Figma shapes (rectangles, ellipses, lines and an arrow),
+  one viewBox per drawing, and centred in the 160px panel. Their colours are the palette's ink
+  tones, fixed inside the drawing on purpose - an illustration, not typography.
+
+  Type comes from the theme: .h2 / .h3 presets for the heading and step titles, and the
+  --font-size--* tokens for everything else (nothing is hardcoded in px).
+{% endcomment %}
+
+{%- liquid
+  if section.settings.background_color != blank
+    render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
+  endif
+-%}
+
+<div
+  class="section-background{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
+></div>
+
+<div
+  class="
+    section
+    section--narrow
+    {% if section.settings.background_color != blank %}color-custom-{{ section.id }}{% endif %}
+    wholesale-steps
+    spacing-style
+  "
+  style="
+    {% render 'spacing-style', settings: section.settings %}
+    --wholesale-steps-line: {{ settings.color_palette.color3 }};
+    --wholesale-steps-tint: {{ settings.color_palette.color2 }};
+    --wholesale-steps-soft: {{ settings.color_palette.color8 }};
+    --wholesale-steps-card: {{ settings.color_palette.background }};
+  "
+  data-testid="wholesale-steps"
+>
+  <div class="wholesale-steps__inner">
+    {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+      <div class="wholesale-steps__heading">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="h2 wholesale-steps__title">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subheading != blank -%}
+          <p class="wholesale-steps__intro">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <ol class="wholesale-steps__list">
+      {%- for block in section.blocks -%}
+        <li class="wholesale-step" {{ block.shopify_attributes }}>
+          {%- if block.settings.step_visual != 'none' -%}
+            <div class="wholesale-step__visual" aria-hidden="true">
+              {%- case block.settings.step_visual -%}
+                {%- when 'spec_sheet' -%}
+                  <svg viewBox="0 -6 72 100" width="72" height="100" xmlns="http://www.w3.org/2000/svg" role="presentation">
+                    <rect x="0.75" y="0.75" width="70.5" height="86.5" rx="4" fill="#ffffff" stroke="#262622" stroke-width="1.5"/>
+                    <rect x="22" y="-6" width="28" height="12" rx="4" fill="#262622"/>
+                    <rect x="10" y="12" width="52" height="3" rx="2" fill="#e0dcd2"/>
+                    <rect x="10" y="21" width="52" height="3" rx="2" fill="#e0dcd2"/>
+                    <rect x="10" y="30" width="30" height="3" rx="2" fill="#e0dcd2"/>
+                    <rect x="10" y="39" width="8" height="8" rx="2" fill="#262622"/>
+                    <rect x="23" y="42" width="28" height="3" rx="2" fill="#e0dcd2"/>
+                    <rect x="10" y="53" width="8" height="8" rx="2" fill="#262622"/>
+                    <rect x="23" y="56" width="22" height="3" rx="2" fill="#e0dcd2"/>
+                  </svg>
+                {%- when 'fitting' -%}
+                  <svg viewBox="0 0 107 102" width="107" height="102" xmlns="http://www.w3.org/2000/svg" role="presentation">
+                    <ellipse cx="14" cy="11" rx="11" ry="11" fill="#262622"/>
+                    <rect x="0" y="26" width="28" height="44" fill="#262622"/>
+                    <rect x="9" y="47" width="10" height="2" rx="1" fill="#eef2e4"/>
+                    <rect x="2" y="74" width="10" height="28" rx="5" fill="#262622"/>
+                    <rect x="16" y="74" width="10" height="28" rx="5" fill="#262622"/>
+                    <rect x="40" y="59" width="40" height="8" rx="4" fill="#262622"/>
+                    <rect x="40" y="73" width="2" height="10" rx="1" fill="#262622"/>
+                    <rect x="45" y="75" width="2" height="7" rx="1" fill="#5c5a52"/>
+                    <rect x="50" y="73" width="2" height="10" rx="1" fill="#262622"/>
+                    <rect x="55" y="75" width="2" height="7" rx="1" fill="#5c5a52"/>
+                    <rect x="60" y="73" width="2" height="10" rx="1" fill="#262622"/>
+                    <rect x="65" y="75" width="2" height="7" rx="1" fill="#5c5a52"/>
+                    <rect x="70" y="73" width="2" height="10" rx="1" fill="#262622"/>
+                    <text x="40" y="99" fill="#5c5a52" font-size="10" font-weight="500" font-family="var(--font-body--family), sans-serif">2 min / person</text>
+                  </svg>
+                {%- when 'invoice' -%}
+                  <svg viewBox="0 0 156 76" width="156" height="76" xmlns="http://www.w3.org/2000/svg" role="presentation">
+                    <rect x="0.75" y="0.75" width="58.5" height="74.5" rx="4" fill="#ffffff" stroke="#262622" stroke-width="1.5"/>
+                    <circle cx="52" cy="8" r="8" fill="#eef2e4"/>
+                    <rect x="8" y="8" width="44" height="3" rx="1" fill="#e0dcd2"/>
+                    <rect x="8" y="16" width="44" height="3" rx="1" fill="#e0dcd2"/>
+                    <rect x="8" y="24" width="24" height="3" rx="1" fill="#e0dcd2"/>
+                    <rect x="8" y="36" width="18" height="3" rx="1" fill="#e0dcd2"/>
+                    <text x="36" y="40" fill="#262622" font-size="8" font-weight="700" font-family="var(--font-body--family), sans-serif">GST</text>
+                    <rect x="8" y="47" width="44" height="1" fill="#e0dcd2"/>
+                    <rect x="8" y="53" width="20" height="3" rx="1" fill="#e0dcd2"/>
+                    <rect x="36" y="53" width="16" height="3" rx="1" fill="#262622"/>
+                    <path d="M74 38H86M82 34.5L86 38L82 41.5" fill="none" stroke="#262622" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <rect x="100" y="10" width="56" height="56" rx="6" fill="#262622"/>
+                    <rect x="108" y="24" width="40" height="2" rx="1" fill="#eef2e4"/>
+                    <rect x="109" y="30" width="38" height="22" rx="3" fill="#ffffff"/>
+                    <rect x="116" y="40" width="24" height="3" rx="1" fill="#e0dcd2"/>
+                  </svg>
+                {%- when 'shipping' -%}
+                  <svg viewBox="0 0 100 88" width="100" height="88" xmlns="http://www.w3.org/2000/svg" role="presentation">
+                    <rect x="0" y="0" width="100" height="18" fill="#262622"/>
+                    <rect x="20" y="8" width="60" height="2" rx="1" fill="#eef2e4"/>
+                    <rect x="0" y="22" width="100" height="18" fill="#5c5a52"/>
+                    <rect x="20" y="30" width="60" height="2" rx="1" fill="#eef2e4" opacity="0.5"/>
+                    <rect x="0" y="44" width="100" height="18" fill="#3d3d38"/>
+                    <rect x="20" y="52" width="60" height="2" rx="1" fill="#eef2e4" opacity="0.3"/>
+                    <rect x="1" y="66" width="98" height="22" rx="11" fill="#262622"/>
+                    <text x="11" y="81" fill="#faf7f0" font-size="11" font-weight="600" font-family="var(--font-body--family), sans-serif">Ships in days &#8599;</text>
+                  </svg>
+              {%- endcase -%}
+            </div>
+          {%- endif -%}
+
+          <div class="wholesale-step__body">
+            <span class="wholesale-step__number" aria-hidden="true">
+              {%- if forloop.index < 10 -%}0{%- endif -%}{{ forloop.index }}
+            </span>
+            {%- if block.settings.title != blank -%}
+              <h3 class="h3 wholesale-step__title">{{ block.settings.title }}</h3>
+            {%- endif -%}
+            {%- if block.settings.text != blank -%}
+              <p class="wholesale-step__text">{{ block.settings.text }}</p>
+            {%- endif -%}
+          </div>
+        </li>
+      {%- endfor -%}
+    </ol>
+  </div>
+</div>
+
+{% stylesheet %}
+  .wholesale-steps__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .wholesale-steps__heading {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+  }
+
+  .wholesale-steps__title {
+    margin: 0;
+  }
+
+  .wholesale-steps__intro {
+    margin: 0;
+    font-size: var(--font-size--xl);
+    line-height: var(--line-height--body-loose);
+    color: var(--wholesale-steps-soft);
+  }
+
+  .wholesale-steps__list {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 1.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .wholesale-step {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--wholesale-steps-card);
+    border: 1px solid var(--wholesale-steps-line);
+    border-radius: 8px;
+  }
+
+  .wholesale-step__visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    height: 10rem;
+    background: var(--wholesale-steps-tint);
+  }
+
+  .wholesale-step__visual svg {
+    display: block;
+    flex: none;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .wholesale-step__body {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 2rem;
+  }
+
+  .wholesale-step__number {
+    font-family: var(--font-heading--family);
+    font-weight: var(--font-heading--weight);
+    font-size: var(--font-size--6xl);
+    line-height: var(--line-height--display-loose);
+    letter-spacing: -0.02em;
+    color: var(--wholesale-steps-tint);
+  }
+
+  .wholesale-step__title {
+    margin: 0;
+  }
+
+  .wholesale-step__text {
+    margin: 0;
+    font-size: var(--font-size--xl);
+    line-height: var(--line-height--body-loose);
+    color: var(--wholesale-steps-soft);
+  }
+
+  @media screen and (max-width: 989px) {
+    .wholesale-steps__list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .wholesale-steps__list {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .wholesale-steps__inner {
+      gap: 1.5rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Wholesale steps",
+  "class": "section-wholesale-steps",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "How Foot Tree wholesale works"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Intro",
+      "default": "Four steps, and only one of them needs your team to stop what they are doing."
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "placeholder": "Default"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "select",
+          "id": "step_visual",
+          "label": "Illustration",
+          "options": [
+            { "value": "spec_sheet", "label": "Spec sheet" },
+            { "value": "fitting", "label": "Fitting" },
+            { "value": "invoice", "label": "Invoice" },
+            { "value": "shipping", "label": "Shipping" },
+            { "value": "none", "label": "None" }
+          ],
+          "default": "spec_sheet"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Tell us what you need"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Roles, headcount, the floor they work on, and any uniform specification you have to meet."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wholesale steps",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "step_visual": "spec_sheet",
+            "title": "Tell us what you need",
+            "text": "Roles, headcount, the floor they work on, and any uniform specification you have to meet."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_visual": "fitting",
+            "title": "We fit on site",
+            "text": "We bring samples in the full width run and measure every person — about two minutes each. No one guesses a size."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_visual": "invoice",
+            "title": "One quotation, one delivery",
+            "text": "A single quotation against your PO, GST invoice, delivered boxed and labelled by name."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_visual": "shipping",
+            "title": "Reorders in days",
+            "text": "We hold your size run. A new starter or a replacement pair ships without another fitting."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

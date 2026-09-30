@@ -1,0 +1,1058 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "fo_hero": {
+      "type": "section",
+      "settings": {
+        "content_direction": "row",
+        "vertical_on_mobile": true,
+        "reverse_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 0,
+        "enable_mobile_gap": false,
+        "mobile_gap": 12,
+        "section_width": "full-width",
+        "full_width_on_mobile": false,
+        "section_height": "",
+        "section_height_custom": 50,
+        "background_media": "none",
+        "background_color": "{{ settings.color_palette.color4 }}",
+        "video": "",
+        "video_position": "cover",
+        "background_image": "",
+        "background_image_position": "cover",
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_color": "",
+        "border_radius": 0,
+        "padding-block-start": 0,
+        "padding-block-end": 0,
+        "custom_mobile_padding": false,
+        "mobile-padding-block-start": 0,
+        "mobile-padding-block-end": 0,
+        "mobile-padding-inline-start": 0,
+        "mobile-padding-inline-end": 0,
+        "css_class": "ft-fo-hero",
+        "add_section_id": false,
+        "section_id": ""
+      },
+      "blocks": {
+        "copy": {
+          "type": "group",
+          "settings": {
+            "link": "",
+            "open_in_new_tab": false,
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "reverse_on_mobile": false,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "custom_mobile_alignment": false,
+            "mobile_vertical_alignment": "flex-start",
+            "vertical_alignment_flex_direction_column": "flex-start",
+            "gap": 26,
+            "enable_mobile_gap": false,
+            "mobile_gap": 12,
+            "width": "custom",
+            "custom_width": 45,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fill",
+            "custom_height": 100,
+            "background_media": "none",
+            "background_color": "{{ settings.color_palette.color4 }}",
+            "video": "",
+            "video_position": "cover",
+            "background_image": "",
+            "background_image_position": "cover",
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_color": "",
+            "border_radius": 0,
+            "enable_mobile_radius": false,
+            "mobile_border_radius": 0,
+            "placeholder": "",
+            "padding-block-start": 80,
+            "padding-block-end": 80,
+            "padding-inline-start": 100,
+            "padding-inline-end": 56,
+            "custom_mobile_padding": true,
+            "mobile-padding-block-start": 48,
+            "mobile-padding-block-end": 48,
+            "mobile-padding-inline-start": 20,
+            "mobile-padding-inline-end": 20,
+            "css_class": "fo-copy"
+          },
+          "blocks": {
+            "eyebrow": {
+              "type": "text",
+              "settings": {
+                "text": "<p>FOR ORGANISATIONS</p>",
+                "width": "fit-content",
+                "max_width": "none",
+                "alignment": "left",
+                "type_preset": "custom",
+                "font": "var(--font-subheading--family)",
+                "font_size": "0.875rem",
+                "enable_mobile_size": false,
+                "mobile_font_size": "1rem",
+                "line_height": "tight",
+                "letter_spacing": "loose",
+                "case": "uppercase",
+                "wrap": "",
+                "text_color": "{{ settings.color_palette.color7 }}",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "custom_mobile_padding": false,
+                "mobile-padding-block-start": 0,
+                "mobile-padding-block-end": 0,
+                "mobile-padding-inline-start": 0,
+                "mobile-padding-inline-end": 0,
+                "custom_class": ""
+              }
+            },
+            "heading": {
+              "type": "text",
+              "settings": {
+                "text": "<h1>Uniform footwear specialist</h1>",
+                "width": "fit-content",
+                "max_width": "none",
+                "alignment": "left",
+                "type_preset": "h1",
+                "font": "var(--font-heading--family)",
+                "font_size": "",
+                "enable_mobile_size": false,
+                "mobile_font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "balance",
+                "text_color": "{{ settings.color_palette.background }}",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "custom_mobile_padding": false,
+                "mobile-padding-block-start": 0,
+                "mobile-padding-block-end": 0,
+                "mobile-padding-inline-start": 0,
+                "mobile-padding-inline-end": 0,
+                "custom_class": ""
+              }
+            },
+            "lead": {
+              "type": "text",
+              "settings": {
+                "text": "<p>Fifty years of fitting people who stand for a living — wards, kitchens, cabins and platforms. We fit your team on site and hold the size run, so replacements take days rather than months.</p>",
+                "width": "fit-content",
+                "max_width": "none",
+                "alignment": "left",
+                "type_preset": "custom",
+                "font": "var(--font-body--family)",
+                "font_size": "1.25rem",
+                "enable_mobile_size": false,
+                "mobile_font_size": "1rem",
+                "line_height": "loose",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "text_color": "{{ settings.color_palette.color7 }}",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "custom_mobile_padding": false,
+                "mobile-padding-block-start": 0,
+                "mobile-padding-block-end": 0,
+                "mobile-padding-inline-start": 0,
+                "mobile-padding-inline-end": 0,
+                "custom_class": ""
+              }
+            },
+            "buttons": {
+              "type": "group",
+              "settings": {
+                "link": "",
+                "open_in_new_tab": false,
+                "content_direction": "row",
+                "vertical_on_mobile": true,
+                "reverse_on_mobile": false,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "center",
+                "align_baseline": false,
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "custom_mobile_alignment": false,
+                "mobile_vertical_alignment": "flex-start",
+                "vertical_alignment_flex_direction_column": "flex-start",
+                "gap": 16,
+                "enable_mobile_gap": false,
+                "mobile_gap": 12,
+                "width": "fit-content",
+                "custom_width": 100,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "height": "fit",
+                "custom_height": 100,
+                "background_media": "none",
+                "background_color": "",
+                "video": "",
+                "video_position": "cover",
+                "background_image": "",
+                "background_image_position": "cover",
+                "toggle_overlay": false,
+                "overlay_color": "#00000026",
+                "overlay_style": "solid",
+                "gradient_direction": "to top",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_color": "",
+                "border_radius": 0,
+                "enable_mobile_radius": false,
+                "mobile_border_radius": 0,
+                "placeholder": "",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "custom_mobile_padding": false,
+                "mobile-padding-block-start": 0,
+                "mobile-padding-block-end": 0,
+                "mobile-padding-inline-start": 0,
+                "mobile-padding-inline-end": 0,
+                "css_class": ""
+              },
+              "blocks": {
+                "quote": {
+                  "type": "button",
+                  "settings": {
+                    "label": "Request a quotation",
+                    "link": "#quotation",
+                    "open_in_new_tab": false,
+                    "show_arrow": false,
+                    "style_class": "button-custom",
+                    "custom_button_background": "{{ settings.color_palette.color7 }}",
+                    "custom_button_text": "{{ settings.color_palette.color1 }}",
+                    "custom_button_border": "{{ settings.color_palette.color7 }}",
+                    "link_text_color": "",
+                    "width": "fit-content",
+                    "custom_width": 100,
+                    "width_mobile": "fit-content",
+                    "custom_width_mobile": 100
+                  }
+                },
+                "whatsapp": {
+                  "type": "button",
+                  "settings": {
+                    "label": "WhatsApp our team",
+                    "link": "#",
+                    "open_in_new_tab": false,
+                    "show_arrow": false,
+                    "style_class": "button-custom",
+                    "custom_button_background": "rgba(0,0,0,0)",
+                    "custom_button_text": "{{ settings.color_palette.color7 }}",
+                    "custom_button_border": "{{ settings.color_palette.color7 }}",
+                    "link_text_color": "",
+                    "width": "fit-content",
+                    "custom_width": 100,
+                    "width_mobile": "fit-content",
+                    "custom_width_mobile": 100
+                  }
+                }
+              },
+              "block_order": [
+                "quote",
+                "whatsapp"
+              ]
+            }
+          },
+          "block_order": [
+            "eyebrow",
+            "heading",
+            "lead",
+            "buttons"
+          ]
+        },
+        "hero_image": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/wholesale-hero.jpg",
+            "link": "",
+            "image_ratio": "adapt",
+            "width": "custom",
+            "custom_width": 55,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fill",
+            "custom_height": 100,
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_color": "",
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          }
+        }
+      },
+      "block_order": [
+        "copy",
+        "hero_image"
+      ],
+      "custom_css": []
+    },
+    "fo_strip": {
+      "type": "marquee",
+      "settings": {
+        "movement_direction": "normal",
+        "background_color": "{{ settings.color_palette.color2 }}",
+        "padding-block-start": 23,
+        "padding-block-end": 23,
+        "gap_between_elements": 72
+      },
+      "blocks": {
+        "sector_1": {
+          "type": "text-icon",
+          "settings": {
+            "icon_position": "left",
+            "icon": "none",
+            "custom_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"48\" height=\"48\" viewBox=\"0 0 48 48\" fill=\"none\" aria-hidden=\"true\"><circle cx=\"24\" cy=\"24\" r=\"23\" fill=\"#faf7f0\" stroke=\"#e0dcd2\" stroke-width=\"2\"/><g transform=\"translate(12 12)\" stroke=\"#4a6a1d\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M11 2a2 2 0 0 0-2 2v5H4a2 2 0 0 0-2 2v2c0 1.1.9 2 2 2h5v5c0 1.1.9 2 2 2h2a2 2 0 0 0 2-2v-5h5a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2h-5V4a2 2 0 0 0-2-2h-2z\"/></g></svg>",
+            "icon_width": 48,
+            "use_height": false,
+            "text": "<p>Healthcare</p>",
+            "text_width": "fit-content",
+            "max_width": "none",
+            "alignment": "left",
+            "type_preset": "custom",
+            "font": "var(--font-accent--family)",
+            "font_size": "1.25rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "nowrap",
+            "content_direction": "row",
+            "vertical_on_mobile": false,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "gap": 12,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          }
+        },
+        "sector_2": {
+          "type": "text-icon",
+          "settings": {
+            "icon_position": "left",
+            "icon": "none",
+            "custom_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"48\" height=\"48\" viewBox=\"0 0 48 48\" fill=\"none\" aria-hidden=\"true\"><circle cx=\"24\" cy=\"24\" r=\"23\" fill=\"#faf7f0\" stroke=\"#e0dcd2\" stroke-width=\"2\"/><g transform=\"translate(12 12)\" stroke=\"#4a6a1d\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2\"/><path d=\"M7 2v20\"/><path d=\"M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7\"/></g></svg>",
+            "icon_width": 48,
+            "use_height": false,
+            "text": "<p>F&amp;B</p>",
+            "text_width": "fit-content",
+            "max_width": "none",
+            "alignment": "left",
+            "type_preset": "custom",
+            "font": "var(--font-accent--family)",
+            "font_size": "1.25rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "nowrap",
+            "content_direction": "row",
+            "vertical_on_mobile": false,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "gap": 12,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          }
+        },
+        "sector_3": {
+          "type": "text-icon",
+          "settings": {
+            "icon_position": "left",
+            "icon": "none",
+            "custom_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"48\" height=\"48\" viewBox=\"0 0 48 48\" fill=\"none\" aria-hidden=\"true\"><circle cx=\"24\" cy=\"24\" r=\"23\" fill=\"#faf7f0\" stroke=\"#e0dcd2\" stroke-width=\"2\"/><g transform=\"translate(12 12)\" stroke=\"#4a6a1d\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z\"/></g></svg>",
+            "icon_width": 48,
+            "use_height": false,
+            "text": "<p>Aviation</p>",
+            "text_width": "fit-content",
+            "max_width": "none",
+            "alignment": "left",
+            "type_preset": "custom",
+            "font": "var(--font-accent--family)",
+            "font_size": "1.25rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "nowrap",
+            "content_direction": "row",
+            "vertical_on_mobile": false,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "gap": 12,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          }
+        },
+        "sector_4": {
+          "type": "text-icon",
+          "settings": {
+            "icon_position": "left",
+            "icon": "none",
+            "custom_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"48\" height=\"48\" viewBox=\"0 0 48 48\" fill=\"none\" aria-hidden=\"true\"><circle cx=\"24\" cy=\"24\" r=\"23\" fill=\"#faf7f0\" stroke=\"#e0dcd2\" stroke-width=\"2\"/><g transform=\"translate(12 12)\" stroke=\"#4a6a1d\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2\"/><path d=\"M15 18H9\"/><path d=\"M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14\"/><circle cx=\"17\" cy=\"18\" r=\"2\"/><circle cx=\"7\" cy=\"18\" r=\"2\"/></g></svg>",
+            "icon_width": 48,
+            "use_height": false,
+            "text": "<p>Transport</p>",
+            "text_width": "fit-content",
+            "max_width": "none",
+            "alignment": "left",
+            "type_preset": "custom",
+            "font": "var(--font-accent--family)",
+            "font_size": "1.25rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "nowrap",
+            "content_direction": "row",
+            "vertical_on_mobile": false,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "gap": 12,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          }
+        },
+        "sector_5": {
+          "type": "text-icon",
+          "settings": {
+            "icon_position": "left",
+            "icon": "none",
+            "custom_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"48\" height=\"48\" viewBox=\"0 0 48 48\" fill=\"none\" aria-hidden=\"true\"><circle cx=\"24\" cy=\"24\" r=\"23\" fill=\"#faf7f0\" stroke=\"#e0dcd2\" stroke-width=\"2\"/><g transform=\"translate(12 12)\" stroke=\"#4a6a1d\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z\"/></g></svg>",
+            "icon_width": 48,
+            "use_height": false,
+            "text": "<p>Security</p>",
+            "text_width": "fit-content",
+            "max_width": "none",
+            "alignment": "left",
+            "type_preset": "custom",
+            "font": "var(--font-accent--family)",
+            "font_size": "1.25rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "nowrap",
+            "content_direction": "row",
+            "vertical_on_mobile": false,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "gap": 12,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          }
+        },
+        "sector_6": {
+          "type": "text-icon",
+          "settings": {
+            "icon_position": "left",
+            "icon": "none",
+            "custom_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"48\" height=\"48\" viewBox=\"0 0 48 48\" fill=\"none\" aria-hidden=\"true\"><circle cx=\"24\" cy=\"24\" r=\"23\" fill=\"#faf7f0\" stroke=\"#e0dcd2\" stroke-width=\"2\"/><g transform=\"translate(12 12)\" stroke=\"#4a6a1d\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16\"/><rect width=\"20\" height=\"14\" x=\"2\" y=\"6\" rx=\"2\"/></g></svg>",
+            "icon_width": 48,
+            "use_height": false,
+            "text": "<p>Corporate</p>",
+            "text_width": "fit-content",
+            "max_width": "none",
+            "alignment": "left",
+            "type_preset": "custom",
+            "font": "var(--font-accent--family)",
+            "font_size": "1.25rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "nowrap",
+            "content_direction": "row",
+            "vertical_on_mobile": false,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "gap": 12,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          }
+        }
+      },
+      "block_order": [
+        "sector_1",
+        "sector_2",
+        "sector_3",
+        "sector_4",
+        "sector_5",
+        "sector_6"
+      ]
+    },
+    "fo_rail": {
+      "type": "product-rail-tabs",
+      "name": "Product rail with tabs",
+      "settings": {
+        "heading": "Foot Tree Work Collection",
+        "description": "",
+        "link_label": "",
+        "link": "",
+        "tab_1_label": "Women",
+        "tab_1_collection": "work-women",
+        "tab_1_max_products": 8,
+        "tab_2_label": "Men",
+        "tab_2_collection": "work-men",
+        "tab_2_max_products": 8,
+        "tab_3_label": "",
+        "tab_3_collection": "",
+        "tab_3_max_products": 8,
+        "tab_4_label": "",
+        "tab_4_collection": "",
+        "tab_4_max_products": 8,
+        "tabs_style": "segmented",
+        "show_arrows": false,
+        "mobile_card_size": 75,
+        "section_width": "narrow",
+        "background_color": "",
+        "padding-block-start": 50,
+        "padding-block-end": 50,
+        "custom_mobile_padding": true,
+        "mobile-padding-block-start": 68,
+        "mobile-padding-block-end": 68,
+        "mobile-padding-inline-start": 0,
+        "mobile-padding-inline-end": 0
+      },
+      "blocks": {
+        "static-product-card": {
+          "type": "_product-card",
+          "name": "Product card",
+          "static": true,
+          "settings": {
+            "product_card_gap": 8,
+            "background_color": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_color": "",
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "product_card_gallery": {
+              "type": "_product-card-gallery",
+              "name": "Media",
+              "settings": {
+                "image_ratio": "portrait",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_color": "",
+                "border_radius": 8,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              }
+            },
+            "product_title": {
+              "type": "product-title",
+              "name": "Product title",
+              "settings": {
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "custom",
+                "font": "var(--font-subheading--family)",
+                "font_size": "",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "",
+                "text_color": "",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 12,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              }
+            },
+            "price": {
+              "type": "price",
+              "name": "Price",
+              "settings": {
+                "show_sale_price_first": true,
+                "show_installments": false,
+                "show_tax_info": false,
+                "type_preset": "custom",
+                "width": "100%",
+                "alignment": "left",
+                "font": "var(--font-subheading--family)",
+                "font_size": "",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "text_color": "",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              }
+            },
+            "swatches": {
+              "type": "swatches",
+              "name": "Swatches",
+              "settings": {
+                "product_swatches_alignment": "flex-start",
+                "product_swatches_alignment_mobile": "flex-start",
+                "hide_padding": false,
+                "product_swatches_padding_top": 0,
+                "product_swatches_padding_bottom": 0,
+                "product_swatches_padding_left": 0,
+                "product_swatches_padding_right": 0
+              }
+            }
+          },
+          "block_order": [
+            "product_card_gallery",
+            "product_title",
+            "price",
+            "swatches"
+          ]
+        }
+      },
+      "block_order": []
+    },
+    "fo_steps": {
+      "type": "wholesale-steps",
+      "settings": {
+        "heading": "How Foot Tree wholesale works",
+        "subheading": "Four steps, and only one of them needs your team to stop what they are doing.",
+        "background_color": "{{ settings.color_palette.color5 }}",
+        "padding-block-start": 80,
+        "padding-block-end": 80
+      },
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "step_visual": "spec_sheet",
+            "title": "Tell us what you need",
+            "text": "Roles, headcount, the floor they work on, and any uniform specification you have to meet."
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "step_visual": "fitting",
+            "title": "We fit on site",
+            "text": "We bring samples in the full width run and measure every person — about two minutes each. No one guesses a size."
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "step_visual": "invoice",
+            "title": "One quotation, one delivery",
+            "text": "A single quotation against your PO, GST invoice, delivered boxed and labelled by name."
+          }
+        },
+        "step_4": {
+          "type": "step",
+          "settings": {
+            "step_visual": "shipping",
+            "title": "Reorders in days",
+            "text": "We hold your size run. A new starter or a replacement pair ships without another fitting."
+          }
+        }
+      },
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3",
+        "step_4"
+      ]
+    },
+    "fo_quote": {
+      "type": "wholesale-quote",
+      "settings": {
+        "anchor_id": "quotation",
+        "background_color": "{{ settings.color_palette.color5 }}",
+        "padding-block-start": 80,
+        "padding-block-end": 80
+      },
+      "blocks": {
+        "contact_whatsapp": {
+          "type": "contact",
+          "settings": {
+            "label": "WhatsApp",
+            "value": "<p>+65 [XXXX XXXX] — fastest, weekdays 9am to 6pm</p>"
+          }
+        },
+        "contact_call": {
+          "type": "contact",
+          "settings": {
+            "label": "Call",
+            "value": "<p>+65 [XXXX XXXX]</p>"
+          }
+        },
+        "contact_email": {
+          "type": "contact",
+          "settings": {
+            "label": "Email",
+            "value": "<p>corporate@foottree.com</p>"
+          }
+        },
+        "contact_visit": {
+          "type": "contact",
+          "settings": {
+            "label": "Visit",
+            "value": "<p>City Square Mall, 180 Kitchener Road #03-15, daily 11am – 9pm</p>"
+          }
+        }
+      },
+      "block_order": [
+        "contact_whatsapp",
+        "contact_call",
+        "contact_email",
+        "contact_visit"
+      ]
+    },
+    "fo_faq": {
+      "type": "wholesale-faq",
+      "settings": {
+        "heading": "Bulk Order FAQ",
+        "background_color": "{{ settings.color_palette.background }}",
+        "padding-block-start": 80,
+        "padding-block-end": 80
+      },
+      "blocks": {
+        "faq_1": {
+          "type": "faq",
+          "settings": {
+            "question": "Is there a minimum order?",
+            "answer": "<p>No minimum on a first order. On-site fitting days and account pricing start to make sense from about [XX] pairs — tell us your headcount and we will say plainly whether a programme is worth it for you.</p>"
+          }
+        },
+        "faq_2": {
+          "type": "faq",
+          "settings": {
+            "question": "How long does delivery take?",
+            "answer": "<p>Stock styles: [X] working days. A size run already held on your account: next working day. A specification build or a special colour: [X] weeks. All confirmed on the quotation.</p>"
+          }
+        },
+        "faq_3": {
+          "type": "faq",
+          "settings": {
+            "question": "Can you invoice against a purchase order?",
+            "answer": "<p>Yes. Quotation, PO, delivery order and GST invoice, with agreed payment terms on account. Prices are quoted GST-inclusive unless you ask otherwise.</p>"
+          }
+        },
+        "faq_4": {
+          "type": "faq",
+          "settings": {
+            "question": "What if someone is in the wrong size afterwards?",
+            "answer": "<p>Free exchange within 30 days, unworn and boxed — the same guarantee as retail. A fitting day removes most of this before it happens.</p>"
+          }
+        },
+        "faq_5": {
+          "type": "faq",
+          "settings": {
+            "question": "Do individual staff get a discount?",
+            "answer": "<p>[TO CONFIRM — the healthcare and service discount and its percentage still need signing off before this can go live.]</p>"
+          }
+        },
+        "faq_6": {
+          "type": "faq",
+          "settings": {
+            "question": "Can staff order for themselves?",
+            "answer": "<p>Yes. Once your account is open, staff log in and order at your contract price, delivered to home or to site. You keep visibility of what has been ordered against the programme.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "faq_5",
+        "faq_6"
+      ]
+    },
+    "fo_band": {
+      "type": "section",
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "reverse_on_mobile": false,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 22,
+        "enable_mobile_gap": false,
+        "mobile_gap": 12,
+        "section_width": "full-width",
+        "full_width_on_mobile": false,
+        "section_height": "",
+        "section_height_custom": 50,
+        "background_media": "none",
+        "background_color": "{{ settings.color_palette.color4 }}",
+        "video": "",
+        "video_position": "cover",
+        "background_image": "",
+        "background_image_position": "cover",
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_color": "",
+        "border_radius": 0,
+        "padding-block-start": 64,
+        "padding-block-end": 64,
+        "custom_mobile_padding": true,
+        "mobile-padding-block-start": 48,
+        "mobile-padding-block-end": 48,
+        "mobile-padding-inline-start": 20,
+        "mobile-padding-inline-end": 20,
+        "css_class": "ft-fo-band",
+        "add_section_id": false,
+        "section_id": ""
+      },
+      "blocks": {
+        "heading": {
+          "type": "text",
+          "settings": {
+            "text": "<h2>Fitting Singapore at work since 1974</h2>",
+            "width": "100%",
+            "max_width": "none",
+            "alignment": "center",
+            "type_preset": "h2",
+            "font": "var(--font-heading--family)",
+            "font_size": "",
+            "enable_mobile_size": false,
+            "mobile_font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "balance",
+            "text_color": "{{ settings.color_palette.background }}",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "custom_mobile_padding": false,
+            "mobile-padding-block-start": 0,
+            "mobile-padding-block-end": 0,
+            "mobile-padding-inline-start": 0,
+            "mobile-padding-inline-end": 0,
+            "custom_class": ""
+          }
+        },
+        "lead": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Tell us what your team stands on all day, and we will tell you what they should be standing in.</p>",
+            "width": "100%",
+            "max_width": "none",
+            "alignment": "center",
+            "type_preset": "custom",
+            "font": "var(--font-body--family)",
+            "font_size": "1.25rem",
+            "enable_mobile_size": false,
+            "mobile_font_size": "1rem",
+            "line_height": "loose",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "text_color": "{{ settings.color_palette.color7 }}",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "custom_mobile_padding": false,
+            "mobile-padding-block-start": 0,
+            "mobile-padding-block-end": 0,
+            "mobile-padding-inline-start": 0,
+            "mobile-padding-inline-end": 0,
+            "custom_class": ""
+          }
+        },
+        "buttons": {
+          "type": "group",
+          "settings": {
+            "link": "",
+            "open_in_new_tab": false,
+            "content_direction": "row",
+            "vertical_on_mobile": true,
+            "reverse_on_mobile": false,
+            "horizontal_alignment": "center",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "center",
+            "custom_mobile_alignment": false,
+            "mobile_vertical_alignment": "flex-start",
+            "vertical_alignment_flex_direction_column": "flex-start",
+            "gap": 16,
+            "enable_mobile_gap": false,
+            "mobile_gap": 12,
+            "width": "fit-content",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "background_media": "none",
+            "background_color": "",
+            "video": "",
+            "video_position": "cover",
+            "background_image": "",
+            "background_image_position": "cover",
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_color": "",
+            "border_radius": 0,
+            "enable_mobile_radius": false,
+            "mobile_border_radius": 0,
+            "placeholder": "",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "custom_mobile_padding": false,
+            "mobile-padding-block-start": 0,
+            "mobile-padding-block-end": 0,
+            "mobile-padding-inline-start": 0,
+            "mobile-padding-inline-end": 0,
+            "css_class": ""
+          },
+          "blocks": {
+            "quote": {
+              "type": "button",
+              "settings": {
+                "label": "Request a quotation",
+                "link": "#quotation",
+                "open_in_new_tab": false,
+                "show_arrow": false,
+                "style_class": "button-custom",
+                "custom_button_background": "{{ settings.color_palette.color7 }}",
+                "custom_button_text": "{{ settings.color_palette.color1 }}",
+                "custom_button_border": "{{ settings.color_palette.color7 }}",
+                "link_text_color": "",
+                "width": "fit-content",
+                "custom_width": 100,
+                "width_mobile": "fit-content",
+                "custom_width_mobile": 100
+              }
+            },
+            "whatsapp": {
+              "type": "button",
+              "settings": {
+                "label": "WhatsApp our corporate team",
+                "link": "#",
+                "open_in_new_tab": false,
+                "show_arrow": false,
+                "style_class": "button-custom",
+                "custom_button_background": "rgba(0,0,0,0)",
+                "custom_button_text": "{{ settings.color_palette.color7 }}",
+                "custom_button_border": "{{ settings.color_palette.color7 }}",
+                "link_text_color": "",
+                "width": "fit-content",
+                "custom_width": 100,
+                "width_mobile": "fit-content",
+                "custom_width_mobile": 100
+              }
+            }
+          },
+          "block_order": [
+            "quote",
+            "whatsapp"
+          ]
+        }
+      },
+      "block_order": [
+        "heading",
+        "lead",
+        "buttons"
+      ],
+      "custom_css": []
+    }
+  },
+  "order": [
+    "fo_hero",
+    "fo_strip",
+    "fo_rail",
+    "fo_steps",
+    "fo_quote",
+    "fo_faq",
+    "fo_band"
+  ]
+}

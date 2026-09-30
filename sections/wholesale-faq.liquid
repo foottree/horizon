@@ -1,0 +1,214 @@
+{% comment %}
+  Bulk Order FAQ (For Organisations page, section 06 in the client's Figma): a heading over two
+  columns of question/answer pairs, all open (no accordion), each pair closed by a 1px rule.
+
+  Items are section-local blocks (question + richtext answer). The column split is by order: the
+  first half of the blocks fill the left column, the rest the right, so the client just reorders
+  them. On mobile the two columns stack, so reading order stays the block order.
+
+  Type: .h2 for the heading, .h3 for the questions, the --font-size--* tokens for the answers.
+{% endcomment %}
+
+{%- liquid
+  if section.settings.background_color != blank
+    render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
+  endif
+
+  assign total = section.blocks.size
+  assign left_count = total | plus: 1 | divided_by: 2
+-%}
+
+<div
+  class="section-background{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
+></div>
+
+<div
+  class="
+    section
+    section--narrow
+    {% if section.settings.background_color != blank %}color-custom-{{ section.id }}{% endif %}
+    wholesale-faq
+    spacing-style
+  "
+  style="
+    {% render 'spacing-style', settings: section.settings %}
+    --wholesale-faq-line: {{ settings.color_palette.color3 }};
+    --wholesale-faq-soft: {{ settings.color_palette.color8 }};
+  "
+  data-testid="wholesale-faq"
+>
+  <div class="wholesale-faq__inner">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="h2 wholesale-faq__title">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    <div class="wholesale-faq__columns">
+      {%- for column in (1..2) -%}
+        <div class="wholesale-faq__column">
+          {%- for block in section.blocks -%}
+            {%- liquid
+              assign in_left = false
+              if forloop.index <= left_count
+                assign in_left = true
+              endif
+              assign show = false
+              if column == 1 and in_left
+                assign show = true
+              elsif column == 2 and in_left == false
+                assign show = true
+              endif
+            -%}
+            {%- if show -%}
+              <div class="wholesale-faq__item" {{ block.shopify_attributes }}>
+                {%- if block.settings.question != blank -%}
+                  <h3 class="h3 wholesale-faq__question">{{ block.settings.question }}</h3>
+                {%- endif -%}
+                {%- if block.settings.answer != blank -%}
+                  <div class="wholesale-faq__answer">{{ block.settings.answer }}</div>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .wholesale-faq__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 2.25rem;
+  }
+
+  .wholesale-faq__title {
+    margin: 0;
+  }
+
+  .wholesale-faq__columns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+    column-gap: 3rem;
+  }
+
+  .wholesale-faq__column {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .wholesale-faq__item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding-block: 1.75rem;
+    border-bottom: 1px solid var(--wholesale-faq-line);
+  }
+
+  .wholesale-faq__question {
+    margin: 0;
+  }
+
+  .wholesale-faq__answer {
+    font-size: var(--font-size--xl);
+    line-height: var(--line-height--body-loose);
+    color: var(--wholesale-faq-soft);
+  }
+
+  .wholesale-faq__answer > * {
+    margin: 0;
+  }
+
+  .wholesale-faq__answer > * + * {
+    margin-block-start: 0.75rem;
+  }
+
+  @media screen and (max-width: 749px) {
+    .wholesale-faq__columns {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .wholesale-faq__inner {
+      gap: 1.5rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Wholesale FAQ",
+  "class": "section-wholesale-faq",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Bulk Order FAQ"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "placeholder": "Default"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "Question",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Is there a minimum order?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>No minimum on a first order.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wholesale FAQ",
+      "blocks": [
+        { "type": "faq" },
+        { "type": "faq" }
+      ]
+    }
+  ]
+}
+{% endschema %}
