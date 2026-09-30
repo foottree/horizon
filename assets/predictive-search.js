@@ -187,8 +187,6 @@ class PredictiveSearchComponent extends Component {
       return;
     }
 
-    // Horizontal arrows fall through to native text-caret movement, which the
-    // browser already mirrors in RTL.
     if (!this.#allResultsItems?.length || event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
       return;
     }

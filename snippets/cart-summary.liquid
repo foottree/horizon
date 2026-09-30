@@ -18,7 +18,7 @@
           class="cart-totals__original-value cart-secondary-typography"
           data-testid="cart-subtotal-value"
         >
-          <bdi>{{- cart.items_subtotal_price | money -}}</bdi>
+          {{- cart.items_subtotal_price | money -}}
         </span>
       </span>
       <ul
@@ -30,10 +30,10 @@
           <li class="cart-discounts__item">
             <span class="cart-discounts__label">
               {{- 'icon-discount.svg' | inline_asset_content -}}
-              <bdi>{{ discount.title | escape }}</bdi>
+              {{ discount.title | escape }}
             </span>
             <span class="cart-discounts__value cart-secondary-typography"
-              ><bdi>-{{ discount.total_allocated_amount | money }}</bdi>
+              >-{{ discount.total_allocated_amount | money -}}
             </span>
           </li>
         {%- endfor -%}
@@ -196,7 +196,7 @@
                         aria-label="{{ 'accessibility.discount_applied' | t: code: discount_code }}"
                       >
                         <p class="cart-discount__pill-code">
-                          <bdi>{{ discount_code }}</bdi>
+                          {{ discount_code }}
                         </p>
                         <button
                           type="button"
@@ -241,7 +241,7 @@
         data-testid="cart-total-value"
         data-cart-subtotal
       >
-        <bdi>{{ total_price }}</bdi>
+        {{ total_price }}
       </text-component>
     </span>
     {% if settings.show_installments %}

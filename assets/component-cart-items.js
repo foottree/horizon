@@ -8,7 +8,7 @@ import {
   startViewTransition,
 } from '@theme/utilities';
 import { morphSection, sectionRenderer } from '@theme/section-renderer';
-import { ThemeEvents, QuantitySelectorUpdateEvent, CartSectionRestoredEvent } from '@theme/events';
+import { ThemeEvents, QuantitySelectorUpdateEvent } from '@theme/events';
 import { cartPerformance } from '@theme/performance';
 import {
   createViewEventElement,
@@ -32,17 +32,6 @@ import {
  * @extends {Component<Refs>}
  */
 export class CartItemsComponent extends createViewEventElement(Component) {
-  /** @type {Set<Promise<void>>} */
-  static #pendingQuantityUpdates = new Set();
-
-  /**
-   * Includes quantity mutations, their section renders, and control cleanup across all cart instances.
-   * @returns {ReadonlyArray<Promise<void>>} A snapshot that cannot modify the shared pending set.
-   */
-  static get pendingQuantityUpdates() {
-    return Array.from(CartItemsComponent.#pendingQuantityUpdates);
-  }
-
   #debouncedOnChange = debounce(
     /** @param {Event} event */
     (event) => {
@@ -65,48 +54,23 @@ export class CartItemsComponent extends createViewEventElement(Component) {
     return !(event.target instanceof Node) || !this.contains(event.target);
   }
 
-  /**
-   * Refreshes this section when a cart AJAX response cannot include rendered section HTML.
-   * @param {Object} [options] - Additional section morph options.
-   * @param {boolean} [options.injectStylesheet]
-   */
-  async #refreshCartSection(options = {}) {
-    try {
-      await sectionRenderer.renderSection(this.sectionId, {
-        cache: false,
-        mode: this.isDrawer ? 'hydration' : 'full',
-        ...options,
-      });
-      this.#updateCartQuantitySelectorButtonStates();
-    } catch (error) {
-      if (error?.name === 'AbortError') return;
-
-      this.dispatchEvent(
-        new CartErrorEvent({
-          error: error?.message || 'Failed to refresh cart',
-          code: 'SERVICE_UNAVAILABLE',
-        })
-      );
-    }
-  }
-
   /** @param {CartDiscountUpdateEvent} event */
   #handleDiscountUpdate = (event) => {
-    const isExternalCartUpdate = this.#isExternalCartUpdate(event);
-
+    const external = this.#isExternalCartUpdate(event);
     event.promise
       ?.then(({ detail }) => {
-        if (!isExternalCartUpdate) return;
-
         const sectionsHtml = detail?.sections?.[this.sectionId];
         if (sectionsHtml) {
-          sectionRenderer.abortRender(this.sectionId);
           morphSection(this.sectionId, sectionsHtml, { mode: this.isDrawer ? 'hydration' : 'full' });
           this.#updateCartQuantitySelectorButtonStates();
-        } else {
+        } else if (external) {
           // External caller (Shopify.actions.updateCart or SFAPI default handler) didn't
           // attach sections; refetch so the discount UI reflects the post-mutation cart.
-          this.#refreshCartSection();
+          // Internal cart-discount-component morphs the section itself — no fallback needed.
+          sectionRenderer.renderSection(this.sectionId, {
+            cache: false,
+            mode: this.isDrawer ? 'hydration' : 'full',
+          });
         }
       })
       .catch((error) => {
@@ -124,10 +88,12 @@ export class CartItemsComponent extends createViewEventElement(Component) {
         const sections = /** @type {Record<string, string> | undefined} */ (detail?.sections);
         const sectionsHtml = sections?.[this.sectionId];
         if (sectionsHtml) {
-          sectionRenderer.abortRender(this.sectionId);
           morphSection(this.sectionId, sectionsHtml, { mode: this.isDrawer ? 'hydration' : 'full' });
         } else {
-          this.#refreshCartSection();
+          sectionRenderer.renderSection(this.sectionId, {
+            cache: false,
+            mode: this.isDrawer ? 'hydration' : 'full',
+          });
         }
       })
       .catch((error) => {
@@ -142,7 +108,6 @@ export class CartItemsComponent extends createViewEventElement(Component) {
     document.addEventListener(ThemeEvents.quantitySelectorUpdate, this.#debouncedOnChange);
     document.addEventListener(StandardEvents.cartDiscountUpdate, this.#handleDiscountUpdate);
     document.addEventListener(StandardEvents.cartNoteUpdate, this.#handleNoteUpdate);
-    window.addEventListener('pageshow', this.#handlePageShow);
   }
 
   disconnectedCallback() {
@@ -152,64 +117,7 @@ export class CartItemsComponent extends createViewEventElement(Component) {
     document.removeEventListener(ThemeEvents.quantitySelectorUpdate, this.#debouncedOnChange);
     document.removeEventListener(StandardEvents.cartDiscountUpdate, this.#handleDiscountUpdate);
     document.removeEventListener(StandardEvents.cartNoteUpdate, this.#handleNoteUpdate);
-    window.removeEventListener('pageshow', this.#handlePageShow);
   }
-
-  /**
-   * Re-renders the cart section when the page is restored from the back/forward cache.
-   *
-   * A restored page replays a frozen DOM, so the line items still show whatever the cart
-   * held before the shopper navigated away. `cart-icon.js` self-corrects its count bubble
-   * on this same event, which is why the bubble and the cart body disagree until a reload.
-   *
-   * `persisted` alone does not cover Chrome. Chrome refuses the bfcache for any document holding
-   * the Sign in with Shop iframe, `/services/login_with_shop/authorize` inside the shadow root of
-   * `shopify-account > shop-login`, and every product page carries one. A shopper's Back there
-   * rebuilds the document from the HTTP disk cache instead: `persisted` is false and the frozen
-   * cart markup renders anyway. Only the navigation entry separates that from an ordinary page
-   * view, so it is the second channel. Safari and Firefox do restore the same page and arrive
-   * through `persisted`. Measured on os3 across all three browsers, 2026-09-03.
-   *
-   * Both channels are still needed. A restored document keeps its ORIGINAL navigation entry in
-   * Chrome and Safari, reporting `navigate`, so `back_forward` alone would miss every real
-   * restore. And `pageshow` fires after `load` on every ordinary navigation, so dropping both
-   * guards would put a section fetch on every page view.
-   *
-   * @param {PageTransitionEvent} event
-   */
-  #handlePageShow = (event) => {
-    const navigationEntry = globalThis.performance?.getEntriesByType?.('navigation')[0];
-    const navigationType = CartItemsComponent.#isNavigationTiming(navigationEntry) ? navigationEntry.type : undefined;
-    if (!event.persisted && navigationType !== 'back_forward') return;
-    // `section_id` is optional in `snippets/cart-items-component.liquid` and the `sectionId`
-    // getter throws without it. Every other caller reads it inside a promise chain that
-    // already has a catch; this one runs straight off a window listener, so it would escape.
-    if (!this.dataset.sectionId) return;
-
-    // `cache: false` on both paths. A bfcache restore never fires `load`, so the renderer's cache
-    // still holds the pre-navigation copy. A disk-cache Back does fire `load` and seeds the cache
-    // from the stale document it just rebuilt. Either way the cached copy is the same stale HTML
-    // the DOM already shows.
-    sectionRenderer
-      .renderSection(this.sectionId, {
-        cache: false,
-        mode: this.isDrawer ? 'hydration' : 'full',
-        // Empty → non-empty adds the cart summary markup, which carries its own stylesheet.
-        injectStylesheet: this.isDrawer && this.querySelector('[data-cart-drawer-empty]') !== null,
-      })
-      .then(() => {
-        // Morph swaps the quantity selectors in place, so they never reconnect and their
-        // min/max button states stay bound to the pre-restore quantities. A line restored to its
-        // minimum would otherwise keep minus enabled: a wrong affordance and a wasted cart mutation.
-        this.#updateCartQuantitySelectorButtonStates();
-        // No drawer-open event fires on a restore, so the sticky summary measurement has to
-        // be driven from here. `cart-drawer-component` listens for this.
-        this.dispatchEvent(new CartSectionRestoredEvent());
-      })
-      .catch((error) => {
-        if (error?.name !== 'AbortError') console.warn('[cart-items] bfcache restore render failed:', error);
-      });
-  };
 
   /**
    * Handles QuantitySelectorUpdateEvent change event.
@@ -297,78 +205,73 @@ export class CartItemsComponent extends createViewEventElement(Component) {
    * @param {number} config.quantity - The quantity.
    * @param {string} config.action - The action.
    */
-  async updateQuantity(config) {
+  updateQuantity(config) {
     const cartPerformaceUpdateMarker = cartPerformance.createStartingMarker(`${config.action}:user-action`);
-    const deferredUpdatePromise = CartLinesUpdateEvent.createPromise();
-    let completeQuantityUpdate = () => {};
-    /** @type {Promise<void>} */
-    const quantityUpdate = new Promise((resolve) => {
-      completeQuantityUpdate = () => resolve();
+
+    this.#disableCartItems();
+
+    const { line, quantity } = config;
+    const { cartTotal } = this.refs;
+
+    const cartItemsComponents = document.querySelectorAll('cart-items-component');
+    const sectionsToUpdate = new Set([this.sectionId]);
+    cartItemsComponents.forEach((item) => {
+      if (item instanceof HTMLElement && item.dataset.sectionId) {
+        sectionsToUpdate.add(item.dataset.sectionId);
+      }
     });
-    CartItemsComponent.#pendingQuantityUpdates.add(quantityUpdate);
 
-    try {
-      this.#disableCartItems();
+    const body = JSON.stringify({
+      line: line,
+      quantity: quantity,
+      sections: Array.from(sectionsToUpdate).join(','),
+      sections_url: window.location.pathname,
+    });
 
-      const { line, quantity } = config;
-      const { cartTotal } = this.refs;
+    cartTotal?.shimmer();
 
-      const cartItemsComponents = document.querySelectorAll('cart-items-component');
-      const sectionsToUpdate = new Set([this.sectionId]);
-      for (const item of cartItemsComponents) {
-        if (item instanceof HTMLElement && item.dataset.sectionId) {
-          sectionsToUpdate.add(item.dataset.sectionId);
+    const deferredUpdatePromise = CartLinesUpdateEvent.createPromise();
+    const lineId = this.refs.cartItemRows[line - 1]?.dataset.key ?? '';
+    this.dispatchEvent(
+      new CartLinesUpdateEvent({
+        action: config.action === 'change' && quantity > 0 ? 'update' : 'remove',
+        context: 'cart',
+        lines: [{ id: lineId, quantity }],
+        promise: deferredUpdatePromise.promise,
+      })
+    );
+
+    fetch(`${Theme.routes.cart_change_url}`, fetchConfig('json', { body }))
+      .then((response) => {
+        return response.text();
+      })
+      .then((responseText) => {
+        const parsedResponseText = JSON.parse(responseText);
+
+        resetShimmer(this);
+
+        if (parsedResponseText.errors) {
+          this.#handleCartError(line, parsedResponseText);
+          deferredUpdatePromise.reject(new Error(parsedResponseText.errors));
+          return;
         }
-      }
 
-      for (const sectionId of sectionsToUpdate) {
-        sectionRenderer.abortRender(sectionId);
-      }
+        const newSectionHTML = new DOMParser().parseFromString(
+          parsedResponseText.sections[this.sectionId],
+          'text/html'
+        );
 
-      const body = JSON.stringify({
-        line: line,
-        quantity: quantity,
-        sections: Array.from(sectionsToUpdate).join(','),
-        sections_url: window.location.pathname,
-      });
+        // Grab the new cart item count from a hidden element
+        const newCartHiddenItemCount = newSectionHTML.querySelector('[ref="cartItemCount"]')?.textContent;
+        const newCartItemCount = newCartHiddenItemCount ? parseInt(newCartHiddenItemCount, 10) : 0;
 
-      cartTotal?.shimmer();
+        // Update data-cart-quantity for all matching variants
+        this.#updateQuantitySelectors(parsedResponseText);
 
-      const lineId = this.refs.cartItemRows[line - 1]?.dataset.key ?? '';
-      this.dispatchEvent(
-        new CartLinesUpdateEvent({
-          action: config.action === 'change' && quantity > 0 ? 'update' : 'remove',
-          context: 'cart',
-          lines: [{ id: lineId, quantity }],
-          promise: deferredUpdatePromise.promise,
-        })
-      );
-
-      const response = await fetch(`${Theme.routes.cart_change_url}`, fetchConfig('json', { body }));
-      const responseText = await response.text();
-      const parsedResponseText = JSON.parse(responseText);
-
-      resetShimmer(this);
-
-      if (parsedResponseText.errors) {
-        this.#handleCartError(line, parsedResponseText);
-        deferredUpdatePromise.reject(new Error(parsedResponseText.errors));
-        return;
-      }
-
-      const sections = /** @type {Record<string, string> | null | undefined} */ (parsedResponseText.sections);
-      const sectionHTML = sections?.[this.sectionId];
-      const parsedItemCount = Number(parsedResponseText.item_count);
-      let newCartItemCount = Number.isFinite(parsedItemCount) ? parsedItemCount : 0;
-
-      // Update data-cart-quantity for all matching variants
-      this.#updateQuantitySelectors(parsedResponseText);
-
-      if (!sectionHTML) {
         deferredUpdatePromise.resolve({
           cart: CartLinesUpdateEvent.createCartFromAjaxResponse(parsedResponseText),
           detail: {
-            sections: sections ?? undefined,
+            sections: parsedResponseText.sections,
             items: parsedResponseText.items,
             itemCount: newCartItemCount,
             source: 'cart-items-component',
@@ -376,52 +279,27 @@ export class CartItemsComponent extends createViewEventElement(Component) {
           },
         });
 
-        await this.#refreshCartSection();
-        return;
-      }
+        morphSection(this.sectionId, parsedResponseText.sections[this.sectionId], {
+          mode: this.isDrawer ? 'hydration' : 'full',
+        });
 
-      const newSectionHTML = new DOMParser().parseFromString(sectionHTML, 'text/html');
+        this.#updateCartQuantitySelectorButtonStates();
+      })
+      .catch((error) => {
+        console.error(error);
+        deferredUpdatePromise.reject(error);
 
-      // Grab the new cart item count from a hidden element
-      const newCartHiddenItemCount = newSectionHTML.querySelector('[ref="cartItemCount"]')?.textContent;
-      newCartItemCount = newCartHiddenItemCount ? parseInt(newCartHiddenItemCount, 10) : newCartItemCount;
-
-      deferredUpdatePromise.resolve({
-        cart: CartLinesUpdateEvent.createCartFromAjaxResponse(parsedResponseText),
-        detail: {
-          sections: sections ?? undefined,
-          items: parsedResponseText.items,
-          itemCount: newCartItemCount,
-          source: 'cart-items-component',
-          didError: false,
-        },
-      });
-
-      sectionRenderer.abortRender(this.sectionId);
-      await morphSection(this.sectionId, sectionHTML, {
-        mode: this.isDrawer ? 'hydration' : 'full',
-      });
-
-      this.#updateCartQuantitySelectorButtonStates();
-    } catch (error) {
-      console.error(error);
-      deferredUpdatePromise.reject(error);
-
-      this.dispatchEvent(
-        new CartErrorEvent({
-          error: error?.message || 'Failed to update cart',
-          code: 'SERVICE_UNAVAILABLE',
-        })
-      );
-    } finally {
-      try {
+        this.dispatchEvent(
+          new CartErrorEvent({
+            error: error?.message || 'Failed to update cart',
+            code: 'SERVICE_UNAVAILABLE',
+          })
+        );
+      })
+      .finally(() => {
         this.#enableCartItems();
         cartPerformance.measureFromMarker(cartPerformaceUpdateMarker);
-      } finally {
-        CartItemsComponent.#pendingQuantityUpdates.delete(quantityUpdate);
-        completeQuantityUpdate();
-      }
-    }
+      });
   }
 
   /**
@@ -479,7 +357,6 @@ export class CartItemsComponent extends createViewEventElement(Component) {
         };
 
         if (cartItemsHtml) {
-          sectionRenderer.abortRender(this.sectionId);
           const existingKeys = new Set(this.refs.cartItemRows?.map((row) => row.dataset.key) ?? []);
 
           if (wasEmptyCartDrawer) {
@@ -503,7 +380,7 @@ export class CartItemsComponent extends createViewEventElement(Component) {
           // Update button states for all cart quantity selectors after morph
           this.#updateCartQuantitySelectorButtonStates();
         } else {
-          this.#refreshCartSection(morphOptions);
+          sectionRenderer.renderSection(this.sectionId, { cache: false, ...morphOptions });
         }
       })
       .catch((error) => {
@@ -595,18 +472,6 @@ export class CartItemsComponent extends createViewEventElement(Component) {
    */
   get isDrawer() {
     return this.dataset.drawer !== undefined;
-  }
-
-  /**
-   * `getEntriesByType` is typed as the `PerformanceEntry` base, which has no `type`, and the DOM
-   * lib has no per-string overload for `'navigation'`. `entryType` is the spec's discriminant and
-   * lives on the base, so this narrows at runtime instead of asserting the way a cast would.
-   *
-   * @param {PerformanceEntry | undefined} entry
-   * @returns {entry is PerformanceNavigationTiming}
-   */
-  static #isNavigationTiming(entry) {
-    return entry?.entryType === 'navigation';
   }
 }
 

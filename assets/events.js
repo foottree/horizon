@@ -14,8 +14,6 @@ export class ThemeEvents {
   static megaMenuHover = 'megaMenu:hover';
   /** @static @constant {string} Event triggered when a zoom dialog media is selected */
   static zoomMediaSelected = 'zoom-media:selected';
-  /** @static @constant {string} Event triggered when a cart section re-renders after a back/forward cache restore */
-  static cartSectionRestored = 'cart-section:restored';
 }
 
 /**
@@ -101,19 +99,5 @@ export class ZoomMediaSelectedEvent extends Event {
 export class MegaMenuHoverEvent extends Event {
   constructor() {
     super(ThemeEvents.megaMenuHover, { bubbles: true });
-  }
-}
-
-/**
- * Event class for a cart section re-rendering after a back/forward cache restore.
- *
- * It has to bubble: `cart-drawer-component` listens for it on itself and the dispatcher is
- * the `cart-items-component` nested inside it.
- *
- * @extends {Event}
- */
-export class CartSectionRestoredEvent extends Event {
-  constructor() {
-    super(ThemeEvents.cartSectionRestored, { bubbles: true });
   }
 }

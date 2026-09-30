@@ -1,6 +1,5 @@
 import { Component } from '@theme/component';
-import { CartItemsComponent } from '@theme/component-cart-items';
-import { morphSection, sectionRenderer } from '@theme/section-renderer';
+import { morphSection } from '@theme/section-renderer';
 import { fetchConfig } from '@theme/utilities';
 import { cartPerformance } from '@theme/performance';
 import { CartDiscountUpdateEvent, CartErrorEvent } from '@shopify/events';
@@ -23,39 +22,6 @@ class CartDiscount extends Component {
   /** @type {AbortController | null} */
   #activeFetch = null;
 
-  #pending = false;
-
-  #needsRefresh = false;
-
-  /**
-   * Keeps discount controls focusable while the pending guard prevents another mutation.
-   * @returns {() => void} Restores the controls' previous states.
-   */
-  #disableControls() {
-    const previousBusy = this.getAttribute('aria-busy');
-    const input = this.querySelector('input[name="discount"]');
-    const previousReadOnly = input instanceof HTMLInputElement && input.readOnly;
-    const buttons = Array.from(this.querySelectorAll('button'), (button) => ({
-      button,
-      previousDisabled: button.getAttribute('aria-disabled'),
-    }));
-
-    this.setAttribute('aria-busy', 'true');
-    if (input instanceof HTMLInputElement) input.readOnly = true;
-    for (const { button } of buttons) button.setAttribute('aria-disabled', 'true');
-
-    return () => {
-      if (previousBusy === null) this.removeAttribute('aria-busy');
-      else this.setAttribute('aria-busy', previousBusy);
-
-      if (input instanceof HTMLInputElement) input.readOnly = previousReadOnly;
-      for (const { button, previousDisabled } of buttons) {
-        if (previousDisabled === null) button.removeAttribute('aria-disabled');
-        else button.setAttribute('aria-disabled', previousDisabled);
-      }
-    };
-  }
-
   #createAbortController() {
     if (this.#activeFetch) {
       this.#activeFetch.abort();
@@ -67,79 +33,14 @@ class CartDiscount extends Component {
   }
 
   /**
-   * Refreshes this section when a cart AJAX response cannot include rendered section HTML.
-   * Cancelled renders can resolve without validation, so retry until this refresh reaches the DOM.
-   * @param {(html: string) => boolean} [shouldRender] - Validates the rendered discounts before morphing.
-   */
-  async #refreshDiscountSection(shouldRender) {
-    const sectionId = this.dataset.sectionId;
-    if (!sectionId) return;
-
-    this.#needsRefresh = true;
-    let validated = false;
-
-    try {
-      while (!validated && this.isConnected) {
-        let pendingQuantityUpdates = CartItemsComponent.pendingQuantityUpdates;
-        while (pendingQuantityUpdates.length) {
-          await Promise.all(pendingQuantityUpdates);
-          pendingQuantityUpdates = CartItemsComponent.pendingQuantityUpdates;
-        }
-        if (!this.isConnected) return;
-
-        await sectionRenderer.renderSection(sectionId, {
-          cache: false,
-          mode: this.closest('theme-drawer') ? 'hydration' : 'full',
-          shouldRender: (html) => {
-            validated = true;
-            return shouldRender?.(html) ?? true;
-          },
-        });
-      }
-
-      if (validated) this.#needsRefresh = false;
-    } catch (error) {
-      if (error?.name === 'AbortError') return;
-
-      this.dispatchEvent(
-        new CartErrorEvent({
-          error: error?.message || 'Failed to refresh cart discounts',
-          code: 'SERVICE_UNAVAILABLE',
-        })
-      );
-    }
-  }
-
-  /**
-   * Replaces stale pills before accepting another action against the refreshed controls.
-   */
-  async #refreshStaleDiscounts() {
-    this.#pending = true;
-    const restoreControls = this.#disableControls();
-
-    try {
-      await this.#refreshDiscountSection();
-    } finally {
-      this.#pending = false;
-      restoreControls();
-    }
-  }
-
-  /**
-   * Applies a discount to the cart.
+   * Handles updates to the cart note.
    * @param {SubmitEvent} event - The submit event on our form.
    */
   applyDiscount = async (event) => {
+    const { cartDiscountError, cartDiscountErrorDiscountCode, cartDiscountErrorShipping } = this.refs;
+
     event.preventDefault();
     event.stopPropagation();
-    if (this.#pending) return;
-
-    if (this.#needsRefresh) {
-      await this.#refreshStaleDiscounts();
-      return;
-    }
-
-    const { cartDiscountError, cartDiscountErrorDiscountCode, cartDiscountErrorShipping } = this.refs;
 
     const form = event.target;
     if (!(form instanceof HTMLFormElement)) return;
@@ -149,11 +50,10 @@ class CartDiscount extends Component {
 
     const discountCodeValue = discountCode.value;
 
+    const abortController = this.#createAbortController();
+
     const existingDiscounts = this.#existingDiscounts();
     if (existingDiscounts.includes(discountCodeValue)) return;
-
-    sectionRenderer.abortRender(this.dataset.sectionId);
-    const abortController = this.#createAbortController();
 
     cartDiscountError.classList.add('hidden');
     cartDiscountErrorDiscountCode.classList.add('hidden');
@@ -162,17 +62,14 @@ class CartDiscount extends Component {
     const allDiscountCodes = [...existingDiscounts, discountCodeValue];
     const deferredPromise = CartDiscountUpdateEvent.createPromise();
 
-    this.#pending = true;
-    const restoreControls = this.#disableControls();
+    this.dispatchEvent(
+      new CartDiscountUpdateEvent({
+        discountCodes: allDiscountCodes.map((code) => ({ code })),
+        promise: deferredPromise.promise,
+      })
+    );
 
     try {
-      this.dispatchEvent(
-        new CartDiscountUpdateEvent({
-          discountCodes: allDiscountCodes.map((code) => ({ code })),
-          promise: deferredPromise.promise,
-        })
-      );
-
       const config = fetchConfig('json', {
         body: JSON.stringify({
           discount: allDiscountCodes.join(','),
@@ -200,52 +97,31 @@ class CartDiscount extends Component {
         return;
       }
 
-      const sections = /** @type {Record<string, string> | null | undefined} */ (data.sections);
-      const newHtml = sections?.[this.dataset.sectionId];
-
-      /**
-       * Liquid omits shipping discounts that the cart payload still reports as applicable.
-       * @param {string} html - The rendered section HTML.
-       * @returns {boolean} Whether the section can replace the current discount UI.
-       */
-      const shouldRender = (html) => {
-        const parsedHtml = new DOMParser().parseFromString(html, 'text/html');
-        const section = parsedHtml.getElementById(`shopify-section-${this.dataset.sectionId}`);
-        const discountCodes = section?.querySelectorAll('.cart-discount__pill') || [];
-        if (section) {
-          const codes = Array.from(discountCodes)
-            .map((element) => (element instanceof HTMLLIElement ? element.dataset.discountCode : null))
-            .filter(Boolean);
-          if (
-            codes.length === existingDiscounts.length &&
-            codes.every((/** @type {string} */ code) => existingDiscounts.includes(code)) &&
-            data.discount_codes.find((/** @type {{ code: string; applicable: boolean; }} */ discount) => {
-              return discount.code === discountCodeValue && discount.applicable === true;
-            })
-          ) {
-            this.#handleDiscountError('shipping');
-            return false;
-          }
+      const newHtml = data.sections[this.dataset.sectionId];
+      const parsedHtml = new DOMParser().parseFromString(newHtml, 'text/html');
+      const section = parsedHtml.getElementById(`shopify-section-${this.dataset.sectionId}`);
+      const discountCodes = section?.querySelectorAll('.cart-discount__pill') || [];
+      if (section) {
+        const codes = Array.from(discountCodes)
+          .map((element) => (element instanceof HTMLLIElement ? element.dataset.discountCode : null))
+          .filter(Boolean);
+        // Before morphing, we need to check if the shipping discount is applicable in the UI
+        // we check the liquid logic compared to the cart payload to assess whether we leveraged
+        // a valid shipping discount code.
+        if (
+          codes.length === existingDiscounts.length &&
+          codes.every((/** @type {string} */ code) => existingDiscounts.includes(code)) &&
+          data.discount_codes.find((/** @type {{ code: string; applicable: boolean; }} */ discount) => {
+            return discount.code === discountCodeValue && discount.applicable === true;
+          })
+        ) {
+          this.#handleDiscountError('shipping');
+          discountCode.value = '';
+          deferredPromise.resolve({
+            cart: CartDiscountUpdateEvent.createCartFromAjaxResponse(data),
+          });
+          return;
         }
-
-        return true;
-      };
-
-      if (!newHtml) {
-        discountCode.value = '';
-        deferredPromise.resolve({
-          cart: CartDiscountUpdateEvent.createCartFromAjaxResponse(data),
-        });
-        await this.#refreshDiscountSection(shouldRender);
-        return;
-      }
-
-      if (!shouldRender(newHtml)) {
-        discountCode.value = '';
-        deferredPromise.resolve({
-          cart: CartDiscountUpdateEvent.createCartFromAjaxResponse(data),
-        });
-        return;
       }
 
       deferredPromise.resolve({
@@ -255,10 +131,7 @@ class CartDiscount extends Component {
       // morphSection no longer syncs the input value from the server-rendered empty state,
       // so without this the user's typed code stays in the field after a successful apply.
       discountCode.value = '';
-      sectionRenderer.abortRender(this.dataset.sectionId);
-      await morphSection(this.dataset.sectionId, newHtml, {
-        mode: this.closest('theme-drawer') ? 'hydration' : 'full',
-      });
+      morphSection(this.dataset.sectionId, newHtml, { mode: this.closest('theme-drawer') ? 'hydration' : 'full' });
     } catch (error) {
       deferredPromise.reject(error);
       if (error instanceof Error && error.name !== 'AbortError') {
@@ -271,8 +144,6 @@ class CartDiscount extends Component {
       }
     } finally {
       this.#activeFetch = null;
-      this.#pending = false;
-      restoreControls();
       cartPerformance.measureFromEvent('discount-update:user-action', event);
     }
   };
@@ -284,12 +155,6 @@ class CartDiscount extends Component {
   removeDiscount = async (event) => {
     event.preventDefault();
     event.stopPropagation();
-    if (this.#pending) return;
-
-    if (this.#needsRefresh) {
-      await this.#refreshStaleDiscounts();
-      return;
-    }
 
     if (
       (event instanceof KeyboardEvent && event.key !== 'Enter') ||
@@ -312,21 +177,17 @@ class CartDiscount extends Component {
 
     existingDiscounts.splice(index, 1);
 
-    sectionRenderer.abortRender(this.dataset.sectionId);
     const abortController = this.#createAbortController();
     const deferredPromise = CartDiscountUpdateEvent.createPromise();
 
-    this.#pending = true;
-    const restoreControls = this.#disableControls();
+    this.dispatchEvent(
+      new CartDiscountUpdateEvent({
+        discountCodes: existingDiscounts.map((code) => ({ code })),
+        promise: deferredPromise.promise,
+      })
+    );
 
     try {
-      this.dispatchEvent(
-        new CartDiscountUpdateEvent({
-          discountCodes: existingDiscounts.map((code) => ({ code })),
-          promise: deferredPromise.promise,
-        })
-      );
-
       const config = fetchConfig('json', {
         body: JSON.stringify({ discount: existingDiscounts.join(','), sections: [this.dataset.sectionId] }),
       });
@@ -338,20 +199,11 @@ class CartDiscount extends Component {
 
       const data = await response.json();
 
-      const sections = /** @type {Record<string, string> | null | undefined} */ (data.sections);
-      const newHtml = sections?.[this.dataset.sectionId];
-
       deferredPromise.resolve({
         cart: CartDiscountUpdateEvent.createCartFromAjaxResponse(data),
       });
 
-      if (!newHtml) {
-        await this.#refreshDiscountSection();
-        return;
-      }
-
-      sectionRenderer.abortRender(this.dataset.sectionId);
-      await morphSection(this.dataset.sectionId, newHtml, {
+      morphSection(this.dataset.sectionId, data.sections[this.dataset.sectionId], {
         mode: this.closest('theme-drawer') ? 'hydration' : 'full',
       });
     } catch (error) {
@@ -366,8 +218,6 @@ class CartDiscount extends Component {
       }
     } finally {
       this.#activeFetch = null;
-      this.#pending = false;
-      restoreControls();
     }
   };
 

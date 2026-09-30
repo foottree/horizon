@@ -99,9 +99,7 @@
             role="caption"
           >
             {{ 'content.cart_total' | t }}
-            <span
-              ><bdi>{{ cart.total_price | money_with_currency }}</bdi></span
-            >
+            <span>{{ cart.total_price | money_with_currency }}</span>
           </caption>
 
           <thead
@@ -214,7 +212,7 @@
                     </div>
                     {% if item.product.vendor and block_settings.vendor %}
                       <p>
-                        <bdi>{{ item.product.vendor }}</bdi>
+                        {{ item.product.vendor }}
                       </p>
                     {% endif %}
 
@@ -291,9 +289,7 @@
                           role="list"
                         >
                           {%- for discount in item.line_level_discount_allocations -%}
-                            <li>
-                              <bdi>{{ discount.discount_application.title | escape }}</bdi>
-                            </li>
+                            <li>{{ discount.discount_application.title | escape }}</li>
                           {%- endfor -%}
                         </ul>
                       {%- endif -%}
@@ -304,15 +300,13 @@
                     <div>
                       {% if item.original_price != item.final_price %}
                         <span class="visually-hidden">{{ 'content.price_sale' | t }}</span>
-                        <span
-                          ><bdi>{{ item.final_price | money }}</bdi></span
-                        >
+                        <span>{{ item.final_price | money }}</span>
                         <span class="visually-hidden">{{ 'content.price_regular' | t }}</span>
                         <s class="compare-at-price">
                           {% if item.variant.compare_at_price > item.original_price %}
-                            <bdi>{{ item.variant.compare_at_price | money }}</bdi>
+                            {{ item.variant.compare_at_price | money }}
                           {% else %}
-                            <bdi>{{ item.original_price | money }}</bdi>
+                            {{ item.original_price | money }}
                           {% endif %}
                         </s>
                       {% else %}
@@ -322,15 +316,11 @@
                           <span class="visually-hidden">{{ 'content.price' | t }}</span>
                         {% endif %}
 
-                        <span
-                          ><bdi>{{ item.original_price | money }}</bdi></span
-                        >
+                        <span>{{ item.original_price | money }}</span>
 
                         {% if item.variant.compare_at_price > item.original_price %}
                           <span class="visually-hidden">{{ 'content.price_regular' | t }}</span>
-                          <s class="compare-at-price"
-                            ><bdi>{{ item.variant.compare_at_price | money }}</bdi></s
-                          >
+                          <s class="compare-at-price">{{ item.variant.compare_at_price | money }}</s>
                         {% endif %}
                       {% endif %}
                     </div>
@@ -409,9 +399,7 @@
                   role="cell"
                   headers="productTotal"
                 >
-                  <text-component value="{{ price | strip_html }}"
-                    ><bdi>{{ price }}</bdi></text-component
-                  >
+                  <text-component value="{{ price | strip_html }}">{{ price }}</text-component>
                   {%- if item.unit_price_measurement -%}
                     <div class="cart-items__price-unit cart-secondary-typography">
                       {% render 'unit-price', price: unit_price, measurement: item.unit_price_measurement %}

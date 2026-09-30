@@ -4,7 +4,6 @@
     class="shopify-design-mode"
   {% endif %}
   lang="{{ request.locale.iso_code }}"
-  dir="{{ request.locale.direction | default: 'ltr' }}"
 >
   <head>
     {%- if settings.favicon != blank -%}

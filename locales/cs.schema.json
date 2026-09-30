@@ -911,13 +911,7 @@
     "portrait_4_5": "Portrait 4:5",
     "portrait_3_4": "Portrait 3:4",
     "portrait_2_3": "Portrait 2:3",
-    "segmented": "Segmented",
-    "direction_bottom_start": "Vlevo dole",
-    "direction_center": "Na střed",
-    "direction_end": "Vpravo",
-    "direction_start": "Vlevo",
-    "direction_top_end": "Vpravo nahoře",
-    "direction_top_start": "Vlevo nahoře"
+    "segmented": "Segmented"
   },
   "content": {
     "advanced": "Pokročilé",

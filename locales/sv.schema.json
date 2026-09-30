@@ -911,13 +911,7 @@
     "portrait_4_5": "Portrait 4:5",
     "portrait_3_4": "Portrait 3:4",
     "portrait_2_3": "Portrait 2:3",
-    "segmented": "Segmented",
-    "direction_bottom_start": "Nere till vänster",
-    "direction_center": "Mitten",
-    "direction_end": "Höger",
-    "direction_start": "Vänster",
-    "direction_top_end": "Uppe till höger",
-    "direction_top_start": "Uppe till vänster"
+    "segmented": "Segmented"
   },
   "content": {
     "advanced": "Avancerat",
