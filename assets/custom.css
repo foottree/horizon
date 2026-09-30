@@ -121,6 +121,20 @@
   .section--narrow > .section-content {
     max-width: var(--page-content-width);
   }
+
+  /* The product page's main section only offers "page" or "full" width, with no narrow option,
+     so at 1440 its gallery started 55px left of the breadcrumb, the feature band, the
+     recommendations and the footer. Give it the same gutter the narrow sections derive from so
+     the whole page shares one left edge. */
+  .product-information.section--page-width {
+    /* The section is a three-track grid whose side tracks come from --page-margin, so that is
+       the variable to move; --page-content-width alone does nothing here. The margin is derived
+       from the section's own width rather than from --ft-gutter directly, because the gutter is
+       in vw (which counts the scrollbar) while the narrow sections centre inside the scrollbar's
+       width. Taking the difference here puts both on the same edge, scrollbar or not. */
+    --page-content-width: calc(100vw - (var(--ft-gutter) * 2));
+    --page-margin: max(40px, calc((100% - var(--page-content-width)) / 2));
+  }
 }
 
 /* ---- Header ---- */
@@ -1612,13 +1626,22 @@
    desktop where four cards sit in a row, but on a phone the cards go full width and the disc
    dominates the card. icon-or-image sets the size as width/height attributes on the svg, which a
    CSS rule overrides without needing !important. */
+.ft-pdp-why .ft-why-badge {
+  padding: 13px;
+}
+
+.ft-pdp-why .ft-why-badge svg {
+  width: 30px;
+  height: 30px;
+}
+
 @media screen and (max-width: 749px) {
   .ft-pdp-why .ft-why-badge {
     padding: 11px;
   }
 
   .ft-pdp-why .ft-why-badge svg {
-    width: 28px;
-    height: 28px;
+    width: 26px;
+    height: 26px;
   }
 }
