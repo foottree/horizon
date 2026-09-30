@@ -36,6 +36,9 @@
       class="button button-unstyled size-guide__trigger"
     >
       {{- size_guide_label -}}
+      <span class="svg-wrapper size-guide__arrow">
+        {{- 'icon-arrow.svg' | inline_asset_content -}}
+      </span>
     </button>
   {%- when 'close' -%}
       <dialog

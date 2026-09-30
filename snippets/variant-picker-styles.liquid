@@ -113,7 +113,11 @@
     --variant-option-padding-inline: var(--padding-md);
   }
 
-  .variant-option + .variant-option {
+  /* The size option is wrapped in <dialog-component class="size-guide"> so its legend can hold
+     the size guide trigger, which breaks the adjacency this spacing relies on. */
+  .variant-option + .variant-option,
+  .variant-option ~ .size-guide,
+  .size-guide ~ .variant-option {
     margin-top: var(--padding-lg);
   }
 
@@ -526,10 +530,18 @@
   }
 
   .size-guide__trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--margin-3xs);
     font-family: var(--font-subheading--family);
     font-weight: var(--font-subheading--weight);
     font-size: var(--font-size--sm);
     color: var(--color-primary-button-background);
+  }
+
+  .size-guide__arrow svg {
+    width: 1.1em;
+    height: 1.1em;
   }
 
   .size-guide__trigger:hover {

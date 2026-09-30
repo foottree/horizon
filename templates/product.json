@@ -197,7 +197,7 @@
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
                 "padding-inline-end": 0,
-                "size_guide_text": "Size Guide →",
+                "size_guide_text": "Size Guide",
                 "size_guide_content": "<p>Our full size and width chart is coming soon.</p>"
               },
               "blocks": {}
@@ -359,7 +359,7 @@
         "limit_details_width": false,
         "gap": 48,
         "padding-block-start": 0,
-        "padding-block-end": 0
+        "padding-block-end": 48
       }
     },
     "why_this_pair_works": {
