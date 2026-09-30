@@ -317,7 +317,7 @@
                   "type": "_accordion-row-dynamic",
                   "settings": {
                     "heading": "SPECIFICATIONS",
-                    "content": "{{ closest.product.metafields.custom.specifications }}",
+                    "content": "{{ closest.product.metafields.custom.specifications | metafield_tag }}",
                     "open_by_default": false,
                     "icon": "none",
                     "width": 20
