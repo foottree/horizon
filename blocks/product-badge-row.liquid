@@ -1,0 +1,136 @@
+{%- doc -%}
+  The merchant-managed badges from a product's `custom.product_badges` metafield, laid out as a
+  wrapping row for the product page.
+
+  The `product-badges` snippet cannot be reused here: it positions itself absolutely over a
+  product card's image and folds in the automatic Sold out / Sale badges, which the product page
+  already states under the price. This renders the same pills in the flow of the buy box.
+
+  Renders nothing when the product carries no badges.
+{%- enddoc -%}
+
+{%- liquid
+  assign block_settings = block.settings
+  assign badges = closest.product.metafields.custom.product_badges.value
+-%}
+
+{%- if badges != blank -%}
+  <div
+    class="product-badge-row spacing-style"
+    style="
+      {% render 'spacing-style', settings: block_settings %}
+      --badge-border-radius: {{ settings.badge_corner_radius }}px;
+      --badge-font-family: var(--font-{{ settings.badge_font_family }}--family);
+      --badge-font-weight: var(--font-{{ settings.badge_font_family }}--weight);
+      --badge-text-transform: {{ settings.badge_text_transform }};
+    "
+    {{ block.shopify_attributes }}
+  >
+    {%- for badge in badges -%}
+      {%- if badge.label == blank -%}
+        {%- continue -%}
+      {%- endif -%}
+      <span
+        class="product-badge-row__badge"
+        style="--color-background: {{ badge.badge_background_color | default: '#4a6a1d' }}; --color-foreground: {{ badge.badge_text_color | default: '#ffffff' }};"
+      >
+        {{- badge.label | escape -}}
+      </span>
+    {%- endfor -%}
+  </div>
+{%- endif -%}
+
+{% stylesheet %}
+  .product-badge-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .product-badge-row__badge {
+    display: inline-flex;
+    align-items: center;
+    padding-block: 4px;
+    padding-inline: 12px;
+    color: var(--color-foreground);
+    background: var(--color-background);
+    font-size: var(--font-size--sm);
+    font-family: var(--badge-font-family);
+    font-weight: var(--badge-font-weight);
+    text-transform: var(--badge-text-transform);
+    line-height: 1.5;
+    border-radius: var(--badge-border-radius);
+  }
+
+  @media screen and (max-width: 749px) {
+    .product-badge-row__badge {
+      padding-block: 2px;
+      padding-inline: 9px;
+      font-size: var(--font-size--xs);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Product badges",
+  "tag": null,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Shows the badges set on the product's Features metafield. Nothing is shown when a product has none. Colours, shape and typography come from the Badges theme settings."
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product badges",
+      "category": "t:categories.product"
+    }
+  ]
+}
+{% endschema %}

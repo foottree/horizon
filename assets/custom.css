@@ -1107,6 +1107,8 @@
 @media screen and (max-width: 749px) {
   .product-badges .product-badges__badge {
     --badge-font-size: var(--font-size--xs);
+    --badge-rectangle-padding-block: 2px;
+    --badge-rectangle-padding-inline: 9px;
   }
 }
 
@@ -1661,4 +1663,25 @@ summary,
 .button,
 .button-unstyled {
   -webkit-tap-highlight-color: transparent;
+}
+
+/* ---- Slideshow dots ----
+   Stock Horizon rings each dot with an inset 1.5px shadow, darker on the selected one. Against
+   the pale studio backgrounds the ring reads as a second, blurrier dot around the real one. The
+   dots already carry their own fill and active colour, so the ring is not doing any work.
+   Overridden here rather than in slideshow-controls.liquid so a Horizon update does not have to
+   be merged around it. */
+.slideshow-controls__dots .slideshow-control.button.button-unstyled::after,
+.slideshow-controls__dots .slideshow-control.button.button-unstyled[aria-selected='true']::after {
+  box-shadow: none;
+}
+
+/* ---- Modal close button ----
+   base.css sizes the glyph with --icon-size-xs (0.85rem) inside a --minimum-touch-target circle,
+   so in the zoom and drawer modals a 13.6px cross floats in a 44px ring. The tap target is right;
+   only the glyph is undersized. Moved up a step rather than editing --icon-size-xs, which the
+   theme also uses for small inline icons. */
+.close-button svg {
+  width: var(--icon-size-lg);
+  height: var(--icon-size-lg);
 }

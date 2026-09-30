@@ -166,10 +166,21 @@
                     "padding-inline-end": 0
                   },
                   "blocks": {}
+                },
+                "badge_row": {
+                  "type": "product-badge-row",
+                  "settings": {
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
                 }
               },
               "block_order": [
                 "text_xpVMaM",
+                "badge_row",
                 "price_tVjtKg",
                 "inventory_stock"
               ]
