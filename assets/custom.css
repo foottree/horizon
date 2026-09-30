@@ -1685,3 +1685,14 @@ summary,
   width: var(--icon-size-lg);
   height: var(--icon-size-lg);
 }
+
+/* ---- Product card swatches: 6px corners, not circles ----
+   `variant_swatch_radius` is a single global theme setting, so raising it to 100 to make the
+   product page's 72px colour swatches circular also rounded the small swatches on product
+   cards, search results and the product rail, which had deliberately been 6px to match the
+   other pills (commit 08d0c47). The product page picker renders through <variant-picker>;
+   cards render through <swatches-variant-picker-component>, so scoping the override to that
+   element restores the card corners without touching the product page. */
+swatches-variant-picker-component {
+  --variant-picker-swatch-radius: 6px;
+}
