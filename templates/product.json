@@ -32,7 +32,7 @@
             "thumbnail_position": "right",
             "thumbnail_width": 44,
             "aspect_ratio": "adapt",
-            "constrain_to_viewport": true,
+            "constrain_to_viewport": false,
             "media_fit": "contain",
             "media_radius": 0,
             "extend_media": false,
@@ -196,7 +196,8 @@
                 "padding-block-start": 0,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
-                "padding-inline-end": 0
+                "padding-inline-end": 0,
+                "show_accelerated_checkout": false
               },
               "blocks": {
                 "quantity": {
@@ -211,12 +212,6 @@
                   "settings": {
                     "style_class": "button"
                   },
-                  "blocks": {}
-                },
-                "accelerated-checkout": {
-                  "type": "accelerated-checkout",
-                  "static": true,
-                  "settings": {},
                   "blocks": {}
                 }
               },

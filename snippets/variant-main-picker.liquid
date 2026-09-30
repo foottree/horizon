@@ -55,6 +55,15 @@
     <form class="variant-picker__form">
       {%- for product_option in product_resource.options_with_values -%}
         {%- liquid
+          # The size option is linked to Shopify's shoe-size taxonomy, so the stored option name
+          # has to stay "Size". Foot Tree sells in EU sizes, so the storefront says so. Only the
+          # visible label changes: the form field name and the data attributes below keep the
+          # real option name, or the variant lookup breaks.
+          assign option_label = product_option.name
+          if product_option.name == 'Size'
+            assign option_label = 'Size (EU)'
+          endif
+
           assign swatch_count = product_option.values | map: 'swatch' | compact | size
           assign variant_style = block_settings.variant_style
 
@@ -78,7 +87,7 @@
             class="variant-option"
             data-testid="variant-option-single"
           >
-            {{- product_option.name | escape -}}
+            {{- option_label | escape -}}
             <span
               class="variant-option__swatch-value"
               data-testid="variant-option-single-value"
@@ -94,7 +103,7 @@
             {{ option_id_attribute }}
           >
             <legend>
-              {{ product_option.name | escape -}}
+              {{ option_label | escape -}}
               {%- if variant_style == 'swatch' -%}
                 <span class="variant-option__swatch-value">{{ product_option.selected_value }}</span>
               {%- endif %}
@@ -190,7 +199,7 @@
           %}
 
           <div class="variant-option variant-option--dropdowns">
-            <label for="Option-{{ block.id }}-{{ forloop.index0 }}">{{ product_option.name | escape }}</label>
+            <label for="Option-{{ block.id }}-{{ forloop.index0 }}">{{ option_label | escape }}</label>
             <div
               class="variant-option__select-wrapper"
               style="
