@@ -911,7 +911,13 @@
     "portrait_4_5": "Portrait 4:5",
     "portrait_3_4": "Portrait 3:4",
     "portrait_2_3": "Portrait 2:3",
-    "segmented": "Segmented"
+    "segmented": "Segmented",
+    "direction_bottom_start": "왼쪽 하단",
+    "direction_center": "가운데",
+    "direction_end": "오른쪽",
+    "direction_start": "왼쪽",
+    "direction_top_end": "오른쪽 상단",
+    "direction_top_start": "왼쪽 상단"
   },
   "content": {
     "background_video": "배경 비디오",
