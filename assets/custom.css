@@ -1877,3 +1877,23 @@ swatches-variant-picker-component {
     row-gap: 32px;
   }
 }
+
+/* ---- "Why this pair works" cards: icon beside the heading on mobile ----
+   The card is a column flex of icon, heading, paragraph, so on a phone the 48px icon sat on its
+   own line and pushed the heading down, making each card taller than it needed to be. Switching
+   to a two-column grid puts the icon and heading on one row and drops the paragraph underneath,
+   with no markup change: the icon and heading auto-place into row 1, and only the last child
+   needs telling to span both columns. The <style> element the group emits is display:none, so it
+   is not a grid item and does not take a cell. Desktop keeps the stacked column layout. */
+@media screen and (max-width: 749px) {
+  .layout-panel-flex--column:has(> .ft-why-title) {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 12px;
+    align-items: center;
+  }
+
+  .layout-panel-flex--column:has(> .ft-why-title) > :last-child {
+    grid-column: 1 / -1;
+  }
+}
