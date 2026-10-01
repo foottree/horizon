@@ -976,7 +976,6 @@
 
 #header-component .ft-tiles {
   --ft-tiles-columns: 6;
-  --ft-tiles-tile-width: 172px;
   --ft-tiles-gap: 24px;
 
   display: flex;
@@ -985,14 +984,13 @@
   justify-content: center;
   width: 100%;
   gap: var(--ft-tiles-gap);
-  /* Hard cap the row at 6 tiles. The tiles are a fixed width, so without this the row simply
-     fits as many as the panel allows: 7 at very wide viewports, 6 just below, which made the
-     same menu reflow between one and two rows depending on the screen. Capping the row's own
-     width makes the wrap point a decision rather than a side effect of the viewport. */
-  max-width: calc(
-    var(--ft-tiles-columns) * var(--ft-tiles-tile-width) + (var(--ft-tiles-columns) - 1) *
-      var(--ft-tiles-gap)
-  );
+  /* The row spans the contained section width (the same inset every homepage section uses,
+     --ft-gutter, so the tiles line up with the content beneath the header) and stays centred
+     in the panel. If the panel is narrower than that, width: 100% wins. Each tile below takes
+     exactly one of --ft-tiles-columns columns of this row, so the column count is a decision
+     rather than a side effect of the viewport: a 7th tile wraps to a second row, and a menu
+     with only 2 tiles shows 2 one-sixth tiles (centred), never 2 half-width ones. */
+  max-width: calc(100vw - (var(--ft-gutter, 40px) * 2));
   margin-inline: auto;
 }
 
@@ -1005,8 +1003,8 @@
 #header-component .ft-tiles__tile {
   position: relative;
   display: block;
-  flex: 0 0 172px;
-  width: 172px;
+  flex: 0 0 calc((100% - (var(--ft-tiles-columns) - 1) * var(--ft-tiles-gap)) / var(--ft-tiles-columns));
+  width: auto;
   text-decoration: none;
   outline: none;
 }
@@ -1042,7 +1040,7 @@
    after the last word instead of pinning to a fixed row like a flex sibling would. */
 #header-component .ft-tiles__label {
   position: absolute;
-  inset-inline: 18px; /* 172px tile - 18px each side = 136px text column */
+  inset-inline: 18px; /* tile width - 18px each side = text column (about 151px at 1440) */
   inset-block-end: 18px;
   display: block;
   font-family: var(--font-subheading--family);
