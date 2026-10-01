@@ -1738,7 +1738,8 @@ swatches-variant-picker-component {
                 blocks use the 'custom' type_preset and set their own size, so
                 it is not driven by the scale below. Deliberate, not a stray.
      h1  48px   page title, one per page (collection, product, cart, page,
-                blog, article, 404).
+                blog, article, 404). Fluid: clamp(36px, 4.8vw, 48px), so it
+                reads 36px on a phone. That floor belongs to this tier.
      h2  32px   SECTION TITLE - the standard. "Shop by Collection",
                 "Bestsellers", "New Arrivals", "Why customers love ...".
                 Same size on mobile and desktop; no responsive step.
