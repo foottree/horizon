@@ -1,0 +1,1734 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "breadcrumb": {
+      "type": "breadcrumb",
+      "settings": {
+        "menu": "main-menu"
+      }
+    },
+    "title": {
+      "type": "section",
+      "name": "Page title",
+      "blocks": {
+        "heading": {
+          "type": "text",
+          "settings": {
+            "text": "<h1>{{ closest.page.title }}</h1>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "h1",
+            "font": "var(--font-body--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "intro": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Everything you might want to know about fit, delivery, returns and caring for your shoes. Can't find your answer? Email us at <a href=\"mailto:hello@foottree.com\">hello@foottree.com</a> and we will be glad to help.</p>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "heading",
+        "intro"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "flex-start",
+        "gap": 16,
+        "section_width": "narrow",
+        "section_height": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "toggle_overlay": false,
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "padding-block-start": 40,
+        "padding-block-end": 0
+      }
+    },
+    "faq_sizing": {
+      "type": "section",
+      "name": "Sizing & fit",
+      "blocks": {
+        "heading": {
+          "type": "text",
+          "settings": {
+            "text": "<h2>Sizing &amp; fit</h2>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "h2",
+            "font": "var(--font-body--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "accordion": {
+          "type": "accordion",
+          "settings": {
+            "icon": "plus",
+            "dividers": true,
+            "divider_color": "{{ settings.color_palette.color3 }}",
+            "type_preset": "h5",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "row_1": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "What sizes do you offer?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "answer": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Our shoes are sized from EU 34 to EU 48, so most women's and men's feet are covered. Availability varies from style to style, so the size selector on each product page shows what we have in stock.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "answer"
+              ]
+            },
+            "row_2": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "How do I find my size?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "answer": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Stand on a sheet of paper, mark the back of your heel and the tip of your longest toe, then measure the gap between the two marks. Measure in the evening, when your feet are at their widest, and use that measurement alongside the sizing information on the product page. If you are still unsure, email us at <a href=\"mailto:hello@foottree.com\">hello@foottree.com</a> and we will help you choose.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "answer"
+              ]
+            },
+            "row_3": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "Do your shoes run true to size?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "answer": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>It varies a little from style to style. Where we have it, the 'How it fits' scale on the product page shows whether a style runs small, true to size or large.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "answer"
+              ]
+            },
+            "row_4": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "What if I am between two sizes?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "answer": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>We would generally suggest the larger size, particularly if you have a wide foot or like to wear thicker socks. The removable memory-foam insoles can also be taken out if you need a little extra room.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "answer"
+              ]
+            },
+            "row_5": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "Can I try the shoes on before I buy?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "answer": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Yes. You are welcome to visit our shop at City Square Mall, 180 Kitchener Rd #03-15, Singapore 208539, and try on our shoes in person. Our opening hours are [opening hours].</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "answer"
+              ]
+            }
+          },
+          "block_order": [
+            "row_1",
+            "row_2",
+            "row_3",
+            "row_4",
+            "row_5"
+          ]
+        }
+      },
+      "block_order": [
+        "heading",
+        "accordion"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "flex-start",
+        "gap": 8,
+        "section_width": "narrow",
+        "section_height": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "toggle_overlay": false,
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "padding-block-start": 40,
+        "padding-block-end": 0
+      }
+    },
+    "faq_wide_fits": {
+      "type": "section",
+      "name": "Wide fits & bunions",
+      "blocks": {
+        "heading": {
+          "type": "text",
+          "settings": {
+            "text": "<h2>Wide fits &amp; bunions</h2>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "h2",
+            "font": "var(--font-body--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "accordion": {
+          "type": "accordion",
+          "settings": {
+            "icon": "plus",
+            "dividers": true,
+            "divider_color": "{{ settings.color_palette.color3 }}",
+            "type_preset": "h5",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "row_1": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "Are your shoes really wide-fit?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "answer": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Yes. We have been making wide-fit footwear in Singapore since 1974, and our shoes are designed with broader feet in mind. A roomy, broad-front last gives your toes space to spread naturally instead of being squeezed together.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "answer"
+              ]
+            },
+            "row_2": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "Will your shoes suit bunions?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "answer": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Our broad-front last is bunion-friendly, giving the front of the foot extra room so there is less pressure on the joint. Every foot is different, so if you have a painful bunion or a medical condition, it is worth checking with your podiatrist or doctor too.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "answer"
+              ]
+            },
+            "row_3": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "Can I wear my own orthotics or insoles?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "answer": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Our memory-foam insoles are removable, so you can take them out and use your own orthotic or insole if you prefer. If you are unsure whether a particular style will suit yours, email us at <a href=\"mailto:hello@foottree.com\">hello@foottree.com</a> before you order.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "answer"
+              ]
+            },
+            "row_4": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "What other comfort features do your shoes have?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "answer": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Along with the broad-front last, our shoes have removable memory-foam insoles for cushioning and slip-resistant outsoles for steadier footing. Some styles also have tie-free laces, which make them quick to slip on and off without bending down.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "answer"
+              ]
+            },
+            "row_5": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "Which styles do you make?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "answer": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>We make women's and men's comfort shoes, including Mary Janes, loafers, flats, sneakers, slip-ons, heels, derbies and boots. Browse our collections to see what is available now.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "answer"
+              ]
+            }
+          },
+          "block_order": [
+            "row_1",
+            "row_2",
+            "row_3",
+            "row_4",
+            "row_5"
+          ]
+        }
+      },
+      "block_order": [
+        "heading",
+        "accordion"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "flex-start",
+        "gap": 8,
+        "section_width": "narrow",
+        "section_height": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "toggle_overlay": false,
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "padding-block-start": 40,
+        "padding-block-end": 0
+      }
+    },
+    "faq_delivery": {
+      "type": "section",
+      "name": "Delivery",
+      "blocks": {
+        "heading": {
+          "type": "text",
+          "settings": {
+            "text": "<h2>Delivery</h2>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "h2",
+            "font": "var(--font-body--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "accordion": {
+          "type": "accordion",
+          "settings": {
+            "icon": "plus",
+            "dividers": true,
+            "divider_color": "{{ settings.color_palette.color3 }}",
+            "type_preset": "h5",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "row_1": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "Do you offer free delivery?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "answer": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Yes, delivery within Singapore is free on orders over S$100. For smaller orders, a delivery fee of [S$X] applies.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "answer"
+              ]
+            },
+            "row_2": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "How long will my order take to arrive?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "answer": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>We dispatch orders as quickly as we can. Local delivery usually takes [X working days] from dispatch.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "answer"
+              ]
+            },
+            "row_3": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "Can I track my order?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "answer": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Yes. Once your order has been dispatched you will receive an email to say it is on its way, with tracking details where the courier provides them.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "answer"
+              ]
+            },
+            "row_4": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "Do you deliver outside Singapore?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "answer": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Our free delivery offer is for local orders. If you are outside Singapore, please email <a href=\"mailto:hello@foottree.com\">hello@foottree.com</a> before you order and we will let you know what we can do.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "answer"
+              ]
+            },
+            "row_5": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "Can I change my delivery address after ordering?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "answer": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Please email <a href=\"mailto:hello@foottree.com\">hello@foottree.com</a> as soon as possible with your order number and the new address. If your order has not been dispatched yet, we will do our best to update it.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "answer"
+              ]
+            }
+          },
+          "block_order": [
+            "row_1",
+            "row_2",
+            "row_3",
+            "row_4",
+            "row_5"
+          ]
+        }
+      },
+      "block_order": [
+        "heading",
+        "accordion"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "flex-start",
+        "gap": 8,
+        "section_width": "narrow",
+        "section_height": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "toggle_overlay": false,
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "padding-block-start": 40,
+        "padding-block-end": 0
+      }
+    },
+    "faq_returns": {
+      "type": "section",
+      "name": "Returns & exchanges",
+      "blocks": {
+        "heading": {
+          "type": "text",
+          "settings": {
+            "text": "<h2>Returns &amp; exchanges</h2>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "h2",
+            "font": "var(--font-body--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "accordion": {
+          "type": "accordion",
+          "settings": {
+            "icon": "plus",
+            "dividers": true,
+            "divider_color": "{{ settings.color_palette.color3 }}",
+            "type_preset": "h5",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "row_1": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "What is your returns policy?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "answer": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>We want you to be happy with your shoes. If they are not right, you can return them within [X days] of delivery, provided they are [return conditions, for example unworn and in the original box].</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "answer"
+              ]
+            },
+            "row_2": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "How do I return or exchange an item?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "answer": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Email <a href=\"mailto:hello@foottree.com\">hello@foottree.com</a> with your order number and let us know whether you would like a refund or a different size, and we will take you through the next steps. If you are in Singapore, you are also welcome to drop in to our shop at City Square Mall and talk it over with us.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "answer"
+              ]
+            },
+            "row_3": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "Can I exchange for a different size?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "answer": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Yes, wherever we can. Getting the fit right matters to us, so please email us first and we will check that the size you need is in stock before you send anything back.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "answer"
+              ]
+            },
+            "row_4": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "When will I receive my refund?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "answer": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Once we have received and checked your return, we will refund your original payment method and email you to confirm. Refunds usually take [X working days] to complete, although your bank may take a little longer to show it.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "answer"
+              ]
+            },
+            "row_5": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "What should I do if my shoes arrive damaged or faulty?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "answer": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Please email <a href=\"mailto:hello@foottree.com\">hello@foottree.com</a> as soon as you notice, with your order number and a photo of the problem. We will sort it out for you.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "answer"
+              ]
+            }
+          },
+          "block_order": [
+            "row_1",
+            "row_2",
+            "row_3",
+            "row_4",
+            "row_5"
+          ]
+        }
+      },
+      "block_order": [
+        "heading",
+        "accordion"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "flex-start",
+        "gap": 8,
+        "section_width": "narrow",
+        "section_height": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "toggle_overlay": false,
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "padding-block-start": 40,
+        "padding-block-end": 0
+      }
+    },
+    "faq_care": {
+      "type": "section",
+      "name": "Product care",
+      "blocks": {
+        "heading": {
+          "type": "text",
+          "settings": {
+            "text": "<h2>Product care</h2>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "h2",
+            "font": "var(--font-body--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "accordion": {
+          "type": "accordion",
+          "settings": {
+            "icon": "plus",
+            "dividers": true,
+            "divider_color": "{{ settings.color_palette.color3 }}",
+            "type_preset": "h5",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "row_1": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "How do I clean my shoes?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "answer": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Wipe them with a soft, slightly damp cloth to remove dirt and dust, then leave them to dry naturally. Keep them out of direct sunlight and away from extreme moisture.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "answer"
+              ]
+            },
+            "row_2": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "How do I look after leather styles?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "answer": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Wipe away dust with a soft cloth and condition the leather occasionally to keep it supple and maintain its finish. Avoid leaving leather shoes in direct sunlight.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "answer"
+              ]
+            },
+            "row_3": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "Can I put my shoes in the washing machine?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "answer": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>We would not recommend it. Machine washing and tumble drying can damage the materials and flatten the memory-foam insoles, so cleaning by hand is the safer choice.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "answer"
+              ]
+            },
+            "row_4": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "What should I do if my shoes get wet?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "answer": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Take out the removable insoles, blot away surface water with a soft cloth and let everything dry naturally at room temperature. Keep them away from radiators, hairdryers and direct sun, as strong heat can damage the shoe.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "answer"
+              ]
+            },
+            "row_5": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "Can I take out and clean the insoles?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "answer": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Yes, the memory-foam insoles are removable. Air them out regularly and wipe them gently with a damp cloth, but do not soak or machine wash them.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "answer"
+              ]
+            }
+          },
+          "block_order": [
+            "row_1",
+            "row_2",
+            "row_3",
+            "row_4",
+            "row_5"
+          ]
+        }
+      },
+      "block_order": [
+        "heading",
+        "accordion"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "flex-start",
+        "gap": 8,
+        "section_width": "narrow",
+        "section_height": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "toggle_overlay": false,
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "padding-block-start": 40,
+        "padding-block-end": 0
+      }
+    },
+    "faq_orders": {
+      "type": "section",
+      "name": "Orders & payment",
+      "blocks": {
+        "heading": {
+          "type": "text",
+          "settings": {
+            "text": "<h2>Orders &amp; payment</h2>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "h2",
+            "font": "var(--font-body--family)",
+            "font_size": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "accordion": {
+          "type": "accordion",
+          "settings": {
+            "icon": "plus",
+            "dividers": true,
+            "divider_color": "{{ settings.color_palette.color3 }}",
+            "type_preset": "h5",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "row_1": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "What payment methods do you accept?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "answer": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>The payment methods we accept are shown at checkout, so you can choose the one that suits you before you pay.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "answer"
+              ]
+            },
+            "row_2": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "Is it safe to pay online?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "answer": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Yes. Your payment is handled through Shopify's secure checkout, and we never see or store your full card details.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "answer"
+              ]
+            },
+            "row_3": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "Will I receive an order confirmation?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "answer": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Yes, you will receive an email confirmation as soon as your order is placed. If it does not arrive, please check your junk folder and then email us at <a href=\"mailto:hello@foottree.com\">hello@foottree.com</a>.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "answer"
+              ]
+            },
+            "row_4": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "Can I change or cancel my order?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "answer": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Email <a href=\"mailto:hello@foottree.com\">hello@foottree.com</a> as soon as you can with your order number. If your order has not been dispatched, we will do our best to make the change or cancel it for you.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "answer"
+              ]
+            },
+            "row_5": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "How can I contact you?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "answer": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>You can email us at <a href=\"mailto:hello@foottree.com\">hello@foottree.com</a>, or visit our shop at City Square Mall, 180 Kitchener Rd #03-15, Singapore 208539. We have been looking after customers' feet since 1974 and are always glad to help.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "answer"
+              ]
+            }
+          },
+          "block_order": [
+            "row_1",
+            "row_2",
+            "row_3",
+            "row_4",
+            "row_5"
+          ]
+        }
+      },
+      "block_order": [
+        "heading",
+        "accordion"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "flex-start",
+        "gap": 8,
+        "section_width": "narrow",
+        "section_height": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "toggle_overlay": false,
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "padding-block-start": 40,
+        "padding-block-end": 80
+      }
+    }
+  },
+  "order": [
+    "breadcrumb",
+    "title",
+    "faq_sizing",
+    "faq_wide_fits",
+    "faq_delivery",
+    "faq_returns",
+    "faq_care",
+    "faq_orders"
+  ]
+}
