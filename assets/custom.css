@@ -1766,3 +1766,12 @@ swatches-variant-picker-component {
    rather than having a navigation size of their own. A new card anywhere
    should be 16px so a row reads evenly whether it holds products or
    collections. */
+
+/* ---- Announcement bar: 14px ----
+   The bar is store chrome, not running copy, so it sits on the "small" rung rather than
+   inheriting the 16px paragraph size. sections/header-announcements.liquid is a stock Horizon
+   file and exposes no font-size setting, so this is overridden here rather than edited
+   upstream, which would conflict on the next Horizon merge. */
+.announcement-bar__text {
+  font-size: var(--font-size--sm); /* 14px */
+}

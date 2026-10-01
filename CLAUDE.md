@@ -26,8 +26,12 @@ stores before, and an omitted `--store` silently reads or writes the wrong shop.
 
 Sizes live in **Theme settings → Typography** (`type_size_h1`…`h6` in
 `config/settings_data.json`). Do not hardcode a heading size in a section's `{% stylesheet %}`
-and do not add a size override to `custom.css` — change the scale, or use the right level. The
-one exception is a genuinely bespoke element, and then it still has to land on a ladder value.
+— change the scale, or use the right level.
+
+A scoped rule in `custom.css` is correct only when the element is chrome with no heading level
+and no theme setting, and the file that owns it is stock Horizon (editing that would conflict
+on the next upstream merge). The announcement bar is the worked example. Even then the value
+must land on a ladder rung, and the rule carries a comment saying why it exists.
 
 **Building a page from the Figma:** the mockup's px values are a starting point, not the spec.
 Snap each one to the nearest ladder value before writing it. Typing Figma numbers verbatim is

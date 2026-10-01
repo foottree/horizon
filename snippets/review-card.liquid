@@ -173,7 +173,10 @@
     margin: 0;
     font-family: var(--font-heading--family);
     font-weight: 600;
-    font-size: 1.5rem; /* 24px, h4 rung of the type ladder */
+    /* 18px. At 24px the quote was three quarters of the 32px section heading and dominated a
+       400px card; a step down lets the heading lead and keeps the card's own hierarchy
+       readable at 18 / 16 / 14. */
+    font-size: 1.125rem;
     line-height: 1.24;
     color: var(--color-foreground);
   }
@@ -204,7 +207,7 @@
   .review-card__name {
     font-family: var(--font-subheading--family);
     font-weight: 600;
-    font-size: 1.125rem;
+    font-size: 1rem; /* 16px, a step under the quote so the card reads 18 / 16 / 14 */
     line-height: 1.6;
     color: var(--color-foreground);
   }
