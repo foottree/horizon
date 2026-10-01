@@ -1862,3 +1862,18 @@ swatches-variant-picker-component {
     --font-h2--size: 1.75rem; /* 28px */
   }
 }
+
+/* ---- Footer columns sit closer once they stack ----
+   The footer section's `gap` setting (60px) feeds a single --footer-gap used on both axes. At
+   desktop that is the gutter between the four columns and reads well; on mobile the columns
+   stack and the same 60px becomes a void between each menu set. Only the row axis is narrowed,
+   so the desktop column gutter is untouched and the setting still owns it. There is no mobile
+   gap field on this section, which is why this is CSS rather than a setting. */
+@media screen and (max-width: 749px) {
+  /* Doubled class: sections/footer.liquid sets `gap: var(--footer-gap)` in its own
+     {% stylesheet %}, which is compiled after custom.css, so a single .footer-content
+     (0,1,0) loses on source order at equal specificity. */
+  .footer-content.footer-content {
+    row-gap: 32px;
+  }
+}
