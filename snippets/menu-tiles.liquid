@@ -22,29 +22,13 @@
   class="ft-tiles"
   style="--tile-image-ratio: {{ tile_image_ratio | default: '3 / 4' }};"
 >
-  {%- if link.type == 'collection_link' -%}
-    <a
-      href="{{ link.url }}"
-      class="ft-tiles__tile"
-    >
-      <span class="ft-tile-image">
-        {% render 'menu-tile-image', link: link %}
-      </span>
-      <span
-        class="ft-tiles__scrim"
-        aria-hidden="true"
-      ></span>
-      <span class="ft-tiles__label">
-        {{- 'actions.all_category' | t: title: link.title -}}
-        <span
-          class="svg-wrapper ft-tiles__arrow"
-          aria-hidden="true"
-        >
-          {{- 'icon-arrow.svg' | inline_asset_content -}}
-        </span>
-      </span>
-    </a>
-  {%- endif -%}
+  {%- comment -%}
+    No auto "All <category>" tile. It pushed Women to 7 tiles, and at 1440 a 7-tile row needs
+    1348px against the 1338px panel, so it wrapped a single orphan tile onto a second row. The
+    top-level link ("Women", "Men") already points at that same collection, so the tile was a
+    duplicate entry point. Six children is now the practical maximum per row; see the 6-column
+    cap on .ft-tiles in assets/custom.css.
+  {%- endcomment -%}
   {%- for child in link.links -%}
     <a
       href="{{ child.url }}"

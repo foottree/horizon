@@ -975,12 +975,25 @@
 }
 
 #header-component .ft-tiles {
+  --ft-tiles-columns: 6;
+  --ft-tiles-tile-width: 172px;
+  --ft-tiles-gap: 24px;
+
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
   width: 100%;
-  gap: 24px;
+  gap: var(--ft-tiles-gap);
+  /* Hard cap the row at 6 tiles. The tiles are a fixed width, so without this the row simply
+     fits as many as the panel allows: 7 at very wide viewports, 6 just below, which made the
+     same menu reflow between one and two rows depending on the screen. Capping the row's own
+     width makes the wrap point a decision rather than a side effect of the viewport. */
+  max-width: calc(
+    var(--ft-tiles-columns) * var(--ft-tiles-tile-width) + (var(--ft-tiles-columns) - 1) *
+      var(--ft-tiles-gap)
+  );
+  margin-inline: auto;
 }
 
 #header-component .ft-tiles__tile,
