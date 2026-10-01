@@ -1650,10 +1650,10 @@
             }
           },
           "block_order": [
-            "link_story",
             "eyebrow",
             "heading",
             "paragraph",
+            "link_story",
             "divider",
             "stats_row"
           ]
