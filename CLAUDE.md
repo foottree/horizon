@@ -14,7 +14,7 @@ stores before, and an omitted `--store` silently reads or writes the wrong shop.
 
 | px | Use |
 |----|-----|
-| 72 | display — homepage hero only (its text blocks use the `custom` preset) |
+| 72 | display — homepage hero only, **40 on mobile**; its text blocks use the `custom` preset and set their own size, so the scale does not drive it |
 | 48 | `h1` page title: collection, product, page, blog, article, 404 |
 | 32 | `h2` **section title** — the standard |
 | 28 | `h3` sub-heading inside a section |

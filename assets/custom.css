@@ -761,6 +761,10 @@
   text-box-trim: trim-both;
   text-box-edge: cap alphabetic;
   overflow: visible;
+  /* 18px, the ladder step below the 20px these inherit from --menu-font-xl--size. Set here
+     rather than on the token: that token is Horizon's "xl" menu preset and any menu set to it
+     would move too, and this is the only surface that should change. */
+  font-size: var(--font-size--lg, 1.125rem);
 }
 
 /* Drawer top-level carets: the right-pointing caret on a row that opens a level-2 panel
@@ -1130,7 +1134,9 @@
    minimum for reading text does not apply. */
 @media screen and (max-width: 749px) {
   .product-badges .product-badges__badge {
-    --badge-font-size: var(--font-size--xs);
+    /* 12px. --font-size--xs is 13px, which is off the ladder; --font-size--2xs is the
+       caption/eyebrow step. The token itself is left alone, as Horizon uses it elsewhere. */
+    --badge-font-size: var(--font-size--2xs);
     --badge-rectangle-padding-block: 2px;
     --badge-rectangle-padding-inline: 9px;
   }
@@ -1728,9 +1734,11 @@ swatches-variant-picker-component {
    NOT from per-section CSS. Do not hardcode a heading size in a section;
    change the scale or use the right level, so every page stays in step.
 
-     h1  48px   page title, one per page (collection, cart, page, article).
-                The homepage hero sets its own size on the text block and is
-                not on this scale.
+     --  72px   display: the homepage hero only, 40px on mobile. Its text
+                blocks use the 'custom' type_preset and set their own size, so
+                it is not driven by the scale below. Deliberate, not a stray.
+     h1  48px   page title, one per page (collection, product, cart, page,
+                blog, article, 404).
      h2  32px   SECTION TITLE - the standard. "Shop by Collection",
                 "Bestsellers", "New Arrivals", "Why customers love ...".
                 Same size on mobile and desktop; no responsive step.
