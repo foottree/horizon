@@ -1775,3 +1775,30 @@ swatches-variant-picker-component {
 .announcement-bar__text {
   font-size: var(--font-size--sm); /* 14px */
 }
+
+/* ---- "Find your shoe": bridge the gap between the pill and its panel ----
+   Every other top-level item is a mega menu now, so this is the only dropdown left, and its
+   trigger is the bordered pill with its own margin-block. That leaves a dead strip between the
+   pill's bottom edge and the top of the panel: at 1440 the pill ends at y=107 and the panel
+   starts at y=139, so the pointer spends ~32px over neither element, pointerleave fires and the
+   menu shuts before the cursor arrives.
+
+   Horizon has a safety box for exactly this (.menu-list__list-item::after, sized by
+   header-menu.js via --box-height) but it only renders when the script sets
+   data-safety-box="true", which never happens on this item - the attribute reads null on hover.
+   Rather than drive that from here, this is a transparent always-on strip hung off the trigger,
+   which already has position: relative for its search icon. The icon owns ::before, so ::after
+   is free. Height = the header's bottom padding plus the pill's own 6px margin, i.e. exactly
+   the distance down to where the panel begins. Transparent and behind the panel, so it changes
+   nothing visually and, unlike the stock box, never toggles `display` and so cannot re-raster
+   the header. */
+#header-component
+  .menu-list--dropdown
+  .menu-list__list-item--dropdown
+  > .menu-list__trigger:has(> a[href$='/pages/size-width-guide'])::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  inset-block-start: 100%;
+  height: calc(var(--header-padding, 26px) + 6px);
+}

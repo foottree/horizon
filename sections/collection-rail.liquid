@@ -250,8 +250,12 @@
     /* Panel width : height as drawn in Figma (588 big + 16 gap + 588 tall wide, 347 + 16 + 300
        tall) - the panel's own ratio, not any one tile's, so the two rows keep their 347:300
        split (after the real gap is subtracted) no matter how the columns are split between
-       tall_column_width settings. */
-    aspect-ratio: 1192 / 663;
+       tall_column_width settings.
+
+       Height reduced 20% from the drawn 663 (663 x 0.8 = 530). The ratio is the only lever on
+       the grid's height: the rows are fr units of it and the tiles fill their row, so changing
+       it here scales every tile together and keeps the 347:300 split intact. */
+    aspect-ratio: 1192 / 530;
     grid-template-areas:
       'big big tall tall'
       'smalla smallb tall tall';
