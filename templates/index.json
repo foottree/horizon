@@ -780,7 +780,7 @@
         "content": {
           "type": "group",
           "settings": {
-            "link": "",
+            "link": "shopify://collections/new-arrivals",
             "open_in_new_tab": false,
             "content_direction": "column",
             "vertical_on_mobile": true,
@@ -2118,10 +2118,10 @@
         "background_color": "",
         "css_class": "ft-social-videos",
         "padding-block-start": 30,
-        "padding-block-end": 30,
+        "padding-block-end": 50,
         "custom_mobile_padding": true,
         "mobile-padding-block-start": 57,
-        "mobile-padding-block-end": 57,
+        "mobile-padding-block-end": 68,
         "mobile-padding-inline-start": 0,
         "mobile-padding-inline-end": 0
       }
