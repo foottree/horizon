@@ -984,13 +984,23 @@
   justify-content: center;
   width: 100%;
   gap: var(--ft-tiles-gap);
-  /* The row spans the contained section width (the same inset every homepage section uses,
-     --ft-gutter, so the tiles line up with the content beneath the header) and stays centred
-     in the panel. If the panel is narrower than that, width: 100% wins. Each tile below takes
-     exactly one of --ft-tiles-columns columns of this row, so the column count is a decision
-     rather than a side effect of the viewport: a 7th tile wraps to a second row, and a menu
-     with only 2 tiles shows 2 one-sixth tiles (centred), never 2 half-width ones. */
-  max-width: calc(100vw - (var(--ft-gutter, 40px) * 2));
+  /* Tiles are a touch wider than the original 172px, not stretched to the contained width:
+     192px each, so the row tops out at 6 x 192 + 5 x 24 = 1272px and still leaves air either
+     side of the panel. 172px was too tight for the label - "Dress & Formal" plus its arrow
+     needs ~139px against a 136px text column, so the arrow wrapped onto a line of its own;
+     192px gives a 156px column and ~17px of slack.
+
+     The width is a max rather than a fixed size: each tile takes exactly one of
+     --ft-tiles-columns columns of the row, so below 1272px they shrink together instead of
+     the row overflowing. That also makes the column count a decision rather than a side
+     effect of the viewport - a 7th tile wraps to a second row, and a menu with only 2 tiles
+     shows 2 one-sixth tiles, centred, never 2 half-width ones. */
+  max-width: min(
+    calc(100vw - (var(--ft-gutter, 40px) * 2)),
+    calc(
+      var(--ft-tiles-columns) * 192px + (var(--ft-tiles-columns) - 1) * var(--ft-tiles-gap)
+    )
+  );
   margin-inline: auto;
 }
 
