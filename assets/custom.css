@@ -1420,7 +1420,10 @@
 .footer-content .ft-footer-heading p {
   font-family: var(--font-subheading--family); /* Plus Jakarta Sans SemiBold: type_subheading_font is plus_jakarta_sans_n6 */
   font-weight: 600;
-  font-size: 13px;
+  /* 12px, the eyebrow rung. These are uppercase column labels, the same role as the
+     "FOR ORGANISATIONS" and "HEAR FROM OUR CUSTOMERS" eyebrows, so they take the same size.
+     It was a hardcoded 13px, which is not on the ladder at all. */
+  font-size: var(--font-size--2xs);
   letter-spacing: 1.8px;
   text-transform: uppercase;
   color: #fee6aa; /* color7 */
@@ -1824,4 +1827,38 @@ swatches-variant-picker-component {
   inset-inline: 0;
   inset-block-start: 100%;
   height: calc(var(--header-padding, 26px) + 6px);
+}
+
+/* ---- Card titles step up to 18px on mobile ----
+   16px is right beside a desktop grid of cards, but on a phone the card is most of the screen
+   and the title stopped carrying the card. This is the next rung up, not a new size, and it is
+   applied to every card title together so products, collections and the drawer tiles stay in
+   step - the whole point of the single card ladder. Prices stay at 16px, so the title now leads
+   the card instead of tying with them.
+
+   Hooks: the product card title is an unclassed <p role="heading"> inside Horizon's
+   ref="productTitleLink" anchor, which is the stable handle for it. */
+@media screen and (max-width: 749px) {
+  [ref='productTitleLink'] p,
+  .collection-rail__tile-title,
+  .collection-card p,
+  #header-component .menu-drawer__tile-label {
+    font-size: var(--font-size--lg); /* 18px */
+  }
+}
+
+/* ---- Section titles step down to 28px on mobile ----
+   h2 is the section-title rung at 32px, which is right on a desktop column but heavy across a
+   390px screen, where the title is most of the line. 28px is the next rung down, not a new size.
+
+   Overridden on the variable rather than on an h2 selector, so every consumer moves together:
+   the fork sections' headings, the text blocks presetted to h2, and the drawer and dialog
+   headings that also use it. That keeps type_size_h2 the single lever it was made to be - the
+   theme setting still owns the desktop value and this only adds the mobile step it has no
+   field for. :root is doubled for specificity because theme-styles-variables.liquid declares
+   the same property on a plain :root later in the document. */
+@media screen and (max-width: 749px) {
+  :root:root {
+    --font-h2--size: 1.75rem; /* 28px */
+  }
 }

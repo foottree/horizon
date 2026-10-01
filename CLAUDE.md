@@ -14,15 +14,14 @@ stores before, and an omitted `--store` silently reads or writes the wrong shop.
 
 | px | Use |
 |----|-----|
-| 72 | display — homepage hero only, **40 on mobile**; its text blocks use the `custom` preset and set their own size, so the scale does not drive it |
-| 48 | `h1` page title: collection, product, page, blog, article, 404. Fluid: `clamp(36px, 4.8vw, 48px)`, so **36 on mobile** is this tier's floor, not a stray |
-| 32 | `h2` **section title** — the standard |
+| 48 | `h1` page title: collection, product, page, blog, article, 404, **and the homepage hero**. Fluid: `clamp(36px, 4.8vw, 48px)`, so **36 on mobile** is this tier's floor, not a stray. There is no separate display tier any more — the hero was a bespoke 72/40 and is now on this rung |
+| 32 | `h2` **section title** — the standard. **28 on mobile** |
 | 28 | `h3` sub-heading inside a section |
 | 24 | `h4` — stat numbers, pull quotes |
 | 18 | `h5` |
 | 16 | body, and **every card title** |
 | 14 | small print, meta |
-| 12 | eyebrow, caption, legal |
+| 12 | **eyebrow**, caption, legal. Every uppercase micro-label is this size: the hero and section eyebrows, "HEAR FROM OUR CUSTOMERS", "FOR ORGANISATIONS", the footer column headings, product card badges. They drifted to 14, 13 and 12 before this was written down |
 
 Sizes live in **Theme settings → Typography** (`type_size_h1`…`h6` in
 `config/settings_data.json`). Do not hardcode a heading size in a section's `{% stylesheet %}`
@@ -32,6 +31,13 @@ A scoped rule in `custom.css` is correct only when the element is chrome with no
 and no theme setting, and the file that owns it is stock Horizon (editing that would conflict
 on the next upstream merge). The announcement bar is the worked example. Even then the value
 must land on a ladder rung, and the rule carries a comment saying why it exists.
+
+**A text block has its own mobile size field.** `enable_mobile_size` + `mobile_font_size` on a
+text block is the right lever for that block, in preference to CSS — the hero heading, hero body
+and eyebrows are all set this way, and the client can see and change them in the editor.
+Reach for a `--font-h*--size` override only for a size no block owns: the mobile h2 step is one,
+because four of the seven section headings are fork sections styled by class, not text blocks,
+so per-block settings would move three of them and leave the other four behind.
 
 **Building a page from the Figma:** the mockup's px values are a starting point, not the spec.
 Snap each one to the nearest ladder value before writing it. Typing Figma numbers verbatim is
