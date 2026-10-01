@@ -1047,7 +1047,7 @@
   display: block;
   font-family: var(--font-subheading--family);
   font-weight: var(--font-subheading--weight, 600);
-  font-size: 1.25rem; /* 20px */
+  font-size: 1rem; /* 16px, the card-title size used everywhere a collection is shown as a card */
   line-height: 1.1;
   color: #3a5316; /* color1, dark olive */
   white-space: normal;
@@ -1720,10 +1720,13 @@ swatches-variant-picker-component {
    NOT from per-section CSS. Do not hardcode a heading size in a section;
    change the scale or use the right level, so every page stays in step.
 
-     h1  56px   page / hero title, one per page
+     h1  48px   page title, one per page (collection, cart, page, article).
+                The homepage hero sets its own size on the text block and is
+                not on this scale.
      h2  32px   SECTION TITLE - the standard. "Shop by Collection",
                 "Bestsellers", "New Arrivals", "Why customers love ...".
                 Same size on mobile and desktop; no responsive step.
+                The product title also uses this preset.
      h3  28px   sub-heading inside a section
      h4  24px
      h5  18px
@@ -1733,13 +1736,16 @@ swatches-variant-picker-component {
    A section title must be an h2. A text block used as a section title
    needs type_preset "h2" and <h2> in its text, or it will not match.
 
-   CARD TITLES are a separate ladder and do not use the heading scale:
+   CARD TITLES are a separate ladder and do not use the heading scale.
+   EVERY card title is 16px, wherever it appears and whatever it points at:
 
-     collection / mega-menu tile   20px desktop, 16px mobile
-       .ft-tiles__label (desktop mega menu)
-       .menu-drawer__tile-label (mobile drawer)
-       .collection-rail__tile-title (homepage rail)
-     product card title            16px
+     product card                 16px / 600  (<p> in .product-grid__card)
+     homepage collection rail     16px / 600  .collection-rail__tile-title
+     /collections card            16px        set on its text block
+     mega menu tile (desktop)     16px / 600  .ft-tiles__label
+     mega menu tile (mobile)      16px / 600  .menu-drawer__tile-label
 
-   A new collection-style card should match the tile ladder above so a
-   collection reads the same from the nav, the homepage and a listing. */
+   The mega-menu tiles are collection cards too, so they sit on this ladder
+   rather than having a navigation size of their own. A new card anywhere
+   should be 16px so a row reads evenly whether it holds products or
+   collections. */
