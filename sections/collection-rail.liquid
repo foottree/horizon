@@ -226,15 +226,6 @@
     flex-shrink: 0;
   }
 
-  /* The theme's h2 preset (settings.type_size_h2) is a fixed 40px below the fluid-scaling
-     cutoff, so it carries no mobile size of its own here - pin the Figma's 32px explicitly,
-     with enough specificity to beat the global `.h2.h2` preset rule (0,2,0). */
-  @media screen and (max-width: 749px) {
-    .collection-rail .collection-rail__header .collection-rail__heading {
-      font-size: 2rem;
-    }
-  }
-
   .collection-rail__shop-all-arrow svg {
     width: 100%;
     height: 100%;

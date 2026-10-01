@@ -127,8 +127,17 @@
   .collection-rail__tile-title {
     font-family: var(--font-subheading--family);
     font-weight: 600;
-    font-size: 1.375rem;
+    /* Matches the mega menu's tile labels (.ft-tiles__label 20px desktop,
+       .menu-drawer__tile-label 16px mobile) so a collection card reads the same
+       whether it is reached from the nav or the homepage rail. */
+    font-size: 1.25rem;
     line-height: 1.6;
+  }
+
+  @media screen and (max-width: 749px) {
+    .collection-rail__tile-title {
+      font-size: 1rem;
+    }
   }
 
   .collection-rail__tile-arrow {

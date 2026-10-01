@@ -1699,3 +1699,34 @@ summary,
 swatches-variant-picker-component {
   --variant-picker-swatch-radius: 6px;
 }
+
+/* ======================================================================
+   TYPE STANDARD - read this before adding a section or a card
+   ======================================================================
+   Sizes come from the theme's type scale (Theme settings > Typography),
+   NOT from per-section CSS. Do not hardcode a heading size in a section;
+   change the scale or use the right level, so every page stays in step.
+
+     h1  56px   page / hero title, one per page
+     h2  32px   SECTION TITLE - the standard. "Shop by Collection",
+                "Bestsellers", "New Arrivals", "Why customers love ...".
+                Same size on mobile and desktop; no responsive step.
+     h3  28px   sub-heading inside a section
+     h4  24px
+     h5  18px
+     h6  14px
+     p   16px   body
+
+   A section title must be an h2. A text block used as a section title
+   needs type_preset "h2" and <h2> in its text, or it will not match.
+
+   CARD TITLES are a separate ladder and do not use the heading scale:
+
+     collection / mega-menu tile   20px desktop, 16px mobile
+       .ft-tiles__label (desktop mega menu)
+       .menu-drawer__tile-label (mobile drawer)
+       .collection-rail__tile-title (homepage rail)
+     product card title            16px
+
+   A new collection-style card should match the tile ladder above so a
+   collection reads the same from the nav, the homepage and a listing. */
