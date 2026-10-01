@@ -18,7 +18,7 @@
           "type": "menu",
           "settings": {
             "menu": "footer-shop-by-need",
-            "heading": "SHOP BY NEED",
+            "heading": "HELP GUIDE",
             "menu_spacing": 14,
             "show_as_accordion": false,
             "accordion_icon": "plus",
@@ -56,7 +56,7 @@
           "type": "menu",
           "settings": {
             "menu": "footer-comfort-fit",
-            "heading": "COMFORT & FIT",
+            "heading": "FOOT TREE",
             "menu_spacing": 14,
             "show_as_accordion": false,
             "accordion_icon": "plus",
@@ -71,31 +71,60 @@
             "padding-inline-end": 0
           }
         },
-        "menu_foot_tree_help": {
-          "type": "menu",
+        "reach_us": {
+          "type": "group",
           "settings": {
-            "menu": "footer-foot-tree-help",
-            "heading": "FOOT TREE & HELP",
-            "menu_spacing": 14,
-            "show_as_accordion": false,
-            "accordion_icon": "plus",
-            "accordion_dividers": false,
-            "background_color": "",
-            "text_color": "",
-            "heading_preset": "paragraph",
-            "link_preset": "paragraph",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          }
+            "content_direction": "column",
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "gap": 14,
+            "width": "fill",
+            "css_class": "ft-footer-reach"
+          },
+          "blocks": {
+            "reach_heading": {
+              "type": "text",
+              "settings": {
+                "text": "<p>REACH US</p>",
+                "width": "100%",
+                "max_width": "none",
+                "type_preset": "paragraph",
+                "custom_class": "ft-footer-heading"
+              }
+            },
+            "reach_text": {
+              "type": "text",
+              "settings": {
+                "text": "<p>Visit City Square Mall<br>180 Kitchener Rd, #03-15 Singapore 208539<br><br>hello@foottree.com</p>",
+                "width": "100%",
+                "max_width": "none",
+                "type_preset": "paragraph",
+                "text_color": "#ffffffd1",
+                "custom_class": "ft-footer-reach-text"
+              }
+            },
+            "reach_tiktok": {
+              "type": "icon",
+              "settings": {
+                "icon": "tiktok",
+                "width": 24,
+                "link": "",
+                "open_in_new_tab": true,
+                "icon_color": "#ffffffd1"
+              }
+            }
+          },
+          "block_order": [
+            "reach_heading",
+            "reach_text",
+            "reach_tiktok"
+          ]
         }
       },
       "block_order": [
         "menu_shop_by_need",
         "menu_shop",
         "menu_comfort_fit",
-        "menu_foot_tree_help"
+        "reach_us"
       ],
       "name": "t:names.footer",
       "settings": {

@@ -1409,14 +1409,37 @@
    .footer-content is sections/footer.liquid's own content wrapper class (see its {% stylesheet %}
    block, which already scopes a rule the same way) - there is only one footer on the site, so no
    further scoping is needed. The section-group wrapper's own id is store/theme-specific
-   (id="shopify-section-sections--<n>__footer"), so it is not used as a selector here. */
-.footer-content .menu__heading__default {
+   (id="shopify-section-sections--<n>__footer"), so it is not used as a selector here.
+
+   The REACH US column is not a menu: it is a group block holding a text block (heading), a text
+   block (address) and an icon block (sections/footer-group.json, block "reach_us"). Its heading
+   carries the css_class "ft-footer-heading" so it shares this rule and cannot drift from the
+   three menu headings beside it. */
+.footer-content .menu__heading__default,
+.footer-content .ft-footer-heading,
+.footer-content .ft-footer-heading p {
   font-family: var(--font-subheading--family); /* Plus Jakarta Sans SemiBold: type_subheading_font is plus_jakarta_sans_n6 */
   font-weight: 600;
   font-size: 13px;
   letter-spacing: 1.8px;
   text-transform: uppercase;
   color: #fee6aa; /* color7 */
+}
+
+/* A menu heading is a <summary>: padding-block var(--padding-sm) around a paragraph-height line box
+   (48px at the default scale). The REACH US heading is a bare text block, so without this it sits
+   about 14px higher than HELP GUIDE / SHOP / FOOT TREE and the address starts above the first
+   link. Same padding and line box here puts all four headings, and the first row beneath them, on
+   one line. */
+.footer-content .ft-footer-heading {
+  /* the 2px shift moves the 13px glyphs down to where the menu headings paint them: there the
+     text shares a baseline with the summary's 16px line, which a bare 13px line box does not
+     (measured: 2.0px at 390 and 1440). Total height stays 2 x padding-sm + one line. */
+  padding-block: calc(var(--padding-sm) + 2px) calc(var(--padding-sm) - 2px);
+}
+
+.footer-content .ft-footer-heading p {
+  line-height: calc(var(--font-paragraph--size) * var(--font-paragraph--line-height));
 }
 
 .footer-content .menu__item,
