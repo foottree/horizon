@@ -217,7 +217,7 @@
             "lockup_copyright": {
               "type": "text",
               "settings": {
-                "text": "<p>© 2026 Peapes Footwear Pte Ltd · UEN [XXXXXXXXX] · Designed in Singapore since 1974</p>",
+                "text": "<p>© 2026 Peapes Footwear Pte Ltd</p>",
                 "width": "fit-content",
                 "max_width": "none",
                 "alignment": "left",
