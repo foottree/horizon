@@ -1897,3 +1897,12 @@ swatches-variant-picker-component {
     grid-column: 1 / -1;
   }
 }
+
+/* ---- Product card prices one rung below the title ----
+   The price matched the card title at 16px, so the two competed. 14px is the small/meta rung,
+   which leaves the name leading the card. Scoped to .product-card__content, the wrapper every
+   card context shares (collection grid, homepage rails, recommendations, cart drawer), and which
+   the product page's own buy box does not use, so the PDP price is unaffected. */
+.product-card__content product-price {
+  font-size: var(--font-size--sm); /* 14px */
+}
