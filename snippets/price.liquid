@@ -60,17 +60,29 @@
     assign use_currency = true
   endif
 
-  # Format all prices
+  # Format all prices.
+  #
+  # Trailing zeros are dropped, so a whole-pound price reads "$149 SGD" rather than
+  # "$149.00 SGD", while a price with real cents keeps them ("$149.50 SGD").
+  #
+  # Shopify ships `money_without_trailing_zeros` for the plain case, but there is no
+  # `money_with_currency_without_trailing_zeros`, so the currency-code branch strips ".00"
+  # from the formatted string instead. That is safe here because the shop formats to two
+  # decimals, so ".00" only ever appears as the cents of a whole amount: "$1,000.00 SGD"
+  # becomes "$1,000 SGD", and "$149.50 SGD" is left alone.
+  #
+  # Cart totals are deliberately untouched; they render through snippets/cart-summary.liquid
+  # and snippets/cart-products.liquid, which still show the full amount.
   if use_currency
-    assign price = price | money_with_currency
-    assign compare_at_price = compare_at_price | money_with_currency
-    assign price_min = price_min | money_with_currency
-    assign price_max = price_max | money_with_currency
+    assign price = price | money_with_currency | replace: '.00', ''
+    assign compare_at_price = compare_at_price | money_with_currency | replace: '.00', ''
+    assign price_min = price_min | money_with_currency | replace: '.00', ''
+    assign price_max = price_max | money_with_currency | replace: '.00', ''
   else
-    assign price = price | money
-    assign compare_at_price = compare_at_price | money
-    assign price_min = price_min | money
-    assign price_max = price_max | money
+    assign price = price | money_without_trailing_zeros
+    assign compare_at_price = compare_at_price | money_without_trailing_zeros
+    assign price_min = price_min | money_without_trailing_zeros
+    assign price_max = price_max | money_without_trailing_zeros
   endif
 -%}
 
