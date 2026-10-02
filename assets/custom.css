@@ -1906,3 +1906,29 @@ swatches-variant-picker-component {
 .product-card__content product-price {
   font-size: var(--font-size--sm); /* 14px */
 }
+
+/* ---- Filter panel: match the card titles ----
+   Two mismatches against the rest of the page.
+
+   1. The filter group names ("Size (EU)", "Features", "Availability", "Price") rendered at
+      24px/400. They label a column of links the same way a product card title labels a card, so
+      they take the card-title treatment: 16px/600.
+   2. The checkbox labels rendered at rgba(foreground / 0.8) via --color-foreground-subdued,
+      which read grey next to the full-strength headings, pills and card titles beside them.
+      Full foreground here. The disabled state ("Out of stock") is deliberately left subdued,
+      which is why the selector keeps Horizon's .checkbox--disabled exclusion.
+
+      Stock list-filter.liquid also sets the hover colour to var(--color-foreground-rgb), which
+      is the bare "38, 38, 34" triplet rather than a colour, so hover had no valid value to
+      resolve to. Setting both states to the same colour makes that moot. */
+.facets .facets__label {
+  font-size: var(--font-size--md); /* 16px */
+  font-weight: 600;
+}
+
+/* Doubled .facets: list-filter.liquid declares the same selector in its own {% stylesheet %},
+   which compiles after custom.css, so an equal-specificity rule loses on source order. */
+.facets.facets .checkbox:not(.checkbox--disabled) .checkbox__label-text,
+.facets.facets .checkbox:not(.checkbox--disabled):hover .checkbox__label-text {
+  color: var(--color-foreground);
+}
