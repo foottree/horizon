@@ -14,7 +14,7 @@ stores before, and an omitted `--store` silently reads or writes the wrong shop.
 
 | px | Use |
 |----|-----|
-| 48 | `h1` page title: collection, product, page, blog, article, 404, **and the homepage hero**. Fluid: `clamp(36px, 4.8vw, 48px)`, so **36 on mobile** is this tier's floor, not a stray. There is no separate display tier any more — the hero was a bespoke 72/40 and is now on this rung |
+| 48 | `h1` page title: collection, page, blog, article, 404, **and the homepage hero**. Fluid: `clamp(36px, 4.8vw, 48px)`, so **36 on mobile** is this tier's floor, not a stray. There is no separate display tier any more — the hero was a bespoke 72/40 and is now on this rung. **The product title is the exception — see below** |
 | 32 | `h2` **section title** — the standard. **28 on mobile** |
 | 28 | `h3` sub-heading inside a section |
 | 24 | `h4` — stat numbers, pull quotes |
@@ -51,11 +51,27 @@ how 22px, 20px, 15px and 13px got onto the homepage.
 - A **section title** is an `<h2>`. A text block used as one needs `type_preset: "h2"` and
   `<h2>` in its `text`.
 
+**The product title is the one exception: `<h1>` tag, `h2` preset (32px).** It is the only
+page title that does not span the page — it sits in a ~413px column beside an 803px gallery.
+Real product names here run 40–50 characters ("Men's Black Leather Slip-On Work Shoes 047U-8"),
+so at 48px they wrapped to four lines and swamped the column. The sweep that put every page
+title on the h1 rung did not catch this because the demo products were named "Vira Slip-on".
+Judge a title size against the **longest real** title in the **column it actually occupies**,
+never against placeholder content.
+
 ### Card titles are 16px, everywhere
 
 Product cards, the homepage collection rail (`.collection-rail__tile-title`), `/collections`
-cards, and both mega-menu tile grids (`.ft-tiles__label`, `.menu-drawer__tile-label`). A row of
-cards should read evenly whether it holds products or collections.
+cards, the product page's "You may also like" rail, and both mega-menu tile grids
+(`.ft-tiles__label`, `.menu-drawer__tile-label`). A row of cards should read evenly whether it
+holds products or collections.
+
+**16px at weight 600**, and the weight comes from the *font family*, not a weight setting:
+`--font-subheading--weight` is 600 and `--font-body--weight` is 400. A card title block must be
+`type_preset: "custom"` + `font: "var(--font-subheading--family)"` + `font_size: ""`. A block
+left on the `paragraph` or `rte` preset with the body family renders 16px/400 and looks
+lighter than every other card on the site — that is how the recommendations rail and the
+`/collections` cards drifted. Matching the size alone is not enough; measure the weight too.
 
 ## A global setting reaches the whole site
 
