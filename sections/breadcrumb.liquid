@@ -27,18 +27,14 @@
 
   case template.name
     when 'collection'
+      # Always "Home / Collections / <this collection>". The middle crumb used to be resolved by
+      # walking the nav for a top-level item that owns this collection, which read well for
+      # Women / Women's Loafers but gave "Find your shoe" for the need-based collections, and
+      # nothing at all for a collection the nav does not list. A fixed Collections crumb is the
+      # same on every collection page and points at /collections, which is a real listing page.
       assign current_title = collection.title
-      for top_link in menu.links
-        unless found_parent
-          for child_link in top_link.links
-            if child_link.url == collection.url
-              assign crumb2_title = top_link.title
-              assign crumb2_url = top_link.url
-              assign found_parent = true
-            endif
-          endfor
-        endunless
-      endfor
+      assign crumb2_title = 'Collections'
+      assign crumb2_url = routes.collections_url
 
     when 'product'
       assign current_title = product.title
