@@ -1,0 +1,394 @@
+{% comment %}
+  Our Story timeline (Figma "02 Timeline - our story"): an optional first-person intro note, then a row for
+  each chapter. A row is a year chip, a heading and one or two paragraphs beside a photo, and the photo
+  side alternates down the page - left, right, left...
+
+  The side follows the row's position among the rows, not a setting, so adding, removing or reordering a
+  row keeps the alternation. The photo comes first in the markup, so below 750px every row stacks
+  photo-then-text whatever the desktop side was.
+
+  Photos: every slot is an optional image picker. An empty slot renders nothing on the live site and the
+  row drops its media column and runs text-only (see snippets/story-media.liquid). In the theme editor an
+  empty slot shows a grey tile with its brief. Layout "Photo pair" gives a row two portrait photos side by
+  side (the 1974 row); every other row is one landscape photo.
+
+  The intro note is its own block, so it can be removed. Delete it if the person it names would rather not
+  be named.
+
+  Type: .h3 on the row headings (28px), --font-size--2xs for the year chip, --font-paragraph--size for
+  copy, --font-size--sm for captions.
+{% endcomment %}
+
+<div class="section-background" style="background-color: {{ settings.color_palette.color5 }};"></div>
+
+<div
+  class="section section--narrow story-timeline spacing-style"
+  style="
+    {% render 'spacing-style', settings: section.settings %}
+    --st-ink: {{ settings.color_palette.foreground }};
+    --st-soft: {{ settings.color_palette.color8 }};
+    --st-accent: {{ settings.color_palette.color4 }};
+    --st-chip: {{ settings.color_palette.color2 }};
+  "
+  data-testid="story-timeline"
+>
+  <div class="story-timeline__inner">
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'note' -%}
+        <div class="story-note" {{ block.shopify_attributes }}>
+          {%- if block.settings.show_mark -%}
+            {%- render 'story-mark', class_name: 'story-note__mark' -%}
+          {%- endif -%}
+          {%- if block.settings.paragraph_1 != blank -%}
+            <p class="story-note__text">{{ block.settings.paragraph_1 }}</p>
+          {%- endif -%}
+          {%- if block.settings.paragraph_2 != blank -%}
+            <p class="story-note__text">{{ block.settings.paragraph_2 }}</p>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- assign row_number = 0 -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'row' -%}
+        {%- assign row_number = row_number | plus: 1 -%}
+        {%- assign row_parity = row_number | modulo: 2 -%}
+
+        {%- capture media_html -%}
+          {%- render 'story-media',
+            image: block.settings.image,
+            image_2: block.settings.image_2,
+            layout: block.settings.layout,
+            brief: block.settings.brief,
+            brief_2: block.settings.brief_2,
+            caption: block.settings.caption,
+            alt: block.settings.heading
+          -%}
+        {%- endcapture -%}
+        {%- assign has_media = false -%}
+        {%- if media_html != blank -%}
+          {%- assign has_media = true -%}
+        {%- endif -%}
+
+        <div
+          class="story-row{% if row_parity == 0 %} story-row--flip{% endif %}{% unless has_media %} story-row--text-only{% endunless %}"
+          {{ block.shopify_attributes }}
+        >
+          {%- if has_media -%}
+            <div class="story-row__media">{{ media_html }}</div>
+          {%- endif -%}
+
+          <div class="story-row__text">
+            {%- if block.settings.chip != blank -%}
+              <span class="story-chip">{{ block.settings.chip }}</span>
+            {%- endif -%}
+            {%- if block.settings.heading != blank -%}
+              <h3 class="h3 story-row__title">{{ block.settings.heading }}</h3>
+            {%- endif -%}
+            {%- if block.settings.body != blank -%}
+              <div class="story-row__body">{{ block.settings.body }}</div>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  .story-timeline__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 56px;
+  }
+
+  .story-note {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    max-width: 720px;
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .story-note__mark {
+    width: 44px;
+    height: auto;
+    color: var(--st-accent);
+  }
+
+  .story-note__text {
+    margin: 0;
+    font-size: var(--font-paragraph--size);
+    line-height: var(--line-height--body-loose);
+    color: var(--st-ink);
+  }
+
+  .story-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: center;
+    gap: 24px;
+  }
+
+  .story-row__media,
+  .story-row__text {
+    min-width: 0;
+  }
+
+  .story-row__text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
+
+  .story-chip {
+    display: inline-flex;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: var(--st-chip);
+    font-family: var(--font-subheading--family);
+    font-weight: var(--font-subheading--weight);
+    font-size: var(--font-size--2xs);
+    line-height: 1.3;
+    letter-spacing: 0.04em;
+    color: var(--st-accent);
+  }
+
+  /* .h3 paints with `color: var(--color)`, so the colour goes in through --color. Line height is set
+     because the scale's 1.1 is tight on a wrapped heading; doubled class to beat .h3.h3. */
+  .story-row__title.story-row__title {
+    --color: var(--st-ink);
+
+    margin: 0;
+    line-height: 1.2;
+    text-wrap: balance;
+  }
+
+  .story-row__body {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    font-size: var(--font-paragraph--size);
+    line-height: var(--line-height--body-loose);
+    color: var(--st-soft);
+  }
+
+  .story-row__body p {
+    margin: 0;
+    font-size: inherit;
+    line-height: inherit;
+    color: inherit;
+  }
+
+  /* No photo: the media column is gone, so the row is a single full-width column. The copy stays at a
+     readable measure rather than running 1240px across. */
+  .story-row--text-only .story-row__text {
+    max-width: 720px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .story-timeline__inner {
+      gap: 80px;
+    }
+
+    .story-row {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: clamp(48px, 8.34vw, 120px);
+    }
+
+    .story-row--text-only {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    /* Even rows put the photo on the right. It is first in the markup, so this only reorders it on
+       screens wide enough to sit it beside the copy; the stacked layout below 750px is untouched. */
+    .story-row--flip > .story-row__media {
+      order: 2;
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .story-timeline__inner {
+      gap: 128px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Story timeline",
+  "class": "section-story-timeline",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 128
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 128
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_mobile_padding",
+      "label": "Custom mobile padding",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "mobile-padding-block-start",
+      "label": "Mobile top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 56,
+      "visible_if": "{{ section.settings.custom_mobile_padding }}"
+    },
+    {
+      "type": "range",
+      "id": "mobile-padding-block-end",
+      "label": "Mobile bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 56,
+      "visible_if": "{{ section.settings.custom_mobile_padding }}"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "note",
+      "name": "Intro note",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "A short first-person note above the timeline. Remove this block to drop it entirely."
+        },
+        {
+          "type": "checkbox",
+          "id": "show_mark",
+          "label": "Show the Foot Tree mark",
+          "default": true
+        },
+        {
+          "type": "textarea",
+          "id": "paragraph_1",
+          "label": "First paragraph",
+          "default": "Hi, I'm Shi Ying, and I look after Foot Tree today. [One line on how you came to Foot Tree — e.g. your link to the founder.]"
+        },
+        {
+          "type": "textarea",
+          "id": "paragraph_2",
+          "label": "Second paragraph",
+          "default": "Our story starts well before me — with a boy in his father's shoe factory, and the lesson he learned there."
+        }
+      ]
+    },
+    {
+      "type": "row",
+      "name": "Chapter",
+      "limit": 12,
+      "settings": [
+        {
+          "type": "text",
+          "id": "chip",
+          "label": "Year chip",
+          "default": "[19XX]"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Chapter heading"
+        },
+        {
+          "type": "richtext",
+          "id": "body",
+          "label": "Text",
+          "default": "<p>Tell this part of the story.</p>"
+        },
+        {
+          "type": "header",
+          "content": "Photo"
+        },
+        {
+          "type": "select",
+          "id": "layout",
+          "label": "Photo layout",
+          "options": [
+            { "value": "single", "label": "One landscape photo" },
+            { "value": "pair", "label": "Pair of portrait photos" }
+          ],
+          "default": "single"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Photo",
+          "info": "Leave empty and this chapter runs as text only on the live site. A grey tile showing the brief appears in the theme editor."
+        },
+        {
+          "type": "text",
+          "id": "brief",
+          "label": "Photo brief (editor only)",
+          "info": "What photo belongs here. Shown on the grey tile in the theme editor, never on the live site."
+        },
+        {
+          "type": "image_picker",
+          "id": "image_2",
+          "label": "Second photo",
+          "info": "Right-hand photo of the pair.",
+          "visible_if": "{{ block.settings.layout == 'pair' }}"
+        },
+        {
+          "type": "text",
+          "id": "brief_2",
+          "label": "Second photo brief (editor only)",
+          "visible_if": "{{ block.settings.layout == 'pair' }}"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Caption",
+          "info": "Sits under the photo and is hidden with it."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Story timeline",
+      "blocks": [
+        { "type": "note" },
+        { "type": "row" },
+        { "type": "row" }
+      ]
+    }
+  ]
+}
+{% endschema %}

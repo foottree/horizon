@@ -1,0 +1,159 @@
+{%- doc -%}
+  A photo slot for the Our Story page: one landscape photo, a pair of portraits side by side, or one tall
+  portrait, with an optional caption under it.
+
+  Empty slots collapse. On the live site a slot with no photo renders nothing, and when nothing at all
+  renders the caller drops the whole media column (caption included) so the row runs text-only. Inside
+  the theme editor (request.design_mode) an empty slot shows a grey tile carrying its brief, so the
+  client can see which photo is wanted and where it goes.
+
+  The brief is a text setting on the caller, not part of the image picker's `info`: `info` is fixed per
+  block type, and every row here needs a different brief.
+
+  @param {object} [image] - Photo for the first slot
+  @param {object} [image_2] - Photo for the second slot, used by layout 'pair'
+  @param {string} [layout] - 'single' (4:3 landscape, the default), 'pair' (two 3:4 portraits) or 'tall' (4:5 portrait)
+  @param {string} [brief] - Brief for the first slot, shown on the grey tile in the editor only
+  @param {string} [brief_2] - Brief for the second slot
+  @param {string} [caption] - Caption under the photo(s)
+  @param {string} [alt] - Alt text used when the image has none of its own
+{%- enddoc -%}
+
+{%- liquid
+  assign layout = layout | default: 'single'
+  assign slots = 1
+  assign sizes = '(min-width: 990px) 560px, calc(100vw - 32px)'
+  if layout == 'pair'
+    assign slots = 2
+    assign sizes = '(min-width: 990px) 270px, calc((100vw - 44px) / 2)'
+  endif
+
+  assign has_photo = false
+  if image != blank
+    assign has_photo = true
+  endif
+  if slots == 2 and image_2 != blank
+    assign has_photo = true
+  endif
+
+  assign show = has_photo
+  if request.design_mode
+    assign show = true
+  endif
+-%}
+
+{%- if show -%}
+  <figure
+    class="story-media story-media--{{ layout }}"
+    style="--sm-tile: {{ settings.color_palette.color9 }}; --sm-soft: {{ settings.color_palette.color8 }};"
+  >
+    <div class="story-media__frame">
+      {%- for slot in (1..slots) -%}
+        {%- liquid
+          if slot == 1
+            assign slot_image = image
+            assign slot_brief = brief
+          else
+            assign slot_image = image_2
+            assign slot_brief = brief_2
+          endif
+          assign slot_alt = slot_image.alt | default: alt
+        -%}
+        {%- if slot_image != blank -%}
+          <div class="story-media__photo">
+            {{-
+              slot_image
+              | image_url: width: 1200
+              | image_tag: widths: '560, 840, 1120', sizes: sizes, alt: slot_alt, class: 'story-media__img', loading: 'lazy'
+            -}}
+          </div>
+        {%- elsif request.design_mode -%}
+          <div class="story-media__photo story-media__photo--brief">
+            <p class="story-media__brief">{{ slot_brief | default: 'Photo to come' }}</p>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+    {%- if caption != blank -%}
+      <figcaption class="story-media__caption">{{ caption }}</figcaption>
+    {%- endif -%}
+  </figure>
+{%- endif -%}
+
+{% stylesheet %}
+  .story-media {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-width: 0;
+    margin: 0;
+  }
+
+  .story-media__frame {
+    display: grid;
+    gap: 20px;
+  }
+
+  .story-media--pair .story-media__frame {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .story-media__photo {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    border-radius: 8px;
+    background: var(--sm-tile);
+  }
+
+  .story-media--pair .story-media__photo {
+    aspect-ratio: 3 / 4;
+  }
+
+  .story-media--tall .story-media__photo {
+    aspect-ratio: 4 / 5;
+  }
+
+  .story-media__img {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* The grey tile only ever renders inside the theme editor. */
+  .story-media__photo--brief {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+  }
+
+  .story-media__brief {
+    max-width: 320px;
+    margin: 0;
+    font-size: var(--font-size--sm);
+    line-height: 1.5;
+    text-align: center;
+    color: var(--sm-soft);
+  }
+
+  .story-media__caption {
+    font-size: var(--font-size--sm);
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--sm-soft);
+  }
+
+  @media screen and (max-width: 749px) {
+    .story-media__frame {
+      gap: 12px;
+    }
+
+    .story-media__photo--brief {
+      padding: 24px;
+    }
+  }
+{% endstylesheet %}

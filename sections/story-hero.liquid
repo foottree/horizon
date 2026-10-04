@@ -1,0 +1,267 @@
+{% comment %}
+  Our Story hero (Figma "01 Hero - olive watermark"): an olive band with the Foot Tree mark as a faded
+  watermark running off the right edge, and over it an eyebrow, the page's h1 and a line of intro.
+
+  The watermark is the built-in mark (snippets/story-mark.liquid) in a light olive at 60% opacity, 940px
+  wide at 1440, clipped to the section. An uploaded "Watermark image" takes its place if one is set.
+
+  The Figma centres the hero ("a centred hero" in its own build notes), so the copy is centred; the
+  Alignment setting switches it to left.
+
+  Type: .h1 on the heading (48px, the page-title rung), --font-size--2xs for the eyebrow, --font-paragraph--size
+  for the intro.
+{% endcomment %}
+
+<div
+  class="section-background"
+  style="background-color: {{ settings.color_palette.color4 }};"
+></div>
+
+<div
+  class="section section--narrow story-hero story-hero--{{ section.settings.alignment }} spacing-style"
+  style="
+    {% render 'spacing-style', settings: section.settings %}
+    --sh-eyebrow: {{ settings.color_palette.color7 }};
+    --sh-ink: {{ settings.color_palette.background }};
+    --sh-mark: {{ section.settings.watermark_color }};
+  "
+  data-testid="story-hero"
+>
+  <div class="story-hero__watermark" aria-hidden="true">
+    {%- if section.settings.watermark_image != blank -%}
+      {{
+        section.settings.watermark_image
+        | image_url: width: 1880
+        | image_tag: widths: '940, 1410, 1880', sizes: '(min-width: 750px) 65vw, 560px', alt: '', class: 'story-hero__watermark-art', loading: 'lazy'
+      }}
+    {%- else -%}
+      {%- render 'story-mark', class_name: 'story-hero__watermark-art' -%}
+    {%- endif -%}
+  </div>
+
+  <div class="story-hero__copy">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="story-hero__eyebrow">{{ section.settings.eyebrow }}</p>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h1 class="h1 story-hero__title">{{ section.settings.heading }}</h1>
+    {%- endif -%}
+    {%- if section.settings.text != blank -%}
+      <p class="story-hero__text">{{ section.settings.text }}</p>
+    {%- endif -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  .story-hero {
+    align-items: center;
+    overflow: hidden;
+  }
+
+  @media screen and (min-width: 750px) {
+    .story-hero {
+      min-height: 495px;
+    }
+  }
+
+  /* An absolutely positioned child of a grid takes its grid area as its containing block; spanning
+     every column makes that the whole section, so the offsets below are measured from its edges. */
+  .story-hero__watermark {
+    position: absolute;
+    inset-block-start: -40px;
+    inset-inline-start: 69.4%;
+    grid-column: 1 / -1;
+    width: 65.3%;
+    color: var(--sh-mark);
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  .story-hero__watermark-art {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .story-hero__copy {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    width: 100%;
+    max-width: 1040px;
+    margin-inline: auto;
+  }
+
+  .story-hero--center .story-hero__copy {
+    align-items: center;
+    text-align: center;
+  }
+
+  .story-hero--left .story-hero__copy {
+    align-items: flex-start;
+    margin-inline: 0;
+    text-align: start;
+  }
+
+  .story-hero__eyebrow {
+    margin: 0;
+    font-family: var(--font-subheading--family);
+    font-weight: var(--font-subheading--weight);
+    font-size: var(--font-size--2xs);
+    line-height: 1.3;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sh-eyebrow);
+  }
+
+  /* .h1 paints with `color: var(--color)`, so the colour goes in through --color. The scale's h1 line
+     height is 1, which is tight once the title wraps to two or three lines; .h1.h1 (0,2,0) sets it, so
+     the override is doubled to win on specificity. */
+  .story-hero__title.story-hero__title {
+    --color: var(--sh-ink);
+
+    margin: 0;
+    line-height: 1.1;
+    text-wrap: balance;
+  }
+
+  .story-hero__text {
+    max-width: 780px;
+    margin: 0;
+    font-size: var(--font-paragraph--size);
+    line-height: var(--line-height--body-loose);
+    color: var(--sh-ink);
+  }
+
+  /* On a phone the mark is a corner of tree rather than a backdrop: pushed down and off the right
+     so the stacked copy keeps its contrast. */
+  @media screen and (max-width: 749px) {
+    .story-hero__copy {
+      gap: 20px;
+    }
+
+    .story-hero__watermark {
+      inset-block-start: auto;
+      inset-block-end: -48px;
+      inset-inline-start: 38%;
+      width: 360px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Story hero",
+  "class": "section-story-hero",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "EST. 1974 · A SINGAPORE BRAND · BUILT FOR PROFESSIONALS, NOW EVERYONE"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "info": "The page title (h1).",
+      "default": "Every foot is different. We've known since 1974."
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Intro",
+      "default": "From a boy learning the trade in his father's shoe factory to more than a million pairs made and fitted — this is how Foot Tree got here."
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Alignment",
+      "options": [
+        { "value": "center", "label": "Center" },
+        { "value": "left", "label": "Left" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Watermark"
+    },
+    {
+      "type": "image_picker",
+      "id": "watermark_image",
+      "label": "Watermark image",
+      "info": "Optional. Replaces the built-in Foot Tree mark."
+    },
+    {
+      "type": "color",
+      "id": "watermark_color",
+      "label": "Watermark color",
+      "info": "Tints the built-in mark. Has no effect on an uploaded image.",
+      "default": "#6c814f"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 100
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_mobile_padding",
+      "label": "Custom mobile padding",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "mobile-padding-block-start",
+      "label": "Mobile top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 56,
+      "visible_if": "{{ section.settings.custom_mobile_padding }}"
+    },
+    {
+      "type": "range",
+      "id": "mobile-padding-block-end",
+      "label": "Mobile bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 56,
+      "visible_if": "{{ section.settings.custom_mobile_padding }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Story hero"
+    }
+  ]
+}
+{% endschema %}

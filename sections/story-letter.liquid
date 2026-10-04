@@ -1,0 +1,258 @@
+{% comment %}
+  Our Story closing letter (Figma "06 Closing letter"): the page split into two equal halves, a photo on the
+  left and a dark color1 panel on the right holding an eyebrow, two paragraphs and an italic sign-off.
+
+  The photo is the same workshop shot the homepage heritage block uses (shopify://shop_images/heritage-archive.jpg,
+  set in the template), so nothing is uploaded for it. The Figma suggests swapping it for a team or family
+  photo so the two pages do not repeat; the picker is here for that.
+
+  Below 750px the halves stack, photo above panel.
+
+  Type: --font-size--2xs for the eyebrow, --font-paragraph--size for the two paragraphs, .h3 for the
+  sign-off (28px, Lora, italic). The first paragraph can be set larger (24px pull-quote or 32px heading
+  rung) with "Opening line size"; the default is body copy.
+{% endcomment %}
+
+<div
+  class="story-letter{% if section.settings.image == blank and request.design_mode == false %} story-letter--no-photo{% endif %}"
+  style="
+    --sl-panel: {{ settings.color_palette.color1 }};
+    --sl-eyebrow: {{ settings.color_palette.color7 }};
+    --sl-ink: {{ settings.color_palette.background }};
+    --sl-signoff: {{ settings.color_palette.color7 }};
+    --sl-tile: {{ settings.color_palette.color9 }};
+    --sl-soft: {{ settings.color_palette.color8 }};
+    --sl-focus: {{ section.settings.focus_x }}%;
+  "
+  data-testid="story-letter"
+>
+  {%- if section.settings.image != blank -%}
+    <div class="story-letter__photo">
+      {%- comment -%}
+        `sizes` must describe the width the image is PAINTED at, not the width of its box. The box is
+        taller than it is wide (50vw x 800px desktop, 4/3 mobile) while the photo is 16:9, so
+        `object-fit: cover` scales it to cover the HEIGHT and crops the sides - the painted width comes
+        out far wider than the box. Desktop: 800px tall x 16/9 = ~1422px painted, so a fixed 1500px is
+        closer than 50vw (720px) and holds at any viewport under ~2844px, where the column finally
+        becomes the driving dimension. Mobile: (100vw x 3/4) x 16/9 = ~133vw.
+
+        Declaring the box width instead made this photo ask for 720px to paint 1422 - fine at 1x by
+        luck, 1.78x short on a retina screen. The ladder runs to 2400 (the source's own width) so a 2x
+        display has a candidate to reach for.
+      {%- endcomment -%}
+      {{
+        section.settings.image
+        | image_url: width: 2400
+        | image_tag: widths: '720, 1080, 1440, 1600, 2048, 2400', sizes: '(min-width: 750px) 1500px, 134vw', alt: section.settings.image.alt, class: 'story-letter__img', loading: 'lazy'
+      }}
+    </div>
+  {%- elsif request.design_mode -%}
+    <div class="story-letter__photo story-letter__photo--brief">
+      <p class="story-letter__brief">Photo to come: a team or family photo, or the workshop shot from the homepage.</p>
+    </div>
+  {%- endif -%}
+
+  <div class="story-letter__panel">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="story-letter__eyebrow">{{ section.settings.eyebrow }}</p>
+    {%- endif -%}
+
+    {%- liquid
+      case section.settings.opening_size
+        when 'heading'
+          assign opening_class = 'story-letter__text h2'
+        when 'quote'
+          assign opening_class = 'story-letter__text h4'
+        else
+          assign opening_class = 'story-letter__text'
+      endcase
+    -%}
+    {%- if section.settings.paragraph_1 != blank -%}
+      <p class="{{ opening_class }}">{{ section.settings.paragraph_1 }}</p>
+    {%- endif -%}
+    {%- if section.settings.paragraph_2 != blank -%}
+      <p class="story-letter__text">{{ section.settings.paragraph_2 }}</p>
+    {%- endif -%}
+    {%- if section.settings.signoff != blank -%}
+      <p class="h3 story-letter__signoff">{{ section.settings.signoff }}</p>
+    {%- endif -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  .story-letter {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    width: 100%;
+  }
+
+  .story-letter__photo {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+  }
+
+  .story-letter__img {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: var(--sl-focus) 50%;
+  }
+
+  .story-letter__photo--brief {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: var(--sl-tile);
+  }
+
+  .story-letter__brief {
+    max-width: 320px;
+    margin: 0;
+    font-size: var(--font-size--sm);
+    line-height: 1.5;
+    text-align: center;
+    color: var(--sl-soft);
+  }
+
+  .story-letter__panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 28px;
+    padding: 56px 24px;
+    background: var(--sl-panel);
+  }
+
+  .story-letter__eyebrow {
+    margin: 0;
+    font-family: var(--font-subheading--family);
+    font-weight: var(--font-subheading--weight);
+    font-size: var(--font-size--2xs);
+    line-height: 1.3;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sl-eyebrow);
+  }
+
+  /* The opening line can carry .h4 or .h2 (see "Opening line size"). Those paint with
+     `color: var(--color)` and own their size, so --color is set here as well as color. */
+  .story-letter__text {
+    --color: var(--sl-ink);
+
+    margin: 0;
+    font-size: var(--font-paragraph--size);
+    line-height: var(--line-height--body-loose);
+    color: var(--sl-ink);
+  }
+
+  /* .h3 paints with `color: var(--color)`, so the colour goes in through --color. The italic is a second
+     class deep because .h3.h3 (0,2,0) sets font-style from the type scale, which has no italic option. */
+  .story-letter__signoff.story-letter__signoff {
+    --color: var(--sl-signoff);
+
+    margin: 0;
+    font-style: italic;
+  }
+
+  /* No photo and not in the editor: the panel takes the whole row. */
+  .story-letter--no-photo .story-letter__panel {
+    grid-column: 1 / -1;
+  }
+
+  @media screen and (min-width: 750px) {
+    .story-letter {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      min-height: 800px;
+    }
+
+    .story-letter__photo {
+      aspect-ratio: auto;
+    }
+
+    .story-letter__panel {
+      padding: 96px 112px 96px 96px;
+    }
+
+    .story-letter--no-photo {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Story closing letter",
+  "class": "section-story-letter",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Photo",
+      "info": "Left half. The template uses the workshop photo from the homepage."
+    },
+    {
+      "type": "range",
+      "id": "focus_x",
+      "label": "Photo focus",
+      "info": "Which part of the photo stays in view when it is cropped to the half. 0 is the left edge, 100 the right.",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 58
+    },
+    {
+      "type": "header",
+      "content": "Letter"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "SINCE 1974"
+    },
+    {
+      "type": "textarea",
+      "id": "paragraph_1",
+      "label": "First paragraph",
+      "default": "For over fifty years, we've made shoes for the people who keep Singapore running. Now we'd love to fit you too."
+    },
+    {
+      "type": "select",
+      "id": "opening_size",
+      "label": "Opening line size",
+      "options": [
+        { "value": "body", "label": "Body copy (16px)" },
+        { "value": "quote", "label": "Pull quote (24px)" },
+        { "value": "heading", "label": "Heading (32px)" }
+      ],
+      "default": "body"
+    },
+    {
+      "type": "textarea",
+      "id": "paragraph_2",
+      "label": "Second paragraph",
+      "default": "Whether you stand through a twelve-hour shift or simply need a shoe with more room, come and see us."
+    },
+    {
+      "type": "text",
+      "id": "signoff",
+      "label": "Sign-off",
+      "default": "Fitted with care, since 1974."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Story closing letter"
+    }
+  ]
+}
+{% endschema %}

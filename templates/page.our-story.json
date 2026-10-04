@@ -1,0 +1,368 @@
+{
+  "sections": {
+    "breadcrumb": {
+      "type": "breadcrumb",
+      "settings": {
+        "menu": "main-menu",
+        "background_color": "{{ settings.color_palette.color5 }}"
+      }
+    },
+    "hero": {
+      "type": "story-hero",
+      "settings": {
+        "eyebrow": "EST. 1974 · A SINGAPORE BRAND · BUILT FOR PROFESSIONALS, NOW EVERYONE",
+        "heading": "Every foot is different. We've known since 1974.",
+        "text": "From a boy learning the trade in his father's shoe factory to more than a million pairs made and fitted — this is how Foot Tree got here.",
+        "alignment": "center",
+        "watermark_color": "#6c814f",
+        "padding-block-start": 100,
+        "padding-block-end": 100,
+        "custom_mobile_padding": true,
+        "mobile-padding-block-start": 56,
+        "mobile-padding-block-end": 56
+      }
+    },
+    "timeline": {
+      "type": "story-timeline",
+      "blocks": {
+        "note": {
+          "type": "note",
+          "settings": {
+            "show_mark": true,
+            "paragraph_1": "Hi, I'm Shi Ying, and I look after Foot Tree today. [One line on how you came to Foot Tree — e.g. your link to the founder.]",
+            "paragraph_2": "Our story starts well before me — with a boy in his father's shoe factory, and the lesson he learned there."
+          }
+        },
+        "row_before": {
+          "type": "row",
+          "settings": {
+            "chip": "Before 1974",
+            "heading": "Where it all began",
+            "body": "<p>Our founder grew up in his father's shoe factory in Singapore, learning the trade at the bench from a young age.</p><p>It taught him the idea every Foot Tree shoe is still built on: comfort is not one size fits all.</p>",
+            "layout": "single",
+            "brief": "PHOTO — archive. The family shoe factory, or our founder as a young man at the bench. Ask the family for originals.",
+            "caption": "[Caption — who, where and roughly when]"
+          }
+        },
+        "row_1974": {
+          "type": "row",
+          "settings": {
+            "chip": "1974",
+            "heading": "Foot Tree is born",
+            "body": "<p>He opened Foot Tree in 1974 with a simple promise: make the shoe fit the foot, not the other way round.</p><p>[Where the first shop or workshop was, and what it made first — confirm.]</p>",
+            "layout": "pair",
+            "brief": "PHOTO — archive. The first shop front, 1970s.",
+            "brief_2": "PHOTO — archive. One of the first pairs, or an early price tag.",
+            "caption": "[Caption — the first shop, 197X]"
+          }
+        },
+        "row_corporate": {
+          "type": "row",
+          "settings": {
+            "chip": "[19XX]",
+            "heading": "Shoes for Singapore's working day",
+            "body": "<p>Nurses, cabin crew and bus captains spend all day on their feet. We began making uniform footwear for the teams who keep the country running.</p><p>Today, more than 80 organisations outfit their teams with us.</p>",
+            "layout": "single",
+            "brief": "PHOTO — an on-site fitting: a Foot Tree fitter measuring a staff member in uniform. Real people, 45–70. No client logos.",
+            "caption": "[Caption — an early corporate fitting, 19XX]"
+          }
+        },
+        "row_factory": {
+          "type": "row",
+          "settings": {
+            "chip": "[19XX]",
+            "heading": "Our own factory",
+            "body": "<p>As more people came to us, we built our own factory. Every style is still designed in Singapore and hand made in-house.</p><p>That means we own the lasts — the forms every shoe is shaped on. It's why we can make the widths and sizes other brands skip.</p>",
+            "layout": "single",
+            "brief": "PHOTO — hands lasting an upper at the bench. Close, warm, real workers.",
+            "caption": "[Caption — inside our factory]"
+          }
+        },
+        "row_city": {
+          "type": "row",
+          "settings": {
+            "chip": "[20XX]",
+            "heading": "A home at City Square",
+            "body": "<p>We opened our store at City Square Mall so anyone could walk in and be fitted properly — both feet measured, not guessed.</p>",
+            "layout": "single",
+            "brief": "PHOTO — the shopfront from the mall walkway, lights on, a fitter at the door.",
+            "caption": "[Caption — our City Square store, opened 20XX]"
+          }
+        }
+      },
+      "block_order": [
+        "note",
+        "row_before",
+        "row_1974",
+        "row_corporate",
+        "row_factory",
+        "row_city"
+      ],
+      "settings": {
+        "padding-block-start": 128,
+        "padding-block-end": 128,
+        "custom_mobile_padding": true,
+        "mobile-padding-block-start": 56,
+        "mobile-padding-block-end": 56
+      }
+    },
+    "today": {
+      "type": "story-today",
+      "blocks": {
+        "stat_1": {
+          "type": "stat",
+          "settings": {
+            "number": "Since 1974",
+            "label": "over fifty years of shoemaking"
+          }
+        },
+        "stat_2": {
+          "type": "stat",
+          "settings": {
+            "number": "1,000,000+",
+            "label": "pairs made and fitted"
+          }
+        },
+        "stat_3": {
+          "type": "stat",
+          "settings": {
+            "number": "80+",
+            "label": "corporate clients"
+          }
+        },
+        "stat_4": {
+          "type": "stat",
+          "settings": {
+            "number": "5.0",
+            "label": "from 60 Google reviews"
+          }
+        }
+      },
+      "block_order": [
+        "stat_1",
+        "stat_2",
+        "stat_3",
+        "stat_4"
+      ],
+      "settings": {
+        "chip": "Today — City Square",
+        "heading": "Designed in Singapore. Hand made in-house. Fitted in person.",
+        "paragraph_1": "Every material comes from suppliers we trust, and every pair is checked at each stage of making — not just at the end.",
+        "paragraph_2": "Our work shoes are slip-resistant and supportive for long shifts. Across the range you'll find wide fits, half sizes and extended sizes, with styles that make room for bunions.",
+        "paragraph_3": "That's why we still own every step, from the first sketch to the fitting.",
+        "brief": "PHOTO — a fitting at City Square today: a Foot Tree fitter checking a customer's foot width. Customer 50+, natural light, real staff.",
+        "caption": "[Caption — a fitting at our City Square store]",
+        "padding-block-start": 128,
+        "padding-block-end": 128,
+        "custom_mobile_padding": true,
+        "mobile-padding-block-start": 56,
+        "mobile-padding-block-end": 56
+      }
+    },
+    "stand_for": {
+      "type": "story-cards",
+      "blocks": {
+        "card_1": {
+          "type": "card",
+          "settings": {
+            "icon": "ruler",
+            "title": "Fit for more feet",
+            "text": "Wide fits, half sizes and extended sizes, plus styles with room for bunions. Owning our lasts is what makes that possible."
+          }
+        },
+        "card_2": {
+          "type": "card",
+          "settings": {
+            "icon": "stopwatch",
+            "title": "Built for the whole shift",
+            "text": "Slip-resistant soles and firm support in our work range, for people who stand and walk all day."
+          }
+        },
+        "card_3": {
+          "type": "card",
+          "settings": {
+            "icon": "check_box",
+            "title": "Checked at every stage",
+            "text": "Materials from suppliers we trust, and quality checks at every step of making — not just at the end."
+          }
+        },
+        "card_4": {
+          "type": "card",
+          "settings": {
+            "icon": "return",
+            "title": "Wrong size? Swap it free",
+            "text": "Bought the wrong size? Exchange it free at our City Square store within 30 days."
+          }
+        }
+      },
+      "block_order": [
+        "card_1",
+        "card_2",
+        "card_3",
+        "card_4"
+      ],
+      "settings": {
+        "show_mark": true,
+        "heading": "Made for long days on your feet",
+        "lead": "What goes into every pair — whether you buy one for yourself or outfit a whole team.",
+        "header_width": 760,
+        "columns": "2",
+        "layout": "beside",
+        "outline": false,
+        "card_padding": 40,
+        "background": "soft",
+        "padding-block-start": 128,
+        "padding-block-end": 128,
+        "custom_mobile_padding": true,
+        "mobile-padding-block-start": 56,
+        "mobile-padding-block-end": 56
+      }
+    },
+    "sectors": {
+      "type": "story-cards",
+      "blocks": {
+        "sector_1": {
+          "type": "card",
+          "settings": {
+            "icon": "heart",
+            "title": "Healthcare",
+            "text": "Supportive shoes for long shifts on hard hospital floors."
+          }
+        },
+        "sector_2": {
+          "type": "card",
+          "settings": {
+            "icon": "plane",
+            "title": "Aviation",
+            "text": "Smart, comfortable shoes that stay polished from check-in to landing."
+          }
+        },
+        "sector_3": {
+          "type": "card",
+          "settings": {
+            "icon": "truck",
+            "title": "Transport",
+            "text": "Steady support for drivers and crews who are on the move all day."
+          }
+        },
+        "sector_4": {
+          "type": "card",
+          "settings": {
+            "icon": "serving_dish",
+            "title": "F&B",
+            "text": "Slip-resistant shoes for busy kitchens and service floors."
+          }
+        }
+      },
+      "block_order": [
+        "sector_1",
+        "sector_2",
+        "sector_3",
+        "sector_4"
+      ],
+      "settings": {
+        "show_mark": true,
+        "heading": "Made for the people who keep Singapore running",
+        "lead": "Healthcare, aviation, transport and F&B teams count on us to keep their people comfortable through the whole shift.",
+        "header_width": 916,
+        "columns": "4",
+        "layout": "above",
+        "outline": true,
+        "card_padding": 32,
+        "background": "cream",
+        "padding-block-start": 128,
+        "padding-block-end": 64,
+        "custom_mobile_padding": true,
+        "mobile-padding-block-start": 56,
+        "mobile-padding-block-end": 32
+      }
+    },
+    "band": {
+      "type": "story-band",
+      "settings": {
+        "eyebrow": "FOR ORGANISATIONS",
+        "heading": "Outfitting a team?",
+        "text": "We keep stock on hand so lead times stay short, make bulk orders in our own factory, deliver across Singapore and fit your team on site.",
+        "primary_label": "Request a quote →",
+        "primary_link": "/pages/wholesale",
+        "secondary_label": "WhatsApp us",
+        "watermark_color": "#6c814f",
+        "padding-block-start": 0,
+        "padding-block-end": 128,
+        "custom_mobile_padding": true,
+        "mobile-padding-block-start": 0,
+        "mobile-padding-block-end": 56
+      }
+    },
+    "letter": {
+      "type": "story-letter",
+      "settings": {
+        "image": "shopify://shop_images/heritage-archive.jpg",
+        "focus_x": 58,
+        "eyebrow": "SINCE 1974",
+        "paragraph_1": "For over fifty years, we've made shoes for the people who keep Singapore running. Now we'd love to fit you too.",
+        "opening_size": "body",
+        "paragraph_2": "Whether you stand through a twelve-hour shift or simply need a shoe with more room, come and see us.",
+        "signoff": "Fitted with care, since 1974."
+      }
+    },
+    "visit": {
+      "type": "story-cards",
+      "blocks": {
+        "visit_store": {
+          "type": "card",
+          "settings": {
+            "icon": "map_pin",
+            "title": "Foot Tree at City Square Mall",
+            "text": "180 Kitchener Road, #03-15 City Square Mall, Singapore 208539. Open daily, 11am – 9pm.",
+            "button_1_label": "Get directions",
+            "button_1_link": "https://www.google.com/maps/search/?api=1&query=180+Kitchener+Road+%2303-15+City+Square+Mall+Singapore+208539"
+          }
+        },
+        "visit_online": {
+          "type": "card",
+          "settings": {
+            "icon": "box",
+            "title": "Shop online",
+            "text": "Free local delivery over S$100, in 2–4 working days. Bought the wrong size? Exchange it free in store within 30 days.",
+            "button_1_label": "Shop women",
+            "button_1_link": "/collections/women",
+            "button_2_label": "Shop men",
+            "button_2_link": "/collections/men"
+          }
+        }
+      },
+      "block_order": [
+        "visit_store",
+        "visit_online"
+      ],
+      "settings": {
+        "show_mark": false,
+        "heading": "Come and be fitted",
+        "lead": "Visit our store at City Square, or shop online with free local delivery over S$100.",
+        "header_width": 900,
+        "columns": "2",
+        "layout": "above",
+        "outline": true,
+        "card_padding": 48,
+        "background": "cream",
+        "padding-block-start": 128,
+        "padding-block-end": 128,
+        "custom_mobile_padding": true,
+        "mobile-padding-block-start": 56,
+        "mobile-padding-block-end": 56
+      }
+    }
+  },
+  "order": [
+    "breadcrumb",
+    "hero",
+    "timeline",
+    "today",
+    "stand_for",
+    "sectors",
+    "band",
+    "letter",
+    "visit"
+  ]
+}

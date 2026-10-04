@@ -1,0 +1,317 @@
+{% comment %}
+  Our Story corporate band (Figma "Band - Outfitting a team"): a rounded color4 panel with an eyebrow, a
+  heading and a line of copy on the left, two buttons on the right, and the Foot Tree mark as a light-olive
+  watermark bleeding off the right edge, clipped to the panel.
+
+  The first button is the call to action and defaults to the wholesale page. The second is the WhatsApp
+  button: the number is not in the design yet, so it stays hidden until a link is set (the same rule the
+  wholesale closing band follows). Each button is hidden until it has both a label and a link.
+
+  An uploaded "Watermark image" replaces the built-in mark.
+
+  The section sits on color5 with no top padding by default so it reads as the end of the "Who we make
+  shoes for" block above it, which shares the background.
+
+  Type: .h3 on the heading (28px), --font-size--2xs for the eyebrow, --font-paragraph--size for copy and the
+  buttons.
+{% endcomment %}
+
+<div class="section-background" style="background-color: {{ settings.color_palette.color5 }};"></div>
+
+<div
+  class="section section--narrow story-band spacing-style"
+  style="
+    {% render 'spacing-style', settings: section.settings %}
+    --band-panel: {{ settings.color_palette.color4 }};
+    --band-eyebrow: {{ settings.color_palette.color7 }};
+    --band-ink: {{ settings.color_palette.background }};
+    --band-mark: {{ section.settings.watermark_color }};
+  "
+  data-testid="story-band"
+>
+  <div class="story-band__panel">
+    <div class="story-band__watermark" aria-hidden="true">
+      {%- if section.settings.watermark_image != blank -%}
+        {{
+          section.settings.watermark_image
+          | image_url: width: 1040
+          | image_tag: widths: '520, 780, 1040', sizes: '520px', alt: '', class: 'story-band__watermark-art', loading: 'lazy'
+        }}
+      {%- else -%}
+        {%- render 'story-mark', class_name: 'story-band__watermark-art' -%}
+      {%- endif -%}
+    </div>
+
+    <div class="story-band__copy">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="story-band__eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h3 class="h3 story-band__title">{{ section.settings.heading }}</h3>
+      {%- endif -%}
+      {%- if section.settings.text != blank -%}
+        <p class="story-band__text">{{ section.settings.text }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- capture buttons_html -%}
+      {%- render 'story-button',
+        label: section.settings.primary_label,
+        url: section.settings.primary_link,
+        variant: 'solid-light'
+      -%}
+      {%- render 'story-button',
+        label: section.settings.secondary_label,
+        url: section.settings.secondary_link,
+        variant: 'outline-light'
+      -%}
+    {%- endcapture -%}
+    {%- if buttons_html != blank -%}
+      <div class="story-band__buttons">{{ buttons_html }}</div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  .story-band__panel {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    overflow: hidden;
+    padding: 40px 24px;
+    border-radius: 8px;
+    background: var(--band-panel);
+  }
+
+  /* Bleeds off the right edge and 60px above the top, the way the Figma instance does; the panel's
+     overflow clips it. Sits behind the copy and buttons, which are lifted above it below. On a phone it
+     is smaller and fainter, since the copy spans the whole panel and has to stay legible over it. */
+  .story-band__watermark {
+    position: absolute;
+    inset-block-start: -40px;
+    inset-inline-end: -120px;
+    width: 300px;
+    color: var(--band-mark);
+    opacity: 0.45;
+    pointer-events: none;
+  }
+
+  .story-band__watermark-art {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .story-band__copy,
+  .story-band__buttons {
+    position: relative;
+  }
+
+  .story-band__copy {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 640px;
+  }
+
+  .story-band__eyebrow {
+    margin: 0;
+    font-family: var(--font-subheading--family);
+    font-weight: var(--font-subheading--weight);
+    font-size: var(--font-size--2xs);
+    line-height: 1.3;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--band-eyebrow);
+  }
+
+  /* .h3 paints with `color: var(--color)`, so the colour goes in through --color. */
+  .story-band__title.story-band__title {
+    --color: var(--band-ink);
+
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  .story-band__text {
+    margin: 0;
+    font-size: var(--font-paragraph--size);
+    line-height: var(--line-height--body-loose);
+    color: var(--band-ink);
+  }
+
+  .story-band__buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .story-band__buttons .story-button {
+    width: 100%;
+  }
+
+  @media screen and (min-width: 750px) {
+    .story-band__watermark {
+      inset-block-start: -60px;
+      inset-inline-end: -190px;
+      width: 520px;
+      opacity: 1;
+    }
+
+    .story-band__panel {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 64px;
+      min-height: 320px;
+      padding: 64px 72px;
+    }
+
+    .story-band__buttons {
+      flex: none;
+      flex-direction: row;
+    }
+
+    .story-band__buttons .story-button {
+      width: auto;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Story corporate band",
+  "class": "section-story-band",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "FOR ORGANISATIONS"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Outfitting a team?"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "We keep stock on hand so lead times stay short, make bulk orders in our own factory, deliver across Singapore and fit your team on site."
+    },
+    {
+      "type": "header",
+      "content": "Primary button"
+    },
+    {
+      "type": "text",
+      "id": "primary_label",
+      "label": "Label",
+      "default": "Request a quote →"
+    },
+    {
+      "type": "url",
+      "id": "primary_link",
+      "label": "Link",
+      "info": "Hidden until a link is set."
+    },
+    {
+      "type": "header",
+      "content": "Second button"
+    },
+    {
+      "type": "text",
+      "id": "secondary_label",
+      "label": "Label",
+      "default": "WhatsApp us"
+    },
+    {
+      "type": "url",
+      "id": "secondary_link",
+      "label": "Link",
+      "info": "Hidden until a link is set, for example https://wa.me/65XXXXXXXX. The number is not in the design yet."
+    },
+    {
+      "type": "header",
+      "content": "Watermark"
+    },
+    {
+      "type": "image_picker",
+      "id": "watermark_image",
+      "label": "Watermark image",
+      "info": "Optional. Replaces the built-in Foot Tree mark."
+    },
+    {
+      "type": "color",
+      "id": "watermark_color",
+      "label": "Watermark color",
+      "info": "Tints the built-in mark. Has no effect on an uploaded image.",
+      "default": "#6c814f"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 128
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_mobile_padding",
+      "label": "Custom mobile padding",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "mobile-padding-block-start",
+      "label": "Mobile top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.custom_mobile_padding }}"
+    },
+    {
+      "type": "range",
+      "id": "mobile-padding-block-end",
+      "label": "Mobile bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 56,
+      "visible_if": "{{ section.settings.custom_mobile_padding }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Story corporate band"
+    }
+  ]
+}
+{% endschema %}
