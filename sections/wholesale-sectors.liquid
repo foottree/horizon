@@ -192,6 +192,33 @@
     .wholesale-sector {
       padding: 24px;
     }
+
+    /* Icon and heading sit on one line on mobile, the same shape the product page's
+       "why this pair works" cards use (assets/custom.css, .ft-why-title). Stacked, a
+       40px icon on its own row pushed every tile taller for no gain.
+
+       Two columns, auto + 1fr: the icon takes the first cell, the heading the second,
+       and everything after them (body copy, the "See the range" link) spans the full
+       width. :nth-child(n + 3) rather than :last-child because the tile can have four
+       children once a collection is picked and the link appears.
+
+       Guarded by :has(> .icon) - the icon is optional, and without it the heading
+       would otherwise drop into the icon's column and the body into the heading's. */
+    .wholesale-sector:has(> .wholesale-sector__icon) {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      column-gap: 12px;
+      align-items: center;
+    }
+
+    .wholesale-sector:has(> .wholesale-sector__icon) > :nth-child(n + 3) {
+      grid-column: 1 / -1;
+    }
+
+    /* the icon's bottom margin exists to separate it from the heading when stacked */
+    .wholesale-sector__icon {
+      margin-block-end: 0;
+    }
   }
 {% endstylesheet %}
 

@@ -103,9 +103,18 @@
     background: var(--wi-fill);
   }
 
+  /* The feature tile is only "the feature" once there is a mosaic to lead. Below 750px
+     every tile is a full-width row in one stack, so a taller first tile just reads as an
+     inconsistent grid - it was 320px against 220px for the other four. Uniform height on
+     mobile; the feature regains its emphasis at 750px and spans both rows at 990px. */
   .wholesale-industry--feature {
-    min-height: 320px;
     padding: 24px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .wholesale-industry--feature {
+      min-height: 320px;
+    }
   }
 
   .wholesale-industry__image {
