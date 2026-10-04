@@ -28,10 +28,22 @@
 >
   {%- if section.settings.image != blank -%}
     <div class="story-letter__photo">
+      {%- comment -%}
+        `sizes` must describe the width the image is PAINTED at, not the width of its box. The box is
+        taller than it is wide (50vw x 800px desktop, 4/3 mobile) while the photo is 16:9, so
+        `object-fit: cover` scales it to cover the HEIGHT and crops the sides - the painted width comes
+        out far wider than the box. Desktop: 800px tall x 16/9 = ~1422px painted, so a fixed 1500px is
+        closer than 50vw (720px) and holds at any viewport under ~2844px, where the column finally
+        becomes the driving dimension. Mobile: (100vw x 3/4) x 16/9 = ~133vw.
+
+        Declaring the box width instead made this photo ask for 720px to paint 1422 - fine at 1x by
+        luck, 1.78x short on a retina screen. The ladder runs to 2400 (the source's own width) so a 2x
+        display has a candidate to reach for.
+      {%- endcomment -%}
       {{
         section.settings.image
-        | image_url: width: 1600
-        | image_tag: widths: '720, 1080, 1440, 1600', sizes: '(min-width: 750px) 50vw, 100vw', alt: section.settings.image.alt, class: 'story-letter__img', loading: 'lazy'
+        | image_url: width: 2400
+        | image_tag: widths: '720, 1080, 1440, 1600, 2048, 2400', sizes: '(min-width: 750px) 1500px, 134vw', alt: section.settings.image.alt, class: 'story-letter__img', loading: 'lazy'
       }}
     </div>
   {%- elsif request.design_mode -%}
