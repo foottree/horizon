@@ -3,7 +3,7 @@
   over four steps in a row. Each step is an auto-numbered eyebrow ("STEP 01"), a title and a line of
   copy. Steps are section-local blocks, so the client can reorder them and the numbers follow.
 
-  Each step leads with a 72px circle in color2 holding a 32px color4 glyph, and a 1px color3 rail runs
+  Each step leads with a 56px circle in color2 holding a 24px color4 glyph, and a 1px color3 rail runs
   behind the circles from the centre of the first to the centre of the last - the Figma's "Connector
   rail". At 750-989px the steps go two-up and the rail is dropped, since one horizontal line no longer
   describes the sequence. Below 750px they become a vertical timeline: the rail runs down the left
@@ -24,7 +24,7 @@
   class="section section--narrow wholesale-steps spacing-style"
   style="
     {% render 'spacing-style', settings: section.settings %}
-    --wholesale-steps-heading: {{ settings.color_palette.color1 }};
+    --wholesale-steps-heading: {{ settings.color_palette.foreground }};
     --wholesale-steps-accent: {{ settings.color_palette.color4 }};
     --wholesale-steps-line: {{ settings.color_palette.color3 }};
     --wholesale-steps-soft: {{ settings.color_palette.color8 }};
@@ -104,11 +104,12 @@
     color: var(--wholesale-steps-soft);
   }
 
-  /* Figma "03 How it works": each step is a 72px circle in color2 holding a 32px color4
-     glyph, and a 1px color3 "Connector rail" runs behind them from the centre of the
-     first circle to the centre of the last. */
+  /* Figma "03 How it works": each step is a circle in color2 holding a color4 glyph, and a
+     1px color3 "Connector rail" runs behind them from the centre of the first circle to the
+     centre of the last. The Figma draws the badge at 72px; it read too heavy against the
+     12px step label next to it, so the badge is 56 and the glyph 24 (48/22 on mobile). */
   .wholesale-steps__list {
-    --ws-badge: 72px;
+    --ws-badge: 56px;
     --ws-gap: 24px;
 
     position: relative;
@@ -158,8 +159,8 @@
 
   .wholesale-step__icon {
     display: block;
-    width: 32px;
-    height: 32px;
+    width: 24px;
+    height: 24px;
     color: var(--wholesale-steps-accent);
   }
 
@@ -211,7 +212,7 @@
      it runs from under one badge to the top of the next, and the last step has none. */
   @media screen and (max-width: 749px) {
     .wholesale-steps__list {
-      --ws-badge: 56px;
+      --ws-badge: 48px;
       --ws-gap: 28px;
 
       grid-template-columns: minmax(0, 1fr);
@@ -239,8 +240,8 @@
     }
 
     .wholesale-step__icon {
-      width: 26px;
-      height: 26px;
+      width: 22px;
+      height: 22px;
     }
   }
 

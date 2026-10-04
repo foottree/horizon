@@ -612,7 +612,7 @@
             "letter_spacing": "normal",
             "case": "none",
             "wrap": "pretty",
-            "text_color": "{{ settings.color_palette.color1 }}",
+            "text_color": "{{ settings.color_palette.foreground }}",
             "background": false,
             "background_color": "#00000026",
             "corner_radius": 0,
@@ -879,15 +879,15 @@
     "closing": {
       "type": "wholesale-closing",
       "settings": {
-        "eyebrow": "Fitting Singapore at work since 1974",
-        "heading": "Tell us what your team stands on all day, and we will tell you what they should be standing in.",
+        "heading": "Fitting Singapore at work since 1974",
         "primary_label": "Request a quotation",
         "primary_link": "#quotation",
         "secondary_label": "WhatsApp our corporate team",
         "secondary_link": "",
         "secondary_new_tab": true,
         "padding-block-start": 80,
-        "padding-block-end": 80
+        "padding-block-end": 80,
+        "text": "Tell us what your team stands on all day, and we will tell you what they should be standing in."
       }
     }
   },

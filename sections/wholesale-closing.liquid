@@ -1,7 +1,11 @@
 {% comment %}
   Closing band (For Organisations page, "07 Closing band" in the client's Figma): a centred call to
-  action on the brand green. An eyebrow, a heading and two buttons: Request a quotation (light fill)
-  and WhatsApp our corporate team (outline).
+  action on the brand green. A heading in white, a supporting line in color7 and two buttons: Request a
+  quotation (color7 fill, color1 text) and WhatsApp our corporate team (color7 outline and text).
+
+  The heading and the supporting line were the wrong way round until the Figma was re-read: the band
+  opened on a 12px uppercase eyebrow reading "Fitting Singapore at work since 1974" with the long
+  sentence set as the h2. The Figma has no eyebrow here - the short line IS the heading.
 
   Why not a generic section with button blocks: the button block renders a dead, disabled link when its
   URL is blank, and the WhatsApp number is not in the design. Each button here is hidden until its
@@ -23,8 +27,9 @@
   style="
     {% render 'spacing-style', settings: section.settings %}
     --wc-eyebrow: {{ settings.color_palette.background }};
-    --wc-heading: {{ settings.color_palette.color7 }};
-    --wc-light-bg: {{ settings.color_palette.background }};
+    --wc-heading: {{ settings.color_palette.background }};
+    --wc-text: {{ settings.color_palette.color7 }};
+    --wc-light-bg: {{ settings.color_palette.color7 }};
     --wc-light-text: {{ settings.color_palette.color1 }};
     --wc-outline: {{ settings.color_palette.color7 }};
   "
@@ -36,6 +41,9 @@
     {%- endif -%}
     {%- if section.settings.heading != blank -%}
       <h2 class="h2 wholesale-closing__title">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+    {%- if section.settings.text != blank -%}
+      <p class="wholesale-closing__text">{{ section.settings.text }}</p>
     {%- endif -%}
 
     <div class="wholesale-closing__buttons">
@@ -86,7 +94,19 @@
     --color: var(--wc-heading);
 
     margin: 0;
+    max-width: 900px;
     text-wrap: balance;
+  }
+
+  /* The Figma sets the supporting line in color7 against the color4 band, a step softer
+     than the white heading above it. */
+  .wholesale-closing__text {
+    margin: 0;
+    max-width: 760px;
+    font-size: var(--font-paragraph--size);
+    line-height: var(--line-height--body-loose);
+    color: var(--wc-text);
+    text-wrap: pretty;
   }
 
   .wholesale-closing__buttons {
@@ -142,12 +162,18 @@
       "type": "text",
       "id": "eyebrow",
       "label": "Eyebrow",
-      "default": "Fitting Singapore at work since 1974"
+      "info": "Optional. The Figma's band has no eyebrow - it opens on the heading."
     },
     {
       "type": "textarea",
       "id": "heading",
       "label": "Heading",
+      "default": "Fitting Singapore at work since 1974"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
       "default": "Tell us what your team stands on all day, and we will tell you what they should be standing in."
     },
     {
