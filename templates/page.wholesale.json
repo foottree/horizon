@@ -7,7 +7,7 @@
         "eyebrow": {
           "type": "text",
           "settings": {
-            "text": "<p>FOR ORGANISATIONS</p>",
+            "text": "<p>WHOLESALE</p>",
             "width": "100%",
             "max_width": "none",
             "alignment": "left",
@@ -588,12 +588,12 @@
     },
     "faq": {
       "type": "section",
-      "name": "Bulk Order FAQ",
+      "name": "Wholesale FAQ",
       "blocks": {
         "heading": {
           "type": "text",
           "settings": {
-            "text": "<h2>Bulk Order FAQ</h2>",
+            "text": "<h2>Wholesale FAQ</h2>",
             "width": "100%",
             "max_width": "none",
             "alignment": "left",
@@ -633,8 +633,8 @@
             "horizontal_alignment_flex_direction_column": "flex-start",
             "vertical_alignment_flex_direction_column": "flex-start",
             "gap": 48,
-            "enable_mobile_gap": false,
-            "mobile_gap": 12,
+            "enable_mobile_gap": true,
+            "mobile_gap": 0,
             "width": "fill",
             "custom_width": 100,
             "width_mobile": "fill",
@@ -708,7 +708,7 @@
                       "settings": {
                         "heading": "Is there a minimum order?",
                         "content": "<p>No minimum on a first order. On-site fitting days and account pricing start to make sense from about [XX] pairs — tell us your headcount and we will say plainly whether a programme is worth it for you.</p>",
-                        "open_by_default": true,
+                        "open_by_default": false,
                         "icon": "none",
                         "width": 20
                       }
@@ -718,7 +718,7 @@
                       "settings": {
                         "heading": "How long does delivery take?",
                         "content": "<p>Stock styles: [X] working days. A size run already held on your account: next working day. A specification build or a special colour: [X] weeks. All confirmed on the quotation.</p>",
-                        "open_by_default": true,
+                        "open_by_default": false,
                         "icon": "none",
                         "width": 20
                       }
@@ -728,7 +728,7 @@
                       "settings": {
                         "heading": "Can staff order for themselves?",
                         "content": "<p>Yes. Once your account is open, staff log in and order at your contract price, delivered to home or to site. You keep visibility of what has been ordered against the programme.</p>",
-                        "open_by_default": true,
+                        "open_by_default": false,
                         "icon": "none",
                         "width": 20
                       }
@@ -799,7 +799,7 @@
                       "settings": {
                         "heading": "What if someone is in the wrong size afterwards?",
                         "content": "<p>Free exchange within 30 days, unworn and boxed — the same guarantee as retail. A fitting day removes most of this before it happens.</p>",
-                        "open_by_default": true,
+                        "open_by_default": false,
                         "icon": "none",
                         "width": 20
                       }
@@ -809,7 +809,7 @@
                       "settings": {
                         "heading": "Do individual staff get a discount?",
                         "content": "<p>[TO CONFIRM — the healthcare and service discount and its percentage still need signing off before this can go live.]</p>",
-                        "open_by_default": true,
+                        "open_by_default": false,
                         "icon": "none",
                         "width": 20
                       }
@@ -819,7 +819,7 @@
                       "settings": {
                         "heading": "Can you invoice against a purchase order?",
                         "content": "<p>Yes. Quotation, PO, delivery order and GST invoice, with agreed payment terms on account. Prices are quoted GST-inclusive unless you ask otherwise.</p>",
-                        "open_by_default": true,
+                        "open_by_default": false,
                         "icon": "none",
                         "width": 20
                       }
