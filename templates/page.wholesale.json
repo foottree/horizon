@@ -883,8 +883,8 @@
         "primary_label": "Request a quotation",
         "primary_link": "#quotation",
         "secondary_label": "WhatsApp our corporate team",
-        "secondary_link": "",
-        "secondary_new_tab": true,
+        "secondary_link": "#",
+        "secondary_new_tab": false,
         "padding-block-start": 80,
         "padding-block-end": 80,
         "text": "Tell us what your team stands on all day, and we will tell you what they should be standing in."
