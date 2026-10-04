@@ -6,12 +6,15 @@
     Who we make shoes for  4 columns, icon above, outlined, on color5
     Visit               2 columns, icon above, outlined, with buttons, on color5
 
-  Each card is a 72px circle in color2 holding a 32px color4 glyph (the same badge the wholesale steps and
-  sectors use - an uploaded Icon image takes over from the built-in icon), a title and a line of copy. A
-  card can carry up to two buttons; each is hidden until it has both a label and a link.
+  Each card is a 56px circle in color2 holding a 24px color4 glyph (the same badge the wholesale steps
+  use - an uploaded Icon image takes over from the built-in icon), a title and a line of copy. A card
+  can carry up to two buttons; each is hidden until it has both a label and a link.
+
+  The badge was 72/32, the size the Figma draws, until that read too heavy on the wholesale steps and
+  was taken down to 56/24 there. This follows it so a badge is one size across the site.
 
   Below 990px the cards drop to two columns (one below 750px) and the icon always sits above the text, so
-  a 72px badge never squeezes the copy.
+  the badge never squeezes the copy.
 
   Type: .h2 on the heading (32px, 28px on mobile through the global step), .h5 on the card titles (an <h3>
   in the outline, the 18px rung), --font-paragraph--size for copy and the lead.
@@ -178,16 +181,16 @@
     flex: none;
     align-items: center;
     justify-content: center;
-    width: 72px;
-    height: 72px;
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
     background: var(--sc-badge);
   }
 
   .story-card__icon {
     display: block;
-    width: 32px;
-    height: 32px;
+    width: 24px;
+    height: 24px;
     color: var(--sc-accent);
     object-fit: contain;
   }
