@@ -151,37 +151,37 @@
         "client_1": {
           "type": "client",
           "settings": {
-            "label": "Healthcare"
+            "label": ""
           }
         },
         "client_2": {
           "type": "client",
           "settings": {
-            "label": "F&B"
+            "label": ""
           }
         },
         "client_3": {
           "type": "client",
           "settings": {
-            "label": "Aviation"
+            "label": ""
           }
         },
         "client_4": {
           "type": "client",
           "settings": {
-            "label": "Transport"
+            "label": ""
           }
         },
         "client_5": {
           "type": "client",
           "settings": {
-            "label": "Security"
+            "label": ""
           }
         },
         "client_6": {
           "type": "client",
           "settings": {
-            "label": "Corporate"
+            "label": ""
           }
         }
       },
