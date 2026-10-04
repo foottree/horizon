@@ -3,9 +3,16 @@
   over four steps in a row. Each step is an auto-numbered eyebrow ("STEP 01"), a title and a line of
   copy. Steps are section-local blocks, so the client can reorder them and the numbers follow.
 
+  Each step leads with a 72px circle in color2 holding a 32px color4 glyph, and a 1px color3 rail runs
+  behind the circles from the centre of the first to the centre of the last - the Figma's "Connector
+  rail". At 750-989px the steps go two-up and the rail is dropped, since one horizontal line no longer
+  describes the sequence. Below 750px they become a vertical timeline: the rail runs down the left
+  through the badge centres and the copy sits beside it.
+
   Salvaged from the earlier wholesale-page branch and brought onto the type ladder: that version drew a
-  card with an illustration per step and set the copy at 20px. This one is plain text columns under a
-  hairline, per the Figma.
+  card with an illustration per step and set the copy at 20px. An intermediate pass replaced the badges
+  with a plain hairline above each column, which did not match the mockup - the circles and the rail are
+  in the Figma and are restored here.
 
   Type: .h2 for the heading, .h3 on the step titles (28px), --font-size--2xs for the eyebrow,
   --font-paragraph--size for copy.
@@ -21,6 +28,8 @@
     --wholesale-steps-accent: {{ settings.color_palette.color4 }};
     --wholesale-steps-line: {{ settings.color_palette.color3 }};
     --wholesale-steps-soft: {{ settings.color_palette.color8 }};
+    --wholesale-steps-badge-bg: {{ settings.color_palette.color2 }};
+    --ws-step-count: {{ section.blocks.size }};
   "
   data-testid="wholesale-steps"
 >
@@ -39,16 +48,28 @@
     <ol class="wholesale-steps__list">
       {%- for block in section.blocks -%}
         <li class="wholesale-step" {{ block.shopify_attributes }}>
-          <p class="wholesale-step__eyebrow">
-            {{- section.settings.step_label }}
-            {% if forloop.index < 10 %}0{% endif %}{{ forloop.index -}}
-          </p>
-          {%- if block.settings.title != blank -%}
-            <h3 class="h3 wholesale-step__title">{{ block.settings.title }}</h3>
+          {%- if block.settings.icon != 'none' or block.settings.image != blank -%}
+            <span class="wholesale-step__badge" aria-hidden="true">
+              {%- render 'icon-or-image',
+                icon: block.settings.icon,
+                image_upload: block.settings.image,
+                width: 32,
+                class_name: 'wholesale-step__icon'
+              -%}
+            </span>
           {%- endif -%}
-          {%- if block.settings.text != blank -%}
-            <p class="wholesale-step__text">{{ block.settings.text }}</p>
-          {%- endif -%}
+          <div class="wholesale-step__body">
+            <p class="wholesale-step__eyebrow">
+              {{- section.settings.step_label }}
+              {% if forloop.index < 10 %}0{% endif %}{{ forloop.index -}}
+            </p>
+            {%- if block.settings.title != blank -%}
+              <h3 class="h3 wholesale-step__title">{{ block.settings.title }}</h3>
+            {%- endif -%}
+            {%- if block.settings.text != blank -%}
+              <p class="wholesale-step__text">{{ block.settings.text }}</p>
+            {%- endif -%}
+          </div>
         </li>
       {%- endfor -%}
     </ol>
@@ -83,22 +104,69 @@
     color: var(--wholesale-steps-soft);
   }
 
+  /* Figma "03 How it works": each step is a 72px circle in color2 holding a 32px color4
+     glyph, and a 1px color3 "Connector rail" runs behind them from the centre of the
+     first circle to the centre of the last. */
   .wholesale-steps__list {
+    --ws-badge: 72px;
+    --ws-gap: 24px;
+
+    position: relative;
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(var(--ws-step-count, 4), minmax(0, 1fr));
     align-items: start;
-    gap: 24px;
+    gap: var(--ws-gap);
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
+  /* The rail stops at the centre of the outer badges rather than running edge to edge.
+     A column is (100% - gaps) / count wide, so the right inset is that column width less
+     half a badge. Driven by --ws-step-count so it still lands if a step is added. */
+  .wholesale-steps__list::before {
+    content: '';
+    position: absolute;
+    inset-block-start: calc(var(--ws-badge) / 2);
+    inset-inline-start: calc(var(--ws-badge) / 2);
+    inset-inline-end: calc(
+      (100% - (var(--ws-gap) * (var(--ws-step-count, 4) - 1))) / var(--ws-step-count, 4) - var(--ws-badge) / 2
+    );
+    height: 1px;
+    background-color: var(--wholesale-steps-line);
+  }
+
   .wholesale-step {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .wholesale-step__badge {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: var(--ws-badge);
+    height: var(--ws-badge);
+    border-radius: 50%;
+    background-color: var(--wholesale-steps-badge-bg);
+  }
+
+  .wholesale-step__icon {
+    display: block;
+    width: 32px;
+    height: 32px;
+    color: var(--wholesale-steps-accent);
+  }
+
+  .wholesale-step__body {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    padding-block-start: 24px;
-    border-block-start: 1px solid var(--wholesale-steps-line);
   }
 
   .wholesale-step__eyebrow {
@@ -125,9 +193,54 @@
     color: var(--wholesale-steps-soft);
   }
 
-  @media screen and (max-width: 989px) {
+  @media screen and (max-width: 989px) and (min-width: 750px) {
     .wholesale-steps__list {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+      row-gap: 40px;
+    }
+
+    /* two rows of two, so a single horizontal rail no longer describes the sequence */
+    .wholesale-steps__list::before {
+      content: none;
+    }
+  }
+
+  /* Below 750px the steps become a vertical timeline: the rail runs down the left
+     through the centre of each badge, and the copy sits beside it. The rail is drawn
+     per step rather than once on the list so it starts and stops at badge centres -
+     it runs from under one badge to the top of the next, and the last step has none. */
+  @media screen and (max-width: 749px) {
+    .wholesale-steps__list {
+      --ws-badge: 56px;
+      --ws-gap: 28px;
+
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .wholesale-steps__list::before {
+      content: none;
+    }
+
+    .wholesale-step {
+      display: grid;
+      grid-template-columns: var(--ws-badge) minmax(0, 1fr);
+      column-gap: 16px;
+      align-items: start;
+    }
+
+    .wholesale-step:not(:last-child)::before {
+      content: '';
+      position: absolute;
+      inset-block-start: var(--ws-badge);
+      inset-block-end: calc(-1 * var(--ws-gap));
+      inset-inline-start: calc(var(--ws-badge) / 2);
+      width: 1px;
+      background-color: var(--wholesale-steps-line);
+    }
+
+    .wholesale-step__icon {
+      width: 26px;
+      height: 26px;
     }
   }
 
@@ -202,6 +315,32 @@
       "limit": 6,
       "settings": [
         {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "clipboard", "label": "Clipboard" },
+            { "value": "map_pin", "label": "Map pin" },
+            { "value": "ruler", "label": "Ruler" },
+            { "value": "price_tag", "label": "Price tag" },
+            { "value": "box", "label": "Box" },
+            { "value": "truck", "label": "Truck" },
+            { "value": "stopwatch", "label": "Stopwatch" },
+            { "value": "return", "label": "Return" },
+            { "value": "check_box", "label": "Check box" },
+            { "value": "shoe", "label": "Shoe" },
+            { "value": "star", "label": "Star" }
+          ],
+          "default": "clipboard"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Icon image",
+          "info": "Optional. Replaces the icon above."
+        },
+        {
           "type": "text",
           "id": "title",
           "label": "Title",
@@ -223,6 +362,7 @@
         {
           "type": "step",
           "settings": {
+            "icon": "clipboard",
             "title": "Tell us what you need",
             "text": "Sector, headcount and the sizes you expect. A call or the form below."
           }
@@ -230,6 +370,7 @@
         {
           "type": "step",
           "settings": {
+            "icon": "map_pin",
             "title": "We fit on site",
             "text": "We bring sample sizes to your workplace and fit every pair of feet."
           }
@@ -237,6 +378,7 @@
         {
           "type": "step",
           "settings": {
+            "icon": "price_tag",
             "title": "One quotation, one delivery",
             "text": "One price list, one invoice, every size in a single delivery."
           }
@@ -244,6 +386,7 @@
         {
           "type": "step",
           "settings": {
+            "icon": "stopwatch",
             "title": "Reorders in days",
             "text": "Your sizes stay on file, so new starters are fitted without a new survey."
           }

@@ -459,28 +459,32 @@
           "type": "step",
           "settings": {
             "title": "Tell us what you need",
-            "text": "Sector, headcount and the sizes you expect. A call or the form below."
+            "text": "Sector, headcount and the sizes you expect. A call or the form below.",
+            "icon": "clipboard"
           }
         },
         "step_2": {
           "type": "step",
           "settings": {
             "title": "We fit on site",
-            "text": "We bring sample sizes to your workplace and fit every pair of feet."
+            "text": "We bring sample sizes to your workplace and fit every pair of feet.",
+            "icon": "map_pin"
           }
         },
         "step_3": {
           "type": "step",
           "settings": {
             "title": "One quotation, one delivery",
-            "text": "One price list, one invoice, every size in a single delivery."
+            "text": "One price list, one invoice, every size in a single delivery.",
+            "icon": "price_tag"
           }
         },
         "step_4": {
           "type": "step",
           "settings": {
             "title": "Reorders in days",
-            "text": "Your sizes stay on file, so new starters are fitted without a new survey."
+            "text": "Your sizes stay on file, so new starters are fitted without a new survey.",
+            "icon": "stopwatch"
           }
         }
       },
