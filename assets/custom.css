@@ -1969,3 +1969,25 @@ swatches-variant-picker-component {
     );
   }
 }
+
+/* ---- Two-column FAQ: no doubled rule where the columns meet on mobile ----
+   The wholesale FAQ is two `group` blocks side by side, each holding its own `accordion`.
+   Horizon's `accordion--dividers` gives every row a 0.8px top rule and closes each
+   accordion with a 0.8px bottom rule on its last row. Side by side that is right: each
+   column is bounded. Stacked below 750px the two accordions sit end to end, so column
+   one's closing rule lands directly on column two's opening rule and paints 1.6px -
+   a visibly heavier line in the middle of what reads as one list.
+
+   Drop the closing rule from every column except the last, so the stack keeps one
+   uniform 0.8px rhythm. The last column keeps its bottom rule, which closes the list.
+   Scoped by the section's css_class rather than the accordion block ids, which change
+   whenever a block is recreated in the editor.
+
+   The selector is doubled because `accordion.liquid` declares the divider in its own
+   {% stylesheet %}, which compiles into compiled_assets/styles.css AFTER custom.css -
+   an equal-specificity rule here would lose. */
+@media screen and (max-width: 749px) {
+  .ft-faq-columns.ft-faq-columns .group-block:not(:last-child) accordion-custom:last-of-type .details {
+    border-block-end: 0;
+  }
+}
