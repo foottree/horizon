@@ -38,12 +38,21 @@
           {{ block.shopify_attributes }}
         >
           {%- if block.settings.image != blank -%}
+            {%- comment -%}
+              These tiles are object-fit: cover, so `sizes` must describe the width the
+              image is PAINTED at, not the width of the box. A 16:9 source covering the
+              600x520 feature tile is scaled until it is 520 tall, which makes it ~925
+              wide; the 304x252 tiles need ~450. Declaring the box width instead let the
+              browser pick a 304-wide candidate for a 450-wide paint, and every landscape
+              tile rendered at a ~1.5x upscale. Measured before this change:
+              aviation/transport/hospitality all 1.47-1.49x.
+            {%- endcomment -%}
             {%- if forloop.first -%}
-              {%- assign tile_sizes = '(min-width: 990px) 600px, calc(100vw - 32px)' -%}
-              {%- assign tile_widths = '600, 900, 1200' -%}
+              {%- assign tile_sizes = '(min-width: 990px) 925px, calc(100vw - 32px)' -%}
+              {%- assign tile_widths = '600, 925, 1200, 1400' -%}
             {%- else -%}
-              {%- assign tile_sizes = '(min-width: 990px) 304px, calc(100vw - 32px)' -%}
-              {%- assign tile_widths = '304, 608, 900' -%}
+              {%- assign tile_sizes = '(min-width: 990px) 450px, calc(100vw - 32px)' -%}
+              {%- assign tile_widths = '304, 450, 608, 900' -%}
             {%- endif -%}
             {{
               block.settings.image

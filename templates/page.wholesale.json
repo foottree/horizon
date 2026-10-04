@@ -504,7 +504,8 @@
         "industry_1": {
           "type": "industry",
           "settings": {
-            "label": "Healthcare"
+            "label": "Healthcare",
+            "image": "shopify://shop_images/wholesale-industry-healthcare.png"
           }
         },
         "industry_2": {
@@ -517,7 +518,8 @@
         "industry_3": {
           "type": "industry",
           "settings": {
-            "label": "Transport"
+            "label": "Transport",
+            "image": "shopify://shop_images/wholesale-industry-transport.png"
           }
         },
         "industry_4": {
