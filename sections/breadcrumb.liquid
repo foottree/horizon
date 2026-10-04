@@ -10,6 +10,8 @@
   product.collections). The matching top-level item becomes the middle crumb, linked to its own URL.
   No match falls back to Home / <title> with no middle crumb, per spec.
 
+  The strip takes the page background unless Background color is set (the Our Story page sets it).
+
   Reusable across templates (see the schema's presets and disabled_on): collection, product, page,
   blog, article, search and 404 are the ones asked for. Add the section to another template's JSON
   by giving it its own key under "sections" (type: "breadcrumb") and listing that key early in
@@ -78,7 +80,12 @@
   endcase
 -%}
 
-<div class="section-background"></div>
+<div
+  class="section-background"
+  {% if section.settings.background_color != blank %}
+    style="background-color: {{ section.settings.background_color }};"
+  {% endif %}
+></div>
 <div
   class="section section--narrow breadcrumb-section"
   style="--breadcrumb-ink-soft: {{ settings.color_palette.color8 }};"
@@ -178,6 +185,12 @@
       "label": "Menu",
       "default": "main-menu",
       "info": "Used to find the parent category for collection and product pages."
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "info": "Leave empty for the page background. The Our Story page sets it to cream so the strip runs into the sections around it."
     }
   ],
   "disabled_on": {

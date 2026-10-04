@@ -1,0 +1,83 @@
+{%- doc -%}
+  A 200 x 64 call-to-action button for the Our Story page, in one of four palette-bound looks. It is the
+  theme's .button recoloured through the --button-* custom properties the base rule reads, so the type
+  size, radius and focus ring stay the theme's.
+
+  Renders nothing unless both the label and the link are set, so the page never shows a button that goes
+  nowhere. An absolute link (http...) opens in a new tab.
+
+  @param {string} label - Button text
+  @param {string} url - Where it goes
+  @param {string} [variant] - 'solid' (color4 fill, the default), 'outline' (color4 outline), 'solid-light' (color7 fill, for dark bands) or 'outline-light' (white outline, for dark bands)
+  @param {string} [class_name] - Extra CSS class
+{%- enddoc -%}
+
+{%- if label != blank and url != blank -%}
+  {%- liquid
+    assign variant = variant | default: 'solid'
+    case variant
+      when 'solid-light'
+        assign bg = settings.color_palette.color7
+        assign fg = settings.color_palette.color1
+        assign line = settings.color_palette.color7
+      when 'outline-light'
+        assign bg = 'transparent'
+        assign fg = settings.color_palette.background
+        assign line = settings.color_palette.background
+      when 'outline'
+        assign bg = 'transparent'
+        assign fg = settings.color_palette.color4
+        assign line = settings.color_palette.color4
+      else
+        assign variant = 'solid'
+        assign bg = settings.color_palette.color4
+        assign fg = settings.color_palette.background
+        assign line = settings.color_palette.color4
+    endcase
+
+    assign is_external = false
+    assign url_start = url | slice: 0, 4
+    if url_start == 'http'
+      assign is_external = true
+    endif
+  -%}
+  <a
+    class="button story-button story-button--{{ variant }}{% if class_name != blank %} {{ class_name }}{% endif %}"
+    href="{{ url }}"
+    style="--sb-bg: {{ bg }}; --sb-fg: {{ fg }}; --sb-line: {{ line }};"
+    {% if is_external %}
+      target="_blank"
+      rel="noopener noreferrer"
+    {% endif %}
+  >{{ label }}</a>
+{%- endif -%}
+
+{% stylesheet %}
+  /* Doubled class: .button:hover (0,2,0) resets the --button-* vars, and this has to hold in
+     both states, so the base rule matches its specificity and the hover rules below beat it. */
+  .story-button.story-button {
+    --button-background-color: var(--sb-bg);
+    --button-color: var(--sb-fg);
+    --button-border-color: var(--sb-line);
+    --button-border-width: 2px;
+    --button-focus-outline-color: var(--sb-line);
+
+    justify-items: center;
+    min-width: 200px;
+    min-height: 64px;
+    padding-inline: 32px;
+  }
+
+  .story-button.story-button--solid:is(:hover, :focus-visible) {
+    --button-background-color: color-mix(in srgb, var(--sb-bg) 85%, #000);
+  }
+
+  .story-button.story-button--solid-light:is(:hover, :focus-visible) {
+    --button-background-color: color-mix(in srgb, var(--sb-bg) 85%, #fff);
+  }
+
+  .story-button.story-button--outline:is(:hover, :focus-visible),
+  .story-button.story-button--outline-light:is(:hover, :focus-visible) {
+    --button-background-color: color-mix(in srgb, var(--sb-fg) 10%, transparent);
+  }
+{% endstylesheet %}
