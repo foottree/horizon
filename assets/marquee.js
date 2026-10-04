@@ -154,7 +154,17 @@ class MarqueeComponent extends Component {
 
   #handleResize = debounce(async () => {
     const { marqueeItems } = this.refs;
-    const { newNumberOfCopies, isHorizontalResize } = await this.#queryNumberOfCopies();
+    // Upstream bug (identical in Shopify/horizon as of 4.2.0): this destructured
+    // `newNumberOfCopies`, but #queryNumberOfCopies resolves `{ numberOfCopies, ... }`.
+    // The name never matched, so after any horizontal resize newNumberOfCopies was
+    // undefined -> Math.sqrt(undefined) * speedFactor = NaN -> `--marquee-speed: NaNs`.
+    // A defined-but-invalid custom property does NOT fall back to the `40s` default in
+    // `animation: ... var(--marquee-speed, 40s) ...`, so the whole shorthand became
+    // invalid and the marquee froze permanently for the rest of that page load. The
+    // copy count also stopped adapting, since `undefined > n` and `undefined < n` are
+    // both false. Affects every marquee-component: sections/marquee.liquid,
+    // sections/wholesale-logo-marquee.liquid and blocks/_marquee.liquid.
+    const { numberOfCopies: newNumberOfCopies, isHorizontalResize } = await this.#queryNumberOfCopies();
 
     // opt out of marquee manipulation on vertical resizes
     if (!isHorizontalResize) return;
