@@ -1932,3 +1932,40 @@ swatches-variant-picker-component {
 .facets.facets .checkbox:not(.checkbox--disabled):hover .checkbox__label-text {
   color: var(--color-foreground);
 }
+
+/* ---- For Organisations page hero (templates/page.wholesale.json, css_class "ft-wholesale-hero") ----
+   Built from the stock `section` block set. Two things it has no setting for:
+
+   1. Height. section_height offers fixed rems or a share of the viewport, and the Figma hero is a
+      fixed 640px tall at 1440. 640px on desktop, a shorter 480px once it stacks.
+   2. The scrim. overlay_style "gradient" only runs bottom-to-top or top-to-bottom, from the overlay
+      colour to transparent. The mockup darkens the photo from the left, where the copy sits, and
+      fades to almost nothing on the right: #142408 at 94% > 76% > 18% > 2%. #142408 is a legibility
+      scrim, not a brand colour, so it has no palette token. On a phone the copy spans the full width
+      of the photo, so it gets a flatter scrim instead of one that clears on the right.
+
+   .overlay--gradient is declared in snippets/overlay.liquid's own {% stylesheet %}, which compiles
+   after this file, so the selector carries a second class to win on specificity. */
+.ft-wholesale-hero {
+  --section-min-height: 480px;
+}
+
+.ft-wholesale-hero .overlay--gradient {
+  background: linear-gradient(to right, rgb(20 36 8 / 0.9), rgb(20 36 8 / 0.7));
+}
+
+@media screen and (min-width: 750px) {
+  .ft-wholesale-hero {
+    --section-min-height: 640px;
+  }
+
+  .ft-wholesale-hero .overlay--gradient {
+    background: linear-gradient(
+      to right,
+      rgb(20 36 8 / 0.94) 0%,
+      rgb(20 36 8 / 0.76) 35%,
+      rgb(20 36 8 / 0.18) 70%,
+      rgb(20 36 8 / 0.02) 100%
+    );
+  }
+}

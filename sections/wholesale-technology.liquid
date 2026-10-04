@@ -1,0 +1,329 @@
+{% comment %}
+  Technology (For Organisations page, "03 Technology" in the client's Figma): two bands in one section.
+
+  Upper band, tinted full width: a media tile that bleeds to the left edge of the page beside the
+  eyebrow, heading, copy and a button. The Figma shows a video placeholder there; the video is held
+  back, so it is a still image for now (the `image` setting).
+
+  Lower band, white: a heading over three feature columns (image, title, copy). The columns are
+  section-local blocks so the client can add, remove and reorder them.
+
+  Layout: the section is a normal .section.section--narrow grid, so the lower band lines up with every
+  other section on the page. The upper band spans all three grid tracks (1 / -1) to get its full-bleed
+  tint and its edge-to-edge image, and puts its copy back on the right-hand gutter itself.
+
+  Type: .h2 for both headings, .h5 on the feature titles (an <h3> in the outline), --font-size--2xs for
+  the eyebrow, --font-paragraph--size for copy.
+{% endcomment %}
+
+<div class="section-background"></div>
+
+<div
+  class="section section--narrow wholesale-tech"
+  style="
+    --wt-tint: {{ settings.color_palette.color5 }};
+    --wt-heading: {{ settings.color_palette.color1 }};
+    --wt-accent: {{ settings.color_palette.color4 }};
+    --wt-soft: {{ settings.color_palette.color8 }};
+  "
+  data-testid="wholesale-tech"
+>
+  <div class="wholesale-tech__intro">
+    <div class="wholesale-tech__media">
+      {%- if section.settings.image != blank -%}
+        {{
+          section.settings.image
+          | image_url: width: 1480
+          | image_tag: widths: '740, 1110, 1480', sizes: '(min-width: 750px) 51vw, 100vw', class: 'wholesale-tech__image', loading: 'lazy'
+        }}
+      {%- else -%}
+        {{ 'image' | placeholder_svg_tag: 'wholesale-tech__image wholesale-tech__image--placeholder' }}
+      {%- endif -%}
+    </div>
+
+    <div class="wholesale-tech__copy">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="wholesale-tech__eyebrow">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="h2 wholesale-tech__title">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.text != blank -%}
+        <p class="wholesale-tech__text">{{ section.settings.text }}</p>
+      {%- endif -%}
+      {%- if section.settings.button_label != blank and section.settings.button_link != blank -%}
+        <a class="button wholesale-tech__button" href="{{ section.settings.button_link }}">{{ section.settings.button_label }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <div class="wholesale-tech__features">
+    {%- if section.settings.features_heading != blank -%}
+      <h2 class="h2 wholesale-tech__title">{{ section.settings.features_heading }}</h2>
+    {%- endif -%}
+
+    <ul class="wholesale-tech__grid">
+      {%- for block in section.blocks -%}
+        <li class="wholesale-feature" {{ block.shopify_attributes }}>
+          <div class="wholesale-feature__media">
+            {%- if block.settings.image != blank -%}
+              {{
+                block.settings.image
+                | image_url: width: 900
+                | image_tag: widths: '403, 600, 806, 900', sizes: '(min-width: 990px) 403px, calc(100vw - 32px)', class: 'wholesale-feature__image', loading: 'lazy'
+              }}
+            {%- else -%}
+              {{ 'image' | placeholder_svg_tag: 'wholesale-feature__image wholesale-feature__image--placeholder' }}
+            {%- endif -%}
+          </div>
+          {%- if block.settings.title != blank -%}
+            <h3 class="h5 wholesale-feature__title">{{ block.settings.title }}</h3>
+          {%- endif -%}
+          {%- if block.settings.text != blank -%}
+            <p class="wholesale-feature__text">{{ block.settings.text }}</p>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</div>
+
+{% stylesheet %}
+  .wholesale-tech__intro {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    background: var(--wt-tint);
+  }
+
+  .wholesale-tech__media {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+  }
+
+  .wholesale-tech__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .wholesale-tech__copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 16px;
+    padding: 40px var(--page-margin, 16px);
+  }
+
+  .wholesale-tech__eyebrow {
+    margin: 0;
+    font-family: var(--font-subheading--family);
+    font-weight: var(--font-subheading--weight);
+    font-size: var(--font-size--2xs);
+    line-height: 1.3;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--wt-accent);
+  }
+
+  /* .h2 / .h5 paint with `color: var(--color)`, so the colour goes in through --color. */
+  .wholesale-tech__title {
+    --color: var(--wt-heading);
+
+    margin: 0;
+  }
+
+  .wholesale-tech__text {
+    margin: 0;
+    font-size: var(--font-paragraph--size);
+    line-height: var(--line-height--body-loose);
+    color: var(--wt-soft);
+  }
+
+  .wholesale-tech__button.wholesale-tech__button {
+    margin-block-start: 8px;
+    font-size: var(--font-paragraph--size);
+  }
+
+  .wholesale-tech__features {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    padding-block: 56px;
+  }
+
+  .wholesale-tech__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px 16px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .wholesale-feature {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .wholesale-feature__media {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    margin-block-end: 4px;
+    overflow: hidden;
+    border-radius: 8px;
+    background: var(--wt-tint);
+  }
+
+  .wholesale-feature__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .wholesale-feature__title {
+    --color: var(--wt-heading);
+
+    margin: 0;
+  }
+
+  .wholesale-feature__text {
+    margin: 0;
+    font-size: var(--font-paragraph--size);
+    line-height: var(--line-height--body-loose);
+    color: var(--wt-soft);
+  }
+
+  @media screen and (min-width: 750px) {
+    .wholesale-tech__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .wholesale-tech__features {
+      gap: 40px;
+      padding-block: 80px;
+    }
+  }
+
+  /* Media tile 740 wide, copy column 700 wide at 1440 (the Figma 740 / 700 split). The tile is
+     600 tall there; the copy column keeps the same height. */
+  @media screen and (min-width: 990px) {
+    .wholesale-tech__intro {
+      grid-template-columns: minmax(0, 740fr) minmax(0, 700fr);
+    }
+
+    .wholesale-tech__media {
+      aspect-ratio: auto;
+      min-height: 600px;
+    }
+
+    .wholesale-tech__copy {
+      padding: 64px var(--ft-gutter, 100px) 64px 80px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Wholesale technology",
+  "class": "section-wholesale-tech",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Upper band"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Media image",
+      "info": "A still image for now. The technology video is held back."
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Shoe technology"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Trusted all-day comfort and safety"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "Every layer of a Foot Tree shoe is designed with your feet, knees, and spine in mind, so your team stays comfortable and focused, right through to the end of the day."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Request a quotation"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link",
+      "info": "The button is hidden until both the label and the link are set."
+    },
+    {
+      "type": "header",
+      "content": "Lower band"
+    },
+    {
+      "type": "text",
+      "id": "features_heading",
+      "label": "Heading",
+      "default": "Foot Tree Work Comfort Engineering"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Genuine leather uppers"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Made with high quality genuine cow leather for a polished and professional look"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wholesale technology",
+      "blocks": [
+        { "type": "feature" },
+        { "type": "feature" },
+        { "type": "feature" }
+      ]
+    }
+  ]
+}
+{% endschema %}

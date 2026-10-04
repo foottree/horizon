@@ -1,0 +1,209 @@
+{% comment %}
+  Client logo strip (For Organisations page, "Logo banner strip" in the client's Figma): a
+  continuously scrolling row of logo + label pairs.
+
+  Why not sections/marquee.liquid: it only accepts text / icon / logo / divider theme blocks, and none
+  of those can pair a picture with a caption. This reuses the same <marquee-component> element and
+  assets/marquee.js (which only needs the three ref attributes below, it clones the items to fill the
+  row and sets --marquee-speed), with its own markup and classes.
+
+  The logos are placeholders on purpose. Real client logos need written permission first, so a block
+  with no image shows a placehold.co rectangle instead of the theme's grey placeholder. Upload a logo
+  into a block to replace it.
+
+  Motion: the animation only exists inside prefers-reduced-motion: no-preference, so a visitor who
+  asks for less motion gets a still row. Hovering slows it to a stop (marquee.js).
+{% endcomment %}
+
+<script
+  src="{{ 'marquee.js' | asset_url }}"
+  type="module"
+  fetchpriority="low"
+></script>
+
+<marquee-component
+  class="wholesale-logos"
+  style="
+    --wholesale-logos-bg: {{ settings.color_palette.color2 }};
+    --wholesale-logos-line: {{ settings.color_palette.color3 }};
+    --wholesale-logos-pad: {{ section.settings.padding_block }}px;
+    --marquee-direction: {{ section.settings.movement_direction }};
+  "
+  data-speed-factor="25"
+  data-movement-direction="{{ section.settings.movement_direction }}"
+  data-testid="wholesale-logos"
+>
+  <div
+    class="wholesale-logos__wrapper"
+    ref="wrapper"
+  >
+    <div
+      class="wholesale-logos__content"
+      ref="content"
+    >
+      <div
+        class="wholesale-logos__items"
+        ref="marqueeItems[]"
+      >
+        {%- for block in section.blocks -%}
+          <div class="wholesale-logos__item" {{ block.shopify_attributes }}>
+            {%- if block.settings.logo != blank -%}
+              {{
+                block.settings.logo
+                | image_url: width: 480
+                | image_tag: widths: '160, 320, 480', width: 160, height: 48, class: 'wholesale-logos__logo', alt: '', loading: 'lazy'
+              }}
+            {%- else -%}
+              {% # theme-check-disable RemoteAsset %}
+              <img
+                class="wholesale-logos__logo"
+                src="https://placehold.co/160x48?text=Client"
+                width="160"
+                height="48"
+                alt=""
+                loading="lazy"
+              >
+              {% # theme-check-enable RemoteAsset %}
+            {%- endif -%}
+            {%- if block.settings.label != blank -%}
+              <span class="wholesale-logos__label">{{ block.settings.label }}</span>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</marquee-component>
+
+{% stylesheet %}
+  .wholesale-logos {
+    display: block;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding-block: var(--wholesale-logos-pad);
+    background: var(--wholesale-logos-bg);
+    border-block: 1px solid var(--wholesale-logos-line);
+    --marquee-gap: 24px;
+  }
+
+  .wholesale-logos__wrapper {
+    display: flex;
+    gap: var(--marquee-gap);
+    width: fit-content;
+    white-space: nowrap;
+  }
+
+  .wholesale-logos__content {
+    min-width: max-content;
+    display: flex;
+    gap: var(--marquee-gap);
+  }
+
+  .wholesale-logos__items {
+    min-width: max-content;
+    display: flex;
+    gap: var(--marquee-gap);
+    align-items: center;
+  }
+
+  .wholesale-logos__item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: 48px;
+  }
+
+  .wholesale-logos__logo {
+    display: block;
+    flex: none;
+    width: 160px;
+    height: 48px;
+    object-fit: contain;
+  }
+
+  .wholesale-logos__label {
+    font-family: var(--font-subheading--family);
+    font-weight: var(--font-subheading--weight);
+    font-size: var(--font-paragraph--size);
+    line-height: 1.2;
+    color: var(--color-foreground);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .wholesale-logos:not([data-disabled]) .wholesale-logos__wrapper {
+      animation: wholesale-logos-motion var(--marquee-speed, 40s) linear infinite var(--marquee-direction);
+    }
+  }
+
+  @keyframes wholesale-logos-motion {
+    to {
+      transform: translate3d(calc(-50% - (var(--marquee-gap) / 2)), 0, 0);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Logo marquee",
+  "class": "section-wholesale-logos",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "select",
+      "id": "movement_direction",
+      "label": "Direction",
+      "options": [
+        { "value": "normal", "label": "Right to left" },
+        { "value": "reverse", "label": "Left to right" }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "range",
+      "id": "padding_block",
+      "label": "Padding top and bottom",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    }
+  ],
+  "blocks": [
+    {
+      "type": "client",
+      "name": "Client",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Logo",
+          "info": "Leave empty to show a placeholder. Only upload a logo once the client has given written permission."
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Healthcare"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Logo marquee",
+      "blocks": [
+        { "type": "client", "settings": { "label": "Healthcare" } },
+        { "type": "client", "settings": { "label": "F&B" } },
+        { "type": "client", "settings": { "label": "Aviation" } },
+        { "type": "client", "settings": { "label": "Transport" } },
+        { "type": "client", "settings": { "label": "Security" } },
+        { "type": "client", "settings": { "label": "Corporate" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

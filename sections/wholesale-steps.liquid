@@ -1,0 +1,255 @@
+{% comment %}
+  "How it works" (For Organisations page, "03 How it works" in the client's Figma): a heading and lead
+  over four steps in a row. Each step is an auto-numbered eyebrow ("STEP 01"), a title and a line of
+  copy. Steps are section-local blocks, so the client can reorder them and the numbers follow.
+
+  Salvaged from the earlier wholesale-page branch and brought onto the type ladder: that version drew a
+  card with an illustration per step and set the copy at 20px. This one is plain text columns under a
+  hairline, per the Figma.
+
+  Type: .h2 for the heading, .h3 on the step titles (28px), --font-size--2xs for the eyebrow,
+  --font-paragraph--size for copy.
+{% endcomment %}
+
+<div class="section-background"></div>
+
+<div
+  class="section section--narrow wholesale-steps spacing-style"
+  style="
+    {% render 'spacing-style', settings: section.settings %}
+    --wholesale-steps-heading: {{ settings.color_palette.color1 }};
+    --wholesale-steps-accent: {{ settings.color_palette.color4 }};
+    --wholesale-steps-line: {{ settings.color_palette.color3 }};
+    --wholesale-steps-soft: {{ settings.color_palette.color8 }};
+  "
+  data-testid="wholesale-steps"
+>
+  <div class="wholesale-steps__inner">
+    {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
+      <div class="wholesale-steps__heading">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="h2 wholesale-steps__title">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subheading != blank -%}
+          <p class="wholesale-steps__intro">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <ol class="wholesale-steps__list">
+      {%- for block in section.blocks -%}
+        <li class="wholesale-step" {{ block.shopify_attributes }}>
+          <p class="wholesale-step__eyebrow">
+            {{- section.settings.step_label }}
+            {% if forloop.index < 10 %}0{% endif %}{{ forloop.index -}}
+          </p>
+          {%- if block.settings.title != blank -%}
+            <h3 class="h3 wholesale-step__title">{{ block.settings.title }}</h3>
+          {%- endif -%}
+          {%- if block.settings.text != blank -%}
+            <p class="wholesale-step__text">{{ block.settings.text }}</p>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ol>
+  </div>
+</div>
+
+{% stylesheet %}
+  .wholesale-steps__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+  }
+
+  .wholesale-steps__heading {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  /* .h2 / .h3 paint with `color: var(--color)`, so the colour goes in through --color. */
+  .wholesale-steps__title {
+    --color: var(--wholesale-steps-heading);
+
+    margin: 0;
+  }
+
+  .wholesale-steps__intro {
+    margin: 0;
+    max-width: 640px;
+    font-size: var(--font-paragraph--size);
+    line-height: var(--line-height--body-loose);
+    color: var(--wholesale-steps-soft);
+  }
+
+  .wholesale-steps__list {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    align-items: start;
+    gap: 24px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .wholesale-step {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-block-start: 24px;
+    border-block-start: 1px solid var(--wholesale-steps-line);
+  }
+
+  .wholesale-step__eyebrow {
+    margin: 0;
+    font-family: var(--font-subheading--family);
+    font-weight: var(--font-subheading--weight);
+    font-size: var(--font-size--2xs);
+    line-height: 1.3;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--wholesale-steps-accent);
+  }
+
+  .wholesale-step__title {
+    --color: var(--wholesale-steps-heading);
+
+    margin: 0;
+  }
+
+  .wholesale-step__text {
+    margin: 0;
+    font-size: var(--font-paragraph--size);
+    line-height: var(--line-height--body-loose);
+    color: var(--wholesale-steps-soft);
+  }
+
+  @media screen and (max-width: 989px) {
+    .wholesale-steps__list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .wholesale-steps__inner {
+      gap: 32px;
+    }
+
+    .wholesale-steps__list {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 32px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Wholesale steps",
+  "class": "section-wholesale-steps",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Leave it to us to handle your corporate needs"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Lead",
+      "default": "From the first call to the next reorder — four steps, one point of contact."
+    },
+    {
+      "type": "text",
+      "id": "step_label",
+      "label": "Step label",
+      "info": "Shown before the step number, for example STEP 01.",
+      "default": "Step"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Tell us what you need"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Sector, headcount and the sizes you expect. A call or the form below."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wholesale steps",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "title": "Tell us what you need",
+            "text": "Sector, headcount and the sizes you expect. A call or the form below."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "We fit on site",
+            "text": "We bring sample sizes to your workplace and fit every pair of feet."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "One quotation, one delivery",
+            "text": "One price list, one invoice, every size in a single delivery."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "Reorders in days",
+            "text": "Your sizes stay on file, so new starters are fitted without a new survey."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,239 @@
+{% comment %}
+  Industries we serve (For Organisations page, "04 Industries - Version B" in the client's Figma): a
+  heading over a photo mosaic. The first block is the large feature tile on the left; the rest fill a
+  2 x 2 grid beside it. Every tile is a photo under a dark gradient with its label bottom-left.
+
+  Every tile's photo is an image picker so the two held-back ones (Healthcare, Transport) can be filled
+  in later without a code change. A tile with no photo shows a solid dark fill, so its white label
+  still reads.
+
+  The Figma tiles also carry art-direction captions ("PHOTO - WARD NURSE MID-STRIDE"). Those are notes
+  to the photographer and are deliberately not part of this section.
+
+  Type: .h2 for the heading; the feature label is an <h3> at the h3 rung (28px), the small labels are
+  <h3> styled as .h5 (18px).
+{% endcomment %}
+
+<div class="section-background"></div>
+
+<div
+  class="section section--narrow wholesale-industries spacing-style"
+  style="
+    {% render 'spacing-style', settings: section.settings %}
+    --wi-heading: {{ settings.color_palette.color1 }};
+    --wi-fill: {{ settings.color_palette.color1 }};
+    --wi-label: {{ settings.color_palette.background }};
+  "
+  data-testid="wholesale-industries"
+>
+  <div class="wholesale-industries__inner">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="h2 wholesale-industries__title">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    <ul class="wholesale-industries__mosaic">
+      {%- for block in section.blocks -%}
+        <li
+          class="wholesale-industry{% if forloop.first %} wholesale-industry--feature{% endif %}"
+          {{ block.shopify_attributes }}
+        >
+          {%- if block.settings.image != blank -%}
+            {%- if forloop.first -%}
+              {%- assign tile_sizes = '(min-width: 990px) 600px, calc(100vw - 32px)' -%}
+              {%- assign tile_widths = '600, 900, 1200' -%}
+            {%- else -%}
+              {%- assign tile_sizes = '(min-width: 990px) 304px, calc(100vw - 32px)' -%}
+              {%- assign tile_widths = '304, 608, 900' -%}
+            {%- endif -%}
+            {{
+              block.settings.image
+              | image_url: width: 1200
+              | image_tag: widths: tile_widths, sizes: tile_sizes, class: 'wholesale-industry__image', loading: 'lazy'
+            }}
+          {%- endif -%}
+          {%- if block.settings.label != blank -%}
+            <h3 class="{% if forloop.first %}h3{% else %}h5{% endif %} wholesale-industry__label">{{ block.settings.label }}</h3>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</div>
+
+{% stylesheet %}
+  .wholesale-industries__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  /* .h2 / .h3 / .h5 paint with `color: var(--color)`, so colours go in through --color. */
+  .wholesale-industries__title {
+    --color: var(--wi-heading);
+
+    margin: 0;
+  }
+
+  .wholesale-industries__mosaic {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .wholesale-industry {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    min-height: 220px;
+    padding: 20px;
+    overflow: hidden;
+    border-radius: 8px;
+    background: var(--wi-fill);
+  }
+
+  .wholesale-industry--feature {
+    min-height: 320px;
+    padding: 24px;
+  }
+
+  .wholesale-industry__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Scrim so the white label reads on any photo. The tint is a deep green, not black, to stay in
+     the palette's family; it is a legibility scrim, not a brand colour, so it has no palette token. */
+  .wholesale-industry::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgb(20 36 8 / 0.78) 0%, rgb(20 36 8 / 0.3) 45%, rgb(20 36 8 / 0) 75%);
+    pointer-events: none;
+  }
+
+  .wholesale-industry__label {
+    --color: var(--wi-label);
+
+    position: relative;
+    z-index: 1;
+    margin: 0;
+  }
+
+  @media screen and (min-width: 750px) {
+    .wholesale-industries__inner {
+      gap: 48px;
+    }
+
+    .wholesale-industries__mosaic {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .wholesale-industry {
+      min-height: 252px;
+    }
+
+    .wholesale-industry--feature {
+      grid-column: 1 / -1;
+      min-height: 360px;
+    }
+  }
+
+  /* 600 | 304 | 304 columns and two 252 rows with a 16px gap: the 1240 x 520 mosaic. */
+  @media screen and (min-width: 990px) {
+    .wholesale-industries__mosaic {
+      grid-template-columns: minmax(0, 600fr) minmax(0, 304fr) minmax(0, 304fr);
+      grid-template-rows: repeat(2, 252px);
+    }
+
+    .wholesale-industry--feature {
+      grid-column: 1;
+      grid-row: 1 / span 2;
+      min-height: 0;
+    }
+
+    .wholesale-industry {
+      min-height: 0;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Wholesale industries",
+  "class": "section-wholesale-industries",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Industries we serve"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "industry",
+      "name": "Industry tile",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Photo",
+          "info": "The first tile is the large feature tile."
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Healthcare"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wholesale industries",
+      "blocks": [
+        { "type": "industry", "settings": { "label": "Healthcare" } },
+        { "type": "industry", "settings": { "label": "Aviation" } },
+        { "type": "industry", "settings": { "label": "Transport" } },
+        { "type": "industry", "settings": { "label": "F&B" } },
+        { "type": "industry", "settings": { "label": "Hospitality" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

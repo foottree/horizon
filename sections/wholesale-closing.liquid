@@ -1,0 +1,222 @@
+{% comment %}
+  Closing band (For Organisations page, "07 Closing band" in the client's Figma): a centred call to
+  action on the brand green. An eyebrow, a heading and two buttons: Request a quotation (light fill)
+  and WhatsApp our corporate team (outline).
+
+  Why not a generic section with button blocks: the button block renders a dead, disabled link when its
+  URL is blank, and the WhatsApp number is not in the design. Each button here is hidden until its
+  link is set, so the band never shows a button that goes nowhere.
+
+  The buttons are the theme's .button, recoloured through the --button-* custom properties the base
+  rule reads, so size, radius and type stay the theme's.
+
+  Type: .h2 for the heading, --font-size--2xs for the eyebrow, the theme's button size (16px).
+{% endcomment %}
+
+<div
+  class="section-background"
+  style="background-color: {{ settings.color_palette.color4 }};"
+></div>
+
+<div
+  class="section section--narrow wholesale-closing spacing-style"
+  style="
+    {% render 'spacing-style', settings: section.settings %}
+    --wc-eyebrow: {{ settings.color_palette.background }};
+    --wc-heading: {{ settings.color_palette.color7 }};
+    --wc-light-bg: {{ settings.color_palette.background }};
+    --wc-light-text: {{ settings.color_palette.color1 }};
+    --wc-outline: {{ settings.color_palette.color7 }};
+  "
+  data-testid="wholesale-closing"
+>
+  <div class="wholesale-closing__inner">
+    {%- if section.settings.eyebrow != blank -%}
+      <p class="wholesale-closing__eyebrow">{{ section.settings.eyebrow }}</p>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h2 class="h2 wholesale-closing__title">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    <div class="wholesale-closing__buttons">
+      {%- if section.settings.primary_label != blank and section.settings.primary_link != blank -%}
+        <a
+          class="button wholesale-closing__button wholesale-closing__button--light"
+          href="{{ section.settings.primary_link }}"
+        >{{ section.settings.primary_label }}</a>
+      {%- endif -%}
+      {%- if section.settings.secondary_label != blank and section.settings.secondary_link != blank -%}
+        <a
+          class="button wholesale-closing__button wholesale-closing__button--outline"
+          href="{{ section.settings.secondary_link }}"
+          {% if section.settings.secondary_new_tab %}
+            target="_blank"
+            rel="noopener noreferrer"
+          {% endif %}
+        >{{ section.settings.secondary_label }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .wholesale-closing__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    max-width: 800px;
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .wholesale-closing__eyebrow {
+    margin: 0;
+    font-family: var(--font-subheading--family);
+    font-weight: var(--font-subheading--weight);
+    font-size: var(--font-size--2xs);
+    line-height: 1.3;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--wc-eyebrow);
+  }
+
+  /* .h2 paints with `color: var(--color)`, so the colour goes in through --color. */
+  .wholesale-closing__title {
+    --color: var(--wc-heading);
+
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .wholesale-closing__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    margin-block-start: 16px;
+  }
+
+  .wholesale-closing__buttons:empty {
+    display: none;
+  }
+
+  .wholesale-closing__button--light {
+    --button-background-color: var(--wc-light-bg);
+    --button-color: var(--wc-light-text);
+    --button-border-width: 0px;
+    --button-focus-outline-color: var(--wc-light-bg);
+  }
+
+  .wholesale-closing__button--outline {
+    --button-background-color: transparent;
+    --button-color: var(--wc-outline);
+    --button-border-color: var(--wc-outline);
+    --button-border-width: 1.5px;
+    --button-focus-outline-color: var(--wc-outline);
+  }
+
+  @media screen and (max-width: 749px) {
+    .wholesale-closing__buttons {
+      flex-direction: column;
+      align-items: stretch;
+      width: 100%;
+    }
+
+    .wholesale-closing__button {
+      width: 100%;
+      justify-items: center;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Wholesale closing band",
+  "class": "section-wholesale-closing",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Fitting Singapore at work since 1974"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Tell us what your team stands on all day, and we will tell you what they should be standing in."
+    },
+    {
+      "type": "header",
+      "content": "Primary button"
+    },
+    {
+      "type": "text",
+      "id": "primary_label",
+      "label": "Label",
+      "default": "Request a quotation"
+    },
+    {
+      "type": "url",
+      "id": "primary_link",
+      "label": "Link",
+      "info": "Hidden until a link is set."
+    },
+    {
+      "type": "header",
+      "content": "WhatsApp button"
+    },
+    {
+      "type": "text",
+      "id": "secondary_label",
+      "label": "Label",
+      "default": "WhatsApp our corporate team"
+    },
+    {
+      "type": "url",
+      "id": "secondary_link",
+      "label": "Link",
+      "info": "Hidden until a link is set, for example https://wa.me/65XXXXXXXX. The number is not in the design yet."
+    },
+    {
+      "type": "checkbox",
+      "id": "secondary_new_tab",
+      "label": "Open in a new tab",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 80
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wholesale closing band"
+    }
+  ]
+}
+{% endschema %}

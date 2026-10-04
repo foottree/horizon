@@ -1,0 +1,899 @@
+{
+  "sections": {
+    "hero": {
+      "type": "section",
+      "name": "Hero",
+      "blocks": {
+        "eyebrow": {
+          "type": "text",
+          "settings": {
+            "text": "<p>FOR ORGANISATIONS</p>",
+            "width": "100%",
+            "max_width": "none",
+            "alignment": "left",
+            "type_preset": "custom",
+            "font": "var(--font-subheading--family)",
+            "font_size": "0.75rem",
+            "enable_mobile_size": false,
+            "mobile_font_size": "1rem",
+            "line_height": "tight",
+            "letter_spacing": "loose",
+            "case": "uppercase",
+            "wrap": "",
+            "text_color": "{{ settings.color_palette.color7 }}",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "custom_mobile_padding": false,
+            "mobile-padding-block-start": 0,
+            "mobile-padding-block-end": 0,
+            "mobile-padding-inline-start": 0,
+            "mobile-padding-inline-end": 0,
+            "custom_class": ""
+          }
+        },
+        "heading": {
+          "type": "text",
+          "settings": {
+            "text": "<h1>Uniform footwear specialist</h1>",
+            "width": "100%",
+            "max_width": "none",
+            "alignment": "left",
+            "type_preset": "h1",
+            "font": "var(--font-body--family)",
+            "font_size": "",
+            "enable_mobile_size": false,
+            "mobile_font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "text_color": "{{ settings.color_palette.background }}",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "custom_mobile_padding": false,
+            "mobile-padding-block-start": 0,
+            "mobile-padding-block-end": 0,
+            "mobile-padding-inline-start": 0,
+            "mobile-padding-inline-end": 0,
+            "custom_class": ""
+          }
+        },
+        "body": {
+          "type": "text",
+          "settings": {
+            "text": "<p>We fit your team on site and hold the size run, so replacements take days rather than months.</p>",
+            "width": "100%",
+            "max_width": "normal",
+            "alignment": "left",
+            "type_preset": "paragraph",
+            "font": "var(--font-body--family)",
+            "font_size": "",
+            "enable_mobile_size": false,
+            "mobile_font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "text_color": "{{ settings.color_palette.color7 }}",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "custom_mobile_padding": false,
+            "mobile-padding-block-start": 0,
+            "mobile-padding-block-end": 0,
+            "mobile-padding-inline-start": 0,
+            "mobile-padding-inline-end": 0,
+            "custom_class": ""
+          }
+        }
+      },
+      "block_order": [
+        "eyebrow",
+        "heading",
+        "body"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 16,
+        "enable_mobile_gap": false,
+        "mobile_gap": 12,
+        "section_width": "narrow",
+        "full_width_on_mobile": false,
+        "section_height": "",
+        "section_height_custom": 50,
+        "background_media": "image",
+        "background_image": "shopify://shop_images/wholesale-hero.jpg",
+        "background_image_position": "cover",
+        "video_position": "cover",
+        "toggle_overlay": true,
+        "overlay_color": "#142408f0",
+        "overlay_style": "gradient",
+        "gradient_direction": "to top",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_color": "",
+        "border_radius": 0,
+        "padding-block-start": 80,
+        "padding-block-end": 80,
+        "custom_mobile_padding": false,
+        "mobile-padding-block-start": 0,
+        "mobile-padding-block-end": 0,
+        "mobile-padding-inline-start": 0,
+        "mobile-padding-inline-end": 0,
+        "css_class": "ft-wholesale-hero",
+        "add_section_id": false,
+        "section_id": ""
+      }
+    },
+    "client_logos": {
+      "type": "wholesale-logo-marquee",
+      "blocks": {
+        "client_1": {
+          "type": "client",
+          "settings": {
+            "label": "Healthcare"
+          }
+        },
+        "client_2": {
+          "type": "client",
+          "settings": {
+            "label": "F&B"
+          }
+        },
+        "client_3": {
+          "type": "client",
+          "settings": {
+            "label": "Aviation"
+          }
+        },
+        "client_4": {
+          "type": "client",
+          "settings": {
+            "label": "Transport"
+          }
+        },
+        "client_5": {
+          "type": "client",
+          "settings": {
+            "label": "Security"
+          }
+        },
+        "client_6": {
+          "type": "client",
+          "settings": {
+            "label": "Corporate"
+          }
+        }
+      },
+      "block_order": [
+        "client_1",
+        "client_2",
+        "client_3",
+        "client_4",
+        "client_5",
+        "client_6"
+      ],
+      "settings": {
+        "movement_direction": "normal",
+        "padding_block": 24
+      }
+    },
+    "sectors": {
+      "type": "wholesale-sectors",
+      "blocks": {
+        "sector_1": {
+          "type": "sector",
+          "settings": {
+            "icon": "heart",
+            "title": "Healthcare & nursing",
+            "text": "Twelve-hour shifts, wash-down floors, infection-control cleaning. Closed toe, slip-resistant, wipe-clean.",
+            "link_label": "See the range"
+          }
+        },
+        "sector_2": {
+          "type": "sector",
+          "settings": {
+            "icon": "serving_dish",
+            "title": "F&B & kitchen",
+            "text": "Grease and water underfoot. Slip-resistant outsoles, sealed uppers, easy on and off at the door.",
+            "link_label": "See the range"
+          }
+        },
+        "sector_3": {
+          "type": "sector",
+          "settings": {
+            "icon": "plane",
+            "title": "Aviation & cabin crew",
+            "text": "Pressurised cabins swell feet. Wider lasts, low heel, smart enough for a uniform standard.",
+            "link_label": "See the range"
+          }
+        },
+        "sector_4": {
+          "type": "sector",
+          "settings": {
+            "icon": "truck",
+            "title": "Transport & logistics",
+            "text": "In and out of vehicles, on and off kerbs. Grip, support, and a sole that takes the mileage.",
+            "link_label": "See the range"
+          }
+        },
+        "sector_5": {
+          "type": "sector",
+          "settings": {
+            "icon": "lock",
+            "title": "Security & uniformed",
+            "text": "Long static standing and patrol. Cushioned, dark, and built to a uniform specification.",
+            "link_label": "See the range"
+          }
+        },
+        "sector_6": {
+          "type": "sector",
+          "settings": {
+            "icon": "clipboard",
+            "title": "Office & corporate",
+            "text": "Smart footwear that still fits a broad foot — for staff on their feet more than the dress code admits.",
+            "link_label": "See the range"
+          }
+        }
+      },
+      "block_order": [
+        "sector_1",
+        "sector_2",
+        "sector_3",
+        "sector_4",
+        "sector_5",
+        "sector_6"
+      ],
+      "settings": {
+        "heading": "What your people stand on all day",
+        "lead": "Tell us the environment and we bring the right samples to the fitting.",
+        "padding-block-start": 80,
+        "padding-block-end": 80
+      }
+    },
+    "work_rail": {
+      "type": "product-rail-tabs",
+      "blocks": {
+        "static-product-card": {
+          "type": "_product-card",
+          "name": "Product card",
+          "static": true,
+          "settings": {
+            "product_card_gap": 8,
+            "background_color": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_color": "",
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "product_card_gallery": {
+              "type": "_product-card-gallery",
+              "name": "Media",
+              "settings": {
+                "image_ratio": "square",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_color": "",
+                "border_radius": 8,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              }
+            },
+            "product_title": {
+              "type": "product-title",
+              "name": "Product title",
+              "settings": {
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "custom",
+                "font": "var(--font-subheading--family)",
+                "font_size": "",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "",
+                "text_color": "",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 12,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              }
+            },
+            "price": {
+              "type": "price",
+              "name": "Price",
+              "settings": {
+                "show_sale_price_first": true,
+                "show_installments": false,
+                "show_tax_info": false,
+                "type_preset": "custom",
+                "width": "100%",
+                "alignment": "left",
+                "font": "var(--font-subheading--family)",
+                "font_size": "",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "text_color": "",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              }
+            },
+            "swatches": {
+              "type": "swatches",
+              "name": "Swatches",
+              "settings": {
+                "product_swatches_alignment": "flex-start",
+                "product_swatches_alignment_mobile": "flex-start",
+                "hide_padding": false,
+                "product_swatches_padding_top": 0,
+                "product_swatches_padding_bottom": 0,
+                "product_swatches_padding_left": 0,
+                "product_swatches_padding_right": 0
+              }
+            }
+          },
+          "block_order": [
+            "product_card_gallery",
+            "product_title",
+            "price",
+            "swatches"
+          ]
+        }
+      },
+      "name": "Work collection rail",
+      "settings": {
+        "heading": "Foot Tree Work Collection",
+        "description": "",
+        "link_label": "",
+        "link": "",
+        "tab_1_label": "Women",
+        "tab_1_collection": "work-women",
+        "tab_1_max_products": 8,
+        "tab_2_label": "Men",
+        "tab_2_collection": "work-men",
+        "tab_2_max_products": 8,
+        "tab_3_label": "",
+        "tab_3_collection": "",
+        "tab_3_max_products": 8,
+        "tab_4_label": "",
+        "tab_4_collection": "",
+        "tab_4_max_products": 8,
+        "tabs_style": "segmented",
+        "show_arrows": false,
+        "mobile_card_size": 75,
+        "section_width": "narrow",
+        "background_color": "",
+        "padding-block-start": 80,
+        "padding-block-end": 80,
+        "custom_mobile_padding": false,
+        "mobile-padding-block-start": 68,
+        "mobile-padding-block-end": 68,
+        "mobile-padding-inline-start": 0,
+        "mobile-padding-inline-end": 0,
+        "desktop_layout": "carousel"
+      }
+    },
+    "technology": {
+      "type": "wholesale-technology",
+      "blocks": {
+        "feature_1": {
+          "type": "feature",
+          "settings": {
+            "image": "shopify://shop_images/wholesale-tech-1.jpg",
+            "title": "Genuine leather uppers",
+            "text": "Made with high quality genuine cow leather for a polished and professional look"
+          }
+        },
+        "feature_2": {
+          "type": "feature",
+          "settings": {
+            "image": "shopify://shop_images/wholesale-tech-2.jpg",
+            "title": "Extreme sizes & wide fit last",
+            "text": "Up to 4E width to accommodate Asian feet. Sizing from EU34 to EU48, with half sizes"
+          }
+        },
+        "feature_3": {
+          "type": "feature",
+          "settings": {
+            "image": "shopify://shop_images/wholesale-tech-3.jpg",
+            "title": "Lightweight and slip-resistant",
+            "text": "Cushioned and lightweight outsole to support all day comfort"
+          }
+        }
+      },
+      "block_order": [
+        "feature_1",
+        "feature_2",
+        "feature_3"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/wholesale-tech-1.jpg",
+        "eyebrow": "SHOE TECHNOLOGY",
+        "heading": "Trusted all-day comfort and safety",
+        "text": "Every layer of a Foot Tree shoe is designed with your feet, knees, and spine in mind — so your team stays comfortable and focused, right through to the end of the day.",
+        "button_label": "Request a quotation",
+        "button_link": "#quotation",
+        "features_heading": "Foot Tree Work Comfort Engineering"
+      }
+    },
+    "how_it_works": {
+      "type": "wholesale-steps",
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "title": "Tell us what you need",
+            "text": "Sector, headcount and the sizes you expect. A call or the form below."
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "title": "We fit on site",
+            "text": "We bring sample sizes to your workplace and fit every pair of feet."
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "title": "One quotation, one delivery",
+            "text": "One price list, one invoice, every size in a single delivery."
+          }
+        },
+        "step_4": {
+          "type": "step",
+          "settings": {
+            "title": "Reorders in days",
+            "text": "Your sizes stay on file, so new starters are fitted without a new survey."
+          }
+        }
+      },
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3",
+        "step_4"
+      ],
+      "settings": {
+        "heading": "Leave it to us to handle your corporate needs",
+        "subheading": "From the first call to the next reorder — four steps, one point of contact.",
+        "step_label": "Step",
+        "padding-block-start": 80,
+        "padding-block-end": 80
+      }
+    },
+    "industries": {
+      "type": "wholesale-industries",
+      "blocks": {
+        "industry_1": {
+          "type": "industry",
+          "settings": {
+            "label": "Healthcare"
+          }
+        },
+        "industry_2": {
+          "type": "industry",
+          "settings": {
+            "label": "Aviation",
+            "image": "shopify://shop_images/wholesale-industry-aviation.png"
+          }
+        },
+        "industry_3": {
+          "type": "industry",
+          "settings": {
+            "label": "Transport"
+          }
+        },
+        "industry_4": {
+          "type": "industry",
+          "settings": {
+            "label": "F&B",
+            "image": "shopify://shop_images/wholesale-industry-fnb.png"
+          }
+        },
+        "industry_5": {
+          "type": "industry",
+          "settings": {
+            "label": "Hospitality",
+            "image": "shopify://shop_images/wholesale-industry-hospitality.png"
+          }
+        }
+      },
+      "block_order": [
+        "industry_1",
+        "industry_2",
+        "industry_3",
+        "industry_4",
+        "industry_5"
+      ],
+      "settings": {
+        "heading": "Industries we serve",
+        "padding-block-start": 80,
+        "padding-block-end": 80
+      }
+    },
+    "quote": {
+      "type": "wholesale-quote",
+      "blocks": {
+        "contact_1": {
+          "type": "contact",
+          "settings": {
+            "label": "Contact:",
+            "value": "<p><a href=\"tel:+6567447824\">+65 6744 7824</a> Mon - Fri (9am-6pm)</p>"
+          }
+        },
+        "contact_2": {
+          "type": "contact",
+          "settings": {
+            "label": "Email",
+            "value": "<p><a href=\"mailto:peapesfw@foottree.com\">peapesfw@foottree.com</a></p>"
+          }
+        }
+      },
+      "block_order": [
+        "contact_1",
+        "contact_2"
+      ],
+      "settings": {
+        "anchor_id": "quotation",
+        "eyebrow": "REQUEST A QUOTATION",
+        "heading": "Tell us about your needs",
+        "organisation_label": "Organisation",
+        "organisation_placeholder": "e.g. 50 pairs",
+        "organisation_required": false,
+        "message_label": "What are your corporate needs:",
+        "message_placeholder": "Do you have any uniform specification?",
+        "submit_label": "Send request",
+        "success_message": "Thank you. We have your request and will reply within one working day.",
+        "contact_heading": "Rather just talk to someone?",
+        "padding-block-start": 80,
+        "padding-block-end": 80
+      }
+    },
+    "faq": {
+      "type": "section",
+      "name": "Bulk Order FAQ",
+      "blocks": {
+        "heading": {
+          "type": "text",
+          "settings": {
+            "text": "<h2>Bulk Order FAQ</h2>",
+            "width": "100%",
+            "max_width": "none",
+            "alignment": "left",
+            "type_preset": "h2",
+            "font": "var(--font-body--family)",
+            "font_size": "",
+            "enable_mobile_size": false,
+            "mobile_font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "text_color": "{{ settings.color_palette.color1 }}",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "custom_mobile_padding": false,
+            "mobile-padding-block-start": 0,
+            "mobile-padding-block-end": 0,
+            "mobile-padding-inline-start": 0,
+            "mobile-padding-inline-end": 0,
+            "custom_class": ""
+          }
+        },
+        "columns": {
+          "type": "group",
+          "settings": {
+            "content_direction": "row",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "flex-start",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "flex-start",
+            "gap": 48,
+            "enable_mobile_gap": false,
+            "mobile_gap": 12,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "column_left": {
+              "type": "group",
+              "settings": {
+                "content_direction": "column",
+                "vertical_on_mobile": true,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "flex-start",
+                "align_baseline": false,
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "vertical_alignment_flex_direction_column": "flex-start",
+                "gap": 0,
+                "enable_mobile_gap": false,
+                "mobile_gap": 12,
+                "width": "fill",
+                "custom_width": 100,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "height": "fit",
+                "custom_height": 100,
+                "background_media": "none",
+                "video_position": "cover",
+                "background_image_position": "cover",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "accordion_left": {
+                  "type": "accordion",
+                  "settings": {
+                    "icon": "plus",
+                    "dividers": true,
+                    "divider_color": "{{ settings.color_palette.color3 }}",
+                    "type_preset": "h5",
+                    "border": "none",
+                    "border_width": 1,
+                    "border_opacity": 100,
+                    "border_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {
+                    "left_row_1": {
+                      "type": "_accordion-row-dynamic",
+                      "settings": {
+                        "heading": "Is there a minimum order?",
+                        "content": "<p>No minimum on a first order. On-site fitting days and account pricing start to make sense from about [XX] pairs — tell us your headcount and we will say plainly whether a programme is worth it for you.</p>",
+                        "open_by_default": true,
+                        "icon": "none",
+                        "width": 20
+                      }
+                    },
+                    "left_row_2": {
+                      "type": "_accordion-row-dynamic",
+                      "settings": {
+                        "heading": "How long does delivery take?",
+                        "content": "<p>Stock styles: [X] working days. A size run already held on your account: next working day. A specification build or a special colour: [X] weeks. All confirmed on the quotation.</p>",
+                        "open_by_default": true,
+                        "icon": "none",
+                        "width": 20
+                      }
+                    },
+                    "left_row_3": {
+                      "type": "_accordion-row-dynamic",
+                      "settings": {
+                        "heading": "Can staff order for themselves?",
+                        "content": "<p>Yes. Once your account is open, staff log in and order at your contract price, delivered to home or to site. You keep visibility of what has been ordered against the programme.</p>",
+                        "open_by_default": true,
+                        "icon": "none",
+                        "width": 20
+                      }
+                    }
+                  },
+                  "block_order": [
+                    "left_row_1",
+                    "left_row_2",
+                    "left_row_3"
+                  ]
+                }
+              },
+              "block_order": [
+                "accordion_left"
+              ]
+            },
+            "column_right": {
+              "type": "group",
+              "settings": {
+                "content_direction": "column",
+                "vertical_on_mobile": true,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "flex-start",
+                "align_baseline": false,
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "vertical_alignment_flex_direction_column": "flex-start",
+                "gap": 0,
+                "enable_mobile_gap": false,
+                "mobile_gap": 12,
+                "width": "fill",
+                "custom_width": 100,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "height": "fit",
+                "custom_height": 100,
+                "background_media": "none",
+                "video_position": "cover",
+                "background_image_position": "cover",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "accordion_right": {
+                  "type": "accordion",
+                  "settings": {
+                    "icon": "plus",
+                    "dividers": true,
+                    "divider_color": "{{ settings.color_palette.color3 }}",
+                    "type_preset": "h5",
+                    "border": "none",
+                    "border_width": 1,
+                    "border_opacity": 100,
+                    "border_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {
+                    "right_row_1": {
+                      "type": "_accordion-row-dynamic",
+                      "settings": {
+                        "heading": "What if someone is in the wrong size afterwards?",
+                        "content": "<p>Free exchange within 30 days, unworn and boxed — the same guarantee as retail. A fitting day removes most of this before it happens.</p>",
+                        "open_by_default": true,
+                        "icon": "none",
+                        "width": 20
+                      }
+                    },
+                    "right_row_2": {
+                      "type": "_accordion-row-dynamic",
+                      "settings": {
+                        "heading": "Do individual staff get a discount?",
+                        "content": "<p>[TO CONFIRM — the healthcare and service discount and its percentage still need signing off before this can go live.]</p>",
+                        "open_by_default": true,
+                        "icon": "none",
+                        "width": 20
+                      }
+                    },
+                    "right_row_3": {
+                      "type": "_accordion-row-dynamic",
+                      "settings": {
+                        "heading": "Can you invoice against a purchase order?",
+                        "content": "<p>Yes. Quotation, PO, delivery order and GST invoice, with agreed payment terms on account. Prices are quoted GST-inclusive unless you ask otherwise.</p>",
+                        "open_by_default": true,
+                        "icon": "none",
+                        "width": 20
+                      }
+                    }
+                  },
+                  "block_order": [
+                    "right_row_1",
+                    "right_row_2",
+                    "right_row_3"
+                  ]
+                }
+              },
+              "block_order": [
+                "accordion_right"
+              ]
+            }
+          },
+          "block_order": [
+            "column_left",
+            "column_right"
+          ]
+        }
+      },
+      "block_order": [
+        "heading",
+        "columns"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "flex-start",
+        "gap": 40,
+        "section_width": "narrow",
+        "section_height": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "toggle_overlay": false,
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "padding-block-start": 80,
+        "padding-block-end": 80
+      }
+    },
+    "closing": {
+      "type": "wholesale-closing",
+      "settings": {
+        "eyebrow": "Fitting Singapore at work since 1974",
+        "heading": "Tell us what your team stands on all day, and we will tell you what they should be standing in.",
+        "primary_label": "Request a quotation",
+        "primary_link": "#quotation",
+        "secondary_label": "WhatsApp our corporate team",
+        "secondary_link": "",
+        "secondary_new_tab": true,
+        "padding-block-start": 80,
+        "padding-block-end": 80
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "client_logos",
+    "sectors",
+    "work_rail",
+    "technology",
+    "how_it_works",
+    "industries",
+    "quote",
+    "faq",
+    "closing"
+  ]
+}

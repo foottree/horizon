@@ -1,0 +1,311 @@
+{% comment %}
+  Sectors we supply (For Organisations page, "02 Sectors we supply" in the client's Figma): a heading
+  and lead over a 3 x 2 grid of tiles. Each tile is an icon, a title, a line of copy and a
+  "See the range" link.
+
+  The link points at a collection picked per tile. The sector collections do not exist yet, so the
+  picker defaults to empty and a tile with no collection shows no link and is not clickable. Do not
+  hardcode a handle here.
+
+  Type: .h2 for the heading, .h5 on the tile titles (an <h3> in the outline, styled as the 18px
+  card-title rung), --font-paragraph--size for copy, --font-size--sm for the link. The icon is one of
+  the theme's built-in icons, or an uploaded image that takes over from it.
+{% endcomment %}
+
+<div class="section-background"></div>
+
+<div
+  class="section section--narrow wholesale-sectors spacing-style"
+  style="
+    {% render 'spacing-style', settings: section.settings %}
+    --ws-heading: {{ settings.color_palette.color1 }};
+    --ws-accent: {{ settings.color_palette.color4 }};
+    --ws-tile: {{ settings.color_palette.color5 }};
+    --ws-soft: {{ settings.color_palette.color8 }};
+    --ws-line: {{ settings.color_palette.color3 }};
+  "
+  data-testid="wholesale-sectors"
+>
+  <div class="wholesale-sectors__inner">
+    {%- if section.settings.heading != blank or section.settings.lead != blank -%}
+      <div class="wholesale-sectors__intro">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="h2 wholesale-sectors__title">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.lead != blank -%}
+          <p class="wholesale-sectors__lead">{{ section.settings.lead }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <ul class="wholesale-sectors__grid">
+      {%- for block in section.blocks -%}
+        {%- assign collection = block.settings.collection -%}
+        <li
+          class="wholesale-sector{% if collection != blank %} wholesale-sector--linked{% endif %}"
+          {{ block.shopify_attributes }}
+        >
+          {%- if block.settings.image != blank or block.settings.icon != 'none' -%}
+            <span class="wholesale-sector__icon" aria-hidden="true">
+              {%- render 'icon-or-image',
+                icon: block.settings.icon,
+                image_upload: block.settings.image,
+                width: 40,
+                class_name: 'wholesale-sector__icon-art'
+              -%}
+            </span>
+          {%- endif -%}
+          {%- if block.settings.title != blank -%}
+            <h3 class="h5 wholesale-sector__title">{{ block.settings.title }}</h3>
+          {%- endif -%}
+          {%- if block.settings.text != blank -%}
+            <p class="wholesale-sector__text">{{ block.settings.text }}</p>
+          {%- endif -%}
+          {%- if collection != blank and block.settings.link_label != blank -%}
+            <a class="wholesale-sector__link" href="{{ collection.url }}">
+              {{- block.settings.link_label }}
+              <span aria-hidden="true">&rarr;</span>
+            </a>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</div>
+
+{% stylesheet %}
+  .wholesale-sectors__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+  }
+
+  .wholesale-sectors__intro {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  /* .h2 / .h5 paint with `color: var(--color)`, so the colour goes in through --color. */
+  .wholesale-sectors__title {
+    --color: var(--ws-heading);
+
+    margin: 0;
+  }
+
+  .wholesale-sectors__lead {
+    margin: 0;
+    max-width: 640px;
+    font-size: var(--font-paragraph--size);
+    line-height: var(--line-height--body-loose);
+    color: var(--ws-soft);
+  }
+
+  .wholesale-sectors__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .wholesale-sector {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 32px;
+    background: var(--ws-tile);
+    border-radius: 8px;
+  }
+
+  .wholesale-sector__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    margin-block-end: 4px;
+    color: var(--ws-accent);
+  }
+
+  .wholesale-sector__icon-art {
+    display: block;
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+  }
+
+  .wholesale-sector__title {
+    --color: var(--ws-heading);
+
+    margin: 0;
+  }
+
+  .wholesale-sector__text {
+    margin: 0;
+    font-size: var(--font-paragraph--size);
+    line-height: var(--line-height--body-loose);
+    color: var(--ws-soft);
+  }
+
+  .wholesale-sector__link {
+    margin-block-start: auto;
+    padding-block-start: 4px;
+    font-family: var(--font-subheading--family);
+    font-weight: var(--font-subheading--weight);
+    font-size: var(--font-size--sm);
+    line-height: 1.4;
+    color: var(--ws-accent);
+    text-decoration: none;
+  }
+
+  .wholesale-sector__link:is(:hover, :focus-visible) {
+    text-decoration: underline;
+  }
+
+  /* The whole tile is the click target, not just the link text. */
+  .wholesale-sector__link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  @media screen and (max-width: 989px) {
+    .wholesale-sectors__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .wholesale-sectors__inner {
+      gap: 32px;
+    }
+
+    .wholesale-sectors__grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 16px;
+    }
+
+    .wholesale-sector {
+      padding: 24px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Wholesale sectors",
+  "class": "section-wholesale-sectors",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What your people stand on all day"
+    },
+    {
+      "type": "textarea",
+      "id": "lead",
+      "label": "Lead",
+      "default": "Tell us the environment and we bring the right samples to the fitting."
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "sector",
+      "name": "Sector",
+      "limit": 12,
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "serving_dish", "label": "Serving dish" },
+            { "value": "plane", "label": "Plane" },
+            { "value": "truck", "label": "Truck" },
+            { "value": "lock", "label": "Lock" },
+            { "value": "clipboard", "label": "Clipboard" },
+            { "value": "shoe", "label": "Shoe" },
+            { "value": "star", "label": "Star" },
+            { "value": "silhouette", "label": "Silhouette" }
+          ],
+          "default": "heart"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Icon image",
+          "info": "Optional. Replaces the icon above."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Healthcare & nursing"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Twelve-hour shifts, wash-down floors, infection-control cleaning. Closed toe, slip-resistant, wipe-clean."
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection",
+          "info": "The link and the tile's click-through are hidden until a collection is picked."
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Link label",
+          "default": "See the range"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wholesale sectors",
+      "blocks": [
+        { "type": "sector" },
+        { "type": "sector" },
+        { "type": "sector" }
+      ]
+    }
+  ]
+}
+{% endschema %}
