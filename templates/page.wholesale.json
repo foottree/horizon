@@ -577,7 +577,7 @@
       ],
       "settings": {
         "heading": "Industries we serve",
-        "padding-block-start": 80,
+        "padding-block-start": 40,
         "padding-block-end": 80
       }
     },
@@ -588,13 +588,13 @@
           "type": "contact",
           "settings": {
             "label": "Contact:",
-            "value": "<p><a href=\"tel:+6567447824\">+65 6744 7824</a> Mon - Fri (9am-6pm)</p>"
+            "value": "<p><a href=\"tel:+6567447824\">+65 6744 7824</a> Mon - Fri<br>(9am-6pm)</p>"
           }
         },
         "contact_2": {
           "type": "contact",
           "settings": {
-            "label": "Email",
+            "label": "EMAIL",
             "value": "<p><a href=\"mailto:peapesfw@foottree.com\">peapesfw@foottree.com</a></p>"
           }
         }
@@ -625,7 +625,7 @@
         "heading": {
           "type": "text",
           "settings": {
-            "text": "<h2>Wholesale FAQ</h2>",
+            "text": "<h2>Bulk Order FAQ</h2>",
             "width": "100%",
             "max_width": "none",
             "alignment": "left",

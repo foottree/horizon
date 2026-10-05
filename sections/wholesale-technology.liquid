@@ -137,6 +137,14 @@
     margin: 0;
   }
 
+  /* Scoped to the lower band on purpose: the Figma centres "Foot Tree Work Comfort Engineering"
+     across the 1240 content column (textAlignHorizontal CENTER, centred on x=720) while the upper
+     band's heading stays left (x=804, default LEFT). Both use .wholesale-tech__title, so only the
+     features one may move. */
+  .wholesale-tech__features .wholesale-tech__title {
+    text-align: center;
+  }
+
   .wholesale-tech__text {
     margin: 0;
     font-size: var(--font-paragraph--size);
@@ -206,9 +214,12 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
+    /* Asymmetric on purpose: the 160px that used to sit between the last feature and the
+       "Industries we serve" heading was this 80 plus the industries section's own 80 padding-top.
+       Half of it comes off here, the other half off that section. */
     .wholesale-tech__features {
       gap: 40px;
-      padding-block: 80px;
+      padding-block: 80px 40px;
     }
   }
 

@@ -13,6 +13,11 @@
 
   Motion: the animation only exists inside prefers-reduced-motion: no-preference, so a visitor who
   asks for less motion gets a still row. Hovering slows it to a stop (marquee.js).
+
+  No hairline above or below the strip. The Figma frame does carry a 1px #e0dcd2 top and bottom
+  stroke and this was built from it, but the client asked for the rules to come off — the tinted
+  band already separates itself from the white sections either side. A deliberate departure from
+  the mockup, so do not "restore" it on the next Figma pass.
 {% endcomment %}
 
 <script
@@ -25,7 +30,6 @@
   class="wholesale-logos"
   style="
     --wholesale-logos-bg: {{ settings.color_palette.color2 }};
-    --wholesale-logos-line: {{ settings.color_palette.color3 }};
     --wholesale-logos-pad: {{ section.settings.padding_block }}px;
     --marquee-direction: {{ section.settings.movement_direction }};
   "
@@ -83,7 +87,6 @@
     overflow: hidden;
     padding-block: var(--wholesale-logos-pad);
     background: var(--wholesale-logos-bg);
-    border-block: 1px solid var(--wholesale-logos-line);
     --marquee-gap: 24px;
   }
 

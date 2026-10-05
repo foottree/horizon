@@ -25,7 +25,8 @@
   posting.
 
   Type: .h2 for the heading, --font-size--2xs for eyebrows, --font-size--sm for field labels,
-  --font-paragraph--size for inputs and copy, .h5 on the contact card title.
+  --font-paragraph--size for inputs and copy, the .h5 size on the contact card title (in the
+  heading face, which .h5 does not supply — see the rule for why).
 {% endcomment %}
 
 {%- liquid
@@ -205,8 +206,14 @@
     font-size: var(--font-size--2xs);
     line-height: 1.3;
     letter-spacing: 0.12em;
-    text-transform: uppercase;
     color: var(--wq-accent);
+  }
+
+  /* Only the section eyebrow is forced uppercase. The card's labels are typed as drawn —
+     the Figma has "Contact:" in sentence case and "EMAIL" in caps — so the block setting is
+     the literal label and CSS must not override it. */
+  .wholesale-quote__eyebrow {
+    text-transform: uppercase;
   }
 
   /* .h2 / .h5 paint with `color: var(--color)`, so the colour goes in through --color. */
@@ -319,10 +326,18 @@
     border-radius: 8px;
   }
 
-  .wq-card .wq-card__title {
+  /* Theme settings put h5 on the *subheading* face (type_font_h5 = "subheading", Plus Jakarta
+     Sans), so .h5 alone gave this card title the sans. The Figma draws it in the serif heading
+     face like every other heading, and 18px is the right rung, so the family is swapped here
+     and the h5 size/leading left alone. The class is doubled to beat base.css's `.h5.h5`
+     (0,2,0) regardless of stylesheet order. */
+  .wq-card .wq-card__title.wq-card__title {
     --color: var(--wq-heading);
 
     margin: 0;
+    font-family: var(--font-heading--family);
+    font-style: var(--font-heading--style);
+    font-weight: var(--font-heading--weight);
   }
 
   .wq-contact {
