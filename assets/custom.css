@@ -142,32 +142,27 @@
 /* Wordmark is the uploaded logo file (config/settings_data.json), not text. */
 
 @media screen and (min-width: 750px) {
-  /* Nav bar height (96px): section_height only offers compact/standard, so
-     dial in the exact vertical padding via the header's own --header-padding
-     custom property (consumed by .header__columns in sections/header.liquid). */
-  #header-component .header__row--top .header__columns {
-    --header-padding: 26px;
-  }
+  /* Nav bar: one block padding, giving a 72px bar at every scroll position.
 
-  /* Sticky state: once the header detaches from the top of the page it shrinks from the
-     96px nav bar to ~72px, and eases back when it returns. --header-padding is a plain
-     custom property (not registered with @property), so it cannot be transitioned itself;
-     the transition goes on the padding the column actually renders from it. */
-  #header-component .header__row--top .header__columns {
-    transition: padding-block 120ms var(--animation-easing, ease);
-  }
+     section_height only offers compact/standard, so the exact vertical padding is dialled in
+     through the header's own --header-padding custom property (consumed by .header__columns in
+     sections/header.liquid).
 
-  #header-component[data-sticky-state='active'] .header__row--top .header__columns {
+     This was two states: 26px at the top of the page (a 96px bar) dropping to 14px once the
+     header stuck, with a transition to ease between them. There is now a single value and no
+     sticky override, so the bar does not resize on scroll. The transition went with it - it
+     existed only to animate between the two heights, and --header-padding is a plain custom
+     property (not registered with @property) so it could never be transitioned directly
+     anyway; the transition had to sit on the padding the column renders from it.
+
+     Asymmetric side padding (100px left / 50px right): no setting exists for unequal left and
+     right header padding, only the symmetric page-width/full-width choice. header-group.json
+     sets section_width to "full-width" on the header section so .header__columns gets real
+     padding-left/padding-right (see .section--full-width-margin in base.css) that this can
+     override cleanly. */
+  #header-component .header__row--top .header__columns {
     --header-padding: 14px;
-  }
 
-  /* Nav bar asymmetric side padding (100px left / 50px right): no setting
-     exists for unequal left/right header padding, only the symmetric
-     page-width/full-width choice. header-group.json sets section_width to
-     "full-width" on the header section so .header__columns gets real
-     padding-left/padding-right (see .section--full-width-margin in
-     base.css) that this can override cleanly. */
-  #header-component .header__row--top .header__columns {
     padding-left: 100px !important;
     padding-right: 50px !important;
   }
