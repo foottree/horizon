@@ -14,8 +14,12 @@
   with a plain hairline above each column, which did not match the mockup - the circles and the rail are
   in the Figma and are restored here.
 
-  Type: .h2 for the heading, .h3 on the step titles (28px), --font-size--2xs for the eyebrow,
+  Type: .h2 for the heading, .h4 on the step titles (24px), --font-size--2xs for the eyebrow,
   --font-paragraph--size for copy.
+
+  The step title is an <h3> tag on the h4 preset. It was .h3 (28px), which sat too close to the
+  32px section heading above it and read as a second section title rather than a step. The Figma
+  draws it at 26px, which is not a rung on the ladder, so it snaps down to 24 rather than up.
 {% endcomment %}
 
 <div class="section-background"></div>
@@ -64,7 +68,7 @@
               {% if forloop.index < 10 %}0{% endif %}{{ forloop.index -}}
             </p>
             {%- if block.settings.title != blank -%}
-              <h3 class="h3 wholesale-step__title">{{ block.settings.title }}</h3>
+              <h3 class="h4 wholesale-step__title">{{ block.settings.title }}</h3>
             {%- endif -%}
             {%- if block.settings.text != blank -%}
               <p class="wholesale-step__text">{{ block.settings.text }}</p>

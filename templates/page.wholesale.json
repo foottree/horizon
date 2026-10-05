@@ -525,7 +525,7 @@
         "heading": "Leave it to us to handle your corporate needs",
         "subheading": "From the first call to the next reorder — four steps, one point of contact.",
         "step_label": "Step",
-        "padding-block-start": 80,
+        "padding-block-start": 40,
         "padding-block-end": 80
       }
     },
@@ -578,7 +578,7 @@
       "settings": {
         "heading": "Industries we serve",
         "padding-block-start": 40,
-        "padding-block-end": 80
+        "padding-block-end": 40
       }
     },
     "quote": {

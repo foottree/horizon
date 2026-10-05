@@ -287,9 +287,13 @@
     resize: vertical;
   }
 
+  /* No bespoke height. This was min-height: 64px, straight off the Figma's "Button / Send
+     request 200x64", which made it the tallest button on the site - 64 against the theme's
+     58 and the 50 the homepage hero blocks are set to. The height now comes from
+     --button-padding-block like every other button, so it matches the "Request a quotation"
+     button further up this same page. Width stays at the Figma's 200. */
   .wq-submit.wq-submit {
     min-width: 200px;
-    min-height: 64px;
     font-size: var(--font-paragraph--size);
   }
 
