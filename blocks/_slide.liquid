@@ -28,11 +28,35 @@
       # Great example of why it can be helpful for a section to be able to read the settings of its direct child blocks.
       # In this case, we want the section to be able to read the image aspect ratio of the first slide and apply it to the slideshow slides and slides.
     %}
+    {% comment %}
+      The slide is 100vw wide, so a min-height of (1 / ratio) * 100vw keeps its box at exactly the
+      photo's own ratio at every window width, and object-fit: cover is left with nothing to trim.
+      A fixed height can only ever match one width: the homepage hero's 720px was right at 1440 and
+      cut roughly 25% of the image at 1920 and 44% at 2560, taking the model's feet off the bottom.
+      It stays a min-height, so a slide whose copy is taller than the photo still grows rather than
+      clipping the text.
+
+      The selector is the section wrapper's id rather than a class. Shopify renders that wrapper
+      with id "shopify-section-" + section.id and class "shopify-section", so the per-section class
+      this rule named until now does not exist in the markup and it never matched anything - which
+      is why the setting had no visible effect before.
+    {% endcomment %}
     {% style %}
-      .shopify-section-{{ section.id }} slideshow-slides,
-      .shopify-section-{{ section.id }} slideshow-slide {
+      #shopify-section-{{ section.id }} slideshow-slides,
+      #shopify-section-{{ section.id }} slideshow-slide {
         min-height: {{ 1 | divided_by: preview_image.aspect_ratio | times: 100 }}vw;
       }
+
+      {%- if block_settings.image_1_mobile != blank -%}
+        /* the mobile art is a different crop (portrait here), so below 750px the slide follows
+           that file's ratio instead - the desktop rule above would make it far too short */
+        @media screen and (max-width: 749px) {
+          #shopify-section-{{ section.id }} slideshow-slides,
+          #shopify-section-{{ section.id }} slideshow-slide {
+            min-height: {{ 1 | divided_by: block_settings.image_1_mobile.aspect_ratio | times: 100 }}vw;
+          }
+        }
+      {%- endif -%}
     {% endstyle %}
   {% endif %}
 
