@@ -156,7 +156,7 @@
     <aside class="wholesale-quote__rail">
       <div class="wq-card">
         {%- if section.settings.contact_heading != blank -%}
-          <h3 class="h5 wq-card__title">{{ section.settings.contact_heading }}</h3>
+          <h3 class="h4 wq-card__title">{{ section.settings.contact_heading }}</h3>
         {%- endif -%}
         {%- for block in section.blocks -%}
           <div class="wq-contact" {{ block.shopify_attributes }}>
@@ -330,18 +330,15 @@
     border-radius: 8px;
   }
 
-  /* Theme settings put h5 on the *subheading* face (type_font_h5 = "subheading", Plus Jakarta
-     Sans), so .h5 alone gave this card title the sans. The Figma draws it in the serif heading
-     face like every other heading, and 18px is the right rung, so the family is swapped here
-     and the h5 size/leading left alone. The class is doubled to beat base.css's `.h5.h5`
-     (0,2,0) regardless of stylesheet order. */
-  .wq-card .wq-card__title.wq-card__title {
+  /* An <h3> on the h4 preset: 24px on the heading face, the same rung as the step titles and the
+     technology feature titles, so every item-level heading on this page is one size. It was .h5,
+     which is 18px and - because theme settings put h5 alone on the subheading face while h1-h4
+     are on the heading face - also rendered in Plus Jakarta Sans. Moving to h4 fixes the size and
+     the face together, so no font-family override is needed here any more. */
+  .wq-card .wq-card__title {
     --color: var(--wq-heading);
 
     margin: 0;
-    font-family: var(--font-heading--family);
-    font-style: var(--font-heading--style);
-    font-weight: var(--font-heading--weight);
   }
 
   .wq-contact {

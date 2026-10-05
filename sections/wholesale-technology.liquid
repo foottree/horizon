@@ -67,11 +67,14 @@
         <li class="wholesale-feature" {{ block.shopify_attributes }}>
           <div class="wholesale-feature__media">
             {%- comment -%}
-              The box is square and the images are landscape, so `object-fit: cover` scales them
-              to cover the HEIGHT and crops the sides - the painted width runs wider than the
-              403px column. A 3:2 source needs about 605px to fill a 403px square, so `sizes`
-              declares the painted width, not the box width. Declaring the box (403px) is what
-              left the industry tiles and the Our Story photo soft.
+              The box is portrait and the images are landscape, so `object-fit: cover` scales
+              them to cover the HEIGHT and crops the sides - the painted width runs far wider
+              than the box. Desktop: the box is 80% of a ~326px column, about 261 wide and 326
+              tall, and a 3:2 source painted to that height is ~490px across. Mobile is one
+              column, so the box is the full (100vw - 32px) and its height is 1.25x that, which
+              a 3:2 source covers at about 1.9x the viewport. `sizes` therefore declares the
+              painted width, not the box width - declaring the box is what left the industry
+              tiles and the Our Story photo soft.
             {%- endcomment -%}
             {%- if block.settings.image != blank -%}
               {{
@@ -84,7 +87,7 @@
             {%- endif -%}
           </div>
           {%- if block.settings.title != blank -%}
-            <h3 class="h5 wholesale-feature__title">{{ block.settings.title }}</h3>
+            <h3 class="h4 wholesale-feature__title">{{ block.settings.title }}</h3>
           {%- endif -%}
           {%- if block.settings.text != blank -%}
             <p class="wholesale-feature__text">{{ block.settings.text }}</p>
@@ -189,9 +192,12 @@
     text-align: center;
   }
 
+  /* Portrait. Below 750px the grid is one column and the image fills the width; from 750px it
+     is three up and the image is held narrower than its column and centred, so the row reads as
+     three portraits rather than three full-bleed blocks. */
   .wholesale-feature__media {
     position: relative;
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 4 / 5;
     margin-block-end: 4px;
     overflow: hidden;
     border-radius: 8px;
@@ -206,19 +212,15 @@
     object-fit: cover;
   }
 
-  /* Same reason as the industry tile labels: theme settings put h5 on the *subheading* face
-     (type_font_h5 = "subheading") while h1-h4 are all on the heading face, so these three
-     titles came out in Plus Jakarta Sans under a Lora section heading. The Figma has them in
-     the serif. Set here rather than by flipping type_font_h5, which also reaches the FAQ rows,
-     the product page and resource card titles - and card titles are meant to stay on the
-     subheading face. Class doubled to beat base.css's `.h5.h5` (0,2,0). */
-  .wholesale-feature__title.wholesale-feature__title {
+  /* An <h3> on the h4 preset: 24px, and on the heading face. It was .h5, which is 18px and -
+     because theme settings put h5 alone on the *subheading* face while h1-h4 are on the heading
+     face - also came out in Plus Jakarta Sans. At 18px it sat two points off the 16px body under
+     it and read as bold body copy rather than a title. The h4 rung fixes both at once: 24px, and
+     the serif without needing a font-family override here. */
+  .wholesale-feature__title {
     --color: var(--wt-heading);
 
     margin: 0;
-    font-family: var(--font-heading--family);
-    font-style: var(--font-heading--style);
-    font-weight: var(--font-heading--weight);
   }
 
   .wholesale-feature__text {
@@ -231,6 +233,13 @@
   @media screen and (min-width: 750px) {
     .wholesale-tech__grid {
       grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    /* Three up: hold the portrait narrower than its column and centre it. On one column
+       (below this breakpoint) it keeps the full width, which is what the client asked for. */
+    .wholesale-feature__media {
+      width: 80%;
+      margin-inline: auto;
     }
 
     /* Asymmetric on purpose: the 160px that used to sit between the last feature and the
