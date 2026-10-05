@@ -1,8 +1,16 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
       "type": "section",
-      "name": "Hero",
       "blocks": {
         "eyebrow": {
           "type": "text",
@@ -34,7 +42,8 @@
             "mobile-padding-inline-start": 0,
             "mobile-padding-inline-end": 0,
             "custom_class": ""
-          }
+          },
+          "blocks": {}
         },
         "heading": {
           "type": "text",
@@ -66,7 +75,8 @@
             "mobile-padding-inline-start": 0,
             "mobile-padding-inline-end": 0,
             "custom_class": ""
-          }
+          },
+          "blocks": {}
         },
         "body": {
           "type": "text",
@@ -98,7 +108,8 @@
             "mobile-padding-inline-start": 0,
             "mobile-padding-inline-end": 0,
             "custom_class": ""
-          }
+          },
+          "blocks": {}
         }
       },
       "block_order": [
@@ -106,11 +117,14 @@
         "heading",
         "body"
       ],
+      "name": "Hero",
       "settings": {
         "content_direction": "column",
         "vertical_on_mobile": true,
+        "reverse_on_mobile": false,
         "horizontal_alignment": "flex-start",
         "vertical_alignment": "center",
+        "align_baseline": false,
         "horizontal_alignment_flex_direction_column": "flex-start",
         "vertical_alignment_flex_direction_column": "center",
         "gap": 16,
@@ -121,9 +135,10 @@
         "section_height": "",
         "section_height_custom": 50,
         "background_media": "image",
+        "background_color": "",
+        "video_position": "cover",
         "background_image": "shopify://shop_images/wholesale-hero.jpg",
         "background_image_position": "cover",
-        "video_position": "cover",
         "toggle_overlay": true,
         "overlay_color": "#142408f0",
         "overlay_style": "gradient",
@@ -207,6 +222,7 @@
             "icon": "heart",
             "title": "Healthcare & nursing",
             "text": "Twelve-hour shifts, wash-down floors, infection-control cleaning. Closed toe, slip-resistant, wipe-clean.",
+            "collection": "",
             "link_label": "See the range"
           }
         },
@@ -216,6 +232,7 @@
             "icon": "serving_dish",
             "title": "F&B & kitchen",
             "text": "Grease and water underfoot. Slip-resistant outsoles, sealed uppers, easy on and off at the door.",
+            "collection": "",
             "link_label": "See the range"
           }
         },
@@ -225,6 +242,7 @@
             "icon": "plane",
             "title": "Aviation & cabin crew",
             "text": "Pressurised cabins swell feet. Wider lasts, low heel, smart enough for a uniform standard.",
+            "collection": "",
             "link_label": "See the range"
           }
         },
@@ -234,6 +252,7 @@
             "icon": "truck",
             "title": "Transport & logistics",
             "text": "In and out of vehicles, on and off kerbs. Grip, support, and a sole that takes the mileage.",
+            "collection": "",
             "link_label": "See the range"
           }
         },
@@ -243,6 +262,7 @@
             "icon": "lock",
             "title": "Security & uniformed",
             "text": "Long static standing and patrol. Cushioned, dark, and built to a uniform specification.",
+            "collection": "",
             "link_label": "See the range"
           }
         },
@@ -252,6 +272,7 @@
             "icon": "clipboard",
             "title": "Office & corporate",
             "text": "Smart footwear that still fits a broad foot — for staff on their feet more than the dress code admits.",
+            "collection": "",
             "link_label": "See the range"
           }
         }
@@ -264,6 +285,7 @@
         "sector_5",
         "sector_6"
       ],
+      "disabled": true,
       "settings": {
         "heading": "What your people stand on all day",
         "lead": "Tell us the environment and we bring the right samples to the fitting.",
@@ -306,7 +328,8 @@
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
                 "padding-inline-end": 0
-              }
+              },
+              "blocks": {}
             },
             "product_title": {
               "type": "product-title",
@@ -330,7 +353,8 @@
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
                 "padding-inline-end": 0
-              }
+              },
+              "blocks": {}
             },
             "price": {
               "type": "price",
@@ -352,7 +376,8 @@
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
                 "padding-inline-end": 0
-              }
+              },
+              "blocks": {}
             },
             "swatches": {
               "type": "swatches",
@@ -365,7 +390,8 @@
                 "product_swatches_padding_bottom": 0,
                 "product_swatches_padding_left": 0,
                 "product_swatches_padding_right": 0
-              }
+              },
+              "blocks": {}
             }
           },
           "block_order": [
@@ -395,8 +421,10 @@
         "tab_4_collection": "",
         "tab_4_max_products": 8,
         "tabs_style": "segmented",
+        "desktop_layout": "carousel",
         "show_arrows": false,
         "mobile_card_size": 75,
+        "hide_arrows": false,
         "section_width": "narrow",
         "background_color": "",
         "padding-block-start": 80,
@@ -405,8 +433,7 @@
         "mobile-padding-block-start": 68,
         "mobile-padding-block-end": 68,
         "mobile-padding-inline-start": 0,
-        "mobile-padding-inline-end": 0,
-        "desktop_layout": "carousel"
+        "mobile-padding-inline-end": 0
       }
     },
     "technology": {
@@ -458,33 +485,33 @@
         "step_1": {
           "type": "step",
           "settings": {
+            "icon": "clipboard",
             "title": "Tell us what you need",
-            "text": "Sector, headcount and the sizes you expect. A call or the form below.",
-            "icon": "clipboard"
+            "text": "Sector, headcount and the sizes you expect. A call or the form below."
           }
         },
         "step_2": {
           "type": "step",
           "settings": {
+            "icon": "map_pin",
             "title": "We fit on site",
-            "text": "We bring sample sizes to your workplace and fit every pair of feet.",
-            "icon": "map_pin"
+            "text": "We bring sample sizes to your workplace and fit every pair of feet."
           }
         },
         "step_3": {
           "type": "step",
           "settings": {
+            "icon": "price_tag",
             "title": "One quotation, one delivery",
-            "text": "One price list, one invoice, every size in a single delivery.",
-            "icon": "price_tag"
+            "text": "One price list, one invoice, every size in a single delivery."
           }
         },
         "step_4": {
           "type": "step",
           "settings": {
+            "icon": "stopwatch",
             "title": "Reorders in days",
-            "text": "Your sizes stay on file, so new starters are fitted without a new survey.",
-            "icon": "stopwatch"
+            "text": "Your sizes stay on file, so new starters are fitted without a new survey."
           }
         }
       },
@@ -508,36 +535,36 @@
         "industry_1": {
           "type": "industry",
           "settings": {
-            "label": "Healthcare",
-            "image": "shopify://shop_images/wholesale-industry-healthcare.png"
+            "image": "shopify://shop_images/wholesale-industry-healthcare.png",
+            "label": "Healthcare"
           }
         },
         "industry_2": {
           "type": "industry",
           "settings": {
-            "label": "Aviation",
-            "image": "shopify://shop_images/wholesale-industry-aviation.png"
+            "image": "shopify://shop_images/wholesale-industry-aviation.png",
+            "label": "Aviation"
           }
         },
         "industry_3": {
           "type": "industry",
           "settings": {
-            "label": "Transport",
-            "image": "shopify://shop_images/wholesale-industry-transport.png"
+            "image": "shopify://shop_images/wholesale-industry-transport.png",
+            "label": "Transport"
           }
         },
         "industry_4": {
           "type": "industry",
           "settings": {
-            "label": "F&B",
-            "image": "shopify://shop_images/wholesale-industry-fnb.png"
+            "image": "shopify://shop_images/wholesale-industry-fnb.png",
+            "label": "F&B"
           }
         },
         "industry_5": {
           "type": "industry",
           "settings": {
-            "label": "Hospitality",
-            "image": "shopify://shop_images/wholesale-industry-hospitality.png"
+            "image": "shopify://shop_images/wholesale-industry-hospitality.png",
+            "label": "Hospitality"
           }
         }
       },
@@ -594,7 +621,6 @@
     },
     "faq": {
       "type": "section",
-      "name": "Wholesale FAQ",
       "blocks": {
         "heading": {
           "type": "text",
@@ -626,17 +652,23 @@
             "mobile-padding-inline-start": 0,
             "mobile-padding-inline-end": 0,
             "custom_class": ""
-          }
+          },
+          "blocks": {}
         },
         "columns": {
           "type": "group",
           "settings": {
+            "link": "",
+            "open_in_new_tab": false,
             "content_direction": "row",
             "vertical_on_mobile": true,
+            "reverse_on_mobile": false,
             "horizontal_alignment": "flex-start",
             "vertical_alignment": "flex-start",
             "align_baseline": false,
             "horizontal_alignment_flex_direction_column": "flex-start",
+            "custom_mobile_alignment": false,
+            "mobile_vertical_alignment": "flex-start",
             "vertical_alignment_flex_direction_column": "flex-start",
             "gap": 48,
             "enable_mobile_gap": true,
@@ -648,27 +680,47 @@
             "height": "fit",
             "custom_height": 100,
             "background_media": "none",
+            "background_color": "",
             "video_position": "cover",
             "background_image_position": "cover",
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
             "border": "none",
             "border_width": 1,
             "border_opacity": 100,
+            "border_color": "",
             "border_radius": 0,
+            "enable_mobile_radius": false,
+            "mobile_border_radius": 0,
+            "placeholder": "",
             "padding-block-start": 0,
             "padding-block-end": 0,
             "padding-inline-start": 0,
-            "padding-inline-end": 0
+            "padding-inline-end": 0,
+            "custom_mobile_padding": false,
+            "mobile-padding-block-start": 0,
+            "mobile-padding-block-end": 0,
+            "mobile-padding-inline-start": 0,
+            "mobile-padding-inline-end": 0,
+            "css_class": ""
           },
           "blocks": {
             "column_left": {
               "type": "group",
               "settings": {
+                "link": "",
+                "open_in_new_tab": false,
                 "content_direction": "column",
                 "vertical_on_mobile": true,
+                "reverse_on_mobile": false,
                 "horizontal_alignment": "flex-start",
                 "vertical_alignment": "flex-start",
                 "align_baseline": false,
                 "horizontal_alignment_flex_direction_column": "flex-start",
+                "custom_mobile_alignment": false,
+                "mobile_vertical_alignment": "flex-start",
                 "vertical_alignment_flex_direction_column": "flex-start",
                 "gap": 0,
                 "enable_mobile_gap": false,
@@ -680,16 +732,31 @@
                 "height": "fit",
                 "custom_height": 100,
                 "background_media": "none",
+                "background_color": "",
                 "video_position": "cover",
                 "background_image_position": "cover",
+                "toggle_overlay": false,
+                "overlay_color": "#00000026",
+                "overlay_style": "solid",
+                "gradient_direction": "to top",
                 "border": "none",
                 "border_width": 1,
                 "border_opacity": 100,
+                "border_color": "",
                 "border_radius": 0,
+                "enable_mobile_radius": false,
+                "mobile_border_radius": 0,
+                "placeholder": "",
                 "padding-block-start": 0,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
-                "padding-inline-end": 0
+                "padding-inline-end": 0,
+                "custom_mobile_padding": false,
+                "mobile-padding-block-start": 0,
+                "mobile-padding-block-end": 0,
+                "mobile-padding-inline-start": 0,
+                "mobile-padding-inline-end": 0,
+                "css_class": ""
               },
               "blocks": {
                 "accordion_left": {
@@ -699,9 +766,12 @@
                     "dividers": true,
                     "divider_color": "{{ settings.color_palette.color3 }}",
                     "type_preset": "h5",
+                    "background_color": "",
+                    "text_color": "",
                     "border": "none",
                     "border_width": 1,
                     "border_opacity": 100,
+                    "border_color": "",
                     "border_radius": 0,
                     "padding-block-start": 0,
                     "padding-block-end": 0,
@@ -717,7 +787,8 @@
                         "open_by_default": false,
                         "icon": "none",
                         "width": 20
-                      }
+                      },
+                      "blocks": {}
                     },
                     "left_row_2": {
                       "type": "_accordion-row-dynamic",
@@ -727,7 +798,8 @@
                         "open_by_default": false,
                         "icon": "none",
                         "width": 20
-                      }
+                      },
+                      "blocks": {}
                     },
                     "left_row_3": {
                       "type": "_accordion-row-dynamic",
@@ -737,7 +809,8 @@
                         "open_by_default": false,
                         "icon": "none",
                         "width": 20
-                      }
+                      },
+                      "blocks": {}
                     }
                   },
                   "block_order": [
@@ -754,12 +827,17 @@
             "column_right": {
               "type": "group",
               "settings": {
+                "link": "",
+                "open_in_new_tab": false,
                 "content_direction": "column",
                 "vertical_on_mobile": true,
+                "reverse_on_mobile": false,
                 "horizontal_alignment": "flex-start",
                 "vertical_alignment": "flex-start",
                 "align_baseline": false,
                 "horizontal_alignment_flex_direction_column": "flex-start",
+                "custom_mobile_alignment": false,
+                "mobile_vertical_alignment": "flex-start",
                 "vertical_alignment_flex_direction_column": "flex-start",
                 "gap": 0,
                 "enable_mobile_gap": false,
@@ -771,16 +849,31 @@
                 "height": "fit",
                 "custom_height": 100,
                 "background_media": "none",
+                "background_color": "",
                 "video_position": "cover",
                 "background_image_position": "cover",
+                "toggle_overlay": false,
+                "overlay_color": "#00000026",
+                "overlay_style": "solid",
+                "gradient_direction": "to top",
                 "border": "none",
                 "border_width": 1,
                 "border_opacity": 100,
+                "border_color": "",
                 "border_radius": 0,
+                "enable_mobile_radius": false,
+                "mobile_border_radius": 0,
+                "placeholder": "",
                 "padding-block-start": 0,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
-                "padding-inline-end": 0
+                "padding-inline-end": 0,
+                "custom_mobile_padding": false,
+                "mobile-padding-block-start": 0,
+                "mobile-padding-block-end": 0,
+                "mobile-padding-inline-start": 0,
+                "mobile-padding-inline-end": 0,
+                "css_class": ""
               },
               "blocks": {
                 "accordion_right": {
@@ -790,9 +883,12 @@
                     "dividers": true,
                     "divider_color": "{{ settings.color_palette.color3 }}",
                     "type_preset": "h5",
+                    "background_color": "",
+                    "text_color": "",
                     "border": "none",
                     "border_width": 1,
                     "border_opacity": 100,
+                    "border_color": "",
                     "border_radius": 0,
                     "padding-block-start": 0,
                     "padding-block-end": 0,
@@ -808,7 +904,8 @@
                         "open_by_default": false,
                         "icon": "none",
                         "width": 20
-                      }
+                      },
+                      "blocks": {}
                     },
                     "right_row_2": {
                       "type": "_accordion-row-dynamic",
@@ -818,7 +915,8 @@
                         "open_by_default": false,
                         "icon": "none",
                         "width": 20
-                      }
+                      },
+                      "blocks": {}
                     },
                     "right_row_3": {
                       "type": "_accordion-row-dynamic",
@@ -828,7 +926,8 @@
                         "open_by_default": false,
                         "icon": "none",
                         "width": 20
-                      }
+                      },
+                      "blocks": {}
                     }
                   },
                   "block_order": [
@@ -853,41 +952,61 @@
         "heading",
         "columns"
       ],
+      "name": "Wholesale FAQ",
       "settings": {
         "content_direction": "column",
         "vertical_on_mobile": true,
+        "reverse_on_mobile": false,
         "horizontal_alignment": "flex-start",
         "vertical_alignment": "center",
+        "align_baseline": false,
         "horizontal_alignment_flex_direction_column": "flex-start",
         "vertical_alignment_flex_direction_column": "flex-start",
         "gap": 40,
+        "enable_mobile_gap": false,
+        "mobile_gap": 12,
         "section_width": "narrow",
+        "full_width_on_mobile": false,
         "section_height": "",
+        "section_height_custom": 50,
         "background_media": "none",
+        "background_color": "",
         "video_position": "cover",
         "background_image_position": "cover",
         "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
         "border": "none",
         "border_width": 1,
         "border_opacity": 100,
+        "border_color": "",
         "border_radius": 0,
         "padding-block-start": 80,
         "padding-block-end": 80,
-        "css_class": "ft-faq-columns"
+        "custom_mobile_padding": false,
+        "mobile-padding-block-start": 0,
+        "mobile-padding-block-end": 0,
+        "mobile-padding-inline-start": 0,
+        "mobile-padding-inline-end": 0,
+        "css_class": "ft-faq-columns",
+        "add_section_id": false,
+        "section_id": ""
       }
     },
     "closing": {
       "type": "wholesale-closing",
       "settings": {
+        "eyebrow": "",
         "heading": "Fitting Singapore at work since 1974",
+        "text": "Tell us what your team stands on all day, and we will tell you what they should be standing in.",
         "primary_label": "Request a quotation",
         "primary_link": "#quotation",
         "secondary_label": "WhatsApp our corporate team",
         "secondary_link": "#",
         "secondary_new_tab": false,
         "padding-block-start": 80,
-        "padding-block-end": 80,
-        "text": "Tell us what your team stands on all day, and we will tell you what they should be standing in."
+        "padding-block-end": 80
       }
     }
   },
