@@ -1991,3 +1991,176 @@ swatches-variant-picker-component {
     border-block-end: 0;
   }
 }
+
+/* ---- Policy pages ----
+   Shipping (Delivery & Shipping), Refund (Returns & Exchanges), Privacy and any other policy
+   the shop publishes, from the Figma frames "Delivery & Shipping / Desktop 1440" and
+   "Returns & Exchanges / Desktop 1440".
+
+   Policy pages are the one storefront page with no theme template. There is no `policy`
+   template type - the storefront reports `data-template=""` on them - so Shopify renders the
+   page itself, straight into content_for_layout, as
+
+     .shopify-policy__container > .shopify-policy__title > h1   (the policy title)
+                                > .shopify-policy__body  > .rte > <the stored policy HTML>
+
+   The structure of the page therefore lives in the policy body that Settings > Policies (or
+   shopPolicyUpdate) stores - plain h2 / h3 / p / ul / ol / a, no classes - and this block is
+   the only place the theme gets to size it. Every selector is scoped to those two Shopify
+   classes, so it cannot reach any other page.
+
+   Every selector doubles its class. Shopify injects its own stylesheet on these pages
+   (cdn/shopifycloud/.../storefront/policy-*.css) which sets
+     .shopify-policy__container { max-width: 65ch; padding-inline: 20px }
+     .shopify-policy__title     { text-align: center }
+   and it loads AFTER custom.css, so a single-class rule here would lose on source order.
+
+   Type comes from the ladder in CLAUDE.md through the theme's own presets - no px font size is
+   set anywhere below:
+     page title    h1 element   clamp(36px, 4.8vw, 48px) Lora   (Shopify renders the h1)
+     part heading  h2 element   32px, 28px mobile, Lora
+     sub-heading   h3 element on the h5 preset: 18px Plus Jakarta Sans 600, which is the Figma's
+                   sub-heading exactly. h3 is the right *level* under an h2, h5 is the right
+                   *rung* - the same tag/preset split CLAUDE.md documents for the product title.
+     body, lists   16px, inherited from body
+
+   The three accent colours are the palette's color8 / color6 / color4. They are written as hex
+   here because custom.css is a plain stylesheet: the palette only reaches CSS through Liquid
+   (snippets/color-palette.liquid) and there is no --color-palette-colorN global to point at.
+   If the palette moves, these three values move with it. */
+.shopify-policy__container.shopify-policy__container {
+  /* 840px column, left-aligned text, centred in the page (Figma: 300px either side at 1440).
+     The gutter is --page-margin - 40px desktop, 16px mobile - so below ~872px wide the column
+     keeps the same left edge as every other section on the site. */
+  --ftp-measure: 840px;
+  --ftp-body: #5c5a52; /* palette color8 - body copy */
+  --ftp-bullet: #bd8c3d; /* palette color6 "Golden Soil" - bullets */
+  --ftp-step: #4a6a1d; /* palette color4 - numbered step markers, link hover */
+
+  max-width: calc(var(--ftp-measure) + var(--page-margin) * 2);
+  margin-inline: auto;
+  padding-inline: var(--page-margin);
+  /* base.css gives the container --padding-xl (20px) on both ends, a tenth of the Figma's
+     breathing room above the title and below the last line. */
+  padding-block: 96px 120px;
+  color: var(--ftp-body);
+}
+
+.shopify-policy__title.shopify-policy__title {
+  /* Shopify's policy-*.css centres the title; the Figma column is left-aligned throughout. */
+  text-align: start;
+  margin-block-end: 56px;
+}
+
+.shopify-policy__title.shopify-policy__title h1 {
+  /* base.css gives any heading inside .shopify-policy__title a clamped top margin (40px at
+     this size); the container's own padding owns the space above the title instead. */
+  margin-block: 0;
+  color: var(--color-foreground);
+}
+
+/* Part headings */
+.shopify-policy__body.shopify-policy__body h2 {
+  margin-block: 72px 32px;
+  color: var(--color-foreground);
+}
+
+/* A policy that opens on a part heading (Returns & Exchanges opens on "Refund policy") gets a
+   deliberate void under the title in the Figma - 157px against the 76px the Delivery page gives
+   its opening paragraph. base.css zeroes the top margin of the first heading in an .rte, which
+   would close that to the title's own margin, so it is restored here. The margin collapses with
+   the title's 56px, so this value is the whole gap, not an addition to it. */
+.shopify-policy__body.shopify-policy__body h2:first-child {
+  margin-block-start: 96px;
+}
+
+/* Sub-headings: h3 element, h5 rung */
+.shopify-policy__body.shopify-policy__body h3 {
+  margin-block: 40px 14px;
+  font-family: var(--font-h5--family);
+  font-style: var(--font-h5--style);
+  font-weight: var(--font-h5--weight);
+  font-size: var(--font-h5--size);
+  line-height: var(--font-h5--line-height);
+  letter-spacing: var(--font-h5--letter-spacing);
+  color: var(--color-foreground);
+}
+
+.shopify-policy__body.shopify-policy__body p {
+  margin-block: 0 16px;
+}
+
+.shopify-policy__body.shopify-policy__body p:last-child {
+  margin-block-end: 0;
+}
+
+/* Figma indents: bullet text at 21px, numbered-step text at 34px, markers hanging outside. */
+.shopify-policy__body.shopify-policy__body :is(ul, ol) {
+  margin-block: 0 16px;
+}
+
+.shopify-policy__body.shopify-policy__body ul {
+  padding-inline-start: 21px;
+  list-style-type: disc;
+}
+
+.shopify-policy__body.shopify-policy__body ol {
+  padding-inline-start: 34px;
+  list-style-type: decimal;
+}
+
+.shopify-policy__body.shopify-policy__body li {
+  margin-block-end: 14px;
+}
+
+.shopify-policy__body.shopify-policy__body li:last-child {
+  margin-block-end: 0;
+}
+
+/* ::marker takes colour and font properties only, which is all either marker needs. */
+.shopify-policy__body.shopify-policy__body ul > li::marker {
+  color: var(--ftp-bullet);
+}
+
+.shopify-policy__body.shopify-policy__body ol > li::marker {
+  color: var(--ftp-step);
+  font-family: var(--font-subheading--family);
+  font-weight: var(--font-subheading--weight);
+}
+
+/* The Figma draws the email address and the WhatsApp number as plain body text, so they keep
+   the body colour and earn an underline rather than a second accent colour. */
+.shopify-policy__body.shopify-policy__body a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.shopify-policy__body.shopify-policy__body a:hover,
+.shopify-policy__body.shopify-policy__body a:focus-visible {
+  color: var(--ftp-step);
+}
+
+/* Mobile 390, which the Figma does not draw: h1 clamps itself to 36px and h2 steps to 28px
+   (see the section-title rule above), so only the gaps - set for an 840px measure - tighten. */
+@media screen and (max-width: 749px) {
+  .shopify-policy__container.shopify-policy__container {
+    padding-block: 40px 72px;
+  }
+
+  .shopify-policy__title.shopify-policy__title {
+    margin-block-end: 32px;
+  }
+
+  .shopify-policy__body.shopify-policy__body h2 {
+    margin-block: 56px 24px;
+  }
+
+  .shopify-policy__body.shopify-policy__body h2:first-child {
+    margin-block-start: 48px;
+  }
+
+  .shopify-policy__body.shopify-policy__body h3 {
+    margin-block: 32px 12px;
+  }
+}
