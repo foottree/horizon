@@ -118,8 +118,10 @@
 
   /* Figma "03 How it works": each step is a circle holding a color4 glyph, and a 1px color3
      "Connector rail" runs behind them from the centre of the first circle to the centre of
-     the last. The Figma draws the badge at 72px; it read too heavy against the 12px step
-     label next to it, so the badge is 56 and the glyph 24 (48/22 on mobile).
+     the last. Badge 64 holding a 40px glyph, 56/34 on mobile. It went 72/32 -> 56/24 while the
+     badge was still a filled pale-green disc and read too heavy beside the 12px step label;
+     once the fill came off, only the glyph reads, and at 24 it left too much empty rail
+     between steps, so the glyph grew and the badge grew with it to keep masking the rail.
 
      The badge takes the page background, not color2. The earlier mockup filled it pale green;
      the current one drops that fill, so the glyph reads bare. The circle still has to paint
@@ -127,7 +129,7 @@
      transparent badge would let it cross the glyph. Painting it the background colour masks
      the rail and leaves nothing visible. */
   .wholesale-steps__list {
-    --ws-badge: 56px;
+    --ws-badge: 64px;
     --ws-gap: 24px;
 
     position: relative;
@@ -181,8 +183,8 @@
      tall and the square PNG was stretched. The inline SVG path is unaffected by either. */
   .wholesale-step__icon {
     display: block;
-    width: 24px !important;
-    height: 24px;
+    width: 40px !important;
+    height: 40px;
     object-fit: contain;
     color: var(--wholesale-steps-accent);
   }
@@ -235,7 +237,7 @@
      it runs from under one badge to the top of the next, and the last step has none. */
   @media screen and (max-width: 749px) {
     .wholesale-steps__list {
-      --ws-badge: 48px;
+      --ws-badge: 56px;
       --ws-gap: 28px;
 
       grid-template-columns: minmax(0, 1fr);
@@ -263,8 +265,8 @@
     }
 
     .wholesale-step__icon {
-      width: 22px !important;
-      height: 22px;
+      width: 34px !important;
+      height: 34px;
     }
   }
 
