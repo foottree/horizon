@@ -16,6 +16,14 @@
 {% liquid
   assign tile_image = link.object.metafields.custom.collection_card_image.value | default: link.object.featured_image
   assign img_class = class | default: 'ft-tile-image__img'
+
+  # The tile crops with object-fit: cover, so honour the focal point set on the file in Shopify
+  # admin and let the crop keep the subject. Shopify returns it as an "x% y%" string, which is
+  # what object-position expects. Empty when none is set, leaving the CSS default alone.
+  assign tile_focal = ''
+  if tile_image.presentation.focal_point != blank
+    assign tile_focal = 'object-position: ' | append: tile_image.presentation.focal_point | append: ';'
+  endif
 %}
 {%- if tile_image -%}
   {{
@@ -26,6 +34,7 @@
       widths: '200, 344, 400, 516',
       sizes: '172px',
       alt: link.title,
-      class: img_class
+      class: img_class,
+      style: tile_focal
   }}
 {%- endif -%}

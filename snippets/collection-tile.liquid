@@ -51,6 +51,19 @@
 >
   <span class="collection-rail__tile-image">
     {%- if tile_image -%}
+      {%- comment -%}
+        The tile is cropped with object-fit: cover, so a wide image loses its sides and a tall one
+        loses its top and bottom. Honour the focal point set on the file in Shopify admin (Content
+        > Files, or the collection's own image picker) so the crop keeps the shoe rather than the
+        middle of the frame. Shopify hands it over as a ready-made "x% y%" string, which is exactly
+        what object-position takes. Falls back to the CSS default when none is set.
+      {%- endcomment -%}
+      {%- liquid
+        assign tile_focal = ''
+        if tile_image.presentation.focal_point != blank
+          assign tile_focal = 'object-position: ' | append: tile_image.presentation.focal_point | append: ';'
+        endif
+      -%}
       {{
         tile_image
         | image_url: width: 1200
@@ -58,7 +71,8 @@
           loading: 'lazy',
           widths: '300, 450, 600, 750, 900, 1200',
           sizes: tile_sizes,
-          alt: tile_label
+          alt: tile_label,
+          style: tile_focal
       }}
     {%- else -%}
       <span
