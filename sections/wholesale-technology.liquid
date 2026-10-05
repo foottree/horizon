@@ -66,11 +66,18 @@
       {%- for block in section.blocks -%}
         <li class="wholesale-feature" {{ block.shopify_attributes }}>
           <div class="wholesale-feature__media">
+            {%- comment -%}
+              The box is square and the images are landscape, so `object-fit: cover` scales them
+              to cover the HEIGHT and crops the sides - the painted width runs wider than the
+              403px column. A 3:2 source needs about 605px to fill a 403px square, so `sizes`
+              declares the painted width, not the box width. Declaring the box (403px) is what
+              left the industry tiles and the Our Story photo soft.
+            {%- endcomment -%}
             {%- if block.settings.image != blank -%}
               {{
                 block.settings.image
-                | image_url: width: 900
-                | image_tag: widths: '403, 600, 806, 900', sizes: '(min-width: 990px) 403px, calc(100vw - 32px)', class: 'wholesale-feature__image', loading: 'lazy'
+                | image_url: width: 1210
+                | image_tag: widths: '403, 600, 806, 900, 1210', sizes: '(min-width: 990px) 605px, calc((100vw - 32px) * 1.5)', class: 'wholesale-feature__image', loading: 'lazy'
               }}
             {%- else -%}
               {{ 'image' | placeholder_svg_tag: 'wholesale-feature__image wholesale-feature__image--placeholder' }}
@@ -173,15 +180,18 @@
     list-style: none;
   }
 
+  /* Square media and centred copy, both as the Figma draws this row. The media was 4/3 and the
+     copy was left aligned. */
   .wholesale-feature {
     display: flex;
     flex-direction: column;
     gap: 12px;
+    text-align: center;
   }
 
   .wholesale-feature__media {
     position: relative;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 1 / 1;
     margin-block-end: 4px;
     overflow: hidden;
     border-radius: 8px;
@@ -196,10 +206,19 @@
     object-fit: cover;
   }
 
-  .wholesale-feature__title {
+  /* Same reason as the industry tile labels: theme settings put h5 on the *subheading* face
+     (type_font_h5 = "subheading") while h1-h4 are all on the heading face, so these three
+     titles came out in Plus Jakarta Sans under a Lora section heading. The Figma has them in
+     the serif. Set here rather than by flipping type_font_h5, which also reaches the FAQ rows,
+     the product page and resource card titles - and card titles are meant to stay on the
+     subheading face. Class doubled to beat base.css's `.h5.h5` (0,2,0). */
+  .wholesale-feature__title.wholesale-feature__title {
     --color: var(--wt-heading);
 
     margin: 0;
+    font-family: var(--font-heading--family);
+    font-style: var(--font-heading--style);
+    font-weight: var(--font-heading--weight);
   }
 
   .wholesale-feature__text {

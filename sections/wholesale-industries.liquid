@@ -135,12 +135,21 @@
     pointer-events: none;
   }
 
-  .wholesale-industry__label {
+  /* The feature tile takes .h3 and the rest .h5. Theme settings put h5 on the *subheading*
+     face (type_font_h5 = "subheading") while h1-h4 are all on the heading face, so the small
+     tiles came out in Plus Jakarta Sans next to a Lora feature tile. The Figma draws every
+     tile label in the serif. The family is set here rather than by flipping type_font_h5,
+     which also carries product card titles and would put those on the wrong face. Class
+     doubled to beat base.css's `.h5.h5` (0,2,0) whatever the stylesheet order. */
+  .wholesale-industry__label.wholesale-industry__label {
     --color: var(--wi-label);
 
     position: relative;
     z-index: 1;
     margin: 0;
+    font-family: var(--font-heading--family);
+    font-style: var(--font-heading--style);
+    font-weight: var(--font-heading--weight);
   }
 
   @media screen and (min-width: 750px) {
