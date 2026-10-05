@@ -147,6 +147,16 @@
           >{{ form.body }}</textarea>
         </div>
 
+        {%- comment -%}
+          Shopify's contact form delivers every contact[...] field into the same inbox as the
+          general enquiry form, with nothing to say which page it came from. These two hidden
+          fields label it, so a wholesale quotation is sortable in the inbox and in any rule or
+          helpdesk integration rather than being told apart by eye. The label is editable because
+          the team's own wording for this is theirs to choose.
+        {%- endcomment -%}
+        <input type="hidden" name="contact[Enquiry type]" value="{{ section.settings.enquiry_tag | escape }}">
+        <input type="hidden" name="contact[Submitted from]" value="{{ request.origin }}{{ request.path }}">
+
         <div class="wq-actions">
           <button type="submit" class="button wq-submit">{{ section.settings.submit_label }}</button>
         </div>
@@ -477,6 +487,13 @@
     {
       "type": "header",
       "content": "Section"
+    },
+    {
+      "type": "text",
+      "id": "enquiry_tag",
+      "label": "Enquiry label",
+      "info": "Sent with the form as a hidden field so these land tagged in the inbox, apart from general enquiries.",
+      "default": "Wholesale quotation"
     },
     {
       "type": "range",
