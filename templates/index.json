@@ -662,7 +662,7 @@
               "type": "_product-card-gallery",
               "name": "Media",
               "settings": {
-                "image_ratio": "square",
+                "image_ratio": "portrait",
                 "border": "none",
                 "border_width": 1,
                 "border_opacity": 100,
