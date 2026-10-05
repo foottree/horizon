@@ -48,7 +48,7 @@
         "heading": {
           "type": "text",
           "settings": {
-            "text": "<h1>Uniform footwear specialist</h1>",
+            "text": "<h1>Singapore’s uniform footwear specialist</h1>",
             "width": "100%",
             "max_width": "none",
             "alignment": "left",
@@ -81,7 +81,7 @@
         "body": {
           "type": "text",
           "settings": {
-            "text": "<p>We fit your team on site and hold the size run, so replacements take days rather than months.</p>",
+            "text": "<p>Ready inventory, extreme and wide range of designs for all-day comfort on your shifts.</p>",
             "width": "100%",
             "max_width": "normal",
             "alignment": "left",
@@ -452,14 +452,14 @@
           "settings": {
             "image": "shopify://shop_images/wholesale-tech-2.jpg",
             "title": "Extreme sizes & wide fit last",
-            "text": "Up to 4E width to accommodate Asian feet. Sizing from EU34 to EU48, with half sizes"
+            "text": "Half and extreme sizes available. Up to 4E width to accommodate Asian feet"
           }
         },
         "feature_3": {
           "type": "feature",
           "settings": {
             "image": "shopify://shop_images/wholesale-tech-3.jpg",
-            "title": "Lightweight and slip-resistant",
+            "title": "Lightweight & slip-resistant",
             "text": "Cushioned and lightweight outsole to support all day comfort"
           }
         }
@@ -472,8 +472,8 @@
       "settings": {
         "image": "shopify://shop_images/wholesale-tech-1.jpg",
         "eyebrow": "SHOE TECHNOLOGY",
-        "heading": "Trusted all-day comfort and safety",
-        "text": "Every layer of a Foot Tree shoe is designed with your feet, knees, and spine in mind — so your team stays comfortable and focused, right through to the end of the day.",
+        "heading": "Trusted by professionals since 1974",
+        "text": "Every Foot Tree shoe is designed for all day comfort and safety — so your team stays sharp and focused, right through to the end of the day.",
         "button_label": "Request a quotation",
         "button_link": "#quotation",
         "features_heading": "Foot Tree Work Comfort Engineering"
@@ -487,15 +487,15 @@
           "settings": {
             "icon": "clipboard",
             "title": "Tell us what you need",
-            "text": "Sector, headcount and the sizes you expect. A call or the form below."
+            "text": "Industry, shoe style and the sizes you expect. A call or the form below."
           }
         },
         "step_2": {
           "type": "step",
           "settings": {
             "icon": "map_pin",
-            "title": "We fit on site",
-            "text": "We bring sample sizes to your workplace and fit every pair of feet."
+            "title": "We fit and distribute on site",
+            "text": "We can bring sample sizes to you, handle fitting and shoe collection all-in-one on site."
           }
         },
         "step_3": {
@@ -511,7 +511,7 @@
           "settings": {
             "icon": "stopwatch",
             "title": "Reorders in days",
-            "text": "Your sizes stay on file, so new starters are fitted without a new survey."
+            "text": "Ready stocks and stable lead times for easy reordering."
           }
         }
       },
@@ -606,15 +606,15 @@
       "settings": {
         "anchor_id": "quotation",
         "eyebrow": "REQUEST A QUOTATION",
-        "heading": "Tell us about your needs",
+        "heading": "Tell us your needs",
         "organisation_label": "Organisation",
-        "organisation_placeholder": "e.g. 50 pairs",
+        "organisation_placeholder": "e.g. ABC Company",
         "organisation_required": false,
         "message_label": "What are your corporate needs:",
         "message_placeholder": "Do you have any uniform specification?",
         "submit_label": "Send request",
         "success_message": "Thank you. We have your request and will reply within one working day.",
-        "contact_heading": "Rather just talk to someone?",
+        "contact_heading": "Rather just talk to our team?",
         "padding-block-start": 80,
         "padding-block-end": 80
       }
@@ -1016,8 +1016,8 @@
     "sectors",
     "work_rail",
     "technology",
-    "how_it_works",
     "industries",
+    "how_it_works",
     "quote",
     "faq",
     "closing"
