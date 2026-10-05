@@ -17,8 +17,8 @@
           "name": "t:names.slide",
           "settings": {
             "media_type_1": "image",
-            "image_1": "shopify://shop_images/hero-slide-1.jpg",
-            "image_1_mobile": "shopify://shop_images/hero-slide-1-mobile-placeholder.png",
+            "image_1": "shopify://shop_images/hero-kv-1-desktop.jpg",
+            "image_1_mobile": "shopify://shop_images/hero-kv-1-mobile.jpg",
             "content_direction": "column",
             "vertical_on_mobile": true,
             "horizontal_alignment": "flex-start",
@@ -172,8 +172,8 @@
           "name": "t:names.slide",
           "settings": {
             "media_type_1": "image",
-            "image_1": "shopify://shop_images/hero-slide-2.jpg",
-            "image_1_mobile": "shopify://shop_images/hero-slide-2-mobile-placeholder.png",
+            "image_1": "shopify://shop_images/hero-kv-2-desktop.jpg",
+            "image_1_mobile": "shopify://shop_images/hero-kv-2-mobile.jpg",
             "content_direction": "column",
             "vertical_on_mobile": true,
             "horizontal_alignment": "flex-start",
@@ -327,8 +327,8 @@
           "name": "t:names.slide",
           "settings": {
             "media_type_1": "image",
-            "image_1": "shopify://shop_images/hero-slide-1.jpg",
-            "image_1_mobile": "shopify://shop_images/hero-slide-1-mobile-placeholder.png",
+            "image_1": "shopify://shop_images/hero-kv-3-desktop.jpg",
+            "image_1_mobile": "shopify://shop_images/hero-kv-3-mobile.jpg",
             "content_direction": "column",
             "vertical_on_mobile": true,
             "horizontal_alignment": "flex-start",
