@@ -175,10 +175,15 @@
     background-color: var(--wholesale-steps-badge-bg);
   }
 
+  /* `width` needs !important and the glyph needs object-fit, both only because of the uploaded
+     image path: icon-or-image writes an inline `style="width: <width>px"` onto the <img>, and an
+     inline style outranks every selector, so the image came out 32 wide against this rule's 24
+     tall and the square PNG was stretched. The inline SVG path is unaffected by either. */
   .wholesale-step__icon {
     display: block;
-    width: 24px;
+    width: 24px !important;
     height: 24px;
+    object-fit: contain;
     color: var(--wholesale-steps-accent);
   }
 
@@ -258,7 +263,7 @@
     }
 
     .wholesale-step__icon {
-      width: 22px;
+      width: 22px !important;
       height: 22px;
     }
   }

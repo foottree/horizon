@@ -487,7 +487,8 @@
           "settings": {
             "icon": "document_pencil",
             "title": "Tell us what you need",
-            "text": "Industry, shoe style and the sizes you expect. A call or the form below."
+            "text": "Industry, shoe style and the sizes you expect. A call or the form below.",
+            "image": "shopify://shop_images/wholesale-step-01-tell-us.png"
           }
         },
         "step_2": {
@@ -495,7 +496,8 @@
           "settings": {
             "icon": "people_group",
             "title": "We fit and distribute on site",
-            "text": "We can bring sample sizes to you, handle fitting and shoe collection all-in-one on site."
+            "text": "We can bring sample sizes to you, handle fitting and shoe collection all-in-one on site.",
+            "image": "shopify://shop_images/wholesale-step-02-fit-on-site.png"
           }
         },
         "step_3": {
@@ -503,7 +505,8 @@
           "settings": {
             "icon": "invoice",
             "title": "One quotation, one delivery",
-            "text": "One price list, one invoice, every size in a single delivery."
+            "text": "One price list, one invoice, every size in a single delivery.",
+            "image": "shopify://shop_images/wholesale-step-03-quotation.png"
           }
         },
         "step_4": {
@@ -511,7 +514,8 @@
           "settings": {
             "icon": "stopwatch_check",
             "title": "Reorders in days",
-            "text": "Ready stocks and stable lead times for easy reordering."
+            "text": "Ready stocks and stable lead times for easy reordering.",
+            "image": "shopify://shop_images/wholesale-step-04-reorders.png"
           }
         }
       },
