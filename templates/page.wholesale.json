@@ -1007,7 +1007,8 @@
         "secondary_new_tab": false,
         "padding-block-start": 80,
         "padding-block-end": 80
-      }
+      },
+      "disabled": true
     }
   },
   "order": [

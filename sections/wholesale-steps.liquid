@@ -28,7 +28,7 @@
     --wholesale-steps-accent: {{ settings.color_palette.color4 }};
     --wholesale-steps-line: {{ settings.color_palette.color3 }};
     --wholesale-steps-soft: {{ settings.color_palette.color8 }};
-    --wholesale-steps-badge-bg: {{ settings.color_palette.color2 }};
+    --wholesale-steps-badge-bg: {{ settings.color_palette.background }};
     --ws-step-count: {{ section.blocks.size }};
   "
   data-testid="wholesale-steps"
@@ -104,10 +104,16 @@
     color: var(--wholesale-steps-soft);
   }
 
-  /* Figma "03 How it works": each step is a circle in color2 holding a color4 glyph, and a
-     1px color3 "Connector rail" runs behind them from the centre of the first circle to the
-     centre of the last. The Figma draws the badge at 72px; it read too heavy against the
-     12px step label next to it, so the badge is 56 and the glyph 24 (48/22 on mobile). */
+  /* Figma "03 How it works": each step is a circle holding a color4 glyph, and a 1px color3
+     "Connector rail" runs behind them from the centre of the first circle to the centre of
+     the last. The Figma draws the badge at 72px; it read too heavy against the 12px step
+     label next to it, so the badge is 56 and the glyph 24 (48/22 on mobile).
+
+     The badge takes the page background, not color2. The earlier mockup filled it pale green;
+     the current one drops that fill, so the glyph reads bare. The circle still has to paint
+     something opaque rather than be removed: the rail runs through the badge centre, so a
+     transparent badge would let it cross the glyph. Painting it the background colour masks
+     the rail and leaves nothing visible. */
   .wholesale-steps__list {
     --ws-badge: 56px;
     --ws-gap: 24px;
