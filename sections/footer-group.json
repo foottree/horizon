@@ -94,7 +94,7 @@
             "reach_text": {
               "type": "text",
               "settings": {
-                "text": "<p>Visit City Square Mall<br>180 Kitchener Rd, #03-15 Singapore 208539<br><br>hello@foottree.com</p>",
+                "text": "<p>Visit City Square Mall<br>180 Kitchener Rd, #03-15 Singapore 208539<br><br><a href=\"mailto:hello@foottree.com\">hello@foottree.com</a></p>",
                 "width": "100%",
                 "max_width": "none",
                 "type_preset": "paragraph",
