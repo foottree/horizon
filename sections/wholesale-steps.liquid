@@ -14,6 +14,14 @@
   with a plain hairline above each column, which did not match the mockup - the circles and the rail are
   in the Figma and are restored here.
 
+  Icons. The Figma draws a document-and-pencil, a group of three people, an invoice and a
+  stopwatch with a tick. Horizon's built-in set has none of those, so the four were stood in with
+  clipboard / map pin / price tag / stopwatch and the client rejected that three times. They now
+  come from Tabler Icons (MIT) through snippets/icon-foot-tree.liquid, which carries the licence
+  notice and the normalisation that matches them to Horizon's hairline weight. The Figma's icons
+  themselves are raster stock of unknown provenance and are deliberately not used. The "Icon
+  image" picker still overrides the select, per icon-or-image.liquid.
+
   Type: .h2 for the heading, .h4 on the step titles (24px), --font-size--2xs for the eyebrow,
   --font-paragraph--size for copy.
 
@@ -331,6 +339,10 @@
           "label": "Icon",
           "options": [
             { "value": "none", "label": "None" },
+            { "value": "document_pencil", "label": "Document and pencil" },
+            { "value": "people_group", "label": "Group of people" },
+            { "value": "invoice", "label": "Invoice" },
+            { "value": "stopwatch_check", "label": "Stopwatch with tick" },
             { "value": "clipboard", "label": "Clipboard" },
             { "value": "map_pin", "label": "Map pin" },
             { "value": "ruler", "label": "Ruler" },
@@ -343,7 +355,7 @@
             { "value": "shoe", "label": "Shoe" },
             { "value": "star", "label": "Star" }
           ],
-          "default": "clipboard"
+          "default": "document_pencil"
         },
         {
           "type": "image_picker",
@@ -373,7 +385,7 @@
         {
           "type": "step",
           "settings": {
-            "icon": "clipboard",
+            "icon": "document_pencil",
             "title": "Tell us what you need",
             "text": "Sector, headcount and the sizes you expect. A call or the form below."
           }
@@ -381,7 +393,7 @@
         {
           "type": "step",
           "settings": {
-            "icon": "map_pin",
+            "icon": "people_group",
             "title": "We fit on site",
             "text": "We bring sample sizes to your workplace and fit every pair of feet."
           }
@@ -389,7 +401,7 @@
         {
           "type": "step",
           "settings": {
-            "icon": "price_tag",
+            "icon": "invoice",
             "title": "One quotation, one delivery",
             "text": "One price list, one invoice, every size in a single delivery."
           }
@@ -397,7 +409,7 @@
         {
           "type": "step",
           "settings": {
-            "icon": "stopwatch",
+            "icon": "stopwatch_check",
             "title": "Reorders in days",
             "text": "Your sizes stay on file, so new starters are fitted without a new survey."
           }

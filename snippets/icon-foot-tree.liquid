@@ -1,0 +1,92 @@
+{% doc %}
+  Fork-owned icons, rendered when `snippets/icon.liquid` has no case for the name. Used inside
+  an `<svg>` element, exactly like `icon.liquid`, so it is reachable through `icon-or-image`.
+
+  These four were added for the "How it works" steps on the For Organisations page. Horizon's
+  built-in set has no document-and-pencil, group-of-people or invoice glyph, and the client's
+  Figma calls for all three, so they come from Tabler Icons rather than being drawn by hand.
+
+  Attribution (MIT requires the notice to travel with the work):
+    Tabler Icons v3.31.0 — https://tabler.io/icons
+    MIT License, Copyright (c) 2020-2024 Pawel Kuna
+    Source icons: file-pencil, users-group, file-dollar, stopwatch (+ check).
+
+  Normalisation. Tabler draws on a 24x24 grid at stroke-width 2; `icon-or-image.liquid` opens a
+  `0 0 20 20` viewBox, and Horizon's own glyphs are filled outlines one unit thick on that grid.
+  So each icon is wrapped in scale(0.8333) (24 -> 20) and set to stroke-width 1.2, which lands at
+  1.2 * 0.8333 = 1 unit — the same hairline as `clipboard`, `stopwatch` and the rest. `fill: none`
+  on the group is required: `.icon-default` sets `fill: currentColor` on the parent `<svg>` and
+  the stroke paths would otherwise fill solid. `stroke: currentColor` keeps the badge colour
+  setting working.
+
+  Because the transform assumes a 20-unit viewBox, these names belong in `icon-or-image` callers.
+  Rendering them inside a 24-unit `<svg>` would draw them at five-sixths size.
+
+  @param {string} icon - The icon name to render.
+{% enddoc %}
+
+{%- case icon -%}
+  {%- when 'document_pencil' -%}
+    <g
+      transform="scale(0.8333333)"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+      <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+      <path d="M10 18l5 -5a1.414 1.414 0 0 0 -2 -2l-5 5v2h2z" />
+    </g>
+  {%- when 'people_group' -%}
+    <g
+      transform="scale(0.8333333)"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M10 13a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path d="M8 21v-1a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v1" />
+      <path d="M15 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path d="M17 10h2a2 2 0 0 1 2 2v1" />
+      <path d="M5 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path d="M3 13v-1a2 2 0 0 1 2 -2h2" />
+    </g>
+  {%- when 'invoice' -%}
+    <g
+      transform="scale(0.8333333)"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+      <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+      <path d="M14 11h-2.5a1.5 1.5 0 0 0 0 3h1a1.5 1.5 0 0 1 0 3h-2.5" />
+      <path d="M12 17v1m0 -8v1" />
+    </g>
+  {%- when 'stopwatch_check' -%}
+    {%- comment -%}
+      Tabler has no stopwatch-with-tick, so this is Tabler `stopwatch` with its minute hand
+      dropped and Tabler `check` placed in the dial — both unaltered path data from the same
+      set. The tick is drawn at 0.6 scale, so its stroke-width is 1.2 / 0.6 = 2 to come out at
+      the same weight as the case around it.
+    {%- endcomment -%}
+    <g
+      transform="scale(0.8333333)"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M5 13a7 7 0 1 0 14 0a7 7 0 0 0 -14 0z" />
+      <path d="M17 8l1 -1" />
+      <path d="M14 3h-4" />
+      <path transform="translate(4.5 5.8) scale(0.6)" stroke-width="2" d="M5 12l5 5l10 -10" />
+    </g>
+{%- endcase -%}

@@ -485,7 +485,7 @@
         "step_1": {
           "type": "step",
           "settings": {
-            "icon": "clipboard",
+            "icon": "document_pencil",
             "title": "Tell us what you need",
             "text": "Industry, shoe style and the sizes you expect. A call or the form below."
           }
@@ -493,7 +493,7 @@
         "step_2": {
           "type": "step",
           "settings": {
-            "icon": "map_pin",
+            "icon": "people_group",
             "title": "We fit and distribute on site",
             "text": "We can bring sample sizes to you, handle fitting and shoe collection all-in-one on site."
           }
@@ -501,7 +501,7 @@
         "step_3": {
           "type": "step",
           "settings": {
-            "icon": "price_tag",
+            "icon": "invoice",
             "title": "One quotation, one delivery",
             "text": "One price list, one invoice, every size in a single delivery."
           }
@@ -509,7 +509,7 @@
         "step_4": {
           "type": "step",
           "settings": {
-            "icon": "stopwatch",
+            "icon": "stopwatch_check",
             "title": "Reorders in days",
             "text": "Ready stocks and stable lead times for easy reordering."
           }

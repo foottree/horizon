@@ -402,4 +402,10 @@
     /><path
       d="M12.91 5.362h1.083v3.274H12.91V5.362Zm-2.98 0h1.084v3.274H9.93V5.362Z"
     />
+  {%- else -%}
+    {%- comment -%}
+      Fork-added icons live in their own snippet so this stock Horizon file keeps a one-hunk
+      diff against upstream. See snippets/icon-foot-tree.liquid.
+    {%- endcomment -%}
+    {%- render 'icon-foot-tree', icon: icon -%}
 {%- endcase -%}
