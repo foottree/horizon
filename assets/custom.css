@@ -2000,9 +2000,23 @@ swatches-variant-picker-component {
                                 > .shopify-policy__body  > .rte > <the stored policy HTML>
 
    The structure of the page therefore lives in the policy body that Settings > Policies (or
-   shopPolicyUpdate) stores - plain h2 / h3 / p / ul / ol / a, no classes - and this block is
-   the only place the theme gets to size it. Every selector is scoped to those two Shopify
+   shopPolicyUpdate) stores - plain div / h1 / h2 / h3 / p / ul / ol / li / a / strong / br,
+   classes allowed and no other attributes - and this block is the only place the theme gets to
+   size it. Every selector is scoped to those two Shopify
    classes, so it cannot reach any other page.
+
+   Three things the Figma draws have no template to live in either, so they are hand-written at
+   the top of the stored body and styled from here:
+     - the breadcrumb, which is sections/breadcrumb.liquid's markup by hand (that section cannot
+       be rendered: there is no template to add it to, and editing layout/theme.liquid was tried
+       and rejected);
+     - the page title, because Shopify's .shopify-policy__title prints the policy's stored name
+       ("Shipping", "Refund policy") and ShopPolicyInput has no title field to change it. The
+       body supplies the <h1> and the rule below hides Shopify's - scoped with :has() so the
+       privacy policy, whose body has no <h1> of its own, keeps the one Shopify renders;
+     - the International orders CTA on the shipping policy.
+   This block is written so that nothing here depends on the two Figma pages' copy: a policy
+   body with none of that markup (privacy) still renders the way it did before.
 
    Every selector doubles its class. Shopify injects its own stylesheet on these pages
    (cdn/shopifycloud/.../storefront/policy-*.css) which sets
@@ -2023,6 +2037,24 @@ swatches-variant-picker-component {
    here because custom.css is a plain stylesheet: the palette only reaches CSS through Liquid
    (snippets/color-palette.liquid) and there is no --color-palette-colorN global to point at.
    If the palette moves, these three values move with it. */
+
+/* The Figma sits both policy pages on the cream, not the page white, and the cream has to run
+   the full height of the viewport rather than stop at the text column. The palette only reaches
+   CSS through snippets/color-palette.liquid, whose {% style %} block is inline in <head> and
+   declares `body { background-color: var(--color-background) }` - so a plain `body` rule here
+   would lose on source order whatever it said. :has() lifts the specificity to (0,1,1), which
+   beats `body` (0,0,1) regardless of order, and keeps the change on policy pages only. */
+body:has(.shopify-policy__container) {
+  background-color: #faf7f0; /* palette color5 "cream" - page background */
+}
+
+/* Hide Shopify's stored-name title, but only on a policy whose body brings its own <h1>, so the
+   page is left with exactly one h1 and /policies/privacy-policy keeps its heading. display:none
+   rather than a visually-hidden class so the duplicate leaves the accessibility tree too. */
+.shopify-policy__container:has(.shopify-policy__body h1) .shopify-policy__title {
+  display: none;
+}
+
 .shopify-policy__container.shopify-policy__container {
   /* 840px column, left-aligned text, centred in the page (Figma: 300px either side at 1440).
      The gutter is --page-margin - 40px desktop, 16px mobile - so below ~872px wide the column
@@ -2041,6 +2073,14 @@ swatches-variant-picker-component {
   color: var(--ftp-body);
 }
 
+/* A policy that opens with a breadcrumb hands that 96px to the breadcrumb's own margin and
+   keeps only the 28px that .breadcrumb-section gives the strip on every other template, so the
+   crumbs sit the same distance below the header site-wide. A policy without one (privacy) is
+   untouched and still opens 96px above its title. */
+.shopify-policy__container.shopify-policy__container:has(.shopify-policy__body .ftp-crumbs) {
+  padding-block-start: 28px;
+}
+
 .shopify-policy__title.shopify-policy__title {
   /* Shopify's policy-*.css centres the title; the Figma column is left-aligned throughout. */
   text-align: start;
@@ -2054,18 +2094,113 @@ swatches-variant-picker-component {
   color: var(--color-foreground);
 }
 
-/* Part headings */
-.shopify-policy__body.shopify-policy__body h2 {
-  margin-block: 72px 32px;
+/* Breadcrumb. sections/breadcrumb.liquid's type, reproduced: 12px body family on the ladder's
+   bottom rung, line-height 1, a '/' separator with 8px either side, links unadorned until hover.
+   The hook is a class, because a class is the only thing that survives. Shopify sanitises a
+   policy body on its way to the page and allows a narrow set of elements and almost no
+   attributes: measured on this store, div / ol / li / a[href] / strong / h1-h3 / p / br and
+   class all come through, while <nav>, role, aria-* and data-* are dropped - a stored
+   <nav aria-label="Breadcrumb"> with aria-current="page" reaches the page as a bare <ol>.
+   So the markup is a div.ftp-crumbs and the current crumb is marked by .ftp-crumbs__current,
+   never by an attribute; assets/custom.js puts the navigation landmark and aria-current back
+   for assistive technology, and nothing here depends on that having run.
+
+   Colours are the Figma's, which splits them where that section does not: the Home link in
+   color8, the separator in color3, the current page in the foreground. breadcrumb.liquid paints
+   all three in color8.
+
+   Every list property is restated because the part rules below style .rte lists (34px indent,
+   green decimal markers, 14px between items) and would otherwise reach these crumbs. */
+.shopify-policy__body.shopify-policy__body .ftp-crumbs {
+  margin-block: 0 96px;
+}
+
+.shopify-policy__body.shopify-policy__body .ftp-crumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-body--family);
+  font-weight: var(--font-body--weight, 400);
+  font-size: 12px;
+  line-height: 1;
+  color: var(--ftp-body);
+}
+
+.shopify-policy__body.shopify-policy__body .ftp-crumbs li {
+  margin: 0;
+}
+
+.shopify-policy__body.shopify-policy__body .ftp-crumbs li + li::before {
+  content: '/';
+  margin-inline: 8px;
+  color: #e0dcd2; /* palette color3 - separator */
+}
+
+.shopify-policy__body.shopify-policy__body .ftp-crumbs a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.shopify-policy__body.shopify-policy__body .ftp-crumbs a:hover,
+.shopify-policy__body.shopify-policy__body .ftp-crumbs a:focus-visible {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.shopify-policy__body.shopify-policy__body .ftp-crumbs__current {
   color: var(--color-foreground);
+}
+
+/* The page title the body supplies. Size, family and the 36px mobile step come from the h1 scale
+   untouched - clamp(36px, 4.8vw, 48px) Lora - so all this has to do is take over the margin the
+   hidden .shopify-policy__title used to own and undo .rte's clamped heading margin (40px at this
+   size), which no longer self-zeroes now that the breadcrumb is the body's first child. */
+.shopify-policy__body.shopify-policy__body h1 {
+  margin-block: 0 56px;
+  color: var(--color-foreground);
+}
+
+/* Part headings, and the hairline the Figma rules between one part and the next.
+
+   Driven off the heading structure rather than <hr> elements in the body: the client cannot
+   strip a rule, or leave a doubled one behind, by editing the copy in Settings > Policies. This
+   is also how the Figma models it - each "Segment / ..." frame carries borderTopWeight: 1 in
+   #e0dcd2 and nothing on the other three edges - so a top border on each part is the same
+   drawing, not an approximation of it.
+
+   48px of margin and 48px of padding either side of the border are the designer's own
+   stackVerticalPadding on those frames: 96px between parts with the rule centred in it. This
+   widened the 72px the gap used to be, which was set before there was a rule to give air to. */
+.shopify-policy__body.shopify-policy__body h2 {
+  margin-block: 48px 32px;
+  padding-block-start: 48px;
+  border-block-start: 1px solid #e0dcd2; /* palette color3 */
+  color: var(--color-foreground);
+}
+
+/* Nothing above the first part - same 96px gap, no rule. A top border can only ever fall between
+   two parts, so there is no rule under the last one either. (The Figma does put one above the
+   first part as well; the brief rules that out, and removing the override here is all it would
+   take to follow the mockup instead.)
+
+   :nth-of-type(1) and not :first-child, because the body's first child is the breadcrumb now -
+   and :nth-of-type counts h2s only, so it still finds the opening part whether the page leads
+   with a paragraph (Delivery) or the heading itself (Returns). */
+.shopify-policy__body.shopify-policy__body h2:nth-of-type(1) {
+  margin-block-start: 96px;
+  padding-block-start: 0;
+  border-block-start: 0;
 }
 
 /* A policy that opens on a part heading (Returns & Exchanges opens on "Refund policy") gets a
    deliberate void under the title in the Figma - 157px against the 76px the Delivery page gives
-   its opening paragraph. base.css zeroes the top margin of the first heading in an .rte, which
-   would close that to the title's own margin, so it is restored here. The margin collapses with
-   the title's 56px, so this value is the whole gap, not an addition to it. */
-.shopify-policy__body.shopify-policy__body h2:first-child {
+   its opening paragraph. The margin collapses with the h1's 56px, so this value is the whole
+   gap, not an addition to it. Specificity has to clear h2:nth-of-type(1) above, which the extra
+   element in the selector gives it. */
+.shopify-policy__body.shopify-policy__body h1 + h2:nth-of-type(1) {
   margin-block-start: 96px;
 }
 
@@ -2136,6 +2271,48 @@ swatches-variant-picker-component {
   color: var(--ftp-step);
 }
 
+/* The Figma bolds the contact details inside the sentence - the address and the words around
+   them stay regular - so the body HTML marks them up with <strong> rather than this file
+   bolding every link. Plus Jakarta Sans is loaded at 400 and 600 and not at 700, so <strong> is
+   bound to the weight that exists instead of being left for the browser to synthesise. */
+.shopify-policy__body.shopify-policy__body strong {
+  font-weight: var(--font-subheading--weight, 600);
+}
+
+/* The Figma's one CTA on these pages, under "International orders" on the shipping policy.
+   It takes the theme's primary-button metrics from the same variables base.css's .button reads
+   - 16px padding-block, 24px inline, paragraph type at 16px/400, 8px radius from
+   settings.button_border_radius_primary - which is the site's 58px button, rather than a
+   bespoke height. The fill is literal because .button takes its colours from the surrounding
+   section's colour scheme and Shopify renders a policy page with no section around it, so
+   .button would paint transparent here. */
+.shopify-policy__body.shopify-policy__body .ftp-cta {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  width: fit-content;
+  margin-block: 32px 0;
+  padding-block: var(--button-padding-block, 16px);
+  padding-inline: var(--button-padding-inline, 24px);
+  border-radius: var(--style-border-radius-buttons-primary, 8px);
+  background-color: var(--ftp-step); /* palette color4 */
+  color: #ffffff;
+  font-family: var(--font-paragraph--family);
+  font-style: var(--font-paragraph--style);
+  font-weight: var(--font-paragraph--weight);
+  font-size: var(--font-paragraph--size, 1rem);
+  line-height: var(--font-paragraph--line-height, 1.6);
+  text-align: center;
+  text-decoration: none;
+  transition: background-color var(--animation-speed, 0.2s) var(--animation-easing, ease);
+}
+
+.shopify-policy__body.shopify-policy__body .ftp-cta:hover,
+.shopify-policy__body.shopify-policy__body .ftp-cta:focus-visible {
+  background-color: #3a5316; /* palette color1 - the darker green the theme's hover shift lands on */
+  color: #ffffff;
+}
+
 /* Mobile 390, which the Figma does not draw: h1 clamps itself to 36px and h2 steps to 28px
    (see the section-title rule above), so only the gaps - set for an 840px measure - tighten. */
 @media screen and (max-width: 749px) {
@@ -2143,19 +2320,43 @@ swatches-variant-picker-component {
     padding-block: 40px 72px;
   }
 
+  /* 12px below the header, which is .breadcrumb-section's own mobile padding. */
+  .shopify-policy__container.shopify-policy__container:has(.shopify-policy__body .ftp-crumbs) {
+    padding-block-start: 12px;
+  }
+
+  .shopify-policy__body.shopify-policy__body .ftp-crumbs {
+    margin-block-end: 40px;
+  }
+
   .shopify-policy__title.shopify-policy__title {
     margin-block-end: 32px;
   }
 
-  .shopify-policy__body.shopify-policy__body h2 {
-    margin-block: 56px 24px;
+  .shopify-policy__body.shopify-policy__body h1 {
+    margin-block-end: 32px;
   }
 
-  .shopify-policy__body.shopify-policy__body h2:first-child {
+  /* The desktop 48/48 stepped down for a 390 column: 64px between parts, rule centred. */
+  .shopify-policy__body.shopify-policy__body h2 {
+    margin-block: 32px 24px;
+    padding-block-start: 32px;
+  }
+
+  .shopify-policy__body.shopify-policy__body h2:nth-of-type(1) {
+    margin-block-start: 64px;
+    padding-block-start: 0;
+  }
+
+  .shopify-policy__body.shopify-policy__body h1 + h2:nth-of-type(1) {
     margin-block-start: 48px;
   }
 
   .shopify-policy__body.shopify-policy__body h3 {
     margin-block: 32px 12px;
+  }
+
+  .shopify-policy__body.shopify-policy__body .ftp-cta {
+    margin-block-start: 24px;
   }
 }

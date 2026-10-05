@@ -43,3 +43,28 @@
   details.addEventListener('toggle', update);
 })();
 
+/*
+ * Policy pages: give the breadcrumb back its semantics.
+ *
+ * /policies/* is the one storefront page with no theme template, so sections/breadcrumb.liquid
+ * cannot be rendered into it and the crumbs are hand-written at the top of the policy body that
+ * Settings > Policies stores (see the "Policy pages" block in custom.css). Shopify sanitises that
+ * body on the way to the page: class survives, but <nav>, role, aria-* and data-* are stripped,
+ * so a stored <nav aria-label="Breadcrumb"> with aria-current="page" arrives as a bare <ol> and
+ * the landmark is lost.
+ *
+ * The crumbs are styled entirely off .ftp-crumbs and read correctly with or without this, so this
+ * only adds what CSS cannot: the navigation landmark, its name, and the current-page marker.
+ * role="navigation" + aria-label is the same accessibility node a <nav aria-label> produces, and
+ * setting attributes avoids moving anything in the DOM after the page has painted.
+ */
+(() => {
+  const crumbs = document.querySelector('.shopify-policy__body .ftp-crumbs');
+  if (!crumbs) return;
+  if (!crumbs.closest('nav') && !crumbs.hasAttribute('role')) {
+    crumbs.setAttribute('role', 'navigation');
+    crumbs.setAttribute('aria-label', 'Breadcrumb');
+  }
+  crumbs.querySelector('.ftp-crumbs__current')?.setAttribute('aria-current', 'page');
+})();
+
