@@ -1217,7 +1217,7 @@
     display: none;
   }
 
-  /* the slide is exactly the 4:5 image tall on mobile (see .ft-hero), so the dots row
+  /* the slide is exactly the 2:3 image tall on mobile (see .ft-hero), so the dots row
      (collapsed to its 10px dots via min-height: 0) sits 16px above the image's bottom edge */
   #MainContent .slideshow-section--controls-inline slideshow-controls[controls-on-media] {
     bottom: 16px;
@@ -1228,7 +1228,7 @@
 /* ft-hero: section-instance styling for the homepage hero slideshow (templates/index.json
    hero_slideshow, custom_class "ft-hero"). Desktop copy sits on the photo (content_position:
    on-media), vertically centred, 100px inline padding set on the _slide block itself. Mobile keeps
-   the copy on the photo but pins it to the top and centres it, over a 4:5 image (the slide takes
+   the copy on the photo but pins it to the top and centres it, over a 2:3 image (the slide takes
    its height from .slide__content's aspect ratio; the image container is absolute and fills it). */
 #MainContent .ft-hero .slide__content .text-block > * {
   max-inline-size: 660px;
@@ -1267,9 +1267,13 @@
     min-height: auto;
   }
 
+  /* Matches the mobile key visual's own ratio, so object-fit: cover has nothing to trim. The
+     art was reshot at 2083x3125 (2:3) with the model in the lower half and the top kept clear
+     for this copy; at the previous 4:5 it would lose 17% of its height, which is exactly the
+     band the headline and button sit in. Change this only alongside the artwork. */
   #MainContent .ft-hero .slide__content {
     height: auto;
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 2 / 3;
     padding: 28px 20px 56px;
   }
 
