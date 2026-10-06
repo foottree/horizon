@@ -289,6 +289,10 @@
           "label": "t:options.auto"
         },
         {
+          "value": "adapt_image",
+          "label": "Adapt to first image"
+        },
+        {
           "value": "small",
           "label": "t:options.small"
         },
@@ -307,6 +311,18 @@
       ],
       "default": "medium",
       "label": "t:settings.media_height"
+    },
+    {
+      "type": "range",
+      "id": "slide_height_max",
+      "label": "Maximum height",
+      "info": "The slide keeps the image's shape until it reaches this height, then stops growing.",
+      "min": 300,
+      "max": 1200,
+      "step": 10,
+      "unit": "px",
+      "default": 720,
+      "visible_if": "{{ section.settings.slide_height == 'adapt_image' }}"
     },
     {
       "type": "range",

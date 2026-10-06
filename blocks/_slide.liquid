@@ -28,10 +28,44 @@
       # Great example of why it can be helpful for a section to be able to read the settings of its direct child blocks.
       # In this case, we want the section to be able to read the image aspect ratio of the first slide and apply it to the slideshow slides and slides.
     %}
+    {% comment %}
+      The slide is 100vw wide, so a height of (1 / ratio) * 100vw holds its box at exactly the
+      photo's own shape and object-fit: cover is left with nothing to trim, at any window width.
+      "Maximum height" then caps it, because an uncapped ratio makes a wide banner enormous on a
+      large monitor. Past the cap the box is the wider shape and cover trims the height instead,
+      which is why the artwork still needs clear space above and below the subject.
+
+      A plain fixed height cannot do this. It matches the photo at exactly one width and crops
+      everywhere else, and the crop reverses direction either side of that width: the homepage
+      hero at 720px cut a quarter of the image's height at 1920, and at 820px it cropped so far
+      into the middle of the frame that the model was not on screen at all.
+
+      The selector is the section wrapper's id rather than a class. Shopify renders that wrapper
+      with id "shopify-section-" + section.id and class "shopify-section", so the per-section
+      class this rule named until now does not exist in the markup and it never matched anything,
+      which is why the option had no effect before.
+    {% endcomment %}
+    {% liquid
+      assign adapt_vw = 1 | divided_by: preview_image.aspect_ratio | times: 100
+      assign adapt_max = section.settings.slide_height_max | default: 720
+
+      assign adapt_image_mobile = block_settings.image_1_mobile | default: preview_image
+      assign adapt_vw_mobile = 1 | divided_by: adapt_image_mobile.aspect_ratio | times: 100
+    %}
     {% style %}
-      .shopify-section-{{ section.id }} slideshow-slides,
-      .shopify-section-{{ section.id }} slideshow-slide {
-        min-height: {{ 1 | divided_by: preview_image.aspect_ratio | times: 100 }}vw;
+      #shopify-section-{{ section.id }} slideshow-slides,
+      #shopify-section-{{ section.id }} slideshow-slide {
+        min-height: min({{ adapt_vw }}vw, {{ adapt_max }}px);
+      }
+
+      @media screen and (max-width: 749px) {
+        #shopify-section-{{ section.id }} slideshow-slides,
+        #shopify-section-{{ section.id }} slideshow-slide {
+          /* the mobile artwork is a different crop, so below 750px follow that file's shape; the
+             cap is deliberately not applied here, since a portrait image capped by a desktop
+             height would be cropped on every phone */
+          min-height: {{ adapt_vw_mobile }}vw;
+        }
       }
     {% endstyle %}
   {% endif %}
@@ -45,7 +79,25 @@
         assign height = preview_image.width | divided_by: preview_image.aspect_ratio | round
         assign media_width_desktop = '100vw'
         assign media_width_mobile = '100vw'
-        assign sizes = '(min-width: 750px) ' | append: media_width_desktop | append: ', ' | append: media_width_mobile
+
+        # `sizes` has to describe the width the image is PAINTED at, not the width of its box.
+        # The slide crops with object-fit: cover, so while the box is narrower in ratio than the
+        # photo, cover scales the photo to fill the box HEIGHT and lets the width overflow. On a
+        # fixed-height slide that painted width is height x aspect_ratio and does not change with
+        # the viewport: a 720px slide showing 8:3 artwork paints it 1920px wide even on a 1440px
+        # screen. Declaring 100vw there asks for a 1440px file and the browser upscales it 1.33x,
+        # which reads as a blurry hero on exactly the widths most people use. Above that painted
+        # width the box is the wider ratio, cover fills the width instead, and 100vw is correct.
+        assign painted_width = 0
+        if section.settings.slide_height == 'custom' and preview_image.aspect_ratio > 0
+          assign painted_width = section.settings.slide_height_custom | times: preview_image.aspect_ratio | round
+        endif
+        if painted_width > 0
+          assign media_width_desktop = painted_width | append: 'px'
+          assign sizes = '(min-width: ' | append: painted_width | append: 'px) 100vw, (min-width: 750px) ' | append: media_width_desktop | append: ', ' | append: media_width_mobile
+        else
+          assign sizes = '(min-width: 750px) ' | append: media_width_desktop | append: ', ' | append: media_width_mobile
+        endif
         assign lazy_sizes = 'auto, ' | append: sizes
         assign widths = '832, 1200, 1600, 1920, 2560, 3840'
       %}

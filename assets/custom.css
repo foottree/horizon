@@ -1263,17 +1263,9 @@
 }
 
 @media screen and (max-width: 749px) {
-  #MainContent .ft-hero slideshow-slides {
-    min-height: auto;
-  }
-
-  /* Matches the mobile key visual's own ratio, so object-fit: cover has nothing to trim. The
-     art was reshot at 2083x3125 (2:3) with the model in the lower half and the top kept clear
-     for this copy; at the previous 4:5 it would lose 17% of its height, which is exactly the
-     band the headline and button sit in. Change this only alongside the artwork. */
+  /* The slide's height comes from the section's "Adapt to first image" setting, which reads the
+     mobile key visual's own ratio (2:3 here), so nothing is set for it in this file. */
   #MainContent .ft-hero .slide__content {
-    height: auto;
-    aspect-ratio: 2 / 3;
     padding: 28px 20px 56px;
   }
 

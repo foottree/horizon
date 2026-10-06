@@ -490,7 +490,7 @@
         "full_frame_on_mobile": false,
         "slideshow_gap": 12,
         "corner_radius": 0,
-        "slide_height": "custom",
+        "slide_height": "adapt_image",
         "slide_height_custom": 720,
         "slide_height_custom_mobile": 0,
         "content_position": "on-media",
@@ -503,7 +503,8 @@
         "autoplay_speed": 4,
         "custom_class": "ft-hero",
         "padding-block-start": 0,
-        "padding-block-end": 0
+        "padding-block-end": 0,
+        "slide_height_max": 720
       }
     },
     "collection_rail": {
