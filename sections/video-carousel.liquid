@@ -157,9 +157,17 @@
     assign icon_name = 'caret'
   endif
 
+  # Both edges, not just the start. The start gutter is what lines the first tile up with the
+  # heading instead of the viewport edge; the end gutter is the same page margin at the far end
+  # of the scroll track, so scrolling to the last tile stops it level with the heading's right
+  # edge rather than flush against the window. Without it the row reads as cut off at the end,
+  # unlike every other rail on the homepage (the mobile slideshow below already passes both, and
+  # so does sections/product-rail-tabs.liquid's Bestsellers row). The right-hand bleed is
+  # unaffected: a gutter is padding inside the scroll track, so at rest the tiles still run past
+  # the content column and the next one peeks.
   assign desktop_gutters = null
   if bleed_right
-    assign desktop_gutters = 'start'
+    assign desktop_gutters = 'start end'
   endif
 
   assign desktop_slideshow_attributes = 'id="' | append: desktop_slideshow_id | append: '"'
