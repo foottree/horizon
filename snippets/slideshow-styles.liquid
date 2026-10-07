@@ -26,6 +26,14 @@
     --cursor: default;
   }
 
+  /* A rail whose slides already fit has nothing to drag, so it should not offer the grab cursor.
+     Set from JS (see #updateScrollableState in assets/slideshow.js) because overflow is not
+     something CSS can test. Matches how the arrows and progress bar already hide themselves when
+     there is nothing to scroll. */
+  slideshow-component[not-scrollable] {
+    --cursor: default;
+  }
+
   a slideshow-component {
     --cursor: pointer;
   }

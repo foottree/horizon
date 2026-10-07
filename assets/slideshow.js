@@ -592,6 +592,7 @@ export class Slideshow extends Component {
           }
         }
         // Initialize progress bar after layout is ready
+        this.#updateScrollableState();
         this.#updateProgressBar();
       });
 
@@ -607,6 +608,7 @@ export class Slideshow extends Component {
         }
 
         // Update progress bar on resize
+        this.#updateScrollableState();
         this.#updateProgressBar();
       });
 
@@ -867,12 +869,63 @@ export class Slideshow extends Component {
   }
 
   /**
+   * Marks a slideshow whose slides already fit, so it stops offering a drag it cannot perform.
+   *
+   * slideshow-component sets --cursor: grab unconditionally, which is right for a rail you can
+   * actually move. A section that renders a slideshow whether or not its cards overflow - the
+   * reviews row is three cards in three columns on desktop - then shows a grab cursor over
+   * something that cannot move anywhere. Horizon already hides the arrows and the progress bar
+   * in exactly this case (see #updateControlsVisibility above, same comparison), so the cursor
+   * is the one part of the idle state that was left behind. Attribute rather than an inline
+   * style so the stylesheet keeps ownership of the value.
+   */
+  #updateScrollableState() {
+    const { scroller } = this.refs;
+
+    if (!(scroller instanceof HTMLElement)) return;
+
+    this.toggleAttribute('not-scrollable', scroller.scrollWidth <= scroller.clientWidth + 1);
+  }
+
+  /**
    * Slide step used by next/previous — must match progress bar end position.
    * @returns {number}
    */
   #getProgressScrollStep() {
-    const { visibleSlides } = this;
-    return visibleSlides.length > 1 ? visibleSlides.length : 1;
+    return this.#getVisibleSlideCount();
+  }
+
+  /**
+   * How many slides fit across the visible track, measured from the layout rather than from the
+   * IntersectionObserver. The observer counts every slide that intersects at all, so its count
+   * rises mid-drag as the slides on either side come partly into view - on a 5-slide rail
+   * showing 4 it reaches 5. That fed both the progress bar's "everything fits" test and the step
+   * below, and a step equal to the slide count makes `current + step >= total` true at every
+   * index, which pinned the bar at 100% for the middle of every drag. The geometry does not move
+   * while you drag. Falls back to the observer for a rail whose slides are not a uniform width,
+   * where measuring the first one says nothing about the rest.
+   * @returns {number}
+   */
+  #getVisibleSlideCount() {
+    const { scroller } = this.refs;
+    const slides = this.slides;
+    const total = slides?.length || 0;
+    const firstSlide = slides?.[0];
+    const observed = this.visibleSlides.length || 1;
+
+    if (!(scroller instanceof HTMLElement) || !firstSlide || !total) return observed;
+
+    const style = getComputedStyle(scroller);
+    const gap = parseFloat(style.columnGap) || 0;
+    const slideStep = firstSlide.offsetWidth + gap;
+    if (!(slideStep > 0)) return observed;
+
+    const inner =
+      scroller.clientWidth -
+      (parseFloat(style.paddingInlineStart) || 0) -
+      (parseFloat(style.paddingInlineEnd) || 0);
+
+    return Math.max(1, Math.min(total, Math.round((inner + gap) / slideStep)));
   }
 
   /**
@@ -906,17 +959,18 @@ export class Slideshow extends Component {
     const total = slides?.length || 0;
     const firstSlide = slides?.[0];
 
-    const gap = parseFloat(getComputedStyle(scroller).columnGap) || 0;
-    const visibleFromObserver = this.visibleSlides.length;
-    const visible =
-      visibleFromObserver > 0
-        ? visibleFromObserver
-        : firstSlide
-          ? Math.floor(scroller.clientWidth / (firstSlide.offsetWidth + gap)) || 1
-          : 1;
+    // Measured from the layout, not from the IntersectionObserver - see #getVisibleSlideCount.
+    const visible = this.#getVisibleSlideCount();
 
-    // If no scrollable area or all items visible, show full bar
-    if (!slides?.length || total <= visible) {
+    // The travel the track actually has. This used to be taken from the last navigable slide's
+    // offsetLeft, which assumes that slide can be scrolled all the way to the leading edge -
+    // only true when the slide count divides evenly by the number visible. At 5 slides showing
+    // 4 it reported 1624px against a real 406px, so dragging to the very end filled the bar to
+    // 85% and only the release snapped it to 100%.
+    const maxScroll = Math.max(0, scroller.scrollWidth - scroller.clientWidth);
+
+    // If there is nothing to scroll, show a full bar
+    if (!slides?.length || maxScroll <= 0) {
       progressBar.style.width = '100%';
       if (previous) previous.disabled = true;
       if (next) next.disabled = true;
@@ -924,25 +978,20 @@ export class Slideshow extends Component {
     }
 
     const lastNavigableIndex = this.#getLastNavigableIndex();
-    const lastNavigableSlide = slides[lastNavigableIndex];
-    const axis = this.#scroll?.axis ?? 'x';
-    const paddingStart = calculatePaddingStart(scroller, axis);
-    const effectiveMaxScroll = lastNavigableSlide.offsetLeft - paddingStart;
+    const effectiveMaxScroll = maxScroll;
     const step = this.#getProgressScrollStep();
-
-    if (effectiveMaxScroll <= 0) {
-      progressBar.style.width = '100%';
-      if (previous) previous.disabled = Boolean(!this.infinite && this.current === 0);
-      if (next) next.disabled = true;
-      return;
-    }
 
     // Start with initial fill = visible/total, then add scroll progress for remainder
     const initialFill = (visible / total) * 100;
     const scrollableRange = 100 - initialFill;
     const indexAtEnd = !this.infinite && (this.current >= lastNavigableIndex || this.current + step >= total);
     const scrollAtEnd = scroller.scrollLeft >= effectiveMaxScroll - 1;
-    const atScrollEnd = indexAtEnd || scrollAtEnd;
+    // The index test is what guarantees a full bar after arrow navigation, where scroll-snap can
+    // leave scrollLeft a pixel short of the end. It is useless mid-drag though: the current index
+    // flips to the last page as soon as that slide takes the lead, long before the scroll itself
+    // finishes, so honouring it while dragging pinned the bar at 100% for the second half of
+    // every drag. While the pointer is down, position is the only honest source.
+    const atScrollEnd = scrollAtEnd || (indexAtEnd && !this.hasAttribute('dragging'));
 
     const scrollProgress = Math.min(Math.max(scroller.scrollLeft, 0), effectiveMaxScroll);
     const scrollPct = atScrollEnd
