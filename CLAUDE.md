@@ -73,6 +73,12 @@ left on the `paragraph` or `rte` preset with the body family renders 16px/400 an
 lighter than every other card on the site — that is how the recommendations rail and the
 `/collections` cards drifted. Matching the size alone is not enough; measure the weight too.
 
+**On phones (below 750px) every card title steps up to 18px together**, from one rule in
+`assets/custom.css` ("Card titles step up to 18px on mobile"). A new card type joins that rule;
+it is not sized on its own. A `{% stylesheet %}` compiles into `styles.css`, which loads after
+`custom.css`, so a one-class selector there loses the tie — that is how the collection rail sat
+at 16px beside 18px product cards. Measure at 390 after adding one.
+
 ## A global setting reaches the whole site
 
 `variant_swatch_radius` was raised to 100 for the product page's 72px circles and silently

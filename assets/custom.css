@@ -1820,10 +1820,13 @@ swatches-variant-picker-component {
    the card instead of tying with them.
 
    Hooks: the product card title is an unclassed <p role="heading"> inside Horizon's
-   ref="productTitleLink" anchor, which is the stable handle for it. */
+   ref="productTitleLink" anchor, which is the stable handle for it. The rail title is scoped
+   under .collection-rail because snippets/collection-tile.liquid sets its own 16px in a
+   {% stylesheet %}, which compiles into styles.css, loads after this file and won the tie at one
+   class - the rail sat at 16px on phones while product cards were 18px. */
 @media screen and (max-width: 749px) {
   [ref='productTitleLink'] p,
-  .collection-rail__tile-title,
+  .collection-rail .collection-rail__tile-title,
   .collection-card p,
   #header-component .menu-drawer__tile-label {
     font-size: var(--font-size--lg); /* 18px */
