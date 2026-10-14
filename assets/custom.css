@@ -246,6 +246,11 @@
   padding: 0;
   /* label to caret: 4px */
   margin-inline-start: 4px;
+  /* Flex centring puts the caret on the middle of the label's line box (y=79 at 1440), but the
+     eye centres it on the lowercase letters, whose middle is ~1.1px lower (y=80.1) - so the open
+     "^" read as sitting high. `translate` rather than `transform`, which stock uses for the
+     rotation on the icon inside and which is zeroed on this button above. */
+  translate: 0 1px;
 }
 
 /* Mobile menu drawer close (X): icon-close-menu.svg is a full-bleed X glyph,
