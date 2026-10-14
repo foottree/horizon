@@ -507,137 +507,6 @@
         "slide_height_max": 720
       }
     },
-    "collection_rail": {
-      "type": "collection-rail",
-      "blocks": {
-        "tile_women_mary_janes": {
-          "type": "collection_tile",
-          "name": "Women's Mary Janes",
-          "settings": {
-            "collection": "women-mary-janes",
-            "label": ""
-          }
-        },
-        "tile_women_loafers": {
-          "type": "collection_tile",
-          "name": "Women's Loafers",
-          "settings": {
-            "collection": "women-loafers",
-            "label": ""
-          }
-        },
-        "tile_women_heels": {
-          "type": "collection_tile",
-          "name": "Women's Heels",
-          "settings": {
-            "collection": "women-heels",
-            "label": ""
-          }
-        },
-        "tile_women_sneakers": {
-          "type": "collection_tile",
-          "name": "Women's Sneakers",
-          "settings": {
-            "collection": "women-sneakers",
-            "label": ""
-          }
-        },
-        "tile_women_flats": {
-          "type": "collection_tile",
-          "name": "Women's Flats",
-          "settings": {
-            "collection": "women-flats",
-            "label": ""
-          }
-        },
-        "tile_women_slip_ons": {
-          "type": "collection_tile",
-          "name": "Women's Slip-Ons",
-          "settings": {
-            "collection": "women-slip-ons",
-            "label": ""
-          }
-        },
-        "tile_men_dress_formal": {
-          "type": "collection_tile",
-          "name": "Men's Dress & Formal",
-          "settings": {
-            "collection": "men-dress-formal",
-            "label": ""
-          }
-        },
-        "tile_men_loafers": {
-          "type": "collection_tile",
-          "name": "Men's Loafers",
-          "settings": {
-            "collection": "men-loafers",
-            "label": ""
-          }
-        },
-        "tile_men_slip_ons": {
-          "type": "collection_tile",
-          "name": "Men's Slip-Ons",
-          "settings": {
-            "collection": "men-slip-ons",
-            "label": ""
-          }
-        },
-        "tile_men_sneakers": {
-          "type": "collection_tile",
-          "name": "Men's Sneakers",
-          "settings": {
-            "collection": "men-sneakers",
-            "label": ""
-          }
-        },
-        "tile_men_boots": {
-          "type": "collection_tile",
-          "name": "Men's Boots",
-          "settings": {
-            "collection": "men-boots",
-            "label": ""
-          }
-        },
-        "tile_insoles": {
-          "type": "collection_tile",
-          "name": "Insoles",
-          "settings": {
-            "collection": "insoles",
-            "label": ""
-          }
-        }
-      },
-      "block_order": [
-        "tile_women_mary_janes",
-        "tile_women_loafers",
-        "tile_women_heels",
-        "tile_women_sneakers",
-        "tile_women_flats",
-        "tile_women_slip_ons",
-        "tile_men_dress_formal",
-        "tile_men_loafers",
-        "tile_men_slip_ons",
-        "tile_men_sneakers",
-        "tile_men_boots",
-        "tile_insoles"
-      ],
-      "name": "Shop by Collection rail",
-      "settings": {
-        "heading": "Shop by Collection",
-        "link_label": "Shop All",
-        "link": "shopify://collections",
-        "section_width": "narrow",
-        "mobile_card_size": 85,
-        "background_color": "",
-        "padding-block-start": 50,
-        "padding-block-end": 50,
-        "custom_mobile_padding": true,
-        "mobile-padding-block-start": 68,
-        "mobile-padding-block-end": 68,
-        "mobile-padding-inline-start": 0,
-        "mobile-padding-inline-end": 0
-      }
-    },
     "collection_rail_overlay": {
       "type": "collection-rail",
       "blocks": {
@@ -716,7 +585,7 @@
         "tile_travel_comfort",
         "tile_wide_feet_bunions"
       ],
-      "name": "Shop by Collection rail (overlay titles)",
+      "name": "Shop by Collection rail",
       "settings": {
         "heading": "Shop by Collection",
         "link_label": "Shop All",
@@ -2228,7 +2097,6 @@
   },
   "order": [
     "hero_slideshow",
-    "collection_rail",
     "collection_rail_overlay",
     "bestsellers_rail",
     "new_arrivals_spotlight",
