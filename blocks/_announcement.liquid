@@ -25,11 +25,15 @@
       --line-height: 1;
     "
     {{ block.shopify_attributes }}
-    aria-hidden="{% if block_index == 0 %}false{% else %}true{% endif %}"
+    aria-hidden="{% if block_index == 0 or section.settings.display_mode == 'marquee' %}false{% else %}true{% endif %}"
   >
     <p class="announcement-bar__text">
       {{ block.settings.text }}
     </p>
+
+    {% if section.settings.display_mode == 'marquee' %}
+      <span class="announcement-bar__separator" aria-hidden="true">•</span>
+    {% endif %}
 
     {% if block_settings.link != blank %}
       <a

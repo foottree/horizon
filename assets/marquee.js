@@ -200,6 +200,7 @@ class MarqueeComponent extends Component {
 
     clone.setAttribute('aria-hidden', 'true');
     clone.removeAttribute('ref');
+    hideCloneFromKeyboard(clone);
 
     this.refs.wrapper.appendChild(clone);
   }
@@ -213,7 +214,9 @@ class MarqueeComponent extends Component {
     if (!marqueeItems[0]) return;
 
     for (let i = 0; i < numberOfCopies - 1; i++) {
-      const clone = marqueeItems[0].cloneNode(true);
+      const clone = /** @type {HTMLElement} */ (marqueeItems[0].cloneNode(true));
+      clone.setAttribute('aria-hidden', 'true');
+      hideCloneFromKeyboard(clone);
       content.appendChild(clone);
     }
   }
@@ -231,6 +234,14 @@ class MarqueeComponent extends Component {
       content.lastElementChild?.remove();
     }
   }
+}
+
+/**
+ * Keeps links inside a repeated copy out of the tab order (they stay clickable).
+ * @param {HTMLElement} clone
+ */
+function hideCloneFromKeyboard(clone) {
+  clone.querySelectorAll('a, button').forEach((el) => el.setAttribute('tabindex', '-1'));
 }
 
 // Define the animateValue function

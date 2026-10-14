@@ -1,4 +1,16 @@
-{% if section.blocks.size > 1 %}
+{% capture announcement_blocks %}{% content_for 'blocks' %}{% endcapture %}
+{% assign is_marquee = false %}
+{% if section.settings.display_mode == 'marquee' %}
+  {% assign is_marquee = true %}
+{% endif %}
+
+{% if is_marquee %}
+  <script
+    src="{{ 'marquee.js' | asset_url }}"
+    type="module"
+    fetchpriority="low"
+  ></script>
+{% elsif section.blocks.size > 1 %}
   <script
     src="{{ 'announcement-bar.js' | asset_url }}"
     type="module"
@@ -13,29 +25,59 @@
   class="announcement-bar spacing-style section section--{{ section.settings.section_width }} color-custom-{{ section.id }}"
   style="{% render 'spacing-padding', settings: section.settings %}; --border-bottom-width: {{ section.settings.divider_width }}px;{% if section.settings.divider_color != blank %} --color-border: {{ section.settings.divider_color }};{% endif %}"
 >
-  {% liquid
-    assign autoplay = false
-    assign show_arrows = false
-    if section.blocks.size > 1
-      assign autoplay = true
-      assign show_arrows = true
-    endif
-  %}
+  {% if is_marquee %}
+    {%- comment -%}
+      Marquee mode reuses Horizon's marquee-component (assets/marquee.js): it clones the items to fill the
+      width, then duplicates the whole row as an aria-hidden copy and loops it with a CSS animation.
+    {%- endcomment -%}
+    <marquee-component
+      class="announcement-bar__marquee"
+      style="--marquee-direction: normal; --marquee-gap: {{ section.settings.marquee_gap }}px;"
+      data-speed-factor="{{ section.settings.marquee_speed }}"
+      data-movement-direction="normal"
+    >
+      <div
+        class="marquee__wrapper"
+        ref="wrapper"
+      >
+        <div
+          class="marquee__content"
+          ref="content"
+        >
+          <div
+            class="marquee__repeated-items"
+            ref="marqueeItems[]"
+          >
+            {{ announcement_blocks }}
+          </div>
+        </div>
+      </div>
+    </marquee-component>
+  {% else %}
+    {% liquid
+      assign autoplay = false
+      assign show_arrows = false
+      if section.blocks.size > 1
+        assign autoplay = true
+        assign show_arrows = true
+      endif
+    %}
 
-  <announcement-bar-component
-    class="announcement-bar__slider"
-    {% if autoplay == true %}
-      autoplay="{{ section.settings.speed }}" aria-live="polite"
-    {% endif %}
-  >
-    {% if show_arrows %}
-      {% render 'slideshow-arrows', icon_style: 'chevron' %}
-    {% endif %}
+    <announcement-bar-component
+      class="announcement-bar__slider"
+      {% if autoplay == true %}
+        autoplay="{{ section.settings.speed }}" aria-live="polite"
+      {% endif %}
+    >
+      {% if show_arrows %}
+        {% render 'slideshow-arrows', icon_style: 'chevron' %}
+      {% endif %}
 
-    <div class="announcement-bar__slides">
-      {% content_for 'blocks' %}
-    </div>
-  </announcement-bar-component>
+      <div class="announcement-bar__slides">
+        {{ announcement_blocks }}
+      </div>
+    </announcement-bar-component>
+  {% endif %}
 </aside>
 
 {% stylesheet %}
@@ -121,6 +163,104 @@
     position: absolute;
     inset: 0;
   }
+
+  /* Marquee mode. The row/animation mirrors sections/marquee.liquid, whose stylesheet is not loaded in the header.
+     --marquee-gap is set inline from the section setting. Each item carries its own trailing gap (padding),
+     so the loop join after the last item is the same as every other join. */
+  .announcement-bar__marquee {
+    display: block;
+    overflow: hidden;
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+
+  .announcement-bar__marquee .marquee__wrapper {
+    display: flex;
+    width: fit-content;
+    gap: 0;
+    white-space: nowrap;
+  }
+
+  .announcement-bar__marquee .marquee__content,
+  .announcement-bar__marquee .marquee__repeated-items {
+    display: flex;
+    min-width: max-content;
+    gap: 0;
+    align-items: center;
+  }
+
+  .announcement-bar__marquee .announcement-bar__slide {
+    position: relative;
+    flex: none;
+    width: auto;
+    max-width: none;
+    padding-inline-end: var(--marquee-gap, 80px);
+    white-space: nowrap;
+  }
+
+  .announcement-bar__marquee .announcement-bar__link {
+    right: var(--marquee-gap, 80px);
+  }
+
+  .announcement-bar__separator {
+    position: absolute;
+    right: calc(var(--marquee-gap, 80px) / 2);
+    width: auto;
+    top: 50%;
+    transform: translate(50%, -50%);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .announcement-bar__marquee .marquee__wrapper {
+      animation: announcement-marquee-motion var(--marquee-speed, 30s) linear infinite var(--marquee-direction);
+    }
+
+    .announcement-bar__marquee:is(:hover, :focus-within) .marquee__wrapper {
+      animation-play-state: paused;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    /* No motion: show one centred copy of the row, never a half-scrolled strip. */
+    .announcement-bar__marquee .marquee__wrapper {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .announcement-bar__marquee .marquee__wrapper > :not(:first-child),
+    .announcement-bar__marquee .marquee__content > :not(:first-child),
+    .announcement-bar__separator {
+      display: none;
+    }
+
+    .announcement-bar__marquee .marquee__content {
+      min-width: 0;
+    }
+
+    .announcement-bar__marquee .marquee__repeated-items {
+      min-width: 0;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 4px var(--marquee-gap, 80px);
+    }
+
+    .announcement-bar__marquee .announcement-bar__slide {
+      padding-inline-end: 0;
+      white-space: normal;
+    }
+
+    .announcement-bar__marquee .announcement-bar__link {
+      right: 0;
+    }
+  }
+
+  @keyframes announcement-marquee-motion {
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
 {% endstylesheet %}
 
 {% schema %}
@@ -136,13 +276,53 @@
   },
   "settings": [
     {
+      "type": "select",
+      "id": "display_mode",
+      "label": "Display",
+      "options": [
+        {
+          "value": "slider",
+          "label": "Slider"
+        },
+        {
+          "value": "marquee",
+          "label": "Marquee (scrolling)"
+        }
+      ],
+      "default": "slider"
+    },
+    {
       "type": "range",
       "id": "speed",
       "label": "t:settings.scroll_speed",
       "min": 2,
       "max": 10,
       "default": 5,
-      "unit": "sec"
+      "unit": "sec",
+      "visible_if": "{{ section.settings.display_mode != 'marquee' }}"
+    },
+    {
+      "type": "range",
+      "id": "marquee_speed",
+      "label": "Marquee loop time",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "sec",
+      "default": 30,
+      "info": "Roughly how long one full pass takes. Higher is slower.",
+      "visible_if": "{{ section.settings.display_mode == 'marquee' }}"
+    },
+    {
+      "type": "range",
+      "id": "marquee_gap",
+      "label": "Gap between announcements",
+      "min": 16,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 80,
+      "visible_if": "{{ section.settings.display_mode == 'marquee' }}"
     },
     {
       "type": "header",
