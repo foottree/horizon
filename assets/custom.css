@@ -708,6 +708,18 @@
   min-height: 56px;
 }
 
+/* The level-2 panel's title ("Men" between the back and close buttons, and "Region and
+   language") is stock body text at 16px/400, so it read lighter and smaller than the very row
+   the shopper just tapped to get there. Same face, weight and size as the top-level labels
+   above, from the same variables and token (18px, see the label rule below), so the two cannot
+   drift apart. */
+#header-component .menu-drawer__title {
+  font-family: var(--menu-top-level-font-family);
+  font-style: var(--menu-top-level-font-style);
+  font-weight: var(--menu-top-level-font-weight);
+  font-size: var(--font-size--lg, 1.125rem);
+}
+
 /* Stock puts a 12.8px margin-block-end (--margin-md) on every top-level <li>, below its
    hairline - so the space under a divider (margin + the next row's own inset) ran ~33px
    while the space above it was ~21px. Dropped so each label sits the same distance from
