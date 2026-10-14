@@ -511,60 +511,6 @@
         "features_heading": "Foot Tree Work Comfort Engineering"
       }
     },
-    "how_it_works": {
-      "type": "wholesale-steps",
-      "blocks": {
-        "step_1": {
-          "type": "step",
-          "settings": {
-            "icon": "document_pencil",
-            "title": "Tell us what you need",
-            "text": "Industry, shoe style and the sizes you expect. A call or the form below.",
-            "image": "shopify://shop_images/wholesale-step-01-tell-us.png"
-          }
-        },
-        "step_2": {
-          "type": "step",
-          "settings": {
-            "icon": "people_group",
-            "title": "We fit and distribute on site",
-            "text": "We can bring sample sizes to you, handle fitting and shoe collection all-in-one on site.",
-            "image": "shopify://shop_images/wholesale-step-02-fit-on-site.png"
-          }
-        },
-        "step_3": {
-          "type": "step",
-          "settings": {
-            "icon": "invoice",
-            "title": "One quotation, one delivery",
-            "text": "One price list, one invoice, every size in a single delivery.",
-            "image": "shopify://shop_images/wholesale-step-03-quotation.png"
-          }
-        },
-        "step_4": {
-          "type": "step",
-          "settings": {
-            "icon": "stopwatch_check",
-            "title": "Reorders in days",
-            "text": "Ready stocks and stable lead times for easy reordering.",
-            "image": "shopify://shop_images/wholesale-step-04-reorders.png"
-          }
-        }
-      },
-      "block_order": [
-        "step_1",
-        "step_2",
-        "step_3",
-        "step_4"
-      ],
-      "settings": {
-        "heading": "Leave it to us to handle your corporate needs",
-        "subheading": "From the first call to the next reorder — four steps, one point of contact.",
-        "step_label": "Step",
-        "padding-block-start": 40,
-        "padding-block-end": 80
-      }
-    },
     "industries": {
       "type": "wholesale-industries",
       "blocks": {
@@ -617,6 +563,60 @@
         "padding-block-end": 40
       }
     },
+    "how_it_works": {
+      "type": "wholesale-steps",
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "icon": "document_pencil",
+            "image": "shopify://shop_images/wholesale-step-01-tell-us.png",
+            "title": "Tell us what you need",
+            "text": "Industry, shoe style and the sizes you expect. A call or the form below."
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "icon": "people_group",
+            "image": "shopify://shop_images/wholesale-step-02-fit-on-site.png",
+            "title": "We fit and distribute on site",
+            "text": "We can bring sample sizes to you, handle fitting and shoe collection all-in-one on site."
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "icon": "invoice",
+            "image": "shopify://shop_images/wholesale-step-03-quotation.png",
+            "title": "One quotation, one delivery",
+            "text": "One price list, one invoice, every size in a single delivery."
+          }
+        },
+        "step_4": {
+          "type": "step",
+          "settings": {
+            "icon": "stopwatch_check",
+            "image": "shopify://shop_images/wholesale-step-04-reorders.png",
+            "title": "Reorders in days",
+            "text": "Ready stocks and stable lead times for easy reordering."
+          }
+        }
+      },
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3",
+        "step_4"
+      ],
+      "settings": {
+        "heading": "Leave it to us to handle your corporate needs",
+        "subheading": "From the first call to the next reorder — four steps, one point of contact.",
+        "step_label": "Step",
+        "padding-block-start": 40,
+        "padding-block-end": 80
+      }
+    },
     "quote": {
       "type": "wholesale-quote",
       "blocks": {
@@ -651,6 +651,7 @@
         "submit_label": "Send request",
         "success_message": "Thank you. We have your request and will reply within one working day.",
         "contact_heading": "Rather just talk to our team?",
+        "enquiry_tag": "Wholesale quotation",
         "padding-block-start": 80,
         "padding-block-end": 80
       }
@@ -1032,6 +1033,7 @@
     },
     "closing": {
       "type": "wholesale-closing",
+      "disabled": true,
       "settings": {
         "eyebrow": "",
         "heading": "Fitting Singapore at work since 1974",
@@ -1043,8 +1045,7 @@
         "secondary_new_tab": false,
         "padding-block-start": 80,
         "padding-block-end": 80
-      },
-      "disabled": true
+      }
     }
   },
   "order": [
