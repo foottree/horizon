@@ -88,6 +88,8 @@
   assign mobile_card_size = section.settings.mobile_card_size | default: 85
   assign desktop_style = '--slideshow-gap: 40px;'
   assign mobile_style = '--slideshow-gap: 16px; --slide-width: ' | append: mobile_card_size | append: '%;'
+  assign desktop_slideshow_id = 'collection-rail-desktop-' | append: section.id
+  assign desktop_slideshow_attributes = 'id="' | append: desktop_slideshow_id | append: '"'
 -%}
 
 <div
@@ -100,6 +102,7 @@
     section--{{ section.settings.section_width }}
     {% if section.settings.background_color != blank %}color-custom-{{ section.id }}{% endif %}
     collection-rail
+    {% if section.settings.show_arrows %}collection-rail--arrows{% endif %}
     spacing-style
   "
   style="
@@ -116,20 +119,53 @@
       class="collection-rail__heading h2"
       style="color: var(--collection-rail-heading-color);"
     >{{ section.settings.heading }}</h2>
-    {%- if section.settings.link != blank -%}
-      <a
-        href="{{ section.settings.link }}"
-        class="collection-rail__shop-all"
-      >
-        <span>{{ section.settings.link_label }}</span>
-        <span
-          class="collection-rail__shop-all-arrow"
-          aria-hidden="true"
+    <div class="collection-rail__header-end">
+      {%- if section.settings.link != blank -%}
+        <a
+          href="{{ section.settings.link }}"
+          class="collection-rail__shop-all"
         >
-          {{- 'icon-arrow.svg' | inline_asset_content -}}
-        </span>
-      </a>
-    {%- endif -%}
+          <span>{{ section.settings.link_label }}</span>
+          <span
+            class="collection-rail__shop-all-arrow"
+            aria-hidden="true"
+          >
+            {{- 'icon-arrow.svg' | inline_asset_content -}}
+          </span>
+        </a>
+      {%- endif -%}
+      {%- if section.settings.show_arrows -%}
+        {%- comment -%}
+          Desktop only. On a phone the heading, "Shop All" and two 40px circles need ~455px
+          against a ~358px header, so the row wraps; swipe and the progress bar cover mobile.
+        {%- endcomment -%}
+        <div
+          class="collection-rail__nav hidden--mobile"
+          data-rail-nav="{{ desktop_slideshow_id }}"
+        >
+          <button
+            type="button"
+            class="slideshow-control slideshow-control--previous slideshow-control--shape-circle slideshow-control--style-arrow button button-unstyled button-unstyled--transparent flip-x"
+            aria-label="{{ 'accessibility.slideshow_previous' | t }}"
+            on:click="#{{ desktop_slideshow_id }}/previous"
+          >
+            <span class="svg-wrapper icon-arrow" aria-hidden="true">
+              {{- 'icon-arrow.svg' | inline_asset_content -}}
+            </span>
+          </button>
+          <button
+            type="button"
+            class="slideshow-control slideshow-control--next slideshow-control--shape-circle slideshow-control--style-arrow button button-unstyled button-unstyled--transparent"
+            aria-label="{{ 'accessibility.slideshow_next' | t }}"
+            on:click="#{{ desktop_slideshow_id }}/next"
+          >
+            <span class="svg-wrapper icon-arrow" aria-hidden="true">
+              {{- 'icon-arrow.svg' | inline_asset_content -}}
+            </span>
+          </button>
+        </div>
+      {%- endif -%}
+    </div>
   </div>
 
   <div class="collection-rail__desktop hidden--mobile">
@@ -154,6 +190,7 @@
       infinite: false,
       initial_slide: 0,
       slide_count: panel_index,
+      attributes: desktop_slideshow_attributes,
       controls: desktop_controls
     -%}
   </div>
@@ -189,7 +226,65 @@
   </div>
 </div>
 
+{%- if section.settings.show_arrows -%}
+  <script>
+    (() => {
+      /* Horizon keeps `disabled` current on the progress bar's own (hidden) prev/next buttons.
+         Mirror that onto the header arrows so they grey out at the ends. */
+      const root = document.currentScript.closest('.shopify-section') || document;
+      const sync = (nav) => {
+        const slideshow = document.getElementById(nav.dataset.railNav);
+        if (!slideshow) return;
+        for (const sel of ['.slideshow-control--previous', '.slideshow-control--next']) {
+          const source = slideshow.querySelector('.slideshow-controls__progress-arrows ' + sel);
+          const target = nav.querySelector(sel);
+          if (!source || !target) continue;
+          const apply = () => { target.disabled = source.disabled; };
+          apply();
+          new MutationObserver(apply).observe(source, { attributes: true, attributeFilter: ['disabled'] });
+        }
+      };
+      const init = () => root.querySelectorAll('[data-rail-nav]').forEach(sync);
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+      else init();
+    })();
+  </script>
+{%- endif -%}
+
 {% stylesheet %}
+  .collection-rail__header-end {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-inline-start: auto;
+  }
+
+  .collection-rail__nav {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-shrink: 0;
+  }
+
+  /* Stock circle arrows (slideshow-arrow's circle variant), sized to match the Social video
+     carousel's header arrows. */
+  .collection-rail__nav .slideshow-control {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+  }
+
+  .collection-rail__nav .svg-wrapper {
+    width: 16px;
+    height: 16px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .collection-rail--arrows .collection-rail__header {
+      align-items: center;
+    }
+  }
+
   .collection-rail__header {
     display: flex;
     align-items: baseline;
@@ -434,6 +529,12 @@
       "step": 5,
       "unit": "%",
       "default": 85
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show arrow buttons",
+      "default": true
     },
     {
       "type": "select",

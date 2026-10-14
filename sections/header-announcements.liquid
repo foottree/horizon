@@ -111,6 +111,10 @@
   .announcement-bar__slide {
     transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
     content-visibility: visible;
+    /* <slideshow-slide> is overflow: hidden by default, and at line-height 1 the descenders
+       ("day", "Singapore") overhang the line box by ~2px, so they were cut flat. These slides
+       fade rather than slide, so nothing needs clipping. */
+    overflow: visible;
 
     &[aria-hidden='true'] {
       opacity: 0;
@@ -169,7 +173,11 @@
      so the loop join after the last item is the same as every other join. */
   .announcement-bar__marquee {
     display: block;
-    overflow: hidden;
+    /* Clip sideways only. The text runs at line-height 1, so its glyphs (descenders in "day",
+       "Singapore") overhang the 14px line box by ~2px each side; overflow: hidden clipped them.
+       `clip` on one axis leaves the other visible, which `hidden` cannot. */
+    overflow-x: clip;
+    overflow-y: visible;
     grid-column: 1 / -1;
     width: 100%;
   }

@@ -592,6 +592,7 @@
         "link": "shopify://collections",
         "section_width": "narrow",
         "mobile_card_size": 85,
+        "show_arrows": true,
         "background_color": "",
         "padding-block-start": 50,
         "padding-block-end": 50,
