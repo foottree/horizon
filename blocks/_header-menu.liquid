@@ -85,39 +85,19 @@
 
     {% capture children %}
       {% for link in block_settings.menu.links %}
-        {% liquid
-          # A third level renders as a flyout beside its parent row, so any depth works here.
-          # `submenu_style_exceptions` lets the merchant flip individual top-level items to the
-          # other desktop style (comma-separated titles, case-insensitive, whitespace trimmed,
-          # matched against link.title) while every other item keeps the block's own
-          # submenu_style. Mobile drawer behaviour (drawer_accordion) is unaffected - it has no
-          # dropdown/mega distinction of its own.
-          assign use_dropdown = false
-          if link.links != blank
-            assign link_title_key = link.title | strip | downcase
-            assign is_style_exception = false
-            if block_settings.submenu_style_exceptions != blank
-              assign submenu_style_exceptions = block_settings.submenu_style_exceptions | split: ','
-              for exception_title in submenu_style_exceptions
-                assign exception_title_key = exception_title | strip | downcase
-                if exception_title_key == link_title_key
-                  assign is_style_exception = true
-                endif
-              endfor
-            endif
-            assign effective_submenu_style = block_settings.submenu_style
-            if is_style_exception
-              if effective_submenu_style == 'dropdown'
-                assign effective_submenu_style = 'mega'
-              else
-                assign effective_submenu_style = 'dropdown'
-              endif
-            endif
-            if effective_submenu_style == 'dropdown'
-              assign use_dropdown = true
-            endif
-          endif
-        %}
+        {%- comment -%}
+          A third level renders as a flyout beside its parent row, so any depth works here.
+          `submenu_style_exceptions` lets the merchant flip individual top-level items to the
+          other style; the per-item resolution lives in snippets/menu-submenu-style.liquid so the
+          mobile drawer can follow the same answer (see its `drawer_submenu_style` setting).
+        {%- endcomment -%}
+        {%- capture effective_submenu_style -%}
+          {%- render 'menu-submenu-style', link: link, block_settings: block_settings -%}
+        {%- endcapture -%}
+        {%- assign use_dropdown = false -%}
+        {%- if link.links != blank and effective_submenu_style == 'dropdown' -%}
+          {%- assign use_dropdown = true -%}
+        {%- endif -%}
         <li
           class="menu-list__list-item{% if use_dropdown %} menu-list__list-item--dropdown{% endif %}"
           on:blur="/deactivate"
@@ -217,7 +197,7 @@
                     </li>
                   </ul>
                 {% else %}
-                  {% render 'menu-tiles', link: link, tile_image_ratio: block_settings.tile_image_ratio %}
+                  {% render 'menu-tiles', link: link, tile_image_ratio: block_settings.tile_image_ratio, tile_title_position: block_settings.tile_title_position %}
                 {% endif %}
               </div>
             </div>
@@ -1305,6 +1285,22 @@
     },
     {
       "type": "select",
+      "id": "tile_title_position",
+      "label": "Tile title position",
+      "options": [
+        {
+          "value": "below",
+          "label": "Below image"
+        },
+        {
+          "value": "overlay",
+          "label": "On image"
+        }
+      ],
+      "default": "below"
+    },
+    {
+      "type": "select",
       "id": "menu_style",
       "label": "t:settings.media_type",
       "info": "t:info.media_type_info",
@@ -1416,6 +1412,23 @@
       "label": "t:settings.expand_first_group",
       "default": false,
       "visible_if": "{{ block.settings.drawer_accordion == true }}"
+    },
+    {
+      "type": "select",
+      "id": "drawer_submenu_style",
+      "label": "Mobile menu submenus",
+      "options": [
+        {
+          "value": "match",
+          "label": "Match desktop style"
+        },
+        {
+          "value": "cards",
+          "label": "Always show cards"
+        }
+      ],
+      "default": "match",
+      "info": "Match: items that open a dropdown on desktop show a plain list on phones, mega menu items show cards."
     },
     {
       "type": "checkbox",

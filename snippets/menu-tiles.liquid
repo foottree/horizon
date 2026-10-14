@@ -14,12 +14,16 @@
   @param {string} [tile_image_ratio] - CSS aspect-ratio value for each tile's image box
     (header-menu block setting `tile_image_ratio`).
 
+  @param {string} [tile_title_position] - "overlay" puts the title on the image over a dark
+    bottom scrim, white and without the arrow; anything else keeps it below on the light fade
+    (header-menu block setting `tile_title_position`).
+
   @example
-  {% render 'menu-tiles', link: link, tile_image_ratio: block_settings.tile_image_ratio %}
+  {% render 'menu-tiles', link: link, tile_image_ratio: block_settings.tile_image_ratio, tile_title_position: block_settings.tile_title_position %}
 {%- enddoc -%}
 
 <div
-  class="ft-tiles"
+  class="ft-tiles{% if tile_title_position == 'overlay' %} ft-tiles--overlay{% endif %}"
   style="--tile-image-ratio: {{ tile_image_ratio | default: '3 / 4' }};"
 >
   {%- comment -%}

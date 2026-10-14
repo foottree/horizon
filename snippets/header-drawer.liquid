@@ -111,6 +111,19 @@
             {% assign animation_index = 0 %}
             {%- for link in linklist.links -%}
               {% assign animation_index = animation_index | plus: 1 %}
+              {%- comment -%}
+                Cards for mega-menu items (or everything when the block's drawer_submenu_style is
+                "cards"); items that open a plain dropdown on desktop get a plain link list here.
+              {%- endcomment -%}
+              {%- assign drawer_use_cards = true -%}
+              {%- if block_settings.drawer_submenu_style != 'cards' and link.links != blank -%}
+                {%- capture link_submenu_style -%}
+                  {%- render 'menu-submenu-style', link: link, block_settings: block_settings -%}
+                {%- endcapture -%}
+                {%- if link_submenu_style == 'dropdown' -%}
+                  {%- assign drawer_use_cards = false -%}
+                {%- endif -%}
+              {%- endif -%}
               <li
                 style="--menu-drawer-animation-index: {{ animation_index }};"
                 class="{%- if block_settings.drawer_accordion -%}menu-drawer__list-item--deep{%- else -%}menu-drawer__list-item--flat{%- endif -%}{% if block_settings.drawer_dividers %} menu-drawer__list-item--divider{% endif %}"
@@ -139,7 +152,11 @@
                           {{- 'icon-caret.svg' | inline_asset_content -}}
                         </span>
                       </summary>
-                      {% render 'menu-drawer-tile-grid', link: link, tile_image_ratio: block_settings.tile_image_ratio %}
+                      {% if drawer_use_cards %}
+                        {% render 'menu-drawer-tile-grid', link: link, tile_image_ratio: block_settings.tile_image_ratio, tile_title_position: block_settings.tile_title_position %}
+                      {% else %}
+                        {% render 'menu-drawer-plain-list', link: link, block_settings: block_settings %}
+                      {% endif %}
                     </details>
                   {% endcapture %}
                   {% render 'accordion-custom-component',
@@ -205,7 +222,11 @@
                             </span>
                           </button>
                         </div>
-                        {% render 'menu-drawer-tile-grid', link: link, tile_image_ratio: block_settings.tile_image_ratio %}
+                        {% if drawer_use_cards %}
+                          {% render 'menu-drawer-tile-grid', link: link, tile_image_ratio: block_settings.tile_image_ratio, tile_title_position: block_settings.tile_title_position %}
+                        {% else %}
+                          {% render 'menu-drawer-plain-list', link: link, block_settings: block_settings %}
+                        {% endif %}
                       </div>
                     </div>
                   </details>

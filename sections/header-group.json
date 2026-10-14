@@ -73,6 +73,7 @@
             "submenu_style": "dropdown",
             "submenu_style_exceptions": "Women, Men, Accessories",
             "tile_image_ratio": "3 / 4",
+            "tile_title_position": "overlay",
             "menu_style": "text",
             "featured_products_aspect_ratio": "4 / 5",
             "featured_collections_aspect_ratio": "16 / 9",

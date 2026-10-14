@@ -1,0 +1,36 @@
+{%- doc -%}
+  Renders the mobile drawer's plain list of child links for one top-level menu item: the same
+  markup the stock 3-level branch of snippets/header-drawer.liquid uses for a childless child
+  link, without the featured image. Used instead of snippets/menu-drawer-tile-grid.liquid for
+  items that open a dropdown (not a mega menu) on desktop, so the phone matches the desktop style
+  (header-menu block setting `drawer_submenu_style` = "match"; see snippets/menu-submenu-style.liquid).
+
+  @param {object} link - The top-level menu link being rendered.
+  @param {object} block_settings - The header-menu block's settings.
+
+  @example
+  {% render 'menu-drawer-plain-list', link: link, block_settings: block_settings %}
+{%- enddoc -%}
+
+<ul
+  class="menu-drawer__menu menu-drawer__menu--childlist menu-drawer__menu--plain-list details-content"
+  role="list"
+  tabindex="-1"
+>
+  {%- for childlink in link.links -%}
+    <li class="menu-drawer__list-item{% if block_settings.drawer_dividers %} menu-drawer__list-item--divider{% endif %}">
+      <a
+        id="HeaderDrawer-{{ link.handle }}-{{ childlink.handle }}"
+        href="{{ childlink.url }}"
+        class="menu-drawer__menu-item menu-drawer__menu-item--parent{% if childlink.current %} menu-drawer__menu-item--active{% endif %}"
+        {% if childlink.current %}
+          aria-current="page"
+        {% endif %}
+      >
+        <span class="menu-drawer__menu-item-text wrap-text">
+          {{- childlink.title | escape -}}
+        </span>
+      </a>
+    </li>
+  {%- endfor -%}
+</ul>

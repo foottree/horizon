@@ -872,6 +872,44 @@
   flex: none;
 }
 
+/* Plain child list in the drawer (snippets/menu-drawer-plain-list.liquid, for items that open a
+   dropdown on desktop): the stock childlist <ul> carries no side padding of its own, so the rows
+   sat flush against the screen edge. Same inset as the top-level rows and the back caret. */
+#header-component .menu-drawer__menu--plain-list {
+  padding-inline: var(--drawer-padding);
+}
+
+/* Tile title "On image" in the drawer (tile_title_position = overlay): label pinned to the bottom
+   of the image, white, over a dark scrim drawn by the card's ::after; no arrow. The card is
+   clipped to the image's radius so the scrim follows the corners. Size and weight unchanged. */
+#header-component .menu-drawer__tile-grid--overlay .menu-drawer__tile-card {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+#header-component .menu-drawer__tile-grid--overlay .menu-drawer__tile-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgb(0 0 0 / 0.4) 0%, rgb(0 0 0 / 0) 55%);
+  pointer-events: none;
+}
+
+#header-component .menu-drawer__tile-grid--overlay .menu-drawer__tile-label {
+  position: absolute;
+  inset-inline: 12px;
+  inset-block-end: 10px;
+  z-index: 1;
+  margin-top: 0;
+  color: #fff;
+  text-shadow: 0 1px 2px rgb(0 0 0 / 0.25);
+}
+
+#header-component .menu-drawer__tile-grid--overlay .menu-drawer__tile-arrow {
+  display: none;
+}
+
 /* ---- Mobile drawer: Account row ----
    Last item of the drawer's top-level list (snippets/header-drawer.liquid), standing in for the
    header's own account icon, which is hidden below 990px (see the header-actions rule further
@@ -1088,6 +1126,29 @@
 #header-component .ft-tiles__tile:hover .ft-tiles__label,
 #header-component .ft-tiles__tile:focus-visible .ft-tiles__label {
   color: #4a6a1d;
+}
+
+/* Tile title "On image" (header-menu block setting tile_title_position = overlay): same look as the
+   homepage collection rail's on-image mode (snippets/collection-tile.liquid). The light fade is
+   replaced by a dark bottom scrim across the whole image (clipped by the tile's radius), the title
+   turns white with a soft shadow, and the arrow is dropped. Size and weight are untouched. */
+#header-component .ft-tiles--overlay .ft-tiles__scrim {
+  inset-block: 0;
+  height: auto;
+  background: linear-gradient(to top, rgb(0 0 0 / 0.4) 0%, rgb(0 0 0 / 0) 55%);
+}
+
+#header-component .ft-tiles--overlay .ft-tiles__label,
+#header-component .ft-tiles--overlay .ft-tiles__tile:hover .ft-tiles__label,
+#header-component .ft-tiles--overlay .ft-tiles__tile:focus-visible .ft-tiles__label {
+  inset-inline: 14px;
+  inset-block-end: 12px;
+  color: #fff;
+  text-shadow: 0 1px 2px rgb(0 0 0 / 0.25);
+}
+
+#header-component .ft-tiles--overlay .ft-tiles__arrow {
+  display: none;
 }
 
 /* ---- Search modal ----

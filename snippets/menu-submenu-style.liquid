@@ -1,0 +1,37 @@
+{%- doc -%}
+  Outputs the submenu style that applies to one top-level menu item: `dropdown` or `mega`, with
+  no surrounding whitespace, so it is meant to be captured:
+
+    {%- capture effective_submenu_style -%}{%- render 'menu-submenu-style', link: link, block_settings: block_settings -%}{%- endcapture -%}
+
+  The header-menu block's `submenu_style` is the default for every item. `submenu_style_exceptions`
+  (comma-separated titles, case-insensitive, whitespace trimmed, matched against link.title) flips
+  individual items to the other style. Shared by the desktop menu (blocks/_header-menu.liquid) and
+  the mobile drawer (snippets/header-drawer.liquid) so both agree on which items are dropdowns.
+
+  @param {object} link - The top-level menu link.
+  @param {object} block_settings - The header-menu block's settings.
+{%- enddoc -%}
+
+{%- liquid
+  assign link_title_key = link.title | strip | downcase
+  assign is_style_exception = false
+  if block_settings.submenu_style_exceptions != blank
+    assign submenu_style_exceptions = block_settings.submenu_style_exceptions | split: ','
+    for exception_title in submenu_style_exceptions
+      assign exception_title_key = exception_title | strip | downcase
+      if exception_title_key == link_title_key
+        assign is_style_exception = true
+      endif
+    endfor
+  endif
+  assign resolved_style = block_settings.submenu_style
+  if is_style_exception
+    if resolved_style == 'dropdown'
+      assign resolved_style = 'mega'
+    else
+      assign resolved_style = 'dropdown'
+    endif
+  endif
+  echo resolved_style
+-%}
