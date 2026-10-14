@@ -223,8 +223,12 @@
   /* icon to label: 8px (Figma) */
   margin-inline-end: 8px;
   background-color: var(--color-foreground);
-  -webkit-mask: url('icon-search.svg') no-repeat center / contain;
-  mask: url('icon-search.svg') no-repeat center / contain;
+  /* icon-search-menu.svg, not icon-search.svg: a mask loads the SVG as an image, where the
+     stock file's stroke-width="var(--icon-stroke-width)" cannot resolve and falls back to 1 -
+     0.75px of ink at 18px, half the header search icon's (1.5 on a 24 viewBox at 22px = 1.38px).
+     The menu copy hard-codes 1.83, which is 1.38px at this 18px size. */
+  -webkit-mask: url('icon-search-menu.svg') no-repeat center / contain;
+  mask: url('icon-search-menu.svg') no-repeat center / contain;
 }
 
 .menu-list__trigger:has(> a[href$="/pages/size-width-guide"]) .menu-list__link {
@@ -251,6 +255,15 @@
      "^" read as sitting high. `translate` rather than `transform`, which stock uses for the
      rotation on the icon inside and which is zeroed on this button above. */
   translate: 0 1px;
+}
+
+/* The caret is a filled 10x6 chevron (snippets/icon.liquid 'caret') drawn about 1px thick at
+   its 10px size, thinner than the header icons beside it (1.38px of ink). A 0.375 outline in
+   the same colour adds 0.19px each side, landing the stroke on 1.38px. */
+.menu-list__trigger:has(> a[href$="/pages/size-width-guide"]) .menu-list__disclosure-icon path {
+  stroke: currentcolor;
+  stroke-width: 0.375;
+  stroke-linejoin: round;
 }
 
 /* Mobile menu drawer close (X): icon-close-menu.svg is a full-bleed X glyph,
