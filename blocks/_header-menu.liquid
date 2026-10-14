@@ -804,12 +804,11 @@
      covering. This pseudo-element sits entirely above the trigger, so it never overlaps the
      label or swallows a click, and being absolute it adds no layout.
 
-     Excludes the "Find your shoe" trigger (assets/custom.css's own bordered pill box, with its
-     own search-icon ::before at the SAME element): that trigger isn't flush against the row
-     edges the same way stock dropdown triggers are (it has its own margin-block), so it doesn't
-     need this bridge - and a second ::before rule here would otherwise win on specificity
-     (3 classes vs. the pill rule's 2) and steal the icon's pseudo-element slot, rendering the
-     search glyph as a stray strip above the box instead of inside it. */
+     Excludes the "Find your shoe" trigger (assets/custom.css styles it as a plain menu label with a
+     search icon in its own ::before at the SAME element): it has its own hover bridge
+     (::after, in custom.css), and a second ::before rule here would otherwise win on specificity
+     (3 classes vs. the icon rule's 2) and steal the icon's pseudo-element slot, rendering the
+     search glyph as a stray strip above the label instead of beside it. */
   .menu-list--dropdown
     .menu-list__list-item--dropdown
     > .menu-list__trigger:not(:has(> a[href$="/pages/size-width-guide"])) {

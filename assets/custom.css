@@ -177,13 +177,13 @@
      fit without collapsing into Horizon's "More" overflow item at 1440px. */
   /* One visual gap between every top-level item (Figma: 26px between labels). Items with a
      submenu wrap their link in .menu-list__trigger, so both chains are listed; the
-     "Find your shoe" box has no label padding (its border is the visible edge) and takes
+     "Find your shoe" item has no label padding (its icon is the leading edge) and takes
      the same half-gap as a margin instead. */
   #header-component .header-menu {
     --ft-menu-gap: 20px;
   }
 
-  /* The "Find your shoe" trigger is excluded: its box carries the half-gap as a margin (below)
+  /* The "Find your shoe" trigger is excluded: it carries the half-gap as a margin (below)
      and its own rule zeroes the title padding so the search icon sits tight to the label. */
   #header-component .menu-list > .overflow-menu > .menu-list__list-item > .menu-list__link > .menu-list__link-title,
   #header-component .menu-list > .overflow-menu > .menu-list__list-item > .menu-list__trigger:not(:has(> a[href$="/pages/size-width-guide"])) > .menu-list__link > .menu-list__link-title {
@@ -191,7 +191,7 @@
   }
 
   #header-component .menu-list__trigger:has(> a[href$="/pages/size-width-guide"]) {
-    margin-inline-start: calc(var(--ft-menu-gap) / 2);
+    margin-inline: calc(var(--ft-menu-gap) / 2);
   }
 
   .header-menu .menu-list__link:hover,
@@ -200,32 +200,19 @@
   }
 }
 
-/* "Find your shoe" pill: the 7th main-menu item, targeted by its href
+/* "Find your shoe": the 7th main-menu item, targeted by its href
    (ends in /pages/size-width-guide) rather than nth-child so it keeps
    working if the menu is reordered. Horizon wraps a top-level link that has
    child links in a <span class="menu-list__trigger"> alongside the
-   .menu-list__disclosure caret button (see blocks/_header-menu.liquid) -
-   style that wrapper as the pill and only reveal/reposition the disclosure
-   button, leaving its toggle behaviour and submenu markup untouched. */
+   .menu-list__disclosure caret button (see blocks/_header-menu.liquid).
+   It reads like the other labels (no box, border or background); only the
+   search icon, the label and the caret set it apart. The disclosure button is
+   revealed and repositioned, leaving its toggle behaviour and submenu markup
+   untouched. */
 .menu-list__trigger:has(> a[href$="/pages/size-width-guide"]) {
-  /* Centre the 32px box in the 44px menu row: the row wraps its hidden submenu
-     onto a second flex line, so align-items cannot centre it. */
-  margin-block: 6px;
   align-items: center;
-  /* 2px, not the flex row's stock 8px: measured live, label-to-icon was
-     8px (this gap) + 11.2px (the title's own end padding, zeroed below) =
-     19.2px - too wide for a pill this size. */
-  gap: 2px;
-  height: 32px;
-  /* the client asked for the pill about 20% wider than its content demands (185 -> 221px).
-     The extra width is a min-width rather than padding, because the search icon and label
-     sit at the left and the caret is pushed to the right edge (see the disclosure rule
-     below) - the slack has to fall between them, not around them. */
-  min-width: 221px;
-  padding-inline: 12px;
-  border: 1px solid var(--color-foreground);
-  border-radius: 0;
-  background-color: #ffffff;
+  /* spacing is set per part (icon margin, caret margin) rather than a flex gap */
+  gap: 0;
 }
 
 .menu-list__trigger:has(> a[href$="/pages/size-width-guide"])::before {
@@ -233,6 +220,8 @@
   flex-shrink: 0;
   width: 18px;
   height: 18px;
+  /* icon to label: 8px (Figma) */
+  margin-inline-end: 8px;
   background-color: var(--color-foreground);
   -webkit-mask: url('icon-search.svg') no-repeat center / contain;
   mask: url('icon-search.svg') no-repeat center / contain;
@@ -243,10 +232,9 @@
 }
 
 .menu-list__trigger:has(> a[href$="/pages/size-width-guide"]) .menu-list__link-title {
-  /* Zero both sides: the stock --gap-sm (11.2px) end padding is the other
-     half of the label-to-icon gap this pill was showing (see the trigger's
-     own gap: 2px above). Other top-level titles keep their inline padding -
-     this stays scoped to the "Find your shoe" trigger only. */
+  /* Zero both sides: the icon (8px margin) and the caret (4px margin) set the
+     spacing here. Other top-level titles keep their inline padding - this
+     stays scoped to the "Find your shoe" trigger only. */
   padding-inline: 0;
 }
 
@@ -256,9 +244,8 @@
   pointer-events: auto;
   transform: none;
   padding: 0;
-  /* hold the caret against the right edge so the icon and label read as one left-aligned
-     group, the way a real search field does */
-  margin-inline-start: auto;
+  /* label to caret: 4px */
+  margin-inline-start: 4px;
 }
 
 /* Mobile menu drawer close (X): icon-close-menu.svg is a full-bleed X glyph,
@@ -1793,20 +1780,20 @@ swatches-variant-picker-component {
   font-size: var(--font-size--sm); /* 14px */
 }
 
-/* ---- "Find your shoe": bridge the gap between the pill and its panel ----
-   Every other top-level item is a mega menu now, so this is the only dropdown left, and its
-   trigger is the bordered pill with its own margin-block. That leaves a dead strip between the
-   pill's bottom edge and the top of the panel: at 1440 the pill ends at y=107 and the panel
-   starts at y=139, so the pointer spends ~32px over neither element, pointerleave fires and the
-   menu shuts before the cursor arrives.
+/* ---- "Find your shoe": bridge the gap between the label and its panel ----
+   Every other top-level item is a mega menu now, so this is the only dropdown left. Its trigger
+   is a plain 44px menu row, but the panel starts below the header's bottom padding, which leaves a
+   dead strip between the trigger's bottom edge and the top of the panel: at 1440 the trigger ends
+   at y=101 and the panel starts at y=115, so the pointer spends ~14px over neither element,
+   pointerleave fires and the menu shuts before the cursor arrives.
 
    Horizon has a safety box for exactly this (.menu-list__list-item::after, sized by
    header-menu.js via --box-height) but it only renders when the script sets
    data-safety-box="true", which never happens on this item - the attribute reads null on hover.
    Rather than drive that from here, this is a transparent always-on strip hung off the trigger,
    which already has position: relative for its search icon. The icon owns ::before, so ::after
-   is free. Height = the header's bottom padding plus the pill's own 6px margin, i.e. exactly
-   the distance down to where the panel begins. Transparent and behind the panel, so it changes
+   is free. Height = the header's bottom padding (--header-padding, 14px), i.e. exactly the
+   distance down to where the panel begins. Transparent and behind the panel, so it changes
    nothing visually and, unlike the stock box, never toggles `display` and so cannot re-raster
    the header. */
 #header-component
@@ -1817,7 +1804,7 @@ swatches-variant-picker-component {
   position: absolute;
   inset-inline: 0;
   inset-block-start: 100%;
-  height: calc(var(--header-padding, 26px) + 6px);
+  height: var(--header-padding, 14px);
 }
 
 /* ---- Card titles step up to 18px on mobile ----
