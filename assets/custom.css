@@ -874,9 +874,16 @@
 
 /* Plain child list in the drawer (snippets/menu-drawer-plain-list.liquid, for items that open a
    dropdown on desktop): the stock childlist <ul> carries no side padding of its own, so the rows
-   sat flush against the screen edge. Same inset as the top-level rows and the back caret. */
+   sat flush against the screen edge. Same inset as the top-level rows and the back caret, the
+   same breathing room above the first link, and the same 56px row as the top-level list - stock
+   childlist rows are 46px, which read as cramped next to the menu the shopper just came from. */
 #header-component .menu-drawer__menu--plain-list {
   padding-inline: var(--drawer-padding);
+  padding-block-start: var(--padding-sm);
+}
+
+#header-component .menu-drawer__menu--plain-list .menu-drawer__menu-item {
+  min-height: 56px;
 }
 
 /* Tile title "On image" in the drawer (tile_title_position = overlay): label pinned to the bottom
@@ -1417,7 +1424,10 @@
   }
 }
 
-.ft-corporate [class*='__cta'] {
+/* the mockup's 10px above the buttons. On the button row (the "buttons" group, css_class
+   ft-corp-buttons) rather than on [class*='__cta'], which also matches __cta_whatsapp and put
+   10px above each stacked button on phones. */
+.ft-corporate .ft-corp-buttons {
   margin-top: 10px;
 }
 
@@ -1425,6 +1435,16 @@
   background-color: var(--color-gold, #bd8c3d);
   border-color: var(--color-gold, #bd8c3d);
   color: var(--color-ink, #262622);
+}
+
+/* ---- Button arrows ----
+   snippets/button.liquid centres its 20px arrow on the label's line box, but the eye centres it on
+   the lowercase letters, which sit about 0.12em lower - so every "label ->" button read with the
+   arrow riding high (measured: 2.5px on the 18px "Read our story", 1.7px on the 16px "Request a
+   quote"). In em so it scales with the label. `translate`, not `transform`, so it composes with
+   any hover transform on the wrapper. Same correction as the header's Find your shoe caret. */
+.button--with-arrow .svg-wrapper {
+  translate: 0 0.12em;
 }
 
 /* ---- Customer reviews (homepage section 06) ---- */
