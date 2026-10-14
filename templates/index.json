@@ -942,7 +942,7 @@
         "@media(max-width:749px){.ft-new-arrivals deferred-media{aspect-ratio:4/5!important}}",
         ".ft-new-arrivals video{width:100%;height:100%;object-fit:cover;pointer-events:none}",
         ".ft-new-arrivals deferred-media{pointer-events:none}",
-        ".ft-new-arrivals .button{font-size:1rem;padding:12px 24px}"
+        ".ft-new-arrivals .button{font-size:1rem;padding:12px 24px;border-radius:999px}"
       ],
       "settings": {
         "content_direction": "row",
