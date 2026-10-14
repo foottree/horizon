@@ -58,6 +58,8 @@
       label: block.settings.label,
       image: block.settings.image,
       tile_slot: tile_slot,
+      label_position: section.settings.label_position,
+      show_arrow: section.settings.show_tile_arrow,
       block_attributes: block.shopify_attributes
     -%}
   {%- endcapture -%}
@@ -105,6 +107,7 @@
     --collection-rail-heading-color: {{ settings.color_palette.color1 }};
     --collection-rail-accent-color: {{ settings.color_palette.color4 }};
     --collection-rail-track-color: {{ settings.color_palette.color3 }};
+    --collection-rail-overlay-opacity: {{ section.settings.overlay_opacity | default: 40 | divided_by: 100.0 }};
   "
   data-testid="collection-rail"
 >
@@ -431,6 +434,40 @@
       "step": 5,
       "unit": "%",
       "default": 85
+    },
+    {
+      "type": "select",
+      "id": "label_position",
+      "label": "Tile title position",
+      "options": [
+        {
+          "value": "below",
+          "label": "Below image"
+        },
+        {
+          "value": "overlay",
+          "label": "On image"
+        }
+      ],
+      "default": "below"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tile_arrow",
+      "label": "Show arrow next to tile title",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Title shade strength",
+      "info": "Darkens the bottom of each image so the title stays readable.",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "default": 40,
+      "visible_if": "{{ section.settings.label_position == 'overlay' }}"
     },
     {
       "type": "color",

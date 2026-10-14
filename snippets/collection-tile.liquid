@@ -16,6 +16,11 @@
     height the grid gives that slot (see the section's `.collection-rail__panel` stylesheet).
     Ignored on mobile, where every tile renders at a uniform 3:4 ratio (see the
     `.collection-rail__mobile` override in the section's stylesheet).
+  @param {string} [label_position] - 'below' (default) puts the title row under the image;
+    'overlay' lays it over the bottom of the image on a dark gradient.
+  @param {boolean} [show_arrow] - Defaults to true. Pass `false` explicitly to hide the arrow
+    next to the title (Liquid's `default` filter treats false as blank, so this is checked with
+    `== false` rather than defaulted).
   @param {string} [block_attributes] - `block.shopify_attributes` for the block this tile
     represents, so the theme editor can select it in the live preview.
 
@@ -46,7 +51,7 @@
 
 <a
   href="{{ collection.url | default: '#' }}"
-  class="collection-rail__tile collection-rail__tile--{{ tile_slot }}"
+  class="collection-rail__tile collection-rail__tile--{{ tile_slot }}{% if label_position == 'overlay' %} collection-rail__tile--overlay{% endif %}"
   {{ block_attributes }}
 >
   <span class="collection-rail__tile-image">
@@ -83,12 +88,14 @@
   </span>
   <span class="collection-rail__tile-label">
     <span class="collection-rail__tile-title">{{- tile_label -}}</span>
-    <span
-      class="collection-rail__tile-arrow svg-wrapper"
-      aria-hidden="true"
-    >
-      {{- 'icon-arrow.svg' | inline_asset_content -}}
-    </span>
+    {%- unless show_arrow == false -%}
+      <span
+        class="collection-rail__tile-arrow svg-wrapper"
+        aria-hidden="true"
+      >
+        {{- 'icon-arrow.svg' | inline_asset_content -}}
+      </span>
+    {%- endunless -%}
   </span>
 </a>
 
@@ -158,5 +165,37 @@
   .collection-rail__tile-arrow svg {
     width: 100%;
     height: 100%;
+  }
+
+  /* Title over the image ("On image" in the section settings). The label leaves the flow, so in
+     the desktop panel the image fills the whole grid area; on mobile it keeps its 3:4 ratio. */
+  .collection-rail__tile--overlay {
+    position: relative;
+  }
+
+  .collection-rail__tile--overlay .collection-rail__tile-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      to top,
+      rgb(0 0 0 / var(--collection-rail-overlay-opacity, 0.4)) 0%,
+      rgb(0 0 0 / 0) 55%
+    );
+  }
+
+  .collection-rail__tile--overlay .collection-rail__tile-label {
+    position: absolute;
+    inset-inline: 0;
+    inset-block-end: 0;
+    z-index: 1;
+    margin: 0;
+    padding: 16px 20px;
+    color: #fff;
+  }
+
+  .collection-rail__tile--overlay .collection-rail__tile-title {
+    text-shadow: 0 1px 2px rgb(0 0 0 / 0.25);
   }
 {% endstylesheet %}

@@ -638,6 +638,104 @@
         "mobile-padding-inline-end": 0
       }
     },
+    "collection_rail_overlay": {
+      "type": "collection-rail",
+      "blocks": {
+        "tile_women_mary_janes": {
+          "type": "collection_tile",
+          "name": "Women's Mary Janes",
+          "settings": {
+            "collection": "women-mary-janes",
+            "label": "Everyday Mary Janes"
+          }
+        },
+        "tile_women_loafers": {
+          "type": "collection_tile",
+          "name": "Women's Loafers",
+          "settings": {
+            "collection": "women-loafers",
+            "label": "Effortless Loafers"
+          }
+        },
+        "tile_women_heels": {
+          "type": "collection_tile",
+          "name": "Women's Heels",
+          "settings": {
+            "collection": "women-heels",
+            "label": "Comfort Heel Pumps"
+          }
+        },
+        "tile_women_sneakers": {
+          "type": "collection_tile",
+          "name": "Women's Sneakers",
+          "settings": {
+            "collection": "women-sneakers",
+            "label": "Sporty Sneakers"
+          }
+        },
+        "tile_work_essentials": {
+          "type": "collection_tile",
+          "name": "Work Essentials",
+          "settings": {
+            "collection": "work-essentials",
+            "label": ""
+          }
+        },
+        "tile_weekend_leisure": {
+          "type": "collection_tile",
+          "name": "Weekend & Leisure",
+          "settings": {
+            "collection": "weekend-leisure",
+            "label": ""
+          }
+        },
+        "tile_travel_comfort": {
+          "type": "collection_tile",
+          "name": "Travel Comfort",
+          "settings": {
+            "collection": "travel-comfort",
+            "label": ""
+          }
+        },
+        "tile_wide_feet_bunions": {
+          "type": "collection_tile",
+          "name": "Wide Feet & Bunions",
+          "settings": {
+            "collection": "wide-feet-bunions",
+            "label": ""
+          }
+        }
+      },
+      "block_order": [
+        "tile_women_mary_janes",
+        "tile_women_loafers",
+        "tile_women_heels",
+        "tile_women_sneakers",
+        "tile_work_essentials",
+        "tile_weekend_leisure",
+        "tile_travel_comfort",
+        "tile_wide_feet_bunions"
+      ],
+      "name": "Shop by Collection rail (overlay titles)",
+      "settings": {
+        "heading": "Shop by Collection",
+        "link_label": "Shop All",
+        "link": "shopify://collections",
+        "section_width": "narrow",
+        "mobile_card_size": 85,
+        "background_color": "",
+        "padding-block-start": 50,
+        "padding-block-end": 50,
+        "custom_mobile_padding": true,
+        "mobile-padding-block-start": 68,
+        "mobile-padding-block-end": 68,
+        "mobile-padding-inline-start": 0,
+        "mobile-padding-inline-end": 0,
+        "label_position": "overlay",
+        "show_tile_arrow": false,
+        "overlay_opacity": 40
+      }
+    },
     "bestsellers_rail": {
       "type": "product-rail-tabs",
       "blocks": {
@@ -2131,6 +2229,7 @@
   "order": [
     "hero_slideshow",
     "collection_rail",
+    "collection_rail_overlay",
     "bestsellers_rail",
     "new_arrivals_spotlight",
     "why_foot_tree",
