@@ -166,36 +166,63 @@
         "client_1": {
           "type": "client",
           "settings": {
+            "logo": "shopify://shop_images/client-logo-singhealth.png",
             "label": ""
           }
         },
         "client_2": {
           "type": "client",
           "settings": {
+            "logo": "shopify://shop_images/client-logo-nhg-health.png",
             "label": ""
           }
         },
         "client_3": {
           "type": "client",
           "settings": {
+            "logo": "shopify://shop_images/client-logo-singapore-airlines.png",
             "label": ""
           }
         },
         "client_4": {
           "type": "client",
           "settings": {
+            "logo": "shopify://shop_images/client-logo-ihh-healthcare.png",
             "label": ""
           }
         },
         "client_5": {
           "type": "client",
           "settings": {
+            "logo": "shopify://shop_images/client-logo-smrt.png",
             "label": ""
           }
         },
         "client_6": {
           "type": "client",
           "settings": {
+            "logo": "shopify://shop_images/client-logo-alps.png",
+            "label": ""
+          }
+        },
+        "client_7": {
+          "type": "client",
+          "settings": {
+            "logo": "shopify://shop_images/client-logo-tan-tock-seng.png",
+            "label": ""
+          }
+        },
+        "client_8": {
+          "type": "client",
+          "settings": {
+            "logo": "shopify://shop_images/client-logo-mount-alvernia.png",
+            "label": ""
+          }
+        },
+        "client_9": {
+          "type": "client",
+          "settings": {
+            "logo": "shopify://shop_images/client-logo-aic.png",
             "label": ""
           }
         }
@@ -206,11 +233,16 @@
         "client_3",
         "client_4",
         "client_5",
-        "client_6"
+        "client_6",
+        "client_7",
+        "client_8",
+        "client_9"
       ],
       "settings": {
         "movement_direction": "normal",
-        "padding_block": 24
+        "padding_block": 24,
+        "logo_height": 48,
+        "logo_gap": 64
       }
     },
     "sectors": {
