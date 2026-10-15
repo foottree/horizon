@@ -1566,7 +1566,8 @@
    keeps them from overflowing a narrow phone viewport. ft-footer-lockup/ft-payment-group are this
    section's own css_class values (sections/footer-group.json), unique to this footer. */
 .ft-footer-lockup .image-block {
-  width: 160px;
+  /* Figma footer "Logo lockup": mark 36x33 + 12 gap + FOOT TREE wordmark = 167x33. */
+  width: 167px;
   max-width: 100%;
 }
 
