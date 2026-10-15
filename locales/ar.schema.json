@@ -1157,7 +1157,8 @@
     "card_radius": "Card corner radius",
     "duration": "Duration",
     "bleed_right": "Bleed right on desktop",
-    "show_arrow_icon": "Show arrow icon"
+    "show_arrow_icon": "Show arrow icon",
+    "customer_account_menu": "قائمة حساب العميل"
   },
   "text_defaults": {
     "accordion_heading": "عنوان القائمة المنسدلة",
