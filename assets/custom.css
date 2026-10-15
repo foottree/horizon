@@ -339,8 +339,11 @@
   content: '0';
 }
 
-/* The bubble no longer overlaps the icon, so drop the donut cut-out. */
-.header-actions__cart-icon.header-actions__cart-icon--has-cart svg {
+/* The bubble no longer overlaps the icon, so drop Horizon's donut cut-out. The stock rule
+   lives in header-actions.liquid's {% stylesheet %}, which compiles into styles.css and loads
+   AFTER this file; with an equal-specificity selector it won the tie and punched a hole in the
+   bag as soon as the cart held an item. The id prefix outranks it (and the [dir=rtl] variant). */
+#header-component .header-actions__cart-icon.header-actions__cart-icon--has-cart svg {
   mask: none;
   -webkit-mask: none;
 }
