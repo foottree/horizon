@@ -1,6 +1,6 @@
 {% comment %}
   Our Story timeline (Figma "02 Timeline - our story"): an optional first-person intro note, then a row for
-  each chapter. A row is a year chip, a heading and one or two paragraphs beside a photo, and the photo
+  each chapter. A row is a year label (mark + year), a heading and one or two paragraphs beside a photo, and the photo
   side alternates down the page - left, right, left...
 
   The side follows the row's position among the rows, not a setting, so adding, removing or reordering a
@@ -15,11 +15,11 @@
   The intro note is its own block, so it can be removed. Delete it if the person it names would rather not
   be named.
 
-  Type: .h3 on the row headings (28px), --font-size--2xs for the year chip, --font-paragraph--size for
+  Type: .h3 on the row headings (28px), .h4 for the year label, --font-paragraph--size for
   copy, --font-size--sm for captions.
 {% endcomment %}
 
-<div class="section-background" style="background-color: {{ settings.color_palette.color5 }};"></div>
+<div class="section-background" style="background-color: {{ settings.color_palette.background }};"></div>
 
 <div
   class="section section--narrow story-timeline spacing-style"
@@ -28,8 +28,7 @@
     --st-ink: {{ settings.color_palette.foreground }};
     --st-soft: {{ settings.color_palette.color8 }};
     --st-accent: {{ settings.color_palette.color4 }};
-    --st-chip: {{ settings.color_palette.color2 }};
-  "
+      "
   data-testid="story-timeline"
 >
   <div class="story-timeline__inner">
@@ -55,11 +54,18 @@
         {%- assign row_number = row_number | plus: 1 -%}
         {%- assign row_parity = row_number | modulo: 2 -%}
 
+        {%- liquid
+          assign media_layout = block.settings.layout
+          if media_layout == 'single' and block.settings.media_shape == 'portrait'
+            assign media_layout = 'tall'
+          endif
+        -%}
+
         {%- capture media_html -%}
           {%- render 'story-media',
             image: block.settings.image,
             image_2: block.settings.image_2,
-            layout: block.settings.layout,
+            layout: media_layout,
             brief: block.settings.brief,
             brief_2: block.settings.brief_2,
             caption: block.settings.caption,
@@ -81,7 +87,10 @@
 
           <div class="story-row__text">
             {%- if block.settings.chip != blank -%}
-              <span class="story-chip">{{ block.settings.chip }}</span>
+              <p class="h4 story-year">
+                {%- render 'story-mark', class_name: 'story-year__mark' -%}
+                <span class="story-year__label">{{ block.settings.chip }}</span>
+              </p>
             {%- endif -%}
             {%- if block.settings.heading != blank -%}
               <h3 class="h3 story-row__title">{{ block.settings.heading }}</h3>
@@ -100,7 +109,7 @@
   .story-timeline__inner {
     display: flex;
     flex-direction: column;
-    gap: 56px;
+    gap: 64px;
   }
 
   .story-note {
@@ -145,16 +154,23 @@
     gap: 18px;
   }
 
-  .story-chip {
-    display: inline-flex;
-    padding: 6px 14px;
-    border-radius: 999px;
-    background: var(--st-chip);
-    font-family: var(--font-subheading--family);
-    font-weight: var(--font-subheading--weight);
-    font-size: var(--font-size--2xs);
-    line-height: 1.3;
-    letter-spacing: 0.04em;
+  /* The year label: the small Foot Tree mark, then the year in the heading family at the h4 rung (24px).
+     .h4 paints with `color: var(--color)`, so the colour goes in through --color; doubled class beats .h4.h4. */
+  .story-year.story-year {
+    --color: var(--st-accent);
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .story-year__mark {
+    flex: none;
+    width: 30px;
+    height: 27px;
     color: var(--st-accent);
   }
 
@@ -192,7 +208,7 @@
 
   @media screen and (min-width: 750px) {
     .story-timeline__inner {
-      gap: 80px;
+      gap: 100px;
     }
 
     .story-row {
@@ -208,12 +224,6 @@
        screens wide enough to sit it beside the copy; the stacked layout below 750px is untouched. */
     .story-row--flip > .story-row__media {
       order: 2;
-    }
-  }
-
-  @media screen and (min-width: 990px) {
-    .story-timeline__inner {
-      gap: 128px;
     }
   }
 {% endstylesheet %}
@@ -236,7 +246,7 @@
       "label": "Top",
       "min": 0,
       "max": 200,
-      "step": 4,
+      "step": 2,
       "unit": "px",
       "default": 128
     },
@@ -246,7 +256,7 @@
       "label": "Bottom",
       "min": 0,
       "max": 200,
-      "step": 4,
+      "step": 2,
       "unit": "px",
       "default": 128
     },
@@ -261,8 +271,8 @@
       "id": "mobile-padding-block-start",
       "label": "Mobile top",
       "min": 0,
-      "max": 120,
-      "step": 4,
+      "max": 100,
+      "step": 1,
       "unit": "px",
       "default": 56,
       "visible_if": "{{ section.settings.custom_mobile_padding }}"
@@ -272,8 +282,8 @@
       "id": "mobile-padding-block-end",
       "label": "Mobile bottom",
       "min": 0,
-      "max": 120,
-      "step": 4,
+      "max": 100,
+      "step": 1,
       "unit": "px",
       "default": 56,
       "visible_if": "{{ section.settings.custom_mobile_padding }}"
@@ -317,7 +327,7 @@
         {
           "type": "text",
           "id": "chip",
-          "label": "Year chip",
+          "label": "Year",
           "default": "[19XX]"
         },
         {
@@ -341,10 +351,22 @@
           "id": "layout",
           "label": "Photo layout",
           "options": [
-            { "value": "single", "label": "One landscape photo" },
+            { "value": "single", "label": "One photo" },
             { "value": "pair", "label": "Pair of portrait photos" }
           ],
           "default": "single"
+        },
+        {
+          "type": "select",
+          "id": "media_shape",
+          "label": "Photo shape",
+          "info": "For the one-photo layout.",
+          "options": [
+            { "value": "landscape", "label": "Landscape 4:3" },
+            { "value": "portrait", "label": "Portrait 4:5" }
+          ],
+          "default": "landscape",
+          "visible_if": "{{ block.settings.layout == 'single' }}"
         },
         {
           "type": "image_picker",

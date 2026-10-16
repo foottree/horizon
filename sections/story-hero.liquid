@@ -8,10 +8,96 @@
   The Figma centres the hero ("a centred hero" in its own build notes), so the copy is centred; the
   Alignment setting switches it to left.
 
+  Layout "Split (copy + photo)": a white copy column on the left (the mark as a watermark bleeding off the
+  left edge, the h1, then the uppercase tagline) beside a photo on the right, and a cream stats bar under
+  both. Below 750px it stacks copy, photo, stats (stats as one centred column). The tagline is the Eyebrow
+  field; the Intro field is banner-only.
+
   Type: .h1 on the heading (48px, the page-title rung), --font-size--2xs for the eyebrow, --font-paragraph--size
   for the intro.
 {% endcomment %}
 
+{%- if section.settings.layout == 'split' -%}
+  {%- assign stat_count = 0 -%}
+  {%- for block in section.blocks -%}
+    {%- if block.type == 'stat' -%}{%- assign stat_count = stat_count | plus: 1 -%}{%- endif -%}
+  {%- endfor -%}
+
+  <div
+    class="story-split"
+    style="
+      --sh-ink: {{ settings.color_palette.foreground }};
+      --sh-tagline: {{ settings.color_palette.color8 }};
+      --sh-mark: {{ section.settings.watermark_color }};
+      --sh-bg: {{ settings.color_palette.background }};
+      --sh-bar: {{ settings.color_palette.color5 }};
+      --sh-line: {{ settings.color_palette.color3 }};
+      --sh-number: {{ settings.color_palette.color1 }};
+      --sh-min-h: {{ section.settings.min_height }}px;
+      --sh-stat-count: {{ stat_count | at_least: 1 }};
+    "
+    data-testid="story-hero"
+  >
+    <div class="story-split__cols">
+      <div
+        class="story-split__copy spacing-style"
+        style="{% render 'spacing-style', settings: section.settings %}"
+      >
+        <div class="story-split__watermark" aria-hidden="true">
+          {%- if section.settings.watermark_image != blank -%}
+            {{
+              section.settings.watermark_image
+              | image_url: width: 1120
+              | image_tag: widths: '560, 1120', sizes: '560px', alt: '', class: 'story-split__watermark-art', loading: 'lazy'
+            }}
+          {%- else -%}
+            {%- render 'story-mark', class_name: 'story-split__watermark-art' -%}
+          {%- endif -%}
+        </div>
+
+        <div class="story-split__text">
+          {%- if section.settings.heading != blank -%}
+            <h1 class="h1 story-split__title">{{ section.settings.heading | escape | newline_to_br }}</h1>
+          {%- endif -%}
+          {%- if section.settings.eyebrow != blank -%}
+            <p class="story-split__tagline">{{ section.settings.eyebrow }}</p>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div class="story-split__photo">
+        {%- if section.settings.image != blank -%}
+          {{
+            section.settings.image
+            | image_url: width: 1600
+            | image_tag: widths: '750, 1000, 1440, 1600', sizes: '(min-width: 750px) 50vw, 100vw', alt: section.settings.image.alt, class: 'story-split__img', loading: 'eager'
+          }}
+        {%- elsif request.design_mode -%}
+          <p class="story-split__brief">Hero photo to come</p>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- if stat_count > 0 -%}
+      <div class="story-split__stats">
+        <div class="story-split__stats-grid">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'stat' -%}
+              <div class="story-split__stat" {{ block.shopify_attributes }}>
+                {%- if block.settings.number != blank -%}
+                  <p class="h4 story-split__stat-number">{{ block.settings.number }}</p>
+                {%- endif -%}
+                {%- if block.settings.label != blank -%}
+                  <p class="story-split__stat-label">{{ block.settings.label }}</p>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+{%- else -%}
 <div
   class="section-background"
   style="background-color: {{ settings.color_palette.color4 }};"
@@ -44,13 +130,14 @@
       <p class="story-hero__eyebrow">{{ section.settings.eyebrow }}</p>
     {%- endif -%}
     {%- if section.settings.heading != blank -%}
-      <h1 class="h1 story-hero__title">{{ section.settings.heading }}</h1>
+      <h1 class="h1 story-hero__title">{{ section.settings.heading | escape | newline_to_br }}</h1>
     {%- endif -%}
     {%- if section.settings.text != blank -%}
       <p class="story-hero__text">{{ section.settings.text }}</p>
     {%- endif -%}
   </div>
 </div>
+{%- endif -%}
 
 {% stylesheet %}
   .story-hero {
@@ -149,6 +236,179 @@
       width: 360px;
     }
   }
+
+  /* ---- Split layout ---- */
+  .story-split {
+    background: var(--sh-bg);
+  }
+
+  .story-split__cols {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* The copy column is the spacing-style box, so the section's padding settings are its padding-block.
+     Inline-start is the page gutter so the copy lines up with the breadcrumb and the timeline below. */
+  .story-split__copy {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    padding-inline: 16px;
+  }
+
+  /* Bleeds off the left edge of the copy column and is clipped by it. */
+  .story-split__watermark {
+    position: absolute;
+    inset-block-start: 80px;
+    inset-inline-start: -180px;
+    width: 560px;
+    color: var(--sh-mark);
+    opacity: 0.28;
+    pointer-events: none;
+  }
+
+  .story-split__watermark-art {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .story-split__text {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    max-width: none;
+    text-align: start;
+  }
+
+  .story-split__title.story-split__title {
+    --color: var(--sh-ink);
+
+    margin: 0;
+    line-height: 1.1;
+    text-wrap: wrap;
+  }
+
+  .story-split__tagline {
+    margin: 0;
+    font-family: var(--font-subheading--family);
+    font-weight: var(--font-subheading--weight);
+    font-size: var(--font-size--2xs);
+    line-height: 1.3;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sh-tagline);
+  }
+
+  .story-split__photo {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: var(--sh-line);
+  }
+
+  .story-split__img {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .story-split__brief {
+    margin: 0;
+    padding: 24px;
+    font-size: var(--font-size--sm);
+    text-align: center;
+    color: var(--sh-tagline);
+  }
+
+  .story-split__stats {
+    border-block: 1px solid var(--sh-line);
+    background: var(--sh-bar);
+  }
+
+  .story-split__stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .story-split__stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding-block: 24px;
+    text-align: center;
+  }
+
+  /* Phones: with three stats the first spans the full row and the other two share the second row, split
+     by a vertical hairline; a horizontal hairline separates the rows. Two stats sit side by side, one
+     spans the row. */
+  .story-split__stat:only-child,
+  .story-split__stat:first-child:nth-last-child(3) {
+    grid-column: 1 / -1;
+  }
+
+  .story-split__stat:first-child:nth-last-child(3) ~ .story-split__stat {
+    border-block-start: 1px solid var(--sh-line);
+  }
+
+  .story-split__stat:first-child:nth-last-child(3) ~ .story-split__stat:last-child,
+  .story-split__stat:first-child:nth-last-child(2) ~ .story-split__stat {
+    border-inline-start: 1px solid var(--sh-line);
+  }
+
+  .story-split__stat-number.story-split__stat-number {
+    --color: var(--sh-number);
+
+    margin: 0;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .story-split__stat-label {
+    margin: 0;
+    font-size: var(--font-size--sm);
+    line-height: 1.4;
+    color: var(--sh-tagline);
+  }
+
+  @media screen and (min-width: 750px) {
+    .story-split__cols {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .story-split__copy {
+      min-height: var(--sh-min-h);
+      padding-inline: var(--ft-gutter, 40px) 48px;
+    }
+
+    .story-split__photo {
+      aspect-ratio: auto;
+    }
+
+    .story-split__stats-grid {
+      grid-template-columns: repeat(var(--sh-stat-count), minmax(0, 1fr));
+    }
+
+    .story-split__stat:only-child,
+    .story-split__stat:first-child:nth-last-child(3) {
+      grid-column: auto;
+    }
+
+    .story-split__stat + .story-split__stat,
+    .story-split__stat:first-child:nth-last-child(3) ~ .story-split__stat {
+      border-block-start: 0;
+      border-inline-start: 1px solid var(--sh-line);
+    }
+  }
 {% endstylesheet %}
 
 {% schema %}
@@ -160,22 +420,51 @@
   },
   "settings": [
     {
-      "type": "text",
-      "id": "eyebrow",
-      "label": "Eyebrow",
-      "default": "EST. 1974 · A SINGAPORE BRAND · BUILT FOR PROFESSIONALS, NOW EVERYONE"
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        { "value": "banner", "label": "Banner (centred on olive)" },
+        { "value": "split", "label": "Split (copy + photo)" }
+      ],
+      "default": "banner"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Photo",
+      "info": "Split layout only. Right half on desktop, under the copy on mobile."
+    },
+    {
+      "type": "range",
+      "id": "min_height",
+      "label": "Minimum height",
+      "info": "Split layout only. Desktop height of the copy and photo row.",
+      "min": 300,
+      "max": 800,
+      "step": 10,
+      "unit": "px",
+      "default": 440
     },
     {
       "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "info": "In the split layout this is the tagline under the heading.",
+      "default": "EST. 1974 · A SINGAPORE BRAND · BUILT FOR PROFESSIONALS, NOW EVERYONE"
+    },
+    {
+      "type": "textarea",
       "id": "heading",
       "label": "Heading",
-      "info": "The page title (h1).",
+      "info": "The page title (h1). A new line starts a new line in the heading.",
       "default": "Every foot is different. We've known since 1974."
     },
     {
       "type": "textarea",
       "id": "text",
       "label": "Intro",
+      "info": "Banner layout only.",
       "default": "From a boy learning the trade in his father's shoe factory to more than a million pairs made and fitted — this is how Foot Tree got here."
     },
     {
@@ -215,7 +504,7 @@
       "label": "Top",
       "min": 0,
       "max": 200,
-      "step": 4,
+      "step": 2,
       "unit": "px",
       "default": 100
     },
@@ -225,7 +514,7 @@
       "label": "Bottom",
       "min": 0,
       "max": 200,
-      "step": 4,
+      "step": 2,
       "unit": "px",
       "default": 100
     },
@@ -240,8 +529,8 @@
       "id": "mobile-padding-block-start",
       "label": "Mobile top",
       "min": 0,
-      "max": 120,
-      "step": 4,
+      "max": 100,
+      "step": 1,
       "unit": "px",
       "default": 56,
       "visible_if": "{{ section.settings.custom_mobile_padding }}"
@@ -251,11 +540,32 @@
       "id": "mobile-padding-block-end",
       "label": "Mobile bottom",
       "min": 0,
-      "max": 120,
-      "step": 4,
+      "max": 100,
+      "step": 1,
       "unit": "px",
       "default": 56,
       "visible_if": "{{ section.settings.custom_mobile_padding }}"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Number",
+          "default": "1,000,000+"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "pairs made and fitted"
+        }
+      ]
     }
   ],
   "presets": [

@@ -87,7 +87,7 @@
               <h3 class="h5 story-card__title">{{ block.settings.title }}</h3>
             {%- endif -%}
             {%- if block.settings.text != blank -%}
-              <p class="story-card__text">{{ block.settings.text }}</p>
+              <p class="story-card__text">{{ block.settings.text | escape | newline_to_br }}</p>
             {%- endif -%}
 
             {%- capture actions_html -%}
@@ -370,7 +370,7 @@
       "label": "Top",
       "min": 0,
       "max": 200,
-      "step": 4,
+      "step": 2,
       "unit": "px",
       "default": 128
     },
@@ -380,7 +380,7 @@
       "label": "Bottom",
       "min": 0,
       "max": 200,
-      "step": 4,
+      "step": 2,
       "unit": "px",
       "default": 128
     },
@@ -395,8 +395,8 @@
       "id": "mobile-padding-block-start",
       "label": "Mobile top",
       "min": 0,
-      "max": 120,
-      "step": 4,
+      "max": 100,
+      "step": 1,
       "unit": "px",
       "default": 56,
       "visible_if": "{{ section.settings.custom_mobile_padding }}"
@@ -406,8 +406,8 @@
       "id": "mobile-padding-block-end",
       "label": "Mobile bottom",
       "min": 0,
-      "max": 120,
-      "step": 4,
+      "max": 100,
+      "step": 1,
       "unit": "px",
       "default": 56,
       "visible_if": "{{ section.settings.custom_mobile_padding }}"
