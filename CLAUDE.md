@@ -79,6 +79,41 @@ it is not sized on its own. A `{% stylesheet %}` compiles into `styles.css`, whi
 `custom.css`, so a one-class selector there loses the tie — that is how the collection rail sat
 at 16px beside 18px product cards. Measure at 390 after adding one.
 
+## New pages and sections: adapt the mockup, never copy it 1:1
+
+Every new template, page or section requested from the Figma is built **into the design system
+the site already has**, not as a pixel copy of the mockup. The mockup is drawn for one 1440
+viewport (usually with no phone frame). It decides content, order and composition. The size,
+spacing, colour and components come from what is already built.
+
+Before writing a new section:
+
+1. **Reuse first.** Find how the homepage and the finished pages already solve the same element
+   (eyebrow, section heading, year/stat, info card, button, photo tile, colour band, watermark)
+   and reuse that section, snippet, class or setting. Extend an existing section with a setting
+   before writing a new one. The Our Story page (`story-*` sections) is the worked example: the
+   client's revised About Us mockup was folded into the existing sections, not rebuilt.
+2. **Type** snaps to the ladder above. The mockup's 40, 34, 22, 20, 13 are never typed in.
+3. **Spacing follows the homepage rhythm, not the frame.**
+   - Desktop: section padding **50** top and bottom; 0 on a side where a full-bleed photo meets
+     the section edge. Same-background neighbours therefore sit 100 apart, and rows inside a
+     section use the same 100.
+   - Phones: **every visible boundary is exactly 64px**: section to section, a colour edge to the
+     next content, a photo edge to text, between stacked rows, the last content to the footer.
+     `custom_mobile_padding` values above 20 render at ×0.7 below 990px, so **91 renders 64 and
+     46 renders 32** (text-to-text joins are 46 + 46).
+   - Never copy the mockup's 80/100/128 paddings or pin a section to the frame's height.
+4. **Colour** comes from `settings.color_palette.*` slots, never hex literals.
+5. **Anything the client may want to tune** (heights, sizes, spacing) is a section setting with a
+   plain-English label, not a value buried in `custom.css` or a `{% stylesheet %}`.
+6. **When the mockup disagrees with the system** (an off-ladder size, a one-off padding, a
+   different button), follow the system and name the deviation in the report so the client can
+   push back.
+7. **No phone frame?** Design the phone layout from how the existing sections stack, then measure.
+
+Verify at **390 and 1440** by measuring the rendered page (computed font sizes on the ladder,
+the boundary table at 64 on phones), then look at the screenshots before reporting.
+
 ## A global setting reaches the whole site
 
 `variant_swatch_radius` was raised to 100 for the product page's 72px circles and silently
