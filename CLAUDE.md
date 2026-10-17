@@ -88,11 +88,17 @@ spacing, colour and components come from what is already built.
 
 Before writing a new section:
 
-1. **Reuse first.** Find how the homepage and the finished pages already solve the same element
-   (eyebrow, section heading, year/stat, info card, button, photo tile, colour band, watermark)
-   and reuse that section, snippet, class or setting. Extend an existing section with a setting
-   before writing a new one. The Our Story page (`story-*` sections) is the worked example: the
-   client's revised About Us mockup was folded into the existing sections, not rebuilt.
+1. **Stock Horizon first, custom only when necessary.** Compose the page from Horizon's stock
+   `section` type and theme blocks (`group`, `text`, `image`, `button`, `icon`, divider), the
+   way the homepage's New Arrivals, Why Foot Tree and Corporate sections are built, and copy
+   the settings of the equivalent block elsewhere on the site (eyebrow, section heading, card
+   title, colour scheme). A custom section is the last resort: only for layout a section must
+   compute from its blocks (the Our Story timeline's auto-alternating rows), data stock blocks
+   can't render, or behaviour no stock section has. The report says why. The global
+   `horizon-stock-first` skill has the full checklist. Lesson: Our Story was first built as
+   ~2,800 lines of custom `story-*` sections, and a phone font-size fix then needed code
+   because those sections had no per-block mobile size field. Its letter and visit sections
+   were moved back to stock blocks on 2026-10-17.
 2. **Type** snaps to the ladder above. The mockup's 40, 34, 22, 20, 13 are never typed in.
 3. **Spacing follows the homepage rhythm, not the frame.**
    - Desktop: section padding **50** top and bottom; 0 on a side where a full-bleed photo meets
