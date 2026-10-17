@@ -414,6 +414,15 @@
   --icon-stroke-width: calc(var(--icon-stroke-width) * 2 / 3);
 }
 
+/* ...but that larger box must not take up more room than the burger it replaces: at 33px it
+   grew the menu button from 52 to 65px and the whole phone header from 61 to 66px the moment
+   the drawer opened, so the bar visibly jumped. Negative margins of half the difference shrink
+   its layout footprint back to the burger's --icon-size-sm on every side; the X still paints at
+   full size, centred where the burger was. */
+#header-component .header__icon--summary .header-drawer-icon--close {
+  margin: calc((var(--icon-size-sm) - var(--icon-size-md) * 1.5) / 2);
+}
+
 /* Keep a full-width tap target for the burger while the icon hugs the right edge. */
 #header-component .header__icon--summary {
   min-width: var(--minimum-touch-target);
