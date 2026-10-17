@@ -13,6 +13,31 @@
   rung) with "Opening line size"; the default is body copy.
 {% endcomment %}
 
+{%- comment -%}
+  Phones get their own sizes for the opening line and the sign-off ("... on phones" settings). Left on the
+  desktop classes, the statement rendered at the h2 phone step (28) and the sign-off at h3 (28): the same
+  size as every section title on the page, so the panel read louder than the headings around it. The
+  ladder puts a pull quote at 24, which is the default; the sign-off steps down to 18 beneath it.
+{%- endcomment -%}
+{%- liquid
+  case section.settings.opening_size_mobile
+    when 'body'
+      assign open_mobile = 'var(--font-paragraph--size)'
+    when 'heading'
+      assign open_mobile = 'var(--font-h2--size)'
+    else
+      assign open_mobile = 'var(--font-h4--size)'
+  endcase
+  case section.settings.signoff_size_mobile
+    when 'h4'
+      assign signoff_mobile = 'var(--font-h4--size)'
+    when 'h3'
+      assign signoff_mobile = 'var(--font-h3--size)'
+    else
+      assign signoff_mobile = 'var(--font-h5--size)'
+  endcase
+-%}
+
 <div
   class="story-letter{% if section.settings.image == blank and request.design_mode == false %} story-letter--no-photo{% endif %}"
   style="
@@ -24,6 +49,8 @@
     --sl-soft: {{ settings.color_palette.color8 }};
     --sl-focus: {{ section.settings.focus_x }}%;
     --sl-height: {{ section.settings.desktop_height }}px;
+    --sl-open-mobile: {{ open_mobile }};
+    --sl-signoff-mobile: {{ signoff_mobile }};
   "
   data-testid="story-letter"
 >
@@ -68,7 +95,7 @@
       endcase
     -%}
     {%- if section.settings.paragraph_1 != blank -%}
-      <p class="{{ opening_class }}">{{ section.settings.paragraph_1 }}</p>
+      <p class="{{ opening_class }} story-letter__opening">{{ section.settings.paragraph_1 }}</p>
     {%- endif -%}
     {%- if section.settings.paragraph_2 != blank -%}
       <p class="story-letter__text">{{ section.settings.paragraph_2 }}</p>
@@ -166,6 +193,18 @@
     font-style: italic;
   }
 
+  /* Phone sizes from the "... on phones" settings. `.story-letter` in front lifts these to (0,3,0) so they
+     beat the type scale's .h2.h2 / .h3.h3 (0,2,0). */
+  @media screen and (max-width: 749px) {
+    .story-letter .story-letter__opening.story-letter__opening {
+      font-size: var(--sl-open-mobile);
+    }
+
+    .story-letter .story-letter__signoff.story-letter__signoff {
+      font-size: var(--sl-signoff-mobile);
+    }
+  }
+
   /* No photo and not in the editor: the panel takes the whole row. */
   .story-letter--no-photo .story-letter__panel {
     grid-column: 1 / -1;
@@ -255,6 +294,17 @@
       "default": "body"
     },
     {
+      "type": "select",
+      "id": "opening_size_mobile",
+      "label": "Opening line size on phones",
+      "options": [
+        { "value": "body", "label": "Body copy (16px)" },
+        { "value": "quote", "label": "Pull quote (24px)" },
+        { "value": "heading", "label": "Heading (28px)" }
+      ],
+      "default": "quote"
+    },
+    {
       "type": "textarea",
       "id": "paragraph_2",
       "label": "Second paragraph",
@@ -265,6 +315,17 @@
       "id": "signoff",
       "label": "Sign-off",
       "default": "Fitted with care, since 1974."
+    },
+    {
+      "type": "select",
+      "id": "signoff_size_mobile",
+      "label": "Sign-off size on phones",
+      "options": [
+        { "value": "h5", "label": "18px" },
+        { "value": "h4", "label": "24px" },
+        { "value": "h3", "label": "28px" }
+      ],
+      "default": "h5"
     }
   ],
   "presets": [
