@@ -11,6 +11,8 @@
   No match falls back to Home / <title> with no middle crumb, per spec.
 
   The strip takes the page background unless Background color is set (the Our Story page sets it).
+  Its padding above and below the crumbs is two settings, 28px desktop / 12px phone by default; the
+  Our Story page lowers the desktop value because its cream strip reads as a band of its own.
 
   Reusable across templates (see the schema's presets and disabled_on): collection, product, page,
   blog, article, search and 404 are the ones asked for. Add the section to another template's JSON
@@ -88,7 +90,7 @@
 ></div>
 <div
   class="section section--narrow breadcrumb-section"
-  style="--breadcrumb-ink-soft: {{ settings.color_palette.color8 }};"
+  style="--breadcrumb-ink-soft: {{ settings.color_palette.color8 }}; --breadcrumb-padding: {{ section.settings.padding_block }}px; --breadcrumb-padding-mobile: {{ section.settings.padding_block_mobile }}px;"
   data-testid="breadcrumb"
 >
   <nav class="breadcrumb" aria-label="Breadcrumb">
@@ -134,10 +136,10 @@
 
 {% stylesheet %}
   .breadcrumb-section {
-    padding-block: 28px;
+    padding-block: var(--breadcrumb-padding, 28px);
 
     @media screen and (max-width: 749px) {
-      padding-block: 12px;
+      padding-block: var(--breadcrumb-padding-mobile, 12px);
     }
   }
 
@@ -191,6 +193,26 @@
       "id": "background_color",
       "label": "Background color",
       "info": "Leave empty for the page background. The Our Story page sets it to cream so the strip runs into the sections around it."
+    },
+    {
+      "type": "range",
+      "id": "padding_block",
+      "label": "Top and bottom padding",
+      "min": 0,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "padding_block_mobile",
+      "label": "Top and bottom padding on mobile",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 12
     }
   ],
   "disabled_on": {

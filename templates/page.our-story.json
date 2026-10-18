@@ -4,7 +4,8 @@
       "type": "breadcrumb",
       "settings": {
         "menu": "main-menu",
-        "background_color": "{{ settings.color_palette.color5 }}"
+        "background_color": "{{ settings.color_palette.color5 }}",
+        "padding_block": 16
       }
     },
     "hero": {
