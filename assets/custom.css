@@ -2185,8 +2185,8 @@ body:has(.shopify-policy__container) {
 
 /* A policy that opens with a breadcrumb hands that 96px to the breadcrumb's own margin and
    keeps only the 28px that .breadcrumb-section gives the strip on every other template, so the
-   crumbs sit the same distance below the header site-wide. A policy without one (privacy) is
-   untouched and still opens 96px above its title. */
+   crumbs sit the same distance below the header site-wide. A policy without one is untouched
+   and still opens 96px above its title. */
 .shopify-policy__container.shopify-policy__container:has(.shopify-policy__body .ftp-crumbs) {
   padding-block-start: 28px;
 }
@@ -2220,9 +2220,13 @@ body:has(.shopify-policy__container) {
    all three in color8.
 
    Every list property is restated because the part rules below style .rte lists (34px indent,
-   green decimal markers, 14px between items) and would otherwise reach these crumbs. */
+   green decimal markers, 14px between items) and would otherwise reach these crumbs.
+
+   68px below, which puts the title 60px under the crumbs (the h1's own leading adds the rest):
+   the gap the FAQ page has between its breadcrumb and title. It was 96px, the Figma's value,
+   and read as a void above the title next to every other page. Phones already matched at 40. */
 .shopify-policy__body.shopify-policy__body .ftp-crumbs {
-  margin-block: 0 96px;
+  margin-block: 0 68px;
 }
 
 .shopify-policy__body.shopify-policy__body .ftp-crumbs ol {
@@ -2271,6 +2275,19 @@ body:has(.shopify-policy__container) {
 .shopify-policy__body.shopify-policy__body h1 {
   margin-block: 0 56px;
   color: var(--color-foreground);
+}
+
+/* "Last updated: <date>" under the privacy policy's title is a caption of the title, not a lead
+   paragraph: 16px under the h1 rather than 56px, and the first part starts 56px below it (the
+   title-to-content gap) rather than the 96px a part takes after a paragraph. The hook is a class
+   on that <p> in the stored body, because CSS cannot tell it from the Delivery page's lead
+   paragraph - both are an h1, a p, then the first h2. */
+.shopify-policy__body.shopify-policy__body h1:has(+ .ftp-updated) {
+  margin-block-end: 16px;
+}
+
+.shopify-policy__body.shopify-policy__body .ftp-updated + h2:nth-of-type(1) {
+  margin-block-start: 56px;
 }
 
 /* Part headings, and the hairline the Figma rules between one part and the next.
@@ -2460,6 +2477,14 @@ body:has(.shopify-policy__container) {
 
   .shopify-policy__body.shopify-policy__body h1 + h2:nth-of-type(1) {
     margin-block-start: 48px;
+  }
+
+  .shopify-policy__body.shopify-policy__body h1:has(+ .ftp-updated) {
+    margin-block-end: 12px;
+  }
+
+  .shopify-policy__body.shopify-policy__body .ftp-updated + h2:nth-of-type(1) {
+    margin-block-start: 32px;
   }
 
   .shopify-policy__body.shopify-policy__body h3 {
