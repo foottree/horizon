@@ -418,9 +418,13 @@
    grew the menu button from 52 to 65px and the whole phone header from 61 to 66px the moment
    the drawer opened, so the bar visibly jumped. Negative margins of half the difference shrink
    its layout footprint back to the burger's --icon-size-sm on every side; the X still paints at
-   full size, centred where the burger was. */
+   full size, centred where the burger was. The sides stay `auto` (as the burger's do, from
+   header-drawer.liquid): the button is a flex row with justify-content: flex-start, so it is
+   those auto margins that centre the icon, and fixed negative side margins pinned the X to the
+   button's left edge instead - 12px left of the burger on phones. */
 #header-component .header__icon--summary .header-drawer-icon--close {
-  margin: calc((var(--icon-size-sm) - var(--icon-size-md) * 1.5) / 2);
+  margin-block: calc((var(--icon-size-sm) - var(--icon-size-md) * 1.5) / 2);
+  margin-inline: auto;
 }
 
 /* Keep a full-width tap target for the burger while the icon hugs the right edge. */
