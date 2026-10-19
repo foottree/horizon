@@ -1934,6 +1934,14 @@ swatches-variant-picker-component {
   font-size: var(--font-size--sm); /* 14px */
 }
 
+/* A single announcement gets no arrows (the section renders them only for two or more), but the
+   slides box still subtracts both arrow widths. On a 390px phone that left the one-line message
+   302px, so it wrapped to two lines and the bar grew from 43 to 57px. Without arrows the message
+   takes the full width; with two or more announcements nothing changes. */
+.announcement-bar__slider:not(:has(slideshow-arrows)) .announcement-bar__slides {
+  width: 100%;
+}
+
 /* ---- "Find your shoe": bridge the gap between the label and its panel ----
    Every other top-level item is a mega menu now, so this is the only dropdown left. Its trigger
    is a plain 44px menu row, but the panel starts below the header's bottom padding, which leaves a

@@ -675,7 +675,7 @@
                     "text": {
                       "type": "text",
                       "settings": {
-                        "text": "<p>Free local delivery over S$100, in 2–4 working days.<br>Bought the wrong size? Exchange it free in store within 30 days.</p>",
+                        "text": "<p>Free local delivery over S$100, in 2–4 working days.<br>Bought the wrong size? Exchange it free in store within 14 days.</p>",
                         "width": "fit-content",
                         "max_width": "none",
                         "alignment": "left",

@@ -17,39 +17,7 @@
         "announcement_BxgCk9": {
           "type": "_announcement",
           "settings": {
-            "text": "Free local delivery over S$100",
-            "link": "",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "enable_mobile_size": true,
-            "mobile_font_size": "0.875rem",
-            "weight": "400",
-            "letter_spacing": "normal",
-            "case": "none",
-            "text_color": "{{ settings.color_palette.background }}"
-          },
-          "blocks": {}
-        },
-        "announcement_exchanges": {
-          "type": "_announcement",
-          "settings": {
-            "text": "30-day free exchanges",
-            "link": "",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "enable_mobile_size": true,
-            "mobile_font_size": "0.875rem",
-            "weight": "400",
-            "letter_spacing": "normal",
-            "case": "none",
-            "text_color": "{{ settings.color_palette.background }}"
-          },
-          "blocks": {}
-        },
-        "announcement_heritage": {
-          "type": "_announcement",
-          "settings": {
-            "text": "Singapore’s wide-fit shoemakers since 1974",
+            "text": "Free delivery over $100 · 14-day free exchanges",
             "link": "",
             "font": "var(--font-body--family)",
             "font_size": "1rem",
@@ -64,13 +32,11 @@
         }
       },
       "block_order": [
-        "announcement_BxgCk9",
-        "announcement_exchanges",
-        "announcement_heritage"
+        "announcement_BxgCk9"
       ],
       "name": "t:names.announcement_bar",
       "settings": {
-        "display_mode": "marquee",
+        "display_mode": "slider",
         "marquee_gap": 80,
         "speed": 5,
         "section_width": "page-width",
