@@ -1827,6 +1827,32 @@ summary,
   -webkit-tap-highlight-color: transparent;
 }
 
+/* ---- Variant pills: no sticky hover on touch ----
+   iOS keeps :hover on whatever was last tapped until the next tap elsewhere, so a size pill the
+   shopper has just selected stays painted in the lighter hover colours instead of the selected
+   black. Stock variant-picker-styles.liquid has bare :hover rules (no hover media query). On a
+   device that cannot hover, the hover colour variables are pointed back at their resting
+   counterparts on the pill itself, which sits below the picker where the per-block overrides in
+   variant-button-custom-styles.liquid define them, so it wins for plain, checked and
+   unavailable pills alike. Desktop (hover: hover) is untouched. Lives here rather than in the
+   stock snippet so a Horizon update does not have to be merged around it. */
+@media (hover: none) {
+  .variant-option__button-label {
+    --color-variant-hover-background: var(--color-variant-background);
+    --color-variant-hover-text: var(--color-variant-text);
+    --color-variant-hover-border: var(--color-variant-border);
+    --color-selected-variant-hover-background: var(--color-selected-variant-background);
+    --color-selected-variant-hover-text: var(--color-selected-variant-text);
+    --color-selected-variant-hover-border: var(--color-selected-variant-border);
+  }
+
+  /* The swatch hover ring would otherwise linger round the last-tapped swatch. The selected
+     ring is its own rule and stays. */
+  .variant-option__button-label--has-swatch:hover:not(:has(:checked)) {
+    outline: none;
+  }
+}
+
 /* ---- Slideshow dots ----
    Stock Horizon rings each dot with an inset 1.5px shadow, darker on the selected one. Against
    the pale studio backgrounds the ring reads as a second, blurrier dot around the real one. The
