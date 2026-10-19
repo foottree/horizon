@@ -686,7 +686,7 @@
   }
 }
 
-/* breathing room above the first link, and 0.5px hairline dividers (drawer_dividers is on in
+/* breathing room above the first link, and 1px hairline dividers (drawer_dividers is on in
    header-group.json; stock draws them 1px in the border colour) */
 #header-component .menu-drawer__menu:not(.menu-drawer__menu--childlist) {
   padding-block-start: var(--padding-sm);
@@ -697,7 +697,7 @@
    already draws one, so that inner line is dropped or the two stack into 1px. */
 #header-component .menu-drawer__navigation > .menu-drawer__menu > .menu-drawer__list-item,
 #header-component .menu-drawer__list-item--divider {
-  border-block-end: 0.5px solid #e0dcd2; /* palette color3, line */
+  border-block-end: 1px solid #e0dcd2; /* palette color3, line. A whole CSS px on purpose: 0.5px is a single device px on a 3x iPhone and its sub-pixel snapping dropped one row line */
 }
 #header-component .menu-drawer__menu-container--divider {
   border-block-end: 0;
@@ -1198,13 +1198,13 @@
 }
 
 /* ---- Product badges (Figma "Need chip" on the product card) ----
-   16px inset from the photo corner, 4px radius (theme setting), padding 7px 12px, Plus Jakarta
-   Sans SemiBold 14 / 1.5. Sold out / Sale keep their theme-setting colours; merchant badges
+   12px inset from the photo corner (8px on phones), 4px radius (theme setting), Plus Jakarta Sans SemiBold
+   12 / 1.5, padding 2px 9px. Sold out / Sale keep their theme-setting colours; merchant badges
    from the custom.product_badges metaobjects carry their own colours inline
    (snippets/product-badges.liquid). Several badges stack top-down with a small gap.
    Doubled selectors: product-badges-styles.liquid loads after this file. */
 .product-badges.product-badges {
-  --badge-inset: 16px;
+  --badge-inset: 12px;
 
   display: flex;
   flex-direction: column;
@@ -1216,25 +1216,25 @@
   align-items: flex-end;
 }
 
+/* 12px everywhere: the ladder's label rung. The Figma drew 14 on desktop, but with collection
+   pages at 4 per row a desktop card (215px) is barely wider than a phone card (173px), and the
+   chip was crowding the photo; it now matches what phones already had. It is a label on an
+   image, not running copy, so the 16px minimum for reading text does not apply.
+   --font-size--xs is 13px, which is off the ladder; --font-size--2xs is the caption/eyebrow
+   step. The token itself is left alone, as Horizon uses it elsewhere. */
 .product-badges .product-badges__badge {
-  --badge-font-size: var(--font-size--sm); /* 14px, as drawn; the 16px floor applies to running copy */
-  --badge-rectangle-padding-block: 4px;
-  --badge-rectangle-padding-inline: 12px;
+  --badge-font-size: var(--font-size--2xs); /* 12px */
+  --badge-rectangle-padding-block: 2px;
+  --badge-rectangle-padding-inline: 9px;
 
   line-height: 1.5;
   white-space: nowrap;
 }
 
-/* Phones: the chip sits on a much smaller card, so it drops a step to keep its share of the
-   photo the same as on desktop. It is a label on an image, not running copy, so the 16px
-   minimum for reading text does not apply. */
+/* The inset shrinks with the chip: 12px from the photo corner on desktop, 8px on a phone card. */
 @media screen and (max-width: 749px) {
-  .product-badges .product-badges__badge {
-    /* 12px. --font-size--xs is 13px, which is off the ladder; --font-size--2xs is the
-       caption/eyebrow step. The token itself is left alone, as Horizon uses it elsewhere. */
-    --badge-font-size: var(--font-size--2xs);
-    --badge-rectangle-padding-block: 2px;
-    --badge-rectangle-padding-inline: 9px;
+  .product-badges.product-badges {
+    --badge-inset: 8px;
   }
 }
 
