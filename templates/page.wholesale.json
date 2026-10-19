@@ -231,7 +231,7 @@
         "padding-block-end": 80,
         "custom_mobile_padding": true,
         "mobile-padding-block-start": 0,
-        "mobile-padding-block-end": 57,
+        "mobile-padding-block-end": 0,
         "mobile-padding-inline-start": 0,
         "mobile-padding-inline-end": 0,
         "css_class": "ft-wholesale-hero",
