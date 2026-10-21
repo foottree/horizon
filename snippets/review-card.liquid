@@ -167,6 +167,7 @@
     flex: 1;
     gap: 10px;
     padding: 18px 24px 20px;
+    container-type: inline-size;
   }
 
   .review-card__quote {
@@ -243,5 +244,28 @@
   .review-card__verified-icon svg {
     width: 100%;
     height: 100%;
+  }
+
+  /* Narrow card (phones, or any column count that shrinks the card): the chip's nowrap width
+     squeezed the role into a two-line column beside it. Here the chip moves up beside the name and
+     the role takes the full width underneath; if the name and chip still don't fit side by side,
+     the chip wraps under the name instead of squeezing either. Keyed to the card, not the
+     viewport, so it holds whatever width the carousel gives a card. Wide desktop cards keep the
+     chip on the right. */
+  @container (max-width: 339px) {
+    .review-card__attribution {
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      gap: 2px 8px;
+    }
+
+    .review-card__who {
+      display: contents;
+    }
+
+    .review-card__meta {
+      order: 1;
+      flex-basis: 100%;
+    }
   }
 {% endstylesheet %}
