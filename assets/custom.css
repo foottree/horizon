@@ -2547,3 +2547,12 @@ body:has(.shopify-policy__container) {
     margin-block-start: 24px;
   }
 }
+
+/* Product description sub-heading on phones: the product title (h1) is 28px below 750px, so an h3 in
+   the description (28px) read the same size as the title. Step it to the h4 rung (24px) so it sits
+   under the title. Scoped to the description text inside the product details column. */
+@media (max-width: 749px) {
+  .product-details rte-formatter h3 {
+    font-size: var(--font-h4--size);
+  }
+}

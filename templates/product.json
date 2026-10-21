@@ -370,7 +370,10 @@
         "limit_details_width": false,
         "gap": 48,
         "padding-block-start": 0,
-        "padding-block-end": 48
+        "padding-block-end": 48,
+        "custom_mobile_padding": true,
+        "mobile-padding-block-start": 0,
+        "mobile-padding-block-end": 61
       }
     },
     "why_this_pair_works": {
@@ -770,7 +773,10 @@
         "background_color": "{{ settings.color_palette.color5 }}",
         "padding-block-start": 30,
         "padding-block-end": 30,
-        "css_class": "ft-pdp-why"
+        "css_class": "ft-pdp-why",
+        "custom_mobile_padding": true,
+        "mobile-padding-block-start": 91,
+        "mobile-padding-block-end": 91
       }
     },
     "product_recommendations_qggXJq": {
@@ -905,7 +911,10 @@
         "section_width": "narrow",
         "gap": 28,
         "padding-block-start": 48,
-        "padding-block-end": 48
+        "padding-block-end": 48,
+        "custom_mobile_padding": true,
+        "mobile-padding-block-start": 91,
+        "mobile-padding-block-end": 91
       }
     }
   },

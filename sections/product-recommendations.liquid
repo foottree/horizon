@@ -189,6 +189,7 @@
   </div>
 </product-recommendations>
 
+{%- comment -%} Phone-only padding (custom_mobile_padding) is applied by assets/custom.css. {%- endcomment -%}
 {% schema %}
 {
   "name": "t:names.product_recommendations",
@@ -451,6 +452,35 @@
       "step": 1,
       "unit": "px",
       "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "custom_mobile_padding",
+      "label": "Custom phone padding",
+      "info": "Values above 20 show at 70% on phones, so 91 gives 64px.",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "mobile-padding-block-start",
+      "label": "Top on phones",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.custom_mobile_padding == true }}"
+    },
+    {
+      "type": "range",
+      "id": "mobile-padding-block-end",
+      "label": "Bottom on phones",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.custom_mobile_padding == true }}"
     }
   ],
   "presets": [
