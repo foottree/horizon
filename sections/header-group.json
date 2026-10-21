@@ -73,7 +73,7 @@
             "type_font_primary_link": "subheading",
             "type_case_primary_link": "none",
             "submenu_style": "dropdown",
-            "submenu_style_exceptions": "Women, Men, Accessories",
+            "submenu_style_exceptions": "Women, Men",
             "tile_image_ratio": "3 / 4",
             "tile_title_position": "overlay",
             "menu_style": "text",
