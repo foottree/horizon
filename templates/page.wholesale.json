@@ -6,7 +6,7 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */{
+ */{
   "sections": {
     "hero": {
       "type": "section",
@@ -404,182 +404,370 @@
         "padding-block-end": 80
       }
     },
-    "work_rail": {
-      "type": "product-rail-tabs",
+    "comfort_engineering": {
+      "type": "section",
       "blocks": {
-        "static-product-card": {
-          "type": "_product-card",
-          "name": "Product card",
-          "static": true,
+        "heading": {
+          "type": "text",
           "settings": {
-            "product_card_gap": 8,
-            "background_color": "",
+            "text": "<h2>Foot Tree Work Comfort Engineering</h2>",
+            "width": "100%",
+            "max_width": "none",
+            "alignment": "center",
+            "type_preset": "h2",
+            "font": "var(--font-body--family)",
+            "font_size": "",
+            "enable_mobile_size": false,
+            "mobile_font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "",
+            "text_color": "{{ settings.color_palette.foreground }}"
+          }
+        },
+        "features": {
+          "type": "group",
+          "settings": {
+            "link": "",
+            "content_direction": "row",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "flex-start",
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "flex-start",
+            "gap": 16,
+            "width": "fill",
+            "width_mobile": "fill",
+            "height": "fit",
+            "background_media": "none",
             "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_color": "",
             "border_radius": 0,
             "padding-block-start": 0,
             "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
+            "padding-inline-start": 60,
+            "padding-inline-end": 60,
+            "enable_mobile_gap": true,
+            "mobile_gap": 32,
+            "custom_mobile_padding": true,
+            "mobile-padding-inline-start": 0,
+            "mobile-padding-inline-end": 0,
+            "mobile-padding-block-start": 0,
+            "mobile-padding-block-end": 0
           },
           "blocks": {
-            "product_card_gallery": {
-              "type": "_product-card-gallery",
-              "name": "Media",
+            "feature_1": {
+              "type": "group",
               "settings": {
-                "image_ratio": "square",
+                "link": "",
+                "content_direction": "column",
+                "vertical_on_mobile": true,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "center",
+                "horizontal_alignment_flex_direction_column": "center",
+                "vertical_alignment_flex_direction_column": "flex-start",
+                "gap": 12,
+                "width": "fill",
+                "width_mobile": "fill",
+                "height": "fill",
+                "background_media": "none",
                 "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_color": "",
-                "border_radius": 8,
+                "border_radius": 0,
                 "padding-block-start": 0,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
                 "padding-inline-end": 0
               },
-              "blocks": {}
-            },
-            "product_title": {
-              "type": "product-title",
-              "name": "Product title",
-              "settings": {
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "custom",
-                "font": "var(--font-subheading--family)",
-                "font_size": "",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "",
-                "text_color": "",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 12,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
+              "blocks": {
+                "image": {
+                  "type": "image",
+                  "settings": {
+                    "image": "shopify://shop_images/wholesale-tech-1.jpg",
+                    "link": "",
+                    "image_ratio": "square",
+                    "width": "custom",
+                    "custom_width": 80,
+                    "width_mobile": "fill",
+                    "height": "fit",
+                    "border": "none",
+                    "border_radius": 8,
+                    "padding-block-start": 0,
+                    "padding-block-end": 4,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  }
+                },
+                "title": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<h3>Genuine leather uppers</h3>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "center",
+                    "type_preset": "h4",
+                    "font": "var(--font-body--family)",
+                    "font_size": "",
+                    "enable_mobile_size": false,
+                    "mobile_font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "",
+                    "text_color": "{{ settings.color_palette.foreground }}"
+                  }
+                },
+                "text": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Made with high quality genuine cow leather for a polished and professional look</p>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "center",
+                    "type_preset": "custom",
+                    "font": "var(--font-body--family)",
+                    "font_size": "",
+                    "enable_mobile_size": false,
+                    "mobile_font_size": "1rem",
+                    "line_height": "loose",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "",
+                    "text_color": "{{ settings.color_palette.color8 }}"
+                  }
+                }
               },
-              "blocks": {}
+              "block_order": [
+                "image",
+                "title",
+                "text"
+              ]
             },
-            "price": {
-              "type": "price",
-              "name": "Price",
+            "feature_2": {
+              "type": "group",
               "settings": {
-                "show_sale_price_first": true,
-                "show_installments": false,
-                "show_tax_info": false,
-                "type_preset": "custom",
-                "width": "100%",
-                "alignment": "left",
-                "font": "var(--font-subheading--family)",
-                "font_size": "",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "text_color": "",
+                "link": "",
+                "content_direction": "column",
+                "vertical_on_mobile": true,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "center",
+                "horizontal_alignment_flex_direction_column": "center",
+                "vertical_alignment_flex_direction_column": "flex-start",
+                "gap": 12,
+                "width": "fill",
+                "width_mobile": "fill",
+                "height": "fill",
+                "background_media": "none",
+                "border": "none",
+                "border_radius": 0,
                 "padding-block-start": 0,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
                 "padding-inline-end": 0
               },
-              "blocks": {}
-            },
-            "swatches": {
-              "type": "swatches",
-              "name": "Swatches",
-              "settings": {
-                "product_swatches_alignment": "flex-start",
-                "product_swatches_alignment_mobile": "flex-start",
-                "hide_padding": false,
-                "product_swatches_padding_top": 0,
-                "product_swatches_padding_bottom": 0,
-                "product_swatches_padding_left": 0,
-                "product_swatches_padding_right": 0
+              "blocks": {
+                "image": {
+                  "type": "image",
+                  "settings": {
+                    "image": "shopify://shop_images/wholesale-tech-2.jpg",
+                    "link": "",
+                    "image_ratio": "square",
+                    "width": "custom",
+                    "custom_width": 80,
+                    "width_mobile": "fill",
+                    "height": "fit",
+                    "border": "none",
+                    "border_radius": 8,
+                    "padding-block-start": 0,
+                    "padding-block-end": 4,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  }
+                },
+                "title": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<h3>Extreme sizes & wide fit last</h3>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "center",
+                    "type_preset": "h4",
+                    "font": "var(--font-body--family)",
+                    "font_size": "",
+                    "enable_mobile_size": false,
+                    "mobile_font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "",
+                    "text_color": "{{ settings.color_palette.foreground }}"
+                  }
+                },
+                "text": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Half and extreme sizes available. Up to 4E width to accommodate Asian feet</p>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "center",
+                    "type_preset": "custom",
+                    "font": "var(--font-body--family)",
+                    "font_size": "",
+                    "enable_mobile_size": false,
+                    "mobile_font_size": "1rem",
+                    "line_height": "loose",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "",
+                    "text_color": "{{ settings.color_palette.color8 }}"
+                  }
+                }
               },
-              "blocks": {}
+              "block_order": [
+                "image",
+                "title",
+                "text"
+              ]
+            },
+            "feature_3": {
+              "type": "group",
+              "settings": {
+                "link": "",
+                "content_direction": "column",
+                "vertical_on_mobile": true,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "center",
+                "horizontal_alignment_flex_direction_column": "center",
+                "vertical_alignment_flex_direction_column": "flex-start",
+                "gap": 12,
+                "width": "fill",
+                "width_mobile": "fill",
+                "height": "fill",
+                "background_media": "none",
+                "border": "none",
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {
+                "image": {
+                  "type": "image",
+                  "settings": {
+                    "image": "shopify://shop_images/wholesale-tech-3.jpg",
+                    "link": "",
+                    "image_ratio": "square",
+                    "width": "custom",
+                    "custom_width": 80,
+                    "width_mobile": "fill",
+                    "height": "fit",
+                    "border": "none",
+                    "border_radius": 8,
+                    "padding-block-start": 0,
+                    "padding-block-end": 4,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  }
+                },
+                "title": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<h3>Lightweight & slip-resistant</h3>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "center",
+                    "type_preset": "h4",
+                    "font": "var(--font-body--family)",
+                    "font_size": "",
+                    "enable_mobile_size": false,
+                    "mobile_font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "",
+                    "text_color": "{{ settings.color_palette.foreground }}"
+                  }
+                },
+                "text": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Cushioned and lightweight outsole to support all day comfort</p>",
+                    "width": "100%",
+                    "max_width": "none",
+                    "alignment": "center",
+                    "type_preset": "custom",
+                    "font": "var(--font-body--family)",
+                    "font_size": "",
+                    "enable_mobile_size": false,
+                    "mobile_font_size": "1rem",
+                    "line_height": "loose",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "",
+                    "text_color": "{{ settings.color_palette.color8 }}"
+                  }
+                }
+              },
+              "block_order": [
+                "image",
+                "title",
+                "text"
+              ]
             }
           },
           "block_order": [
-            "product_card_gallery",
-            "product_title",
-            "price",
-            "swatches"
+            "feature_1",
+            "feature_2",
+            "feature_3"
           ]
-        }
-      },
-      "name": "Work collection rail",
-      "settings": {
-        "heading": "Foot Tree Work Collection",
-        "description": "",
-        "link_label": "",
-        "link": "",
-        "tab_1_label": "Women",
-        "tab_1_collection": "work-women",
-        "tab_1_max_products": 8,
-        "tab_2_label": "Men",
-        "tab_2_collection": "work-men",
-        "tab_2_max_products": 8,
-        "tab_3_label": "",
-        "tab_3_collection": "",
-        "tab_3_max_products": 8,
-        "tab_4_label": "",
-        "tab_4_collection": "",
-        "tab_4_max_products": 8,
-        "tabs_style": "segmented",
-        "desktop_layout": "carousel",
-        "show_arrows": false,
-        "mobile_card_size": 75,
-        "hide_arrows": false,
-        "section_width": "narrow",
-        "background_color": "",
-        "padding-block-start": 80,
-        "padding-block-end": 80,
-        "custom_mobile_padding": false,
-        "mobile-padding-block-start": 68,
-        "mobile-padding-block-end": 68,
-        "mobile-padding-inline-start": 0,
-        "mobile-padding-inline-end": 0
-      }
-    },
-    "technology": {
-      "type": "wholesale-technology",
-      "blocks": {
-        "feature_1": {
-          "type": "feature",
-          "settings": {
-            "image": "shopify://shop_images/wholesale-tech-1.jpg",
-            "title": "Genuine leather uppers",
-            "text": "Made with high quality genuine cow leather for a polished and professional look"
-          }
         },
-        "feature_2": {
-          "type": "feature",
+        "cta": {
+          "type": "button",
           "settings": {
-            "image": "shopify://shop_images/wholesale-tech-2.jpg",
-            "title": "Extreme sizes & wide fit last",
-            "text": "Half and extreme sizes available. Up to 4E width to accommodate Asian feet"
-          }
-        },
-        "feature_3": {
-          "type": "feature",
-          "settings": {
-            "image": "shopify://shop_images/wholesale-tech-3.jpg",
-            "title": "Lightweight & slip-resistant",
-            "text": "Cushioned and lightweight outsole to support all day comfort"
+            "label": "Sample button",
+            "link": "#",
+            "show_arrow": false,
+            "open_in_new_tab": false,
+            "style_class": "button",
+            "width": "fit-content",
+            "width_mobile": "fit-content"
           }
         }
       },
       "block_order": [
-        "feature_1",
-        "feature_2",
-        "feature_3"
+        "heading",
+        "features",
+        "cta"
       ],
+      "custom_css": [],
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "center",
+        "vertical_alignment": "center",
+        "gap": 40,
+        "section_width": "page-width",
+        "section_height": "",
+        "background_media": "none",
+        "border": "none",
+        "enable_mobile_gap": true,
+        "mobile_gap": 32,
+        "background_color": "",
+        "padding-block-start": 50,
+        "padding-block-end": 50,
+        "custom_mobile_padding": true,
+        "mobile-padding-block-start": 57,
+        "mobile-padding-block-end": 91,
+        "mobile-padding-inline-start": 0,
+        "mobile-padding-inline-end": 0,
+        "css_class": "",
+        "horizontal_alignment_flex_direction_column": "center"
+      }
+    },
+    "technology": {
+      "type": "wholesale-technology",
+      "blocks": {},
+      "block_order": [],
       "settings": {
         "image": "shopify://shop_images/wholesale-tech-1.jpg",
         "eyebrow": "SHOE TECHNOLOGY",
@@ -587,7 +775,7 @@
         "text": "Every Foot Tree shoe is designed for all day comfort and safety — so your team stays sharp and focused, right through to the end of the day.",
         "button_label": "Request a quotation",
         "button_link": "#quotation",
-        "features_heading": "Foot Tree Work Comfort Engineering"
+        "features_heading": ""
       }
     },
     "industries": {
@@ -638,8 +826,11 @@
       ],
       "settings": {
         "heading": "Industries we serve",
-        "padding-block-start": 40,
-        "padding-block-end": 40
+        "padding-block-start": 50,
+        "padding-block-end": 40,
+        "custom_mobile_padding": true,
+        "mobile-padding-block-start": 91,
+        "mobile-padding-block-end": 40
       }
     },
     "how_it_works": {
@@ -1131,7 +1322,7 @@
     "hero",
     "client_logos",
     "sectors",
-    "work_rail",
+    "comfort_engineering",
     "technology",
     "industries",
     "how_it_works",

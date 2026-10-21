@@ -12,6 +12,8 @@
   other section on the page. The upper band spans all three grid tracks (1 / -1) to get its full-bleed
   tint and its edge-to-edge image, and puts its copy back on the right-hand gutter itself.
 
+  The lower band is skipped when it has no heading and no features (on the Wholesale page it moved to a stock section on 2026-10-21).
+
   Type: .h2 for both headings, .h5 on the feature titles (an <h3> in the outline), --font-size--2xs for
   the eyebrow, --font-paragraph--size for copy.
 {% endcomment %}
@@ -57,6 +59,7 @@
     </div>
   </div>
 
+  {%- if section.settings.features_heading != blank or section.blocks.size > 0 -%}
   <div class="wholesale-tech__features">
     {%- if section.settings.features_heading != blank -%}
       <h2 class="h2 wholesale-tech__title">{{ section.settings.features_heading }}</h2>
@@ -96,6 +99,7 @@
       {%- endfor -%}
     </ul>
   </div>
+  {%- endif -%}
 </div>
 
 {% stylesheet %}
