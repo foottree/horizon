@@ -120,6 +120,40 @@ Before writing a new section:
 Verify at **390 and 1440** by measuring the rendered page (computed font sizes on the ladder,
 the boundary table at 64 on phones), then look at the screenshots before reporting.
 
+## Phone pass: make a page shorter, then hold every boundary at 64
+
+When a page is optimised for phones, the order is audit, shorten, fix spacing, then prove desktop did
+not move. The `checking-phone-layout` skill (`.claude/skills/`) has the boundary script. Every change
+in a phone pass is below 750px only.
+
+- **A tinted band is a colour edge.** The client-logo strip (`color2`), the cream bands (`color5`), the
+  green letter panel and the footer are measured from the band's edge, not from what is inside it.
+  Same-background neighbours are measured content to content (46 + 46 settings = 32 + 32).
+- **Custom sections need phone padding.** A section that renders `spacing-style` but has no
+  `custom_mobile_padding` / `mobile-padding-block-start` / `-end` settings gets them, copied from
+  `sections/wholesale-industries.liquid`. Set both start and end: custom.css drops the rule otherwise.
+- **Shorten tall media by cropping, not shrinking.** A phone-only `aspect-ratio` plus
+  `object-position` keeps the subject: a 4:5 portrait becomes 4:3 with the focus low, a white-background
+  packshot becomes 2:1, and a looping video is checked at several frames. The shoes stay in frame.
+- **A tight composition is not cropped.** The homepage hero carries copy over its top half and the model
+  under it; shorter would cut her shoes or put her under the button. That needs a new phone crop of the
+  photo from the client, not code.
+- **A stack of full-width tiles** shrinks with the block's own phone width (image `width_mobile` custom
+  70) or takes the tablet grid down to phones (Industries: the feature tile full width, then two per row).
+- **Carousels use Horizon's "Mobile columns: 1 / 2"** (`mobile_card_size`, 60cqw / 44cqw), the stock
+  control, never a home-made % range. Judge 2 against real ~42-character product names: titles wrap to
+  three lines and the swatches cut to three.
+- **Narrow-card layouts key off the card, not the viewport** (a container query on the card), so they
+  survive a column change. The review card's Verified chip moves beside the name below 340px.
+- **Hierarchy steps down together.** The product h1 is 28px on phones, so the description's h3 drops to
+  24px; a feature tile label under a 28px section heading is 24px. Nothing inside a section may match
+  the size of the heading above it.
+- **A section's Custom CSS box** is prefixed per rule with the section id by Shopify (a class prefix
+  inside it is redundant), has its commas inside `:is()` split by that prefixing, and is capped near 500
+  characters in the editor. Over budget, merge rules or move them to custom.css with a comment.
+- **Desktop must not move.** Run the boundary script at 1440 on dev and on live; the numbers must match
+  before the push.
+
 ## A global setting reaches the whole site
 
 `variant_swatch_radius` was raised to 100 for the product page's 72px circles and silently
