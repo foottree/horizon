@@ -114,7 +114,7 @@
             "layout": "single",
             "image": "shopify://shop_images/our-story-today-placeholder.png",
             "caption": "",
-            "media_shape": "portrait"
+            "media_shape": "landscape"
           }
         }
       },
