@@ -2118,6 +2118,13 @@ swatches-variant-picker-component {
   .ft-wholesale-hero [class*='mobile_photo'] {
     display: flex;
   }
+
+  /* Phones: the portrait photo was 4:5 (390x488). 4:3 with the focus at the bottom keeps both pairs
+     of shoes in frame and saves ~195px. The stock image block only offers square or 16:9. */
+  .ft-wholesale-hero [class*='mobile_photo'] .image-block__image {
+    aspect-ratio: 4 / 3;
+    object-position: 50% 100%;
+  }
 }
 
 /* ---- Two-column FAQ: no doubled rule where the columns meet on mobile ----

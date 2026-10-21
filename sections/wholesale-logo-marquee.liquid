@@ -35,6 +35,8 @@
     --wholesale-logos-pad: {{ section.settings.padding_block }}px;
     --marquee-direction: {{ section.settings.movement_direction }};
     --wholesale-logos-height: {{ section.settings.logo_height }}px;
+    --wholesale-logos-pad-mobile: {{ section.settings.padding_block_mobile }}px;
+    --wholesale-logos-height-mobile: {{ section.settings.logo_height_mobile }}px;
     --marquee-gap: {{ section.settings.logo_gap }}px;
   "
   data-speed-factor="25"
@@ -148,6 +150,19 @@
     color: var(--color-foreground);
   }
 
+  /* Smaller strip on phones. The mobile variables are separate from the desktop ones because the
+     desktop values arrive as inline custom properties, which a stylesheet cannot override. */
+  @media screen and (max-width: 749px) {
+    .wholesale-logos {
+      padding-block: var(--wholesale-logos-pad-mobile, var(--wholesale-logos-pad));
+    }
+
+    .wholesale-logos__item,
+    .wholesale-logos__logo {
+      height: var(--wholesale-logos-height-mobile, var(--wholesale-logos-height, 48px));
+    }
+  }
+
   @media (prefers-reduced-motion: no-preference) {
     .wholesale-logos:not([data-disabled]) .wholesale-logos__wrapper {
       animation: wholesale-logos-motion var(--marquee-speed, 40s) linear infinite var(--marquee-direction);
@@ -198,6 +213,26 @@
       "step": 4,
       "unit": "px",
       "default": 48
+    },
+    {
+      "type": "range",
+      "id": "logo_height_mobile",
+      "label": "Logo height on phones",
+      "min": 16,
+      "max": 96,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_block_mobile",
+      "label": "Padding top and bottom on phones",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "default": 16
     },
     {
       "type": "range",

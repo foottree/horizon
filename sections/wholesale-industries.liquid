@@ -51,7 +51,7 @@
               {%- assign tile_sizes = '(min-width: 990px) 925px, calc(100vw - 32px)' -%}
               {%- assign tile_widths = '600, 925, 1200, 1400' -%}
             {%- else -%}
-              {%- assign tile_sizes = '(min-width: 990px) 450px, calc(100vw - 32px)' -%}
+              {%- assign tile_sizes = '(min-width: 990px) 450px, (min-width: 750px) calc(50vw - 24px), 320px' -%}
               {%- assign tile_widths = '304, 450, 608, 900' -%}
             {%- endif -%}
             {{
@@ -85,7 +85,7 @@
 
   .wholesale-industries__mosaic {
     display: grid;
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 16px;
     margin: 0;
     padding: 0;
@@ -96,19 +96,29 @@
     position: relative;
     display: flex;
     align-items: flex-end;
-    min-height: 220px;
-    padding: 20px;
+    min-height: 180px;
+    padding: 16px;
     overflow: hidden;
     border-radius: 8px;
     background: var(--wi-fill);
   }
 
-  /* The feature tile is only "the feature" once there is a mosaic to lead. Below 750px
-     every tile is a full-width row in one stack, so a taller first tile just reads as an
-     inconsistent grid - it was 320px against 220px for the other four. Uniform height on
-     mobile; the feature regains its emphasis at 750px and spans both rows at 990px. */
+  /* Phones (below 750px): the feature tile is a full-width row, then the other tiles sit two per
+     row (client asked 2026-10-21 to cut page length). The feature keeps 220px, the small tiles are
+     180px with 16px padding so a label fits a ~171px tile. From 750px the feature is taller, and at
+     990px it spans both rows beside a 2 x 2 grid. */
   .wholesale-industry--feature {
+    grid-column: 1 / -1;
+    min-height: 220px;
     padding: 24px;
+  }
+
+  /* The feature label is the .h3 rung (28px); on phones it steps down to the h4 rung (24px), under the
+     28px section heading and above the 18px small labels. Doubled class beats base.css's .h3. */
+  @media screen and (max-width: 749px) {
+    .wholesale-industry__label.wholesale-industry__label.h3 {
+      font-size: var(--font-h4--size);
+    }
   }
 
   @media screen and (min-width: 750px) {

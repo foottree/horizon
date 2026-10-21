@@ -321,7 +321,9 @@
         "movement_direction": "normal",
         "padding_block": 24,
         "logo_height": 48,
-        "logo_gap": 64
+        "logo_gap": 64,
+        "logo_height_mobile": 32,
+        "padding_block_mobile": 16
       }
     },
     "sectors": {
@@ -487,14 +489,15 @@
                     "image_ratio": "square",
                     "width": "custom",
                     "custom_width": 80,
-                    "width_mobile": "fill",
+                    "width_mobile": "custom",
                     "height": "fit",
                     "border": "none",
                     "border_radius": 8,
                     "padding-block-start": 0,
                     "padding-block-end": 4,
                     "padding-inline-start": 0,
-                    "padding-inline-end": 0
+                    "padding-inline-end": 0,
+                    "custom_width_mobile": 70
                   }
                 },
                 "title": {
@@ -573,14 +576,15 @@
                     "image_ratio": "square",
                     "width": "custom",
                     "custom_width": 80,
-                    "width_mobile": "fill",
+                    "width_mobile": "custom",
                     "height": "fit",
                     "border": "none",
                     "border_radius": 8,
                     "padding-block-start": 0,
                     "padding-block-end": 4,
                     "padding-inline-start": 0,
-                    "padding-inline-end": 0
+                    "padding-inline-end": 0,
+                    "custom_width_mobile": 70
                   }
                 },
                 "title": {
@@ -659,14 +663,15 @@
                     "image_ratio": "square",
                     "width": "custom",
                     "custom_width": 80,
-                    "width_mobile": "fill",
+                    "width_mobile": "custom",
                     "height": "fit",
                     "border": "none",
                     "border_radius": 8,
                     "padding-block-start": 0,
                     "padding-block-end": 4,
                     "padding-inline-start": 0,
-                    "padding-inline-end": 0
+                    "padding-inline-end": 0,
+                    "custom_width_mobile": 70
                   }
                 },
                 "title": {
@@ -756,7 +761,7 @@
         "padding-block-start": 50,
         "padding-block-end": 50,
         "custom_mobile_padding": true,
-        "mobile-padding-block-start": 57,
+        "mobile-padding-block-start": 91,
         "mobile-padding-block-end": 91,
         "mobile-padding-inline-start": 0,
         "mobile-padding-inline-end": 0,
@@ -830,7 +835,7 @@
         "padding-block-end": 40,
         "custom_mobile_padding": true,
         "mobile-padding-block-start": 91,
-        "mobile-padding-block-end": 40
+        "mobile-padding-block-end": 46
       }
     },
     "how_it_works": {
@@ -884,7 +889,10 @@
         "subheading": "From the first call to the next reorder — four steps, one point of contact.",
         "step_label": "Step",
         "padding-block-start": 40,
-        "padding-block-end": 80
+        "padding-block-end": 80,
+        "custom_mobile_padding": true,
+        "mobile-padding-block-start": 46,
+        "mobile-padding-block-end": 91
       }
     },
     "quote": {
@@ -923,7 +931,10 @@
         "contact_heading": "Rather just talk to our team?",
         "enquiry_tag": "Wholesale quotation",
         "padding-block-start": 80,
-        "padding-block-end": 80
+        "padding-block-end": 80,
+        "custom_mobile_padding": true,
+        "mobile-padding-block-start": 91,
+        "mobile-padding-block-end": 91
       }
     },
     "faq": {
@@ -1291,9 +1302,9 @@
         "border_radius": 0,
         "padding-block-start": 80,
         "padding-block-end": 80,
-        "custom_mobile_padding": false,
-        "mobile-padding-block-start": 0,
-        "mobile-padding-block-end": 0,
+        "custom_mobile_padding": true,
+        "mobile-padding-block-start": 91,
+        "mobile-padding-block-end": 91,
         "mobile-padding-inline-start": 0,
         "mobile-padding-inline-end": 0,
         "css_class": "ft-faq-columns",
