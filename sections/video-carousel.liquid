@@ -8,7 +8,7 @@
   Each tile is rendered once through snippets/video-tile.liquid, its markup captured, then
   reused in two Horizon slideshows - a desktop one (tiles sized to a fixed `--video-carousel-
   card-width`, see the Desktop grid paragraph below, peeking past the visible count when
-  `bleed_right` is on) and a mobile one (single tile at `mobile_card_size`% of the viewport) -
+  `bleed_right` is on) and a mobile one (single tile at `mobile_card_size`, 60cqw or 44cqw, i.e. Horizon's 1 / 2 columns) -
   only one of the pair is visible at a time (hidden--mobile / hidden--desktop), the same
   technique review-cards uses for its own desktop/mobile split.
 
@@ -113,7 +113,7 @@
 
 {%- liquid
   assign card_gap = section.settings.card_gap | default: 24
-  assign mobile_card_size = section.settings.mobile_card_size | default: 70
+  assign mobile_card_size = section.settings.mobile_card_size | default: '60cqw'
   assign bleed_right = section.settings.bleed_right
 
   # A single shared card-width variable (set on the outer .video-carousel div below, and
@@ -129,7 +129,7 @@
   # own --full-page-grid-central-column-width, which measured unreliably once consumed this
   # deep in a force-full-width tree.
   assign desktop_style = '--slideshow-gap: ' | append: card_gap | append: 'px; --slide-width: var(--video-carousel-card-width);'
-  assign mobile_style = '--slideshow-gap: 16px; --slide-width: ' | append: mobile_card_size | append: '%;'
+  assign mobile_style = '--slideshow-gap: 16px; --slide-width: ' | append: mobile_card_size | append: ';'
 
   assign desktop_slideshow_id = 'video-carousel-desktop-' | append: section.id
 
@@ -590,14 +590,14 @@
       "default": 8
     },
     {
-      "type": "range",
+      "type": "select",
       "id": "mobile_card_size",
-      "label": "t:settings.mobile_card_size",
-      "min": 50,
-      "max": 100,
-      "step": 5,
-      "unit": "%",
-      "default": 70
+      "label": "t:settings.mobile_columns",
+      "options": [
+        { "value": "60cqw", "label": "t:options.one_number" },
+        { "value": "44cqw", "label": "t:options.two_number" }
+      ],
+      "default": "60cqw"
     },
     {
       "type": "checkbox",

@@ -8,7 +8,7 @@
   Each review card is rendered once through snippets/review-card.liquid, its markup captured,
   then reused in two Horizon slideshows - a desktop one (cards sized to 1/`columns` of the row,
   scroll-snap carousel past the visible count) and a mobile one (single-card carousel at
-  `mobile_card_size`% of the viewport) - only one of the pair is visible at a time
+  `mobile_card_size`, 60cqw or 44cqw, i.e. Horizon's 1 / 2 columns) - only one of the pair is visible at a time
   (hidden--mobile / hidden--desktop), the same technique collection-rail uses for its own
   desktop/mobile split.
 {% endcomment %}
@@ -53,12 +53,12 @@
 {%- endfor -%}
 
 {%- liquid
-  assign mobile_card_size = section.settings.mobile_card_size | default: 85
+  assign mobile_card_size = section.settings.mobile_card_size | default: '60cqw'
   assign columns = section.settings.columns | default: 3
   assign card_gap = section.settings.card_gap | default: 20
 
   assign desktop_style = '--slideshow-gap: ' | append: card_gap | append: 'px; --slide-width: calc((100% - (' | append: card_gap | append: 'px * (' | append: columns | append: ' - 1))) / ' | append: columns | append: ');'
-  assign mobile_style = '--slideshow-gap: 16px; --slide-width: ' | append: mobile_card_size | append: '%;'
+  assign mobile_style = '--slideshow-gap: 16px; --slide-width: ' | append: mobile_card_size | append: ';'
 
   # Carousel navigation - mirrors snippets/resource-list-carousel.liquid: dots win over
   # progress, arrows render on the slideshow itself (not inside the controls) and only
@@ -338,7 +338,7 @@
     height: auto;
   }
 
-  /* Mobile: every card is its own slide at mobile_card_size% (collection-rail's carousel pattern). */
+  /* Mobile: every card is its own slide at mobile_card_size, 60cqw or 44cqw (collection-rail's carousel pattern). */
   .review-cards .slideshow-controls__progress {
     margin-top: 32px;
     padding-inline: 0;
@@ -530,14 +530,14 @@
       "default": "cover"
     },
     {
-      "type": "range",
+      "type": "select",
       "id": "mobile_card_size",
-      "label": "t:settings.mobile_card_size",
-      "min": 60,
-      "max": 100,
-      "step": 5,
-      "unit": "%",
-      "default": 85
+      "label": "t:settings.mobile_columns",
+      "options": [
+        { "value": "60cqw", "label": "t:options.one_number" },
+        { "value": "44cqw", "label": "t:options.two_number" }
+      ],
+      "default": "60cqw"
     },
     {
       "type": "text",

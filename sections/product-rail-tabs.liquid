@@ -434,7 +434,7 @@
               class: 'product-rail-tabs__controls'
             -%}
           {%- endcapture -%}
-          {%- assign mobile_slide_width = section.settings.mobile_card_size | append: 'cqw;' -%}
+          {%- assign mobile_slide_width = section.settings.mobile_card_size | default: '60cqw' | append: ';' -%}
           {%- capture mobile_slideshow_style -%}--slideshow-gap: 16px; --slide-width: {{ mobile_slide_width }}{%- endcapture -%}
           {%- render 'slideshow',
             class: 'product-rail-tabs__rail-slideshow product-rail-tabs__rail-slideshow--mobile',
@@ -704,7 +704,7 @@
   /* Desktop rail only: a fixed card width (not the fluid --column-count formula), so it can
      bleed past the content column into the peeking fifth card. Scoped to the desktop rail
      specifically - the mobile rail keeps the base slideshow-slide `width: var(--slide-
-     width, 100%)` fallback, driven by the inline --slide-width (mobile_card_size) percent.
+     width, 100%)` fallback, driven by the inline --slide-width (mobile_card_size: 60cqw or 44cqw, Horizon's 1 / 2 columns).
      `--rail-card-width` (set on .product-rail-tabs above) is the SAME variable the grid
      below uses for its track size, so a card is the exact same rendered width whichever
      branch is showing - it used to be a literal 320px here vs. ~294px in the grid (four
@@ -989,14 +989,14 @@
       "default": false
     },
     {
-      "type": "range",
+      "type": "select",
       "id": "mobile_card_size",
-      "label": "t:settings.mobile_card_size",
-      "min": 50,
-      "max": 100,
-      "step": 5,
-      "unit": "%",
-      "default": 75
+      "label": "t:settings.mobile_columns",
+      "options": [
+        { "value": "60cqw", "label": "t:options.one_number" },
+        { "value": "44cqw", "label": "t:options.two_number" }
+      ],
+      "default": "60cqw"
     },
     {
       "type": "header",

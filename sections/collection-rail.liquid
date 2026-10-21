@@ -85,9 +85,9 @@
 {%- endfor -%}
 
 {%- liquid
-  assign mobile_card_size = section.settings.mobile_card_size | default: 85
+  assign mobile_card_size = section.settings.mobile_card_size | default: '60cqw'
   assign desktop_style = '--slideshow-gap: 40px;'
-  assign mobile_style = '--slideshow-gap: 16px; --slide-width: ' | append: mobile_card_size | append: '%;'
+  assign mobile_style = '--slideshow-gap: 16px; --slide-width: ' | append: mobile_card_size | append: ';'
   assign desktop_slideshow_id = 'collection-rail-desktop-' | append: section.id
   assign desktop_slideshow_attributes = 'id="' | append: desktop_slideshow_id | append: '"'
 -%}
@@ -550,14 +550,14 @@
       "default": 16
     },
     {
-      "type": "range",
+      "type": "select",
       "id": "mobile_card_size",
-      "label": "t:settings.mobile_card_size",
-      "min": 60,
-      "max": 100,
-      "step": 5,
-      "unit": "%",
-      "default": 85
+      "label": "t:settings.mobile_columns",
+      "options": [
+        { "value": "60cqw", "label": "t:options.one_number" },
+        { "value": "44cqw", "label": "t:options.two_number" }
+      ],
+      "default": "60cqw"
     },
     {
       "type": "checkbox",
