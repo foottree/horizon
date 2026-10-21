@@ -813,6 +813,14 @@
   flex-shrink: 0;
 }
 
+/* A row's caret wrapper also carries header-drawer.liquid's padding-inline-start (the gap after
+   the label). With the box pinned to 20px above, that padding left no room for the 20px svg,
+   which spilled 10px past the row and its divider (362-382 on a 372px row at 390). content-box
+   makes the wrapper padding + 20px, so the caret ends where the divider ends. */
+#header-component .menu-drawer__menu-item > .svg-wrapper.icon-caret {
+  box-sizing: content-box;
+}
+
 /* Back caret's left edge lines up with the top-level rows' own text inset (--drawer-padding,
    from .menu-drawer__menu's padding-inline) instead of the stock back-button's --padding-lg,
    which sat a few px further left. Only inline-start changes; block padding and the

@@ -938,12 +938,11 @@
         "video_lifestyle"
       ],
       "custom_css": [
-        ".ft-new-arrivals [class*=__img_product] .image-block__image{--ratio:528/360!important}",
-        ".ft-new-arrivals deferred-media{aspect-ratio:772/640!important}",
-        "@media(max-width:749px){.ft-new-arrivals deferred-media{aspect-ratio:4/5!important}}",
-        ".ft-new-arrivals video{width:100%;height:100%;object-fit:cover;pointer-events:none}",
-        ".ft-new-arrivals deferred-media{pointer-events:none}",
-        ".ft-new-arrivals .button{font-size:1rem;padding:12px 24px;border-radius:999px}"
+        "[class*=__img_product] .image-block__image{--ratio:528/360!important}",
+        "deferred-media{aspect-ratio:772/640!important;pointer-events:none}",
+        "@media(max-width:749px){[class*=__img_product] .image-block__image{--ratio:2/1!important}deferred-media{aspect-ratio:4/3!important}deferred-media img,deferred-media video{object-position:50% 75%}}",
+        "video{width:100%;height:100%;object-fit:cover;pointer-events:none}",
+        ".button{font-size:1rem;padding:12px 24px;border-radius:999px}"
       ],
       "settings": {
         "content_direction": "row",
