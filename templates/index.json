@@ -1650,10 +1650,11 @@
         "video_1": {
           "type": "video_tile",
           "settings": {
+            "video": "shopify://files/videos/social-reel-1.mp4",
             "video_url": "",
             "poster": "",
-            "duration": "0:24",
-            "alt": ""
+            "duration": "0:23",
+            "alt": "Foot Tree customers wearing their shoes"
           }
         },
         "video_2": {
