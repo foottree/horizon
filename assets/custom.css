@@ -2614,3 +2614,26 @@ body:has(.shopify-policy__container) {
 .product-details .product-inventory__status {
   font-size: var(--font-size--sm);
 }
+
+/* ---- Size Guide link: body weight with a hairline underline ----
+   The trigger is stock markup (snippets/size-guide-dialog.liquid) styled in the stock
+   variant-picker-styles.liquid at subheading weight 600, so it was the only bold item in the
+   picker and outweighed the 14px/400 "Size (EU)" legend on the same row. Set to the legend's
+   family and weight, and underlined with a pseudo-element that stops short of the arrow icon
+   (1.1em + the flex gap) so the line sits under the words only. Two-class selector because the
+   stock {% stylesheet %} compiles into styles.css, which loads after this file. */
+.variant-option--with-size-guide .size-guide__trigger {
+  position: relative;
+  font-family: var(--font-body--family);
+  font-weight: var(--font-body--weight);
+}
+
+.variant-option--with-size-guide .size-guide__trigger::after {
+  content: '';
+  position: absolute;
+  inset-inline-start: 0;
+  bottom: 0;
+  width: calc(100% - 1.1em - var(--margin-3xs));
+  height: 1px;
+  background-color: currentColor;
+}
