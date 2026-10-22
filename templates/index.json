@@ -1625,7 +1625,7 @@
         "rating_link": "",
         "columns": 3,
         "card_gap": 20,
-        "image_ratio": "wide",
+        "image_ratio": "landscape",
         "image_fit": "contain",
         "mobile_card_size": "60cqw",
         "verified_label": "Verified",

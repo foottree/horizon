@@ -621,7 +621,7 @@
     line-height: 1.5;
     text-align: center;
     cursor: pointer;
-    transition: background-color 180ms var(--animation-easing, ease), color 180ms var(--animation-easing, ease);
+    /* No fill/text transition: a cross-fade left both tabs half-selected for 180ms on switch. */
   }
 
   .product-rail-tabs__tablist--segmented .product-rail-tabs__tab[aria-selected='true'] {
