@@ -2074,7 +2074,7 @@ swatches-variant-picker-component {
       resolve to. Setting both states to the same colour makes that moot. */
 .facets .facets__label {
   font-size: var(--font-size--md); /* 16px */
-  font-weight: 600;
+  font-weight: 500; /* was 600: at 600 the group names competed with the 18px Filters title (2026-10-23) */
 }
 
 /* Doubled .facets: list-filter.liquid declares the same selector in its own {% stylesheet %},
