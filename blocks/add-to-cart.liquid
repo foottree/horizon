@@ -10,6 +10,16 @@
   assign scoped_class = block.settings.style_class | append: '--' | append: block.id
   assign class = 'add-to-cart-button ' | append: block.settings.style_class | append: ' ' | append: scoped_class
   assign id = 'BuyButtons-ProductSubmitButton-' | append: block.id
+
+  assign button_text = add_to_cart_text
+  if block.settings.show_price and can_add_to_cart
+    assign button_variant = closest.product.selected_or_first_available_variant
+    assign button_price = button_variant.price | money
+    capture button_price_html
+      echo ' &middot; <span class="add-to-cart__price">' | append: button_price | append: '</span>'
+    endcapture
+    assign button_text = add_to_cart_text | append: button_price_html
+  endif
 %}
 {% render 'button-custom-styles', block_settings: block.settings, block_id: block.id %}
 {% render 'add-to-cart-button-styles' %}
@@ -25,7 +35,7 @@
     can_add_to_cart: can_add_to_cart,
     show_icon: can_add_to_cart,
     product: closest.product,
-    add_to_cart_text: add_to_cart_text,
+    add_to_cart_text: button_text,
     data_testid: 'standalone-add-to-cart'
   %}
 </span>
@@ -35,6 +45,13 @@
   "name": "t:names.add_to_cart",
   "tag": null,
   "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_price",
+      "label": "Show price in button",
+      "info": "Shows the selected variant's price after the label, for example Add to cart · $139.90. Sold out products keep the plain label.",
+      "default": true
+    },
     {
       "type": "select",
       "id": "style_class",
