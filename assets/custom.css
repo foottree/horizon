@@ -2548,11 +2548,10 @@ body:has(.shopify-policy__container) {
   }
 }
 
-/* Product description sub-heading on phones: the product title (h1) is 28px below 750px, so an h3 in
-   the description (28px) read the same size as the title. Step it to the h4 rung (24px) so it sits
-   under the title. Scoped to the description text inside the product details column. */
-@media (max-width: 749px) {
-  .product-details rte-formatter h3 {
-    font-size: var(--font-h4--size);
-  }
+/* Product description sub-heading, every width: it sits directly under the product title (32px on
+   desktop, 28px on phones) and above 16px body text, so the h3 renders at the h4 rung (24px) rather
+   than the h3 rung (28px), which was only 4px under the title. A scoped rule on stock-rendered
+   content (the rte text block) that has no setting of its own. */
+.product-details rte-formatter h3 {
+  font-size: var(--font-h4--size);
 }

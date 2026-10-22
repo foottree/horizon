@@ -32,7 +32,7 @@
             "thumbnail_position": "right",
             "thumbnail_width": 44,
             "aspect_ratio": "1",
-            "constrain_to_viewport": false,
+            "constrain_to_viewport": true,
             "media_fit": "contain",
             "media_radius": 0,
             "extend_media": false,
