@@ -65,6 +65,7 @@
     {%- render 'video',
       video: video,
       video_loop: false,
+      video_unmuted: true,
       video_preview_image: preview_image
     -%}
   {%- else -%}
@@ -72,6 +73,7 @@
       video_from_url: true,
       video: video_url.id,
       video_loop: false,
+      video_unmuted: true,
       video_type: video_url.type,
       video_alt: alt,
       video_preview_image: preview_image

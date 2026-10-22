@@ -5,6 +5,7 @@
 
   @param {boolean} [video_autoplay] - Whether the video should autoplay
   @param {boolean} [video_loop] - Whether the video should loop
+  @param {boolean} [video_unmuted] - Set true for tap-to-play videos that should play with sound (default: muted). Never combine with video_autoplay.
   @param {string} [video_class] - Additional classes for the video element
   @param {string} [video_style] - Additional inline styles
   @param {object} [video_preview_image] - Preview image to show before video plays
@@ -33,6 +34,12 @@
   assign video_preview_image = video_preview_image | default: video.preview_image
   assign video_autoplay = video_autoplay | default: block_settings.video_autoplay
   assign video_loop = video_loop | default: block_settings.video_loop
+  assign video_muted_bool = true
+  assign video_muted_value = '1'
+  if video_unmuted
+    assign video_muted_bool = false
+    assign video_muted_value = '0'
+  endif
   assign media_width_desktop = 100 | divided_by: 2 | append: 'vw'
   assign media_width_mobile = '100vw'
   assign sizes = '(min-width: 750px) ' | append: media_width_desktop | append: ', ' | append: media_width_mobile
@@ -104,17 +111,17 @@
     {% if video.host == 'youtube' %}
       {{
         video
-        | external_video_url: autoplay: true, loop: video_loop, playlist: video.external_id, mute: '1', controls: controls, enablejsapi: enable_js_api
+        | external_video_url: autoplay: true, loop: video_loop, playlist: video.external_id, mute: video_muted_value, controls: controls, enablejsapi: enable_js_api
         | external_video_tag: data-video-type: 'youtube'
       }}
     {% elsif video.host == 'vimeo' %}
       {{
         video
-        | external_video_url: autoplay: true, loop: video_loop, muted: '1', controls: controls, api: enable_js_api
+        | external_video_url: autoplay: true, loop: video_loop, muted: video_muted_value, controls: controls, api: enable_js_api
         | external_video_tag: data-video-type: 'vimeo'
       }}
     {% else %}
-      {{ video | video_tag: image_size: '2500x', autoplay: true, loop: video_loop, muted: true, controls: controls }}
+      {{ video | video_tag: image_size: '2500x', autoplay: true, loop: video_loop, muted: video_muted_bool, controls: controls }}
     {% endif %}
   {% endcapture %}
 {% endif %}
