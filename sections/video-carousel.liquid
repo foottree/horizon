@@ -209,6 +209,7 @@
     --video-carousel-accent-color: {{ settings.color_palette.color4 }};
     --video-carousel-line-color: {{ settings.color_palette.color3 }};
     --video-tile-accent-color: {{ settings.color_palette.color4 }};
+    --video-tile-play-size: {{ section.settings.play_button_size }}px;
     --video-tile-chip-bg: {{ settings.color_palette.foreground | color_modify: 'alpha', 0.78 }};
     --video-carousel-card-width: calc((min(var(--page-content-width), calc(100vw - (2 * var(--page-margin)))) - {{ column_gap_span }}px) / {{ columns }});
   "
@@ -588,6 +589,16 @@
       "step": 1,
       "unit": "px",
       "default": 8
+    },
+    {
+      "type": "range",
+      "id": "play_button_size",
+      "label": "Play button size",
+      "min": 40,
+      "max": 96,
+      "step": 4,
+      "unit": "px",
+      "default": 56
     },
     {
       "type": "select",

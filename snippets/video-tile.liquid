@@ -17,8 +17,8 @@
 
   The stock poster button's markup is never restructured - assets/base.css keys several
   selectors off `deferred-media`'s exact direct children (e.g. `deferred-media > .deferred-
-  media__poster-button ~ *`) and breaks if that structure changes. The 76px circular play
-  button and the duration chip are CSS restyles/siblings only: the chip is an absolutely-
+  media__poster-button ~ *`) and breaks if that structure changes. The circular play
+  button (diameter from the section's "Play button size" setting, default 56px) and the duration chip are CSS restyles/siblings only: the chip is an absolutely-
   positioned sibling of whatever `snippets/video.liquid` renders (deferred-media or the inert
   placeholder), both direct children of this tile.
 
@@ -115,39 +115,40 @@
     width: 100%;
   }
 
-  /* Restyle the stock poster button into the Figma's 76px white circle with an olive play
+  /* Restyle the stock poster button into the Figma's white circle (size from --video-tile-play-size, set by the section) with an olive play
      triangle - CSS only. Covers both the interactive deferred-media poster button and the
      inert video-placeholder-wrapper button rendered when there's no video/poster at all. */
   .video-tile .deferred-media__poster-icon,
   .video-tile .video-placeholder-wrapper__poster-icon {
-    width: 76px;
-    height: 76px;
+    width: var(--video-tile-play-size, 56px);
+    height: var(--video-tile-play-size, 56px);
     background: rgb(255 255 255 / 92%);
     color: var(--video-tile-accent-color, #4a6a1d);
   }
 
   .video-tile .deferred-media__poster-icon svg,
   .video-tile .video-placeholder-wrapper__poster-icon svg {
-    /* the Figma's own glyph is ~16px, which reads too small inside the 76px circle on a
-       phone; the theme's medium icon token (22px) carries better at both widths */
-    width: var(--icon-size-md);
-    height: var(--icon-size-md);
+    /* the glyph scales with the circle (about a third of its diameter: 18px at 56) */
+    width: calc(var(--video-tile-play-size, 56px) * 0.32);
+    height: calc(var(--video-tile-play-size, 56px) * 0.32);
     color: inherit;
     filter: none;
   }
 
   .video-tile__duration {
     position: absolute;
-    left: 16px;
-    bottom: 16px;
+    left: 10px;
+    bottom: 10px;
     z-index: 2;
-    padding: 6px 12px;
+    padding: 4px 8px;
     border-radius: 4px;
     background: var(--video-tile-chip-bg, rgb(38 38 34 / 78%));
     color: #fff;
     font-family: var(--font-subheading--family);
     font-weight: 600;
-    font-size: var(--font-size--2xs); /* 12px, caption rung of the type ladder (--xs is 13px) */
-    line-height: 1.4;
+    /* 12px is the ladder's floor (caption rung; --xs is 13px), so the chip shrinks through
+       padding and inset only, never the text */
+    font-size: var(--font-size--2xs);
+    line-height: 1.2;
   }
 {% endstylesheet %}
