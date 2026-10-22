@@ -44,7 +44,10 @@
     "
     style="
       {% render 'spacing-style', settings: section.settings %}
-      --collection-pills-label-color: {{ settings.color_palette.color8 }};
+      --collection-pills-fill: {{ settings.color_palette.color2 }};
+      --collection-pills-label-color: {{ settings.color_palette.color4 }};
+      --collection-pills-hover-border-color: {{ settings.color_palette.color4 }};
+      --collection-pills-active-fill: {{ settings.color_palette.color4 }};
       --collection-pills-active-label-color: {{ settings.color_palette.background }};
     "
     data-testid="collection-pills"
@@ -132,9 +135,9 @@
     white-space: nowrap;
     border-radius: 999px;
     padding: 10px 20px;
-    border: 1.5px solid #d5d1c9;
-    background-color: transparent;
-    color: var(--collection-pills-label-color, #5c5a52);
+    border: 1.5px solid var(--collection-pills-fill);
+    background-color: var(--collection-pills-fill);
+    color: var(--collection-pills-label-color);
     font-family: var(--font-accent--family);
     font-weight: var(--font-accent--weight);
     font-size: 15px;
@@ -144,13 +147,18 @@
   }
 
   a.collection-pills__pill:is(:hover, :focus-visible) {
-    border-color: #5c5a52;
+    border-color: var(--collection-pills-hover-border-color);
+  }
+
+  a.collection-pills__pill:focus-visible {
+    outline: 2px solid var(--collection-pills-hover-border-color);
+    outline-offset: 2px;
   }
 
   .collection-pills__pill--active {
-    background-color: #3b3a34;
-    border-color: transparent;
-    color: var(--collection-pills-active-label-color, #ffffff);
+    background-color: var(--collection-pills-active-fill);
+    border-color: var(--collection-pills-active-fill);
+    color: var(--collection-pills-active-label-color);
     cursor: default;
   }
 
