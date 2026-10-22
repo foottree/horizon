@@ -48,4 +48,19 @@
     padding-block: var(--badge-rectangle-padding-block);
     padding-inline: var(--badge-rectangle-padding-inline);
   }
+
+  /* Inline row that wraps (Figma): Sale first, then the merchant chips, 4px apart; a narrow card
+     wraps to a second line instead of clipping. Tripled class because assets/custom.css doubles it
+     to outrank this file's base rule and the chip column there is a stack. */
+  .product-badges.product-badges.product-badges {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-start;
+    gap: 4px;
+    max-width: calc(100% - (var(--badge-inset) * 2));
+  }
+
+  .product-badges.product-badges.product-badges--top-right {
+    justify-content: flex-end;
+  }
 {% endstylesheet %}

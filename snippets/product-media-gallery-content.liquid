@@ -200,6 +200,23 @@
   {% render 'measure-header-heights', only_on_desktop: true %}
 {%- endif -%}
 
+{%- liquid
+  assign badges_in_wrapper = false
+  if block_settings.aspect_ratio != 'adapt' and block_settings.constrain_to_viewport
+    assign badges_in_wrapper = true
+  endif
+-%}
+{%- capture badges_html -%}
+  {%- if block_settings.show_badges and selected_product != blank -%}
+    {%- capture badges_inner -%}{%- render 'product-badges', product: selected_product -%}{%- endcapture -%}
+    {%- if badges_inner contains 'product-badges' -%}
+      <div class="product-media-badges" style="--padding-block-start: 0px; --padding-inline-start: 0px; --padding-block-end: 0px; --padding-inline-end: 0px;">
+        {{- badges_inner -}}
+      </div>
+    {%- endif -%}
+  {%- endif -%}
+{%- endcapture -%}
+
 {% style %}
   {% unless block_settings.aspect_ratio == 'adapt' %}
     .product-media-container {
@@ -375,6 +392,7 @@
     {% capture slides %}
       {% for media in sorted_media %}
         {% capture children %}
+          {%- if forloop.first and badges_in_wrapper != true -%}{{ badges_html }}{%- endif -%}
           {%- liquid
               if needs_both_sizes and forloop.first
                 assign media_sizes = sizes_single
@@ -385,6 +403,7 @@
           {% if block_settings.aspect_ratio != 'adapt' and block_settings.constrain_to_viewport %}
             <div
               class="product-media-constraint-wrapper">
+              {%- if forloop.first -%}{{ badges_html }}{%- endif -%}
               {%- render 'product-media', media: media, sizes: media_sizes, is_main_product_media: forloop.first -%}
             </div>
           {% else %}
@@ -491,6 +510,7 @@
                 {% endif %}
               ></button>
             {%- endif -%}
+            {%- if forloop.first and badges_in_wrapper != true -%}{{ badges_html }}{%- endif -%}
             {%- liquid
               if needs_both_sizes and forloop.first
                 assign media_sizes = sizes_single
@@ -500,6 +520,7 @@
             -%}
             {% if block_settings.aspect_ratio != 'adapt' and block_settings.constrain_to_viewport %}
               <div class="product-media-constraint-wrapper">
+                {%- if forloop.first -%}{{ badges_html }}{%- endif -%}
                 {%- render 'product-media', media: media, sizes: media_sizes, is_main_product_media: forloop.first -%}
               </div>
             {% else %}
@@ -660,6 +681,19 @@
 {% render 'product-media-gallery-content-styles' %}
 
 {% stylesheet %}
+  /* Badges over the first gallery image: same chips and inset as the product cards.
+     The wrapper fills the media container and lets clicks through to the zoom button. */
+  .product-media-constraint-wrapper {
+    position: relative;
+  }
+
+  .product-media-badges {
+    position: absolute;
+    inset: 0;
+    z-index: var(--layer-flat);
+    pointer-events: none;
+  }
+
   .dialog-thumbnails-list-container {
     position: fixed;
     width: 100%;
