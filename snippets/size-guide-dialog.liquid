@@ -2,10 +2,13 @@
   The "Size Guide" link that sits on the size option's own label row in the variant picker,
   and the dialog it opens.
 
-  Rendered in three parts because a <legend> may only contain phrasing content: the dialog
-  component opens before the fieldset, the trigger goes inside the legend (a <button> is
-  phrasing content, a <dialog> is not), and the dialog itself closes after the fieldset. All
-  three are needed for the trigger's declarative on:click to find its dialog.
+  Rendered in three parts because a <legend> may only contain phrasing content: the trigger
+  goes inside the legend (a <button> is phrasing content, a <dialog> is not), and the dialog
+  goes after the fieldset. The dialog component must be a SIBLING of the fieldset, never its
+  wrapper: Component.refs skips anything inside a nested component, so a wrapping
+  <dialog-component> hid ref="fieldsets[]" from <variant-picker>, which then never tracked
+  data-current-checked / data-previous-checked, and the stock wrap-around rule left the last
+  size's own pill translated off the pill. The trigger reaches the dialog by id instead.
 
   @param {string} part - 'open', 'trigger' or 'close'
   @param {object} settings - The variant picker block's settings
@@ -18,6 +21,7 @@
 {%- liquid
   assign size_guide_label = settings.size_guide_text | default: 'Size Guide'
   assign size_guide_heading_id = 'size-guide-heading-' | append: id
+  assign size_guide_dialog_id = 'size-guide-' | append: id
 -%}
 
 {%- case part -%}
@@ -28,11 +32,10 @@
     ></script>
 
     {% render 'dialog-styles' %}
-
-    <dialog-component class="size-guide">
   {%- when 'trigger' -%}
     <button
-      on:click="/showDialog"
+      type="button"
+      on:click="#{{ size_guide_dialog_id }}/showDialog"
       class="button button-unstyled size-guide__trigger"
     >
       {{- size_guide_label -}}
@@ -41,6 +44,10 @@
       </span>
     </button>
   {%- when 'close' -%}
+    <dialog-component
+      id="{{ size_guide_dialog_id }}"
+      class="size-guide"
+    >
       <dialog
         ref="dialog"
         class="size-guide__content dialog-modal color-custom-popover"

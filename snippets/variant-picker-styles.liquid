@@ -113,11 +113,10 @@
     --variant-option-padding-inline: var(--padding-md);
   }
 
-  /* The size option is wrapped in <dialog-component class="size-guide"> so its legend can hold
-     the size guide trigger, which breaks the adjacency this spacing relies on. */
+  /* The size option is followed by <dialog-component class="size-guide"> (the size guide dialog),
+     which sits between it and the next option and breaks the adjacency this spacing relies on. */
   .variant-option + .variant-option,
-  .variant-option ~ .size-guide,
-  .size-guide ~ .variant-option {
+  .variant-option + .size-guide + .variant-option {
     margin-top: var(--padding-lg);
   }
 
@@ -529,10 +528,10 @@
   }
 
   /* Size guide: the mockup puts it on the size label's row, so the legend becomes the row.
-     The dialog component wraps the whole fieldset, because the trigger lives in the legend
-     and the dialog cannot (a <legend> takes phrasing content only). */
+     The trigger lives in the legend and the dialog (a <legend> takes phrasing content only)
+     follows the fieldset as a sibling. It has no box of its own; the dialog is in the top layer. */
   .size-guide {
-    display: block;
+    display: contents;
   }
 
   .variant-option--with-size-guide legend {
