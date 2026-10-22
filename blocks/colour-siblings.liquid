@@ -1,0 +1,237 @@
+{%- comment -%}
+  Colour options: every colourway of a shoe is its own product, and they are grouped by the
+  `custom.colour_options` metaobject (type `colour_options`, field `products`). This row shows the
+  sibling colourways as photo swatches that link to each one's product page. It renders nothing when
+  the product has no group or fewer than two siblings are live. The Size row sits right under it and
+  its label uses the same inherited type, so the two read as one family.
+{%- endcomment -%}
+
+{%- liquid
+  assign product_resource = closest.product
+  assign group = product_resource.metafields.custom.colour_options.value
+  assign siblings = group.products.value
+  assign valid_count = 0
+  for sibling in siblings
+    if sibling != blank and sibling.featured_image != blank
+      assign valid_count = valid_count | plus: 1
+    endif
+  endfor
+
+  assign current_colour = product_resource.title | split: ' - ' | last | strip
+-%}
+
+{%- if valid_count > 1 -%}
+  {%- assign block_settings = block.settings -%}
+  <div
+    class="colour-siblings"
+    style="
+      --colour-siblings-size: {{ block_settings.swatch_size }}px;
+      --colour-siblings-radius: {{ block_settings.corner_radius }}px;
+      --colour-siblings-padding-block-start: {{ block_settings.padding-block-start }}px;
+      --colour-siblings-padding-block-end: {{ block_settings.padding-block-end }}px;
+      --colour-siblings-padding-inline-start: {{ block_settings.padding-inline-start }}px;
+      --colour-siblings-padding-inline-end: {{ block_settings.padding-inline-end }}px;
+    "
+    {{ block.shopify_attributes }}
+  >
+    {%- if block_settings.show_label -%}
+      <div class="colour-siblings__label">
+        Colour
+        <span class="colour-siblings__value">{{ current_colour | escape }}</span>
+      </div>
+    {%- endif -%}
+    <ul class="colour-siblings__list" role="list" aria-label="Colour options">
+      {%- for sibling in siblings -%}
+        {%- if sibling == blank or sibling.featured_image == blank -%}
+          {%- continue -%}
+        {%- endif -%}
+        {%- assign sibling_colour = sibling.title | split: ' - ' | last | strip -%}
+        <li class="colour-siblings__item">
+          <a
+            class="colour-siblings__link"
+            href="{{ sibling.url }}"
+            aria-label="{{ sibling_colour | escape }}"
+            title="{{ sibling_colour | escape }}"
+            {% if sibling.id == product_resource.id %}aria-current="page"{% endif %}
+          >
+            {{-
+              sibling.featured_image
+              | image_url: width: 192
+              | image_tag:
+                width: block_settings.swatch_size,
+                height: block_settings.swatch_size,
+                class: 'colour-siblings__img',
+                alt: sibling_colour,
+                loading: 'lazy',
+                widths: '96, 192'
+            -}}
+          </a>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+{%- endif -%}
+
+{% stylesheet %}
+  .colour-siblings {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding-block: var(--colour-siblings-padding-block-start) var(--colour-siblings-padding-block-end);
+    padding-inline: var(--colour-siblings-padding-inline-start) var(--colour-siblings-padding-inline-end);
+  }
+
+  /* Same label treatment as the variant picker's legend: inherited body type, foreground colour,
+     the chosen value subdued beside it. */
+  .colour-siblings__label {
+    margin-block-end: var(--margin-xs);
+    color: var(--color-foreground);
+  }
+
+  .colour-siblings__value {
+    padding-inline-start: var(--padding-xs);
+    color: var(--color-foreground-subdued);
+  }
+
+  .colour-siblings__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .colour-siblings__item {
+    margin: 0;
+    padding: 0;
+  }
+
+  .colour-siblings__link {
+    display: block;
+    width: var(--colour-siblings-size);
+    height: var(--colour-siblings-size);
+    overflow: hidden;
+    border: 1px solid rgb(var(--color-foreground-rgb) / var(--variant-picker-border-opacity));
+    border-radius: var(--colour-siblings-radius);
+    background: var(--color-background);
+    box-sizing: border-box;
+  }
+
+  .colour-siblings__link[aria-current='page'] {
+    border-color: var(--color-foreground);
+    outline: 2px solid var(--color-foreground);
+    outline-offset: 0;
+  }
+
+  .colour-siblings__link:hover,
+  .colour-siblings__link:focus-visible {
+    border-color: var(--color-primary-button-background);
+  }
+
+  .colour-siblings__link[aria-current='page']:hover,
+  .colour-siblings__link[aria-current='page']:focus-visible {
+    border-color: var(--color-foreground);
+  }
+
+  .colour-siblings__link:focus-visible {
+    outline: 2px solid var(--color-primary-button-background);
+    outline-offset: 2px;
+  }
+
+  .colour-siblings__img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Colour options",
+  "tag": null,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Shows the other colourways of this shoe, linked to their own product pages. Set up the group in the product's Colour options field."
+    },
+    {
+      "type": "range",
+      "id": "swatch_size",
+      "label": "Swatch size",
+      "min": 40,
+      "max": 96,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "corner_radius",
+      "label": "Corner radius",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "checkbox",
+      "id": "show_label",
+      "label": "Show label",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "Left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "Right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Colour options",
+      "category": "t:categories.product"
+    }
+  ]
+}
+{% endschema %}

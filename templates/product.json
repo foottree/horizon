@@ -198,6 +198,19 @@
               },
               "blocks": {}
             },
+            "colour_siblings_Kx7Rp2": {
+              "type": "colour-siblings",
+              "settings": {
+                "swatch_size": 64,
+                "corner_radius": 8,
+                "show_label": true,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
             "variant_picker_R3rGDr": {
               "type": "variant-picker",
               "settings": {
@@ -344,6 +357,7 @@
           "block_order": [
             "group_icgrde",
             "divider_VJhene",
+            "colour_siblings_Kx7Rp2",
             "variant_picker_R3rGDr",
             "fit_scale_howfits",
             "buy_buttons_eYQEYi",
@@ -883,12 +897,18 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
+            },
+            "colour_siblings_card": {
+              "type": "colour-siblings-card",
+              "settings": {},
+              "blocks": {}
             }
           },
           "block_order": [
             "product_card_gallery_DNizbJ",
             "product_title_M7MJkb",
-            "price_gLWgA6"
+            "price_gLWgA6",
+            "colour_siblings_card"
           ]
         }
       },

@@ -1,0 +1,153 @@
+{%- comment -%}
+  Compact colour options for product cards: up to 5 thumbnails (this colour first, then the rest in
+  the group's order) and a "+N" count for the remainder. Each thumbnail links to that colourway's
+  product page. Renders nothing for a product with no group or fewer than two live siblings.
+{%- endcomment -%}
+
+{%- liquid
+  assign product_resource = closest.product
+  assign group = product_resource.metafields.custom.colour_options.value
+  assign siblings = group.products.value
+  assign valid_count = 0
+  for sibling in siblings
+    if sibling != blank and sibling.featured_image != blank
+      assign valid_count = valid_count | plus: 1
+    endif
+  endfor
+  assign max_shown = 5
+  assign shown = 0
+-%}
+
+{%- if valid_count > 1 -%}
+  <div class="colour-siblings-card" {{ block.shopify_attributes }}>
+    <ul class="colour-siblings-card__list" role="list" aria-label="Colour options">
+      {%- for pass in (1..2) -%}
+        {%- for sibling in siblings -%}
+          {%- if sibling == blank or sibling.featured_image == blank -%}
+            {%- continue -%}
+          {%- endif -%}
+          {%- assign is_current = false -%}
+          {%- if sibling.id == product_resource.id -%}
+            {%- assign is_current = true -%}
+          {%- endif -%}
+          {%- if pass == 1 and is_current == false -%}
+            {%- continue -%}
+          {%- endif -%}
+          {%- if pass == 2 and is_current -%}
+            {%- continue -%}
+          {%- endif -%}
+          {%- if shown >= max_shown -%}
+            {%- continue -%}
+          {%- endif -%}
+          {%- assign shown = shown | plus: 1 -%}
+          {%- assign sibling_colour = sibling.title | split: ' - ' | last | strip -%}
+          <li class="colour-siblings-card__item">
+            <a
+              class="colour-siblings-card__link"
+              href="{{ sibling.url }}"
+              aria-label="{{ sibling_colour | escape }}"
+              title="{{ sibling_colour | escape }}"
+              {% if is_current %}aria-current="page"{% endif %}
+            >
+              {{-
+                sibling.featured_image
+                | image_url: width: 96
+                | image_tag:
+                  width: 24,
+                  height: 24,
+                  class: 'colour-siblings-card__img',
+                  alt: sibling_colour,
+                  loading: 'lazy',
+                  widths: '24, 48, 72'
+              -}}
+            </a>
+          </li>
+        {%- endfor -%}
+      {%- endfor -%}
+      {%- assign extra = valid_count | minus: shown -%}
+      {%- if extra > 0 -%}
+        <li class="colour-siblings-card__more">
+          <a class="colour-siblings-card__more-link" href="{{ product_resource.url }}" aria-label="{{ extra }} more colours">+{{ extra }}</a>
+        </li>
+      {%- endif -%}
+    </ul>
+  </div>
+{%- endif -%}
+
+{% stylesheet %}
+  .colour-siblings-card {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 100%;
+  }
+
+  .colour-siblings-card__list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .colour-siblings-card__item {
+    margin: 0;
+    padding: 0;
+  }
+
+  .colour-siblings-card__link {
+    display: block;
+    width: 24px;
+    height: 24px;
+    overflow: hidden;
+    border: 1px solid rgb(var(--color-foreground-rgb) / var(--variant-picker-border-opacity));
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+  .colour-siblings-card__link[aria-current='page'] {
+    border-color: var(--color-foreground);
+    outline: 1px solid var(--color-foreground);
+    outline-offset: 0;
+  }
+
+  .colour-siblings-card__link:hover,
+  .colour-siblings-card__link:focus-visible {
+    border-color: var(--color-primary-button-background);
+  }
+
+  .colour-siblings-card__img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .colour-siblings-card__more-link {
+    padding-inline-start: 2px;
+    color: var(--color-foreground-subdued);
+    font-size: var(--font-size--sm);
+    text-decoration: none;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Colour options (card)",
+  "tag": null,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Small colour thumbnails under the price. They link to the other colourways of this shoe and show nothing when the product has none."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Colour options (card)",
+      "category": "t:categories.product"
+    }
+  ]
+}
+{% endschema %}

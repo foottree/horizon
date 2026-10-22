@@ -218,12 +218,18 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
+            },
+            "colour_siblings_card": {
+              "type": "colour-siblings-card",
+              "settings": {},
+              "blocks": {}
             }
           },
           "block_order": [
             "product_card_gallery_PEPpfq",
             "product_title_WNMpHe",
-            "price_yXfkPX"
+            "price_yXfkPX",
+            "colour_siblings_card"
           ]
         }
       },

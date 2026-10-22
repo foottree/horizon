@@ -689,6 +689,11 @@
                 "padding-inline-end": 0
               }
             },
+            "colour_siblings_card": {
+              "type": "colour-siblings-card",
+              "settings": {},
+              "blocks": {}
+            },
             "swatches": {
               "type": "swatches",
               "name": "Swatches",
@@ -707,6 +712,7 @@
             "product_card_gallery",
             "product_title",
             "price",
+            "colour_siblings_card",
             "swatches"
           ]
         }

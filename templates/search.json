@@ -156,12 +156,18 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
+            },
+            "colour_siblings_card": {
+              "type": "colour-siblings-card",
+              "settings": {},
+              "blocks": {}
             }
           },
           "block_order": [
             "product_card_gallery_cFExAi",
             "product_title_j7qXTx",
-            "price_fYkUgG"
+            "price_fYkUgG",
+            "colour_siblings_card"
           ]
         }
       },

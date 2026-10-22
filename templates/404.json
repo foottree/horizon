@@ -241,12 +241,18 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
+            },
+            "colour_siblings_card": {
+              "type": "colour-siblings-card",
+              "settings": {},
+              "blocks": {}
             }
           },
           "block_order": [
             "product_card_gallery_wxYqE3",
             "product_title_83YMDL",
-            "price_A6DYPt"
+            "price_A6DYPt",
+            "colour_siblings_card"
           ]
         }
       },

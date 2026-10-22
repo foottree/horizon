@@ -200,6 +200,11 @@
               },
               "blocks": {}
             },
+            "colour_siblings_card": {
+              "type": "colour-siblings-card",
+              "settings": {},
+              "blocks": {}
+            },
             "swatches": {
               "type": "swatches",
               "name": "t:names.swatches",
@@ -216,6 +221,7 @@
             "card-gallery",
             "product_title_4nY4eT",
             "price_EzJzMm",
+            "colour_siblings_card",
             "swatches"
           ]
         }
