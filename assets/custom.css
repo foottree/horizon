@@ -2555,3 +2555,36 @@ body:has(.shopify-policy__container) {
 .product-details rte-formatter h3 {
   font-size: var(--font-h4--size);
 }
+
+/* ---- Product page size pills and filter inputs: match the collection sidebar's Size pills ----
+   The Size (EU) filter pills are 56x44, 14px/600, 8px radius, 8px gap (.facets__pill-label--size-grid
+   in list-filter.liquid). The product page picker drew its own 52px-tall, 16px, 11px-gap pills, and
+   the equal-width mode stretched them to the column. variant_button_width is now "default-width-buttons"
+   (theme setting) which stops the stretching; the picker has no height, padding or font setting, so the
+   rest is CSS here. Swatch pills (colour) are excluded. Same ladder rung as the filter pills (14px). */
+.product-details .variant-option--buttons {
+  gap: 8px;
+}
+
+.product-details .variant-option__button-label:not(.variant-option__button-label--has-swatch) {
+  min-width: 56px;
+  min-height: 44px;
+  padding-block: 0;
+  padding-inline: 8px;
+  font-size: var(--font-size--sm); /* 14px */
+}
+
+/* The Price filter's two number inputs were 51px tall (12.8px padding round 16px text) against
+   44px Size pills one group above. Same 44px height; the "$" label stays centred in the box and
+   the input keeps its 32px start padding that clears it. No setting exists for either field. */
+.price-facet .price-facet__input {
+  height: 44px;
+  padding-block: 0;
+}
+
+.price-facet .price-facet__label {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding-block: 0;
+}
