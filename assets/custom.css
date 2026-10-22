@@ -2601,7 +2601,7 @@ body:has(.shopify-policy__container) {
    single class in product-media-gallery-content-styles.liquid, which compiles into
    styles.css and loads after this file, so an equal-specificity override would lose. */
 .product-media-container .product-media-container__zoom-button {
-    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 36 36'%3E%3Cpath d='M36 18c0 9.941-8.059 18-18 18S0 27.941 0 18 8.059 0 18 0s18 8.059 18 18Zm0 0' fill='%23ffffff'/%3E%3Cpath d='M24.688 18.516h-6.172v6.172h-1.032v-6.172h-6.172v-1.032h6.172v-6.172h1.032v6.172h6.172' fill='%23262622'/%3E%3C/svg%3E") 18 18, zoom-in;
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 36 36'%3E%3Ccircle cx='18' cy='18' r='17' fill='%23ffffff' stroke='%23262622' stroke-opacity='0.3' stroke-width='1'/%3E%3Cpath d='M24.688 18.516h-6.172v6.172h-1.032v-6.172h-6.172v-1.032h6.172v-6.172h1.032v6.172h6.172' fill='%23262622'/%3E%3C/svg%3E") 18 18, zoom-in;
 }
 
 /* ---- Product page labels on the 14px rung ----
