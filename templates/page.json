@@ -12,7 +12,8 @@
     "breadcrumb": {
       "type": "breadcrumb",
       "settings": {
-        "menu": "main-menu"
+        "menu": "main-menu",
+        "padding_block": 16
       }
     },
     "main": {
