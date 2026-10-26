@@ -1650,47 +1650,41 @@
         "video_1": {
           "type": "video_tile",
           "settings": {
-            "video": "shopify://files/videos/social-reel-1.mp4",
+            "video": "shopify://files/videos/foot-tree-reel-1.mp4",
             "video_url": "",
             "poster": "",
-            "duration": "0:23",
-            "alt": "Foot Tree customers wearing their shoes"
+            "duration": "0:37",
+            "alt": "Foot Tree customer video"
           }
         },
         "video_2": {
           "type": "video_tile",
           "settings": {
+            "video": "shopify://files/videos/foot-tree-reel-2.mp4",
             "video_url": "",
             "poster": "",
-            "duration": "0:18",
-            "alt": ""
+            "duration": "0:36",
+            "alt": "Foot Tree customer video"
           }
         },
         "video_3": {
           "type": "video_tile",
           "settings": {
+            "video": "shopify://files/videos/foot-tree-reel-3.mp4",
             "video_url": "",
             "poster": "",
-            "duration": "0:31",
-            "alt": ""
+            "duration": "0:43",
+            "alt": "Foot Tree customer video"
           }
         },
         "video_4": {
           "type": "video_tile",
           "settings": {
+            "video": "shopify://files/videos/foot-tree-reel-4.mp4",
             "video_url": "",
             "poster": "",
-            "duration": "0:22",
-            "alt": ""
-          }
-        },
-        "video_5": {
-          "type": "video_tile",
-          "settings": {
-            "video_url": "",
-            "poster": "",
-            "duration": "0:27",
-            "alt": ""
+            "duration": "0:59",
+            "alt": "Foot Tree customer video"
           }
         }
       },
@@ -1698,8 +1692,7 @@
         "video_1",
         "video_2",
         "video_3",
-        "video_4",
-        "video_5"
+        "video_4"
       ],
       "settings": {
         "heading": "More than 10,000 happy customers",
