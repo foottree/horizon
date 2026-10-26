@@ -1453,7 +1453,7 @@
                   "type": "button",
                   "settings": {
                     "label": "Request a quote",
-                    "link": "/pages/for-organisations",
+                    "link": "shopify://pages/wholesale",
                     "show_arrow": true,
                     "open_in_new_tab": false,
                     "style_class": "button",
