@@ -137,6 +137,18 @@
   }
 }
 
+/* The client asked for a wider details column on the product page. Stock gives the media-left
+   grid 2fr 1fr from 1200px (snippets/product-information-content.liquid, "Wider sidebar for
+   large screens"), which left the details column ~413px at 1440; 3fr 2fr makes it ~496px.
+   Stock's rule lives in a {% stylesheet %} that loads after this file, so the extra
+   .product-information prefix is what makes this win. Media-left only: the equal-columns
+   (--half) variant is untouched, and 750-1199px keeps the stock sidebar width. */
+@media screen and (min-width: 1200px) {
+  .product-information .product-information__grid:not(.product-information__grid--half, .product-information--media-none).product-information--media-left {
+    grid-template-columns: 3fr 2fr;
+  }
+}
+
 /* ---- Header ---- */
 
 /* Wordmark is the uploaded logo file (config/settings_data.json), not text. */
