@@ -170,6 +170,15 @@
     container-type: inline-size;
   }
 
+  /* Phones show two cards at 172px; 24px sides left the quote a 124px column. The body is its
+     own container, so it can't query itself; on phones cards are always this narrow. */
+  @media screen and (max-width: 749px) {
+    .review-card__body {
+      gap: 8px;
+      padding: 14px 16px 16px;
+    }
+  }
+
   .review-card__quote {
     margin: 0;
     font-family: var(--font-heading--family);

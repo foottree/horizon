@@ -182,7 +182,18 @@
   }
 
   /* The Figma's white circle (size from --video-tile-play-size, set by the section) with an
-     olive play triangle. */
+     olive play triangle. Phones cap it at 44px: on a 172px two-up tile the 56px default took a
+     third of the width. */
+  .video-tile {
+    --video-tile-play: var(--video-tile-play-size, 56px);
+  }
+
+  @media screen and (max-width: 749px) {
+    .video-tile {
+      --video-tile-play: min(var(--video-tile-play-size, 56px), 44px);
+    }
+  }
+
   .video-tile__play {
     position: absolute;
     top: 50%;
@@ -192,8 +203,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: var(--video-tile-play-size, 56px);
-    height: var(--video-tile-play-size, 56px);
+    width: var(--video-tile-play);
+    height: var(--video-tile-play);
     border-radius: 50%;
     background: rgb(255 255 255 / 92%);
     color: var(--video-tile-accent-color, #4a6a1d);
@@ -202,8 +213,8 @@
 
   .video-tile__play svg {
     /* the glyph scales with the circle (about a third of its diameter: 18px at 56) */
-    width: calc(var(--video-tile-play-size, 56px) * 0.32);
-    height: calc(var(--video-tile-play-size, 56px) * 0.32);
+    width: calc(var(--video-tile-play) * 0.32);
+    height: calc(var(--video-tile-play) * 0.32);
     color: inherit;
   }
 
