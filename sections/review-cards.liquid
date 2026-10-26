@@ -170,6 +170,7 @@
         {%- elsif icons_style == 'progress' -%}
           {%- render 'slideshow-controls',
             style: 'progress',
+            autoplay: section.settings.autoplay,
             item_count: card_count,
             show_arrows: false,
             arrows_on_media: false,
@@ -191,7 +192,7 @@
       autoplay: section.settings.autoplay,
       autoplay_speed: section.settings.autoplay_speed,
       auto_hide_controls: false,
-      infinite: false,
+      infinite: section.settings.autoplay,
       initial_slide: 0,
       slide_count: card_count,
       controls: desktop_controls
@@ -218,6 +219,7 @@
         {%- elsif icons_style == 'progress' -%}
           {%- render 'slideshow-controls',
             style: 'progress',
+            autoplay: section.settings.autoplay,
             item_count: card_count,
             show_arrows: false,
             arrows_on_media: false,
@@ -239,7 +241,7 @@
       autoplay: section.settings.autoplay,
       autoplay_speed: section.settings.autoplay_speed,
       auto_hide_controls: false,
-      infinite: false,
+      infinite: section.settings.autoplay,
       initial_slide: 0,
       slide_count: card_count,
       slideshow_gutters: 'start end',
@@ -356,6 +358,50 @@
 
   .review-cards .slideshow-controls__progress-arrows {
     display: none;
+  }
+
+  /* Autoplay: stock blends the controls with the page ("difference", meant for controls over a hero
+     photo), which turned the olive bar purple and the beige track black on the white page. */
+  .review-cards slideshow-component[autoplay] slideshow-controls.review-cards__controls {
+    mix-blend-mode: normal;
+    align-items: center;
+    margin-top: 32px;
+  }
+
+  /* Pause / play sits at the right end of the progress row, centred on the bar. */
+  .review-cards slideshow-component[autoplay] slideshow-controls .slideshow-controls__progress {
+    order: 1;
+    flex: 1 1 auto;
+    width: auto;
+    margin-top: 0;
+    min-width: 0;
+  }
+
+  .review-cards slideshow-controls .slideshow-control:is(.icon-pause, .icon-play) {
+    order: 2;
+    flex: none;
+    width: 36px;
+    height: 36px;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--review-cards-accent-color, var(--color-foreground));
+  }
+
+  .review-cards slideshow-component[autoplay]:not([paused]) .slideshow-control.icon-play,
+  .review-cards slideshow-component[paused] .slideshow-control.icon-pause {
+    display: none;
+  }
+
+  .review-cards__mobile.force-full-width slideshow-controls .slideshow-control:is(.icon-pause, .icon-play) {
+    margin-inline-end: var(--util-page-margin-offset, var(--page-margin, 16px));
+  }
+
+  .review-cards slideshow-controls .slideshow-control:is(.icon-pause, .icon-play) svg {
+    width: 16px;
+    height: 16px;
   }
 
   .review-cards__mobile.force-full-width .slideshow-controls__progress {
