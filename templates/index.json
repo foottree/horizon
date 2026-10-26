@@ -1702,7 +1702,7 @@
         "card_gap": 24,
         "image_ratio": "portrait",
         "card_radius": 8,
-        "mobile_card_size": "60cqw",
+        "mobile_card_size": "44cqw",
         "bleed_right": true,
         "enable_dots": false,
         "hide_arrows": false,
