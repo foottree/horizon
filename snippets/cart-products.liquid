@@ -315,6 +315,13 @@
                             <bdi>{{ item.original_price | money }}</bdi>
                           {% endif %}
                         </s>
+                        {%- liquid
+                          assign tag_compare_at = item.original_price
+                          if item.variant.compare_at_price > item.original_price
+                            assign tag_compare_at = item.variant.compare_at_price
+                          endif
+                        -%}
+                        {% render 'percent-off-tag', compare_at: tag_compare_at, price: item.final_price %}
                       {% else %}
                         {% if item.variant.compare_at_price > item.original_price %}
                           <span class="visually-hidden">{{ 'content.price_sale' | t }}</span>
@@ -331,6 +338,7 @@
                           <s class="compare-at-price"
                             ><bdi>{{ item.variant.compare_at_price | money }}</bdi></s
                           >
+                          {% render 'percent-off-tag', compare_at: item.variant.compare_at_price, price: item.original_price %}
                         {% endif %}
                       {% endif %}
                     </div>

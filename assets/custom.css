@@ -2649,3 +2649,26 @@ body:has(.shopify-policy__container) {
   height: 1px;
   background-color: currentColor;
 }
+
+/* ---- "<N>% OFF" tag beside a struck-through price ----
+   Rendered by snippets/percent-off-tag.liquid on the product page price block and in cart lines.
+   Same look as the card sale badge (golden soil via .color-custom-badge-sale, global badge
+   typography and radius). Chrome with no heading level and no theme setting, hence a scoped rule;
+   12px is the badge/eyebrow rung of the type ladder. */
+.percent-off-tag.percent-off-tag {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+  margin-inline-start: 8px;
+  padding-block: var(--badge-rectangle-padding-block);
+  padding-inline: var(--badge-rectangle-padding-inline);
+  color: var(--color-foreground);
+  background: var(--color-background);
+  font-family: var(--badge-font-family);
+  font-weight: var(--badge-font-weight);
+  font-size: 12px;
+  line-height: 1.4;
+  text-transform: var(--badge-text-transform);
+  border-radius: var(--badge-border-radius);
+  white-space: nowrap;
+}

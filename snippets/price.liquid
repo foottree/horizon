@@ -5,6 +5,7 @@
   @param {product} product_resource - The product to render
   @param {boolean} [show_unit_price] - Whether to show the unit price
   @param {boolean} [show_sale_price_first] - Whether to show the sale price first
+  @param {boolean} [show_percent_off] - Fork: show the "<N>% OFF" tag after the compare-at price (product page only)
 {%- enddoc -%}
 
 {% render 'price-styles' %}
@@ -13,6 +14,7 @@
   assign show_unit_price = show_unit_price | default: false
   assign show_sale_price_first = show_sale_price_first | default: false
   assign selected_variant = product_resource.selected_or_first_available_variant
+  assign show_percent_off = show_percent_off | default: false
   assign price = selected_variant.price
   assign compare_at_price = selected_variant.compare_at_price
 
@@ -111,11 +113,17 @@
           <span class="visually-hidden">{{ 'content.price_regular' | t }}&nbsp;</span>
           <bdi>{{- compare_at_price -}}</bdi>
         </span>
+        {%- if show_percent_off -%}
+          {% render 'percent-off-tag', compare_at: selected_variant.compare_at_price, price: selected_variant.price %}
+        {%- endif -%}
       {% else %}
         <span class="price-item__group price-item--regular compare-at-price">
           <span class="visually-hidden">{{ 'content.price_regular' | t }}&nbsp;</span>
           <bdi>{{- compare_at_price -}}</bdi>
         </span>
+        {%- if show_percent_off -%}
+          {% render 'percent-off-tag', compare_at: selected_variant.compare_at_price, price: selected_variant.price %}
+        {%- endif -%}
         <span class="price-item__group price">
           <span class="visually-hidden">{{ 'content.price_sale' | t }}&nbsp;</span>
           <bdi>{{ price | default: '&nbsp;' }}</bdi>

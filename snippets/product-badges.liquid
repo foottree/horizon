@@ -21,6 +21,19 @@
   elsif product.compare_at_price > product.price
     assign on_sale = true
   endif
+
+  comment
+    Sale badge reads "<N>% OFF" for the variant being shown. Integer cents, floored so a
+    discount is never overstated; under 1% falls back to the stock "Sale" text.
+  endcomment
+  assign sale_percent = 0
+  if on_sale
+    assign badge_variant = product.selected_or_first_available_variant
+    if badge_variant.compare_at_price > badge_variant.price
+      assign saved_cents = badge_variant.compare_at_price | minus: badge_variant.price
+      assign sale_percent = saved_cents | times: 100 | divided_by: badge_variant.compare_at_price
+    endif
+  endif
 -%}
 
 {%- if sold_out or on_sale or custom_badges != blank -%}
@@ -37,7 +50,11 @@
       </div>
     {%- elsif on_sale -%}
       <div class="product-badges__badge product-badges__badge--rectangle color-custom-badge-sale">
-        {{- 'content.product_badge_sale' | t -}}
+        {%- if sale_percent > 0 -%}
+          {{- sale_percent }}% OFF
+        {%- else -%}
+          {{- 'content.product_badge_sale' | t -}}
+        {%- endif -%}
       </div>
     {%- endif -%}
 

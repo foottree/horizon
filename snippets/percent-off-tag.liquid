@@ -1,0 +1,25 @@
+{%- doc -%}
+  Inline "<N>% OFF" tag shown beside a struck-through price (product page price block, cart lines).
+  Same look as the card sale badge: golden-soil background, badge typography. Renders nothing
+  when the discount is under 1%. Integer cents, floored, so a discount is never overstated.
+
+  @param {number} compare_at - Original price in cents
+  @param {number} price - Selling price in cents
+
+  @example
+  {% render 'percent-off-tag', compare_at: variant.compare_at_price, price: variant.price %}
+{%- enddoc -%}
+
+{%- liquid
+  assign tag_percent = 0
+  if compare_at > price and price >= 0
+    assign tag_saved = compare_at | minus: price
+    assign tag_percent = tag_saved | times: 100 | divided_by: compare_at
+  endif
+-%}
+{%- if tag_percent > 0 -%}
+  <span
+    class="percent-off-tag color-custom-badge-sale"
+    style="--badge-border-radius: {{ settings.badge_corner_radius }}px; --badge-font-family: var(--font-{{ settings.badge_font_family }}--family); --badge-font-weight: var(--font-{{ settings.badge_font_family }}--weight); --badge-text-transform: {{ settings.badge_text_transform }};"
+  >{{ tag_percent }}% OFF</span>
+{%- endif -%}
