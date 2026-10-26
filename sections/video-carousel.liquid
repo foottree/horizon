@@ -368,23 +368,25 @@
       >
         <span class="svg-wrapper" aria-hidden="true">{{- 'icon-close.svg' | inline_asset_content -}}</span>
       </button>
-      <button
-        type="button"
-        class="video-popover__nav video-popover__nav--previous"
-        data-video-popover-previous
-        aria-label="Previous video"
-      >
-        <span class="svg-wrapper" aria-hidden="true">{{- 'icon-caret.svg' | inline_asset_content -}}</span>
-      </button>
-      <button
-        type="button"
-        class="video-popover__nav video-popover__nav--next"
-        data-video-popover-next
-        aria-label="Next video"
-      >
-        <span class="svg-wrapper" aria-hidden="true">{{- 'icon-caret.svg' | inline_asset_content -}}</span>
-      </button>
       <div class="video-popover__frame"></div>
+      <div class="video-popover__nav-row">
+        <button
+          type="button"
+          class="video-popover__nav video-popover__nav--previous"
+          data-video-popover-previous
+          aria-label="Previous video"
+        >
+          <span class="svg-wrapper" aria-hidden="true">{{- 'icon-caret.svg' | inline_asset_content -}}</span>
+        </button>
+        <button
+          type="button"
+          class="video-popover__nav video-popover__nav--next"
+          data-video-popover-next
+          aria-label="Next video"
+        >
+          <span class="svg-wrapper" aria-hidden="true">{{- 'icon-caret.svg' | inline_asset_content -}}</span>
+        </button>
+      </div>
     </dialog>
   </video-popover>
 </div>
@@ -540,8 +542,13 @@
 
   .video-popover__dialog {
     --video-popover-frame-width: min(94vw, calc(min(90vh, 90dvh) * 9 / 16));
-    --video-popover-nav-size: 36px;
-    --video-popover-nav-offset: 6px;
+    --video-popover-nav-size: 44px;
+    --video-popover-nav-offset: -68px; /* 24px gap plus the 44px button, outside the frame */
+  }
+
+  /* Desktop: the row has no box of its own, so the buttons position against the dialog. */
+  .video-popover__nav-row {
+    display: contents;
   }
 
   .video-popover__frame {
@@ -588,8 +595,8 @@
 
   .video-popover__close .svg-wrapper {
     display: flex;
-    width: 20px;
-    height: 20px;
+    width: 30px; /* the X fills ~half of its icon box: ~16px painted */
+    height: 30px;
   }
 
   .video-popover__close svg {
@@ -635,8 +642,8 @@
 
   .video-popover__nav .svg-wrapper {
     display: flex;
-    width: 14px;
-    height: 14px;
+    width: 20px;
+    height: 20px;
   }
 
   .video-popover__nav svg {
@@ -663,10 +670,35 @@
     }
   }
 
-  @media screen and (min-width: 750px) {
+  /* Phones: the carets leave the video and sit in a row centred under it. The frame's height
+     budget reserves that row (44px button + 12px gap), and frame plus row stay centred together. */
+  @media screen and (max-width: 749px) {
+    /* The top 68px (the close button's 16px inset + 44px + 8px) and 16px at the bottom stay clear,
+       so the close button never sits on the video on short phones; 56px is the caret row. */
     .video-popover__dialog {
-      --video-popover-nav-size: 44px;
-      --video-popover-nav-offset: -68px; /* 24px gap plus the 44px button, outside the frame */
+      --video-popover-frame-width: min(94vw, calc((min(100vh, 100dvh) - 68px - 16px - 56px) * 9 / 16));
+    }
+
+    .video-popover__dialog[open] {
+      flex-direction: column;
+      padding-block: 68px 16px;
+    }
+
+    .video-popover__frame {
+      flex: none;
+    }
+
+    .video-popover__nav-row {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-block-start: 12px;
+      min-width: var(--video-popover-frame-width);
+    }
+
+    .video-popover__nav {
+      position: static;
+      margin: 0;
     }
   }
 

@@ -83,11 +83,11 @@ export class VideoPopover extends HTMLElement {
     this.open(button);
   };
 
-  /** Clicks on the dialog element itself (not the frame or buttons) are backdrop clicks. */
+  /** Clicks on the dialog element itself or the empty space of the nav row (not the frame or buttons) are backdrop clicks. */
   /** @param {MouseEvent} event */
   #onDialogClick = (event) => {
     const target = event.target instanceof Element ? event.target : null;
-    if (target === this.#dialog || target?.closest('[data-video-popover-close]')) this.close();
+    if (target === this.#dialog || target?.matches('.video-popover__nav-row') || target?.closest('[data-video-popover-close]')) this.close();
     else if (target?.closest('[data-video-popover-previous]')) this.step(-1);
     else if (target?.closest('[data-video-popover-next]')) this.step(1);
   };
