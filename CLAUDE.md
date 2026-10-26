@@ -73,11 +73,12 @@ left on the `paragraph` or `rte` preset with the body family renders 16px/400 an
 lighter than every other card on the site — that is how the recommendations rail and the
 `/collections` cards drifted. Matching the size alone is not enough; measure the weight too.
 
-**On phones (below 750px) every card title steps up to 18px together**, from one rule in
-`assets/custom.css` ("Card titles step up to 18px on mobile"). A new card type joins that rule;
-it is not sized on its own. A `{% stylesheet %}` compiles into `styles.css`, which loads after
-`custom.css`, so a one-class selector there loses the tie — that is how the collection rail sat
-at 16px beside 18px product cards. Measure at 390 after adding one.
+**Phones keep card titles at 16px too.** Until 2026-10-27 one custom.css rule stepped every card
+title up to 18px below 750px, because a phone carousel then showed one card across most of the
+screen. The client's mobile review moved the collection rail, Bestsellers, reviews and reels to
+Horizon's "Mobile columns: 2" (172px cards at 390), where 18px wrapped real product names to three
+lines, so the rule was removed. Do not reintroduce a phone-only card title size; if a single-card
+carousel ever returns, size it from the card (container query), not the viewport.
 
 ## New pages and sections: adapt the mockup, never copy it 1:1
 

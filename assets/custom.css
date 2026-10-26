@@ -1989,27 +1989,6 @@ swatches-variant-picker-component {
   height: var(--header-padding, 14px);
 }
 
-/* ---- Card titles step up to 18px on mobile ----
-   16px is right beside a desktop grid of cards, but on a phone the card is most of the screen
-   and the title stopped carrying the card. This is the next rung up, not a new size, and it is
-   applied to every card title together so products, collections and the drawer tiles stay in
-   step - the whole point of the single card ladder. Prices stay at 16px, so the title now leads
-   the card instead of tying with them.
-
-   Hooks: the product card title is an unclassed <p role="heading"> inside Horizon's
-   ref="productTitleLink" anchor, which is the stable handle for it. The rail title is scoped
-   under .collection-rail because snippets/collection-tile.liquid sets its own 16px in a
-   {% stylesheet %}, which compiles into styles.css, loads after this file and won the tie at one
-   class - the rail sat at 16px on phones while product cards were 18px. */
-@media screen and (max-width: 749px) {
-  [ref='productTitleLink'] p,
-  .collection-rail .collection-rail__tile-title,
-  .collection-card p,
-  #header-component .menu-drawer__tile-label {
-    font-size: var(--font-size--lg); /* 18px */
-  }
-}
-
 /* ---- Section titles step down to 28px on mobile ----
    h2 is the section-title rung at 32px, which is right on a desktop column but heavy across a
    390px screen, where the title is most of the line. 28px is the next rung down, not a new size.
