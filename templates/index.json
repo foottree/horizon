@@ -1698,7 +1698,7 @@
         "heading": "More than 10,000 happy customers",
         "columns": 4,
         "card_gap": 24,
-        "image_ratio": "vertical",
+        "image_ratio": "portrait",
         "card_radius": 8,
         "mobile_card_size": "60cqw",
         "bleed_right": true,

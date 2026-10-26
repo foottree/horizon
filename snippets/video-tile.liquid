@@ -1,26 +1,27 @@
 {%- doc -%}
-  Renders one video tile for sections/video-carousel.liquid (homepage section 09, "Social —
-  video carousel" in the client's Figma): a cover image/video with a centred play button and
-  a bottom-left duration chip. Rendered once per `video_tile` block and reused in both the
+  Renders one video tile for sections/video-carousel.liquid (homepage section 09, "Social -
+  video carousel" in the client's Figma): a cover image with a centred play button and a
+  bottom-left duration chip. Rendered once per `video_tile` block and reused in both the
   desktop and mobile slideshows - see sections/video-carousel.liquid for why (a Horizon
   section can't read theme-block settings, so the section loops its own section-local
   `video_tile` blocks and renders each one through this snippet directly, the same technique
   snippets/review-card.liquid uses for sections/review-cards.liquid).
 
+  Behaviour: the tile NEVER loads or plays video inline. It is a plain button holding the
+  poster image and the play icon. Clicking or tapping it (anywhere on the tile) asks the
+  section's single <video-popover> dialog (assets/video-popover.js, rendered once in
+  sections/video-carousel.liquid) to open this tile's video at 9:16 with sound and native
+  controls. The video markup sits in a <template> inside the tile, so nothing downloads until
+  the popover opens; the popover clones it in and removes it again on close.
+
   Video source: the uploaded `video` field wins when present; `video_url` (YouTube/Vimeo) is
-  the fallback when no video is uploaded; when neither is set, `snippets/video.liquid`'s own
-  placeholder branch renders an inert poster (or a generic placeholder image) with the play
-  button still visible, so the block never looks empty in the editor.
+  the fallback when no video is uploaded (rendered as an iframe in the same template); when
+  neither is set the tile renders an inert placeholder poster with the play icon still
+  visible, so the block never looks empty in the editor.
 
-  Tap-to-play only, never autoplay, matching the mockup's own note - `video_autoplay` is never
-  passed, so `snippets/video.liquid` always defers to a click.
-
-  The stock poster button's markup is never restructured - assets/base.css keys several
-  selectors off `deferred-media`'s exact direct children (e.g. `deferred-media > .deferred-
-  media__poster-button ~ *`) and breaks if that structure changes. The circular play
-  button (diameter from the section's "Play button size" setting, default 56px) and the duration chip are CSS restyles/siblings only: the chip is an absolutely-
-  positioned sibling of whatever `snippets/video.liquid` renders (deferred-media or the inert
-  placeholder), both direct children of this tile.
+  The circular play button (diameter from the section's "Play button size" setting, default
+  56px) and the duration chip are positioned against .video-tile, which is display:block -
+  Safari resolves `left: 50%` against an inline positioned ancestor as 0.
 
   @param {object} [video] - Uploaded Shopify video.
   @param {object} [video_url] - `video_url` setting value (external YouTube/Vimeo), used only
@@ -28,7 +29,7 @@
   @param {object} [poster] - Cover image override. Falls back to the uploaded video's own
     preview image when blank.
   @param {string} [duration] - Duration chip text, e.g. "0:24". No chip renders when blank.
-  @param {string} [alt] - Accessible description for an external video.
+  @param {string} [alt] - Accessible description for the video, added to the button label.
   @param {string} [image_ratio] - 'portrait' | 'vertical' | 'square' - the tile's aspect ratio.
   @param {number} [card_radius] - Corner radius in px.
   @param {string} [block_attributes] - `block.shopify_attributes` for the block this tile
@@ -53,7 +54,16 @@
   if video != blank
     assign has_uploaded = true
   endif
+  assign has_media = false
+  if has_uploaded or video_url != blank
+    assign has_media = true
+  endif
   assign preview_image = poster | default: video.preview_image
+  assign tile_alt = alt | default: video.alt
+  assign play_label = 'accessibility.play_video' | t
+  if tile_alt != blank
+    assign play_label = play_label | append: ': ' | append: tile_alt
+  endif
 -%}
 
 <div
@@ -61,23 +71,52 @@
   style="--video-tile-radius: {{ card_radius | default: 8 }}px;"
   {{ block_attributes }}
 >
-  {%- if has_uploaded -%}
-    {%- render 'video',
-      video: video,
-      video_loop: false,
-      video_unmuted: true,
-      video_preview_image: preview_image
-    -%}
+  {%- capture poster_html -%}
+    {%- if preview_image != blank -%}
+      {{
+        preview_image
+        | image_url: width: 960
+        | image_tag: widths: '240, 352, 480, 640, 960', sizes: '(min-width: 750px) 300px, 60vw', loading: 'lazy', alt: '', class: 'video-tile__poster'
+      }}
+    {%- else -%}
+      {{ 'hero-apparel-3' | placeholder_svg_tag: 'video-tile__poster' }}
+    {%- endif -%}
+    <span class="video-tile__play icon-play">
+      {{- 'icon-play.svg' | inline_asset_content -}}
+    </span>
+  {%- endcapture -%}
+
+  {%- if has_media -%}
+    <button
+      type="button"
+      class="video-tile__button"
+      data-video-popover-open
+      aria-label="{{ play_label | escape }}"
+    >
+      {{ poster_html }}
+    </button>
+
+    <template class="video-tile__media">
+      {%- if has_uploaded -%}
+        {{ video | video_tag: image_size: '1080x', autoplay: true, controls: true, playsinline: true, loop: false, muted: false, preload: 'auto' }}
+      {%- else -%}
+        {%- if video_url.type == 'youtube' -%}
+          {%- assign embed_src = 'https://www.youtube.com/embed/' | append: video_url.id | append: '?autoplay=1&playsinline=1&rel=0' -%}
+        {%- else -%}
+          {%- assign embed_src = 'https://player.vimeo.com/video/' | append: video_url.id | append: '?autoplay=1&playsinline=1' -%}
+        {%- endif -%}
+        <iframe
+          src="{{ embed_src }}"
+          allow="autoplay; encrypted-media; fullscreen"
+          allowfullscreen
+          title="{{ tile_alt | default: 'Customer video' | escape }}"
+        ></iframe>
+      {%- endif -%}
+    </template>
   {%- else -%}
-    {%- render 'video',
-      video_from_url: true,
-      video: video_url.id,
-      video_loop: false,
-      video_unmuted: true,
-      video_type: video_url.type,
-      video_alt: alt,
-      video_preview_image: preview_image
-    -%}
+    <div class="video-tile__button video-tile__button--inert">
+      {{ poster_html }}
+    </div>
   {%- endif -%}
 
   {%- if duration != blank -%}
@@ -107,41 +146,65 @@
     aspect-ratio: 1 / 1;
   }
 
-  .video-tile deferred-media,
-  .video-tile .video-placeholder-wrapper {
-    height: 100%;
-    width: 100%;
-  }
-
-  /* deferred-media is an unstyled custom element, so it defaults to inline. It is the play
-     icon's positioned ancestor, and Safari resolves `left: 50%` against an inline box that
-     wraps a block button as 0px wide, which pinned the icon to the tile's left edge. */
-  .video-tile deferred-media {
+  /* The tile is the positioned ancestor of the play circle and the duration chip, and it is
+     display:block (above) so Safari centres the circle correctly. The button itself is
+     deliberately NOT positioned. */
+  .video-tile__button {
     display: block;
-  }
-
-  .video-tile deferred-media .deferred-media__poster-image {
     width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: inherit;
+    background: none;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    appearance: none;
+    -webkit-tap-highlight-color: transparent;
   }
 
-  /* Restyle the stock poster button into the Figma's white circle (size from --video-tile-play-size, set by the section) with an olive play
-     triangle - CSS only. Covers both the interactive deferred-media poster button and the
-     inert video-placeholder-wrapper button rendered when there's no video/poster at all. */
-  .video-tile .deferred-media__poster-icon,
-  .video-tile .video-placeholder-wrapper__poster-icon {
+  .video-tile__button--inert {
+    cursor: default;
+  }
+
+  .video-tile__button:focus-visible {
+    outline: 2px solid var(--video-tile-accent-color, currentcolor);
+    outline-offset: -4px;
+  }
+
+  .video-tile__poster {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* The Figma's white circle (size from --video-tile-play-size, set by the section) with an
+     olive play triangle. */
+  .video-tile__play {
+    position: absolute;
+    top: 50%;
+    left: 50%; /* stylelint-disable-line csstools/use-logical -- centring pair with a physical translate(-50%) */
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: var(--video-tile-play-size, 56px);
     height: var(--video-tile-play-size, 56px);
+    border-radius: 50%;
     background: rgb(255 255 255 / 92%);
     color: var(--video-tile-accent-color, #4a6a1d);
+    pointer-events: none;
   }
 
-  .video-tile .deferred-media__poster-icon svg,
-  .video-tile .video-placeholder-wrapper__poster-icon svg {
+  .video-tile__play svg {
     /* the glyph scales with the circle (about a third of its diameter: 18px at 56) */
     width: calc(var(--video-tile-play-size, 56px) * 0.32);
     height: calc(var(--video-tile-play-size, 56px) * 0.32);
     color: inherit;
-    filter: none;
   }
 
   .video-tile__duration {
@@ -153,6 +216,7 @@
     border-radius: 4px;
     background: var(--video-tile-chip-bg, rgb(38 38 34 / 78%));
     color: #fff;
+    pointer-events: none;
     font-family: var(--font-subheading--family);
     font-weight: 600;
     /* 12px is the ladder's floor (caption rung; --xs is 13px), so the chip shrinks through

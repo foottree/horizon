@@ -357,7 +357,26 @@
       controls: mobile_controls
     -%}
   </div>
+
+  <video-popover class="video-popover">
+    <dialog class="video-popover__dialog" aria-label="Customer video">
+      <button
+        type="button"
+        class="video-popover__close"
+        data-video-popover-close
+        aria-label="Close video"
+      >
+        <span class="svg-wrapper" aria-hidden="true">{{- 'icon-close.svg' | inline_asset_content -}}</span>
+      </button>
+      <div class="video-popover__frame"></div>
+    </dialog>
+  </video-popover>
 </div>
+
+<script
+  src="{{ 'video-popover.js' | asset_url }}"
+  type="module"
+></script>
 
 {% stylesheet %}
   .video-carousel__header {
@@ -472,6 +491,100 @@
      arrows so they never double up next to the track. */
   .video-carousel .slideshow-controls__progress-arrows {
     display: none;
+  }
+
+  /* Video popover: one native <dialog> per section (assets/video-popover.js). The dialog
+     fills the viewport and is transparent, so a click on the dialog itself is a backdrop
+     click; the frame is the largest 9:16 box that fits the viewport height. */
+  .video-popover {
+    display: contents;
+  }
+
+  .video-popover__dialog {
+    width: 100vw;
+    max-width: none;
+    height: 100dvh;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    overflow: hidden;
+  }
+
+  .video-popover__dialog[open] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .video-popover__dialog::backdrop {
+    background: rgb(0 0 0 / 80%);
+  }
+
+  .video-popover__frame {
+    width: min(94vw, calc(min(90vh, 90dvh) * 9 / 16));
+    aspect-ratio: 9 / 16;
+    background: #000;
+    border-radius: var(--video-tile-radius, 8px);
+    overflow: hidden;
+  }
+
+  .video-popover__frame video,
+  .video-popover__frame iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    object-fit: contain;
+    background: #000;
+  }
+
+  .video-popover__close {
+    position: absolute;
+    top: 16px;
+    right: 16px; /* stylelint-disable-line csstools/use-logical -- always the top-right corner */
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: rgb(255 255 255 / 92%);
+    color: var(--video-tile-accent-color, #4a6a1d);
+    cursor: pointer;
+  }
+
+  .video-popover__close:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+  }
+
+  .video-popover__close .svg-wrapper {
+    display: flex;
+    width: 20px;
+    height: 20px;
+  }
+
+  .video-popover__close svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .video-popover__dialog[open] {
+      animation: video-popover-in 180ms ease-out;
+    }
+
+    @keyframes video-popover-in {
+      from {
+        opacity: 0;
+      }
+    }
   }
 
   .video-carousel__mobile.force-full-width .slideshow-controls__progress,
