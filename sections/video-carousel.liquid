@@ -368,6 +368,22 @@
       >
         <span class="svg-wrapper" aria-hidden="true">{{- 'icon-close.svg' | inline_asset_content -}}</span>
       </button>
+      <button
+        type="button"
+        class="video-popover__nav video-popover__nav--previous"
+        data-video-popover-previous
+        aria-label="Previous video"
+      >
+        <span class="svg-wrapper" aria-hidden="true">{{- 'icon-caret.svg' | inline_asset_content -}}</span>
+      </button>
+      <button
+        type="button"
+        class="video-popover__nav video-popover__nav--next"
+        data-video-popover-next
+        aria-label="Next video"
+      >
+        <span class="svg-wrapper" aria-hidden="true">{{- 'icon-caret.svg' | inline_asset_content -}}</span>
+      </button>
       <div class="video-popover__frame"></div>
     </dialog>
   </video-popover>
@@ -522,8 +538,14 @@
     background: rgb(0 0 0 / 80%);
   }
 
+  .video-popover__dialog {
+    --video-popover-frame-width: min(94vw, calc(min(90vh, 90dvh) * 9 / 16));
+    --video-popover-nav-size: 36px;
+    --video-popover-nav-offset: 6px;
+  }
+
   .video-popover__frame {
-    width: min(94vw, calc(min(90vh, 90dvh) * 9 / 16));
+    width: var(--video-popover-frame-width);
     aspect-ratio: 9 / 16;
     background: #000;
     border-radius: var(--video-tile-radius, 8px);
@@ -573,6 +595,79 @@
   .video-popover__close svg {
     width: 100%;
     height: 100%;
+  }
+
+  /* Previous / next: the product lightbox's controls (round disc, small chevron, hover scale) in
+     the close button's white and olive. Desktop: just outside the frame, vertically centred.
+     Phones: the frame is ~94vw wide, so they overlay its edges, smaller; the native controls bar
+     is at the bottom, well clear of the vertical centre. */
+  .video-popover__nav {
+    position: absolute;
+    top: 50%;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--video-popover-nav-size);
+    height: var(--video-popover-nav-size);
+    margin: calc(var(--video-popover-nav-size) / -2) 0 0;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: rgb(255 255 255 / 92%);
+    color: var(--video-tile-accent-color, #4a6a1d);
+    box-shadow: 0 2px 10px rgb(0 0 0 / 15%);
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+  }
+
+  .video-popover__nav[hidden] {
+    display: none;
+  }
+
+  .video-popover__nav--previous {
+    left: calc(50% - var(--video-popover-frame-width) / 2 + var(--video-popover-nav-offset)); /* stylelint-disable-line csstools/use-logical -- positioned against the frame's physical edge */
+  }
+
+  .video-popover__nav--next {
+    right: calc(50% - var(--video-popover-frame-width) / 2 + var(--video-popover-nav-offset)); /* stylelint-disable-line csstools/use-logical -- positioned against the frame's physical edge */
+  }
+
+  .video-popover__nav .svg-wrapper {
+    display: flex;
+    width: 14px;
+    height: 14px;
+  }
+
+  .video-popover__nav svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .video-popover__nav--previous svg {
+    rotate: 90deg;
+  }
+
+  .video-popover__nav--next svg {
+    rotate: -90deg;
+  }
+
+  .video-popover__nav:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+  }
+
+  @media screen and (pointer: fine) {
+    .video-popover__nav:hover {
+      transform: scale(1.1);
+    }
+  }
+
+  @media screen and (min-width: 750px) {
+    .video-popover__dialog {
+      --video-popover-nav-size: 44px;
+      --video-popover-nav-offset: -68px; /* 24px gap plus the 44px button, outside the frame */
+    }
   }
 
   @media (prefers-reduced-motion: no-preference) {

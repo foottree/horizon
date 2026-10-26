@@ -5,6 +5,10 @@
  * `[data-video-popover-open]` button and a <template class="video-tile__media"> holding the
  * <video> or <iframe>. Nothing in a template downloads until it is cloned here, and the clone
  * is removed again on close, so only one video ever exists (and plays) at a time.
+ *
+ * Previous / next buttons (and the arrow keys) swap the video in place, wrapping around at the
+ * ends. The section renders every tile twice (a desktop copy and a mobile copy, one hidden), so
+ * the playlist is the copy the opening tile belongs to: each video once, in block order.
  */
 export class VideoPopover extends HTMLElement {
   /** @type {HTMLDialogElement | null} */
@@ -13,8 +17,13 @@ export class VideoPopover extends HTMLElement {
   #frame = null;
   /** @type {HTMLElement | null} */
   #root = null;
+  /** The tile button of the video currently shown; focus returns to it on close. */
   /** @type {HTMLElement | null} */
   #opener = null;
+  /** Tile buttons of the copy that opened the popover, in block order. */
+  /** @type {HTMLElement[]} */
+  #items = [];
+  #index = 0;
   /** @type {{ x: number, y: number } | null} */
   #pointerStart = null;
   #movedTooFar = false;
@@ -31,6 +40,7 @@ export class VideoPopover extends HTMLElement {
     this.#root.addEventListener('click', this.#onRootClick);
     this.#dialog.addEventListener('click', this.#onDialogClick);
     this.#dialog.addEventListener('close', this.#onClose);
+    this.#dialog.addEventListener('keydown', this.#onKeyDown);
   }
 
   disconnectedCallback() {
@@ -39,6 +49,7 @@ export class VideoPopover extends HTMLElement {
     this.#root?.removeEventListener('click', this.#onRootClick);
     this.#dialog?.removeEventListener('click', this.#onDialogClick);
     this.#dialog?.removeEventListener('close', this.#onClose);
+    this.#dialog?.removeEventListener('keydown', this.#onKeyDown);
     this.#unlockScroll();
   }
 
@@ -72,11 +83,23 @@ export class VideoPopover extends HTMLElement {
     this.open(button);
   };
 
-  /** Clicks on the dialog element itself (not the frame or close button) are backdrop clicks. */
+  /** Clicks on the dialog element itself (not the frame or buttons) are backdrop clicks. */
   /** @param {MouseEvent} event */
   #onDialogClick = (event) => {
     const target = event.target instanceof Element ? event.target : null;
     if (target === this.#dialog || target?.closest('[data-video-popover-close]')) this.close();
+    else if (target?.closest('[data-video-popover-previous]')) this.step(-1);
+    else if (target?.closest('[data-video-popover-next]')) this.step(1);
+  };
+
+  /** Arrow keys move between videos, except while focus is on the video itself (its controls seek with them). */
+  /** @param {KeyboardEvent} event */
+  #onKeyDown = (event) => {
+    if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+    if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+    if (event.target instanceof HTMLVideoElement || event.target instanceof HTMLIFrameElement) return;
+    event.preventDefault();
+    this.step(event.key === 'ArrowRight' ? 1 : -1);
   };
 
   /**
@@ -85,24 +108,64 @@ export class VideoPopover extends HTMLElement {
    */
   open(button) {
     const dialog = this.#dialog;
-    const frame = this.#frame;
-    const template = button.closest('.video-tile')?.querySelector('template.video-tile__media');
-    if (!dialog || !frame || !(template instanceof HTMLTemplateElement) || dialog.open) return;
+    if (!dialog || !this.#frame || dialog.open) return;
+    if (!(button.closest('.video-tile')?.querySelector('template.video-tile__media') instanceof HTMLTemplateElement)) return;
 
-    this.#opener = button;
-    frame.replaceChildren(template.content.cloneNode(true));
+    const container = button.closest('.video-carousel__desktop-grid, .video-carousel__desktop, .video-carousel__mobile') ?? this.#root;
+    const items = /** @type {HTMLElement[]} */ ([...(container?.querySelectorAll('[data-video-popover-open]') ?? [])]);
+    this.#items = items.includes(button) ? items : [button];
+    this.#index = this.#items.indexOf(button);
+
+    dialog.querySelectorAll('[data-video-popover-previous], [data-video-popover-next]').forEach((control) => {
+      /** @type {HTMLElement} */ (control).hidden = this.#items.length < 2;
+    });
 
     this.#lockScroll();
     dialog.showModal();
     /** @type {HTMLElement | null} */ (dialog.querySelector('.video-popover__close'))?.focus();
+    this.#show();
+  }
+
+  /**
+   * Swaps the video in place, wrapping around at the ends.
+   * @param {number} direction - 1 for next, -1 for previous.
+   */
+  step(direction) {
+    if (!this.#dialog?.open || this.#items.length < 2) return;
+    this.#index = (this.#index + direction + this.#items.length) % this.#items.length;
+    this.#show();
+  }
+
+  /** Unloads whatever is in the frame, then clones in the current tile's video and plays it with sound. */
+  #show() {
+    const frame = this.#frame;
+    const button = this.#items[this.#index];
+    const template = button?.closest('.video-tile')?.querySelector('template.video-tile__media');
+    if (!frame || !(template instanceof HTMLTemplateElement)) return;
+
+    this.#unloadMedia();
+    this.#opener = button;
+    frame.replaceChildren(template.content.cloneNode(true));
 
     const video = frame.querySelector('video');
     if (video) {
       video.muted = false;
-      // The click is a user gesture, so playing with sound is allowed. Controls stay available
-      // if the browser still refuses.
+      // The click or key press is a user gesture, so playing with sound is allowed. Controls stay
+      // available if the browser still refuses.
       video.play().catch(() => {});
     }
+  }
+
+  #unloadMedia() {
+    const frame = this.#frame;
+    if (!frame) return;
+    frame.querySelectorAll('video').forEach((video) => {
+      video.pause();
+      video.removeAttribute('src');
+      video.querySelectorAll('source').forEach((source) => source.remove());
+      video.load();
+    });
+    frame.replaceChildren();
   }
 
   close() {
@@ -111,20 +174,11 @@ export class VideoPopover extends HTMLElement {
 
   /** Runs for every way the dialog closes: close button, Esc, backdrop, or close(). */
   #onClose = () => {
-    const frame = this.#frame;
-    if (frame) {
-      frame.querySelectorAll('video').forEach((video) => {
-        video.pause();
-        video.removeAttribute('src');
-        video.querySelectorAll('source').forEach((source) => source.remove());
-        video.load();
-      });
-      frame.replaceChildren();
-    }
-
+    this.#unloadMedia();
     this.#unlockScroll();
     this.#opener?.focus({ preventScroll: true });
     this.#opener = null;
+    this.#items = [];
   };
 
   #lockScroll() {
