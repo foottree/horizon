@@ -113,6 +113,13 @@
     width: 100%;
   }
 
+  /* deferred-media is an unstyled custom element, so it defaults to inline. It is the play
+     icon's positioned ancestor, and Safari resolves `left: 50%` against an inline box that
+     wraps a block button as 0px wide, which pinned the icon to the tile's left edge. */
+  .video-tile deferred-media {
+    display: block;
+  }
+
   .video-tile deferred-media .deferred-media__poster-image {
     width: 100%;
   }
