@@ -1385,9 +1385,14 @@
 
 @media screen and (max-width: 749px) {
   /* The slide's height comes from the section's "Adapt to first image" setting, which reads the
-     mobile key visual's own ratio (2:3 here) less its "Trim on mobile", so nothing is set for it in this file. */
+     mobile key visual's own ratio (2:3 here) less its "Trim on mobile", so nothing is set for it in this file.
+     The bottom padding reserves 12px plus the photo below the model's head (head at ~54% of
+     each 2:3 mobile key visual, so 46% x 150vw = 69vw). On narrow phones the copy wraps further
+     and the slide grows back instead of "Trim on mobile" pulling her head under the button; on
+     wide phones the trimmed min-height still wins. If the mobile photos are replaced with a
+     different composition, re-measure 69vw. */
   #MainContent .ft-hero .slide__content {
-    padding: 28px 20px 56px;
+    padding: 28px 20px max(56px, calc(12px + 69vw));
   }
 
   /* the panel carries its alignment and gap as inline custom properties, so the properties
@@ -2631,7 +2636,7 @@ body:has(.shopify-policy__container) {
 
 /* ---- "<N>% OFF" tag beside a struck-through price ----
    Rendered by snippets/percent-off-tag.liquid on the product page price block and in cart lines.
-   Same look as the card sale badge (golden soil via .color-custom-badge-sale, global badge
+   Same look as the card sale badge (sale red, white text, via .color-custom-badge-sale, global badge
    typography and radius). Chrome with no heading level and no theme setting, hence a scoped rule;
    12px is the badge/eyebrow rung of the type ladder. */
 .percent-off-tag.percent-off-tag {

@@ -4,13 +4,13 @@
   `custom.product_badges` metafield (a list of "Product Badges" metaobjects, each with a
   label, background colour and text colour; draft entries are not returned by Liquid).
 
-  The sale badge is skipped when `hide_sale` is passed (product cards do this, because their
-  "<N>% OFF" sits under the price).
+  The sale badge is skipped when `hide_sale` is passed (product cards and the product page
+  gallery do this, because the price carries the "<N>% OFF" in both places).
 
   Position, corner radius and typography come from the global Badges theme settings.
 
   @param {object} product - The product to render badges for
-  @param {boolean} [hide_sale] - Fork: skip the sale badge; cards show the "<N>% OFF" under the price instead
+  @param {boolean} [hide_sale] - Fork: skip the sale badge; product cards and the product page gallery pass it, because the price carries the "<N>% OFF" instead
 
   @example
   {% render 'product-badges', product: product %}

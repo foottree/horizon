@@ -66,7 +66,9 @@ cards, the product page's "You may also like" rail, and both mega-menu tile grid
 (`.ft-tiles__label`, `.menu-drawer__tile-label`). A row of cards should read evenly whether it
 holds products or collections.
 
-**16px at weight 600**, and the weight comes from the *font family*, not a weight setting:
+**16px at weight 600, line height 1.4** (`--line-height--body-normal`, the text block's "Normal"; a
+custom card such as `snippets/collection-tile.liquid` must set it, or it inherits the 1.6 body
+leading), and the weight comes from the *font family*, not a weight setting:
 `--font-subheading--weight` is 600 and `--font-body--weight` is 400. A card title block must be
 `type_preset: "custom"` + `font: "var(--font-subheading--family)"` + `font_size: ""`. A block
 left on the `paragraph` or `rte` preset with the body family renders 16px/400 and looks
@@ -138,9 +140,11 @@ in a phone pass is below 750px only.
   packshot becomes 2:1, and a looping video is checked at several frames. The shoes stay in frame.
 - **A tight composition is barely cropped.** The homepage hero carries copy over its top half and the model
   under it (head at ~55% of every mobile key visual, shoes at ~92%). The slideshow's "Trim on mobile"
-  (`slide_height_trim_mobile`, px, bottom-anchored) is at 20 since 2026-10-28, on the user's call: button
-  to head is then 8px at 390 and -5px at 375 (hair just under the button), 66px at 430. Anything more
-  needs a new phone crop of the photo from the client, not code.
+  (`slide_height_trim_mobile`, px, bottom-anchored) is at 20 since 2026-10-28. The ft-hero phone rule in
+  custom.css floors the slide with `padding-bottom: max(56px, calc(12px + 69vw))` (12px + the photo
+  from her head down), so narrow phones grow back instead of the trim pulling her head under the
+  button: button to head measures 10 / 16 / 17 / 51 / 66px at 360 / 375 / 390 / 412 / 430. Re-measure
+  69vw if the mobile photos change. Anything more needs a new phone crop from the client, not code.
 - **A stack of full-width tiles** shrinks with the block's own phone width (image `width_mobile` custom
   70) or takes the tablet grid down to phones (Industries: the feature tile full width, then two per row).
 - **Carousels use Horizon's "Mobile columns: 1 / 2"** (`mobile_card_size`, 60cqw / 44cqw), the stock

@@ -213,7 +213,7 @@
 -%}
 {%- capture badges_html -%}
   {%- if block_settings.show_badges and selected_product != blank -%}
-    {%- capture badges_inner -%}{%- render 'product-badges', product: selected_product -%}{%- endcapture -%}
+    {%- capture badges_inner -%}{%- render 'product-badges', product: selected_product, hide_sale: true -%}{%- endcapture -%}
     {%- if badges_inner contains 'product-badges' -%}
       <div class="product-media-badges" style="--padding-block-start: 0px; --padding-inline-start: 0px; --padding-block-end: 0px; --padding-inline-end: 0px;">
         {{- badges_inner -}}

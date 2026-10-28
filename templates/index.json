@@ -1644,7 +1644,7 @@
         "padding-block-end": 30,
         "custom_mobile_padding": true,
         "mobile-padding-block-start": 46,
-        "mobile-padding-block-end": 46,
+        "mobile-padding-block-end": 40,
         "mobile-padding-inline-start": 0,
         "mobile-padding-inline-end": 0
       }
@@ -1720,7 +1720,7 @@
         "padding-block-end": 50,
         "custom_mobile_padding": true,
         "mobile-padding-block-start": 46,
-        "mobile-padding-block-end": 91,
+        "mobile-padding-block-end": 83,
         "mobile-padding-inline-start": 0,
         "mobile-padding-inline-end": 0
       }
