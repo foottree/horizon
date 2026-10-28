@@ -44,6 +44,11 @@
       with id "shopify-section-" + section.id and class "shopify-section", so the per-section
       class this rule named until now does not exist in the markup and it never matched anything,
       which is why the option had no effect before.
+
+      On phones the slide is the mobile key visual's own shape (2:3 here). The section's "Trim on
+      mobile" setting makes it that many pixels shorter, and the media is anchored to its bottom
+      edge, so the trim comes off the empty wall above the subject and the shoes and the
+      slideshow dots keep their place.
     {% endcomment %}
     {% liquid
       assign adapt_vw = 1 | divided_by: preview_image.aspect_ratio | times: 100
@@ -51,6 +56,7 @@
 
       assign adapt_image_mobile = block_settings.image_1_mobile | default: preview_image
       assign adapt_vw_mobile = 1 | divided_by: adapt_image_mobile.aspect_ratio | times: 100
+      assign adapt_trim_mobile = section.settings.slide_height_trim_mobile | default: 0
     %}
     {% style %}
       #shopify-section-{{ section.id }} slideshow-slides,
@@ -64,8 +70,18 @@
           /* the mobile artwork is a different crop, so below 750px follow that file's shape; the
              cap is deliberately not applied here, since a portrait image capped by a desktop
              height would be cropped on every phone */
-          min-height: {{ adapt_vw_mobile }}vw;
+          min-height: {% if adapt_trim_mobile > 0 %}calc({{ adapt_vw_mobile }}vw - {{ adapt_trim_mobile }}px){% else %}{{ adapt_vw_mobile }}vw{% endif %};
         }
+        {%- if adapt_trim_mobile > 0 %}
+
+        /* "Trim on mobile": the box is shorter than the photo, so cover trims the difference.
+           Anchor the media to the bottom so it comes off the top. */
+        #shopify-section-{{ section.id }} .slide__image-container .slide__image,
+        #shopify-section-{{ section.id }} .slide__image-container .slide__video-poster,
+        #shopify-section-{{ section.id }} .slide__image-container .slide__video > video {
+          object-position: 50% 100%;
+        }
+        {%- endif %}
       }
     {% endstyle %}
   {% endif %}

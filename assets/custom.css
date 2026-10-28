@@ -1338,7 +1338,7 @@
     display: none;
   }
 
-  /* the slide is exactly the 2:3 image tall on mobile (see .ft-hero), so the dots row
+  /* the slide is the 2:3 image tall on mobile, less the section's "Trim on mobile" (see .ft-hero), so the dots row
      (collapsed to its 10px dots via min-height: 0) sits 16px above the image's bottom edge */
   #MainContent .slideshow-section--controls-inline slideshow-controls[controls-on-media] {
     bottom: 16px;
@@ -1385,7 +1385,7 @@
 
 @media screen and (max-width: 749px) {
   /* The slide's height comes from the section's "Adapt to first image" setting, which reads the
-     mobile key visual's own ratio (2:3 here), so nothing is set for it in this file. */
+     mobile key visual's own ratio (2:3 here) less its "Trim on mobile", so nothing is set for it in this file. */
   #MainContent .ft-hero .slide__content {
     padding: 28px 20px 56px;
   }

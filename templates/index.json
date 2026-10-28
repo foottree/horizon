@@ -504,7 +504,8 @@
         "custom_class": "ft-hero",
         "padding-block-start": 0,
         "padding-block-end": 0,
-        "slide_height_max": 720
+        "slide_height_max": 720,
+        "slide_height_trim_mobile": 20
       }
     },
     "collection_rail_overlay": {
@@ -1284,7 +1285,7 @@
             "padding-inline-end": 56,
             "custom_mobile_padding": true,
             "mobile-padding-block-start": 0,
-            "mobile-padding-block-end": 91,
+            "mobile-padding-block-end": 0,
             "mobile-padding-inline-start": 20,
             "mobile-padding-inline-end": 20,
             "css_class": "panel"
@@ -1511,6 +1512,7 @@
             "custom_width": 54,
             "width_mobile": "fill",
             "custom_width_mobile": 100,
+            "hide_on_mobile": true,
             "height": "fill",
             "border": "none",
             "border_width": 1,

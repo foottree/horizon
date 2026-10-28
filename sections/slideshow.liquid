@@ -326,6 +326,18 @@
     },
     {
       "type": "range",
+      "id": "slide_height_trim_mobile",
+      "label": "Trim on mobile",
+      "info": "Makes the slide this many pixels shorter on phones. The top of the photo is trimmed, so the bottom of the photo stays in place.",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 0,
+      "visible_if": "{{ section.settings.slide_height == 'adapt_image' }}"
+    },
+    {
+      "type": "range",
       "id": "slide_height_custom",
       "label": "t:settings.desktop_height",
       "min": 200,

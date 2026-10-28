@@ -136,9 +136,11 @@ in a phone pass is below 750px only.
 - **Shorten tall media by cropping, not shrinking.** A phone-only `aspect-ratio` plus
   `object-position` keeps the subject: a 4:5 portrait becomes 4:3 with the focus low, a white-background
   packshot becomes 2:1, and a looping video is checked at several frames. The shoes stay in frame.
-- **A tight composition is not cropped.** The homepage hero carries copy over its top half and the model
-  under it; shorter would cut her shoes or put her under the button. That needs a new phone crop of the
-  photo from the client, not code.
+- **A tight composition is barely cropped.** The homepage hero carries copy over its top half and the model
+  under it (head at ~55% of every mobile key visual, shoes at ~92%). The slideshow's "Trim on mobile"
+  (`slide_height_trim_mobile`, px, bottom-anchored) is at 20 since 2026-10-28, on the user's call: button
+  to head is then 8px at 390 and -5px at 375 (hair just under the button), 66px at 430. Anything more
+  needs a new phone crop of the photo from the client, not code.
 - **A stack of full-width tiles** shrinks with the block's own phone width (image `width_mobile` custom
   70) or takes the tablet grid down to phones (Industries: the feature tile full width, then two per row).
 - **Carousels use Horizon's "Mobile columns: 1 / 2"** (`mobile_card_size`, 60cqw / 44cqw), the stock

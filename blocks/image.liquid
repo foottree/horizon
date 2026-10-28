@@ -18,6 +18,7 @@
 
 {% capture class %}
   image-block image-block--{{ block.id }} image-block--height-{{ block_settings.height }} spacing-style size-style
+  {%- if block_settings.hide_on_mobile %} hidden--mobile{% endif -%}
 {% endcapture %}
 
 {% capture style %}
@@ -214,6 +215,12 @@
       "unit": "%",
       "default": 100,
       "visible_if": "{{ block.settings.width_mobile == 'custom' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_on_mobile",
+      "label": "Hide on mobile",
+      "default": false
     },
     {
       "type": "select",
