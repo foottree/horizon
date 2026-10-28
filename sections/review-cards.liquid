@@ -333,6 +333,16 @@
       align-items: flex-start;
       gap: 16px;
     }
+
+    /* Phones: the section heading is 28px here, so the 48px score steps down to 32 (h2 rung) and
+       the stars to 16, keeping desktop's score-over-heading relationship. */
+    .review-cards__score-value {
+      font-size: 2rem;
+    }
+
+    .review-cards__stars {
+      font-size: 1rem;
+    }
   }
 
   /* Desktop: each slide is one card, sized to 1/columns of the row - see --slide-width above. */
