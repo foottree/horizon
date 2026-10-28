@@ -5,6 +5,7 @@
 
   @param {number} compare_at - Original price in cents
   @param {number} price - Selling price in cents
+  @param {string} [modifier] - Adds the class `percent-off-tag--{modifier}` (e.g. `below` for its own line under a card price)
 
   @example
   {% render 'percent-off-tag', compare_at: variant.compare_at_price, price: variant.price %}
@@ -19,7 +20,7 @@
 -%}
 {%- if tag_percent > 0 -%}
   <span
-    class="percent-off-tag color-custom-badge-sale"
+    class="percent-off-tag{% if modifier != blank %} percent-off-tag--{{ modifier }}{% endif %} color-custom-badge-sale"
     style="--badge-border-radius: {{ settings.badge_corner_radius }}px; --badge-font-family: var(--font-{{ settings.badge_font_family }}--family); --badge-font-weight: var(--font-{{ settings.badge_font_family }}--weight); --badge-text-transform: {{ settings.badge_text_transform }};"
   >{{ tag_percent }}% OFF</span>
 {%- endif -%}

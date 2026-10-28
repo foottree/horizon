@@ -2651,3 +2651,13 @@ body:has(.shopify-policy__container) {
   border-radius: var(--badge-border-radius);
   white-space: nowrap;
 }
+
+/* Product cards: the tag sits on its own line under the price, not beside it. Cards are 172px
+   wide on phones and the struck price plus the sale price already fill the line, so there is no
+   room beside them. Same 12px badge size as the base rule above. */
+.percent-off-tag.percent-off-tag--below {
+  display: flex;
+  width: fit-content;
+  margin-inline-start: 0;
+  margin-block-start: 8px;
+}

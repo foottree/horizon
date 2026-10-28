@@ -6,6 +6,7 @@
   @param {boolean} [show_unit_price] - Whether to show the unit price
   @param {boolean} [show_sale_price_first] - Whether to show the sale price first
   @param {boolean} [show_percent_off] - Fork: show the "<N>% OFF" tag after the compare-at price (product page only)
+  @param {boolean} [percent_off_below] - Fork: show the "<N>% OFF" tag on its own line under the price (product cards)
 {%- enddoc -%}
 
 {% render 'price-styles' %}
@@ -15,6 +16,7 @@
   assign show_sale_price_first = show_sale_price_first | default: false
   assign selected_variant = product_resource.selected_or_first_available_variant
   assign show_percent_off = show_percent_off | default: false
+  assign percent_off_below = percent_off_below | default: false
   assign price = selected_variant.price
   assign compare_at_price = selected_variant.compare_at_price
 
@@ -129,6 +131,9 @@
           <bdi>{{ price | default: '&nbsp;' }}</bdi>
         </span>
       {% endif %}
+      {%- if percent_off_below -%}
+        {% render 'percent-off-tag', compare_at: selected_variant.compare_at_price, price: selected_variant.price, modifier: 'below' %}
+      {%- endif -%}
     {% else %}
       <span class="price"
         ><bdi>{{ price | default: '&nbsp;' }}</bdi></span

@@ -5,8 +5,10 @@
   assign product_resource = closest.product
   assign selected_variant = product_resource.selected_or_first_available_variant
   assign is_main_product = false
+  assign is_card_price = true
   if template.name == 'product' and product_resource.handle == product.handle
     assign is_main_product = true
+    assign is_card_price = false
   endif
 -%}
 
@@ -59,7 +61,8 @@
     show_unit_price: true,
     product_resource: product_resource,
     show_sale_price_first: block_settings.show_sale_price_first,
-    show_percent_off: is_main_product
+    show_percent_off: is_main_product,
+    percent_off_below: is_card_price
   %}
 
   {% if block_settings.show_tax_info %}
