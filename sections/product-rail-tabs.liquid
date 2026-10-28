@@ -434,7 +434,11 @@
               class: 'product-rail-tabs__controls'
             -%}
           {%- endcapture -%}
-          {%- assign mobile_slide_width = section.settings.mobile_card_size | default: '60cqw' | append: ';' -%}
+          {%- assign mobile_slide_width = section.settings.mobile_card_size | default: '60cqw' -%}
+          {%- if mobile_slide_width == 'custom' -%}
+            {%- assign mobile_slide_width = section.settings.mobile_card_width | default: 50 | append: 'cqw' -%}
+          {%- endif -%}
+          {%- assign mobile_slide_width = mobile_slide_width | append: ';' -%}
           {%- capture mobile_slideshow_style -%}--slideshow-gap: 16px; --slide-width: {{ mobile_slide_width }}{%- endcapture -%}
           {%- render 'slideshow',
             class: 'product-rail-tabs__rail-slideshow product-rail-tabs__rail-slideshow--mobile',
@@ -704,7 +708,7 @@
   /* Desktop rail only: a fixed card width (not the fluid --column-count formula), so it can
      bleed past the content column into the peeking fifth card. Scoped to the desktop rail
      specifically - the mobile rail keeps the base slideshow-slide `width: var(--slide-
-     width, 100%)` fallback, driven by the inline --slide-width (mobile_card_size: 60cqw or 44cqw, Horizon's 1 / 2 columns).
+     width, 100%)` fallback, driven by the inline --slide-width (mobile_card_size: 60cqw or 44cqw, Horizon's 1 / 2 columns, or custom = mobile_card_width %).
      `--rail-card-width` (set on .product-rail-tabs above) is the SAME variable the grid
      below uses for its track size, so a card is the exact same rendered width whichever
      branch is showing - it used to be a literal 320px here vs. ~294px in the grid (four
@@ -994,9 +998,22 @@
       "label": "t:settings.mobile_columns",
       "options": [
         { "value": "60cqw", "label": "t:options.one_number" },
-        { "value": "44cqw", "label": "t:options.two_number" }
+        { "value": "44cqw", "label": "t:options.two_number" },
+        { "value": "custom", "label": "Custom" }
       ],
       "default": "60cqw"
+    },
+    {
+      "type": "range",
+      "id": "mobile_card_width",
+      "label": "Card width on phones",
+      "info": "Share of the screen width each card takes. 1 column is 60%, 2 columns is 44%.",
+      "min": 30,
+      "max": 90,
+      "step": 1,
+      "unit": "%",
+      "default": 50,
+      "visible_if": "{{ section.settings.mobile_card_size == 'custom' }}"
     },
     {
       "type": "header",

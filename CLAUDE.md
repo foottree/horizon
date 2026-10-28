@@ -142,8 +142,11 @@ in a phone pass is below 750px only.
 - **A stack of full-width tiles** shrinks with the block's own phone width (image `width_mobile` custom
   70) or takes the tablet grid down to phones (Industries: the feature tile full width, then two per row).
 - **Carousels use Horizon's "Mobile columns: 1 / 2"** (`mobile_card_size`, 60cqw / 44cqw), the stock
-  control, never a home-made % range. Judge 2 against real ~42-character product names: titles wrap to
-  three lines and the swatches cut to three.
+  control. The four custom homepage carousels (collection-rail, product-rail-tabs, review-cards,
+  video-carousel) add a third choice, "Custom", which reveals "Card width on phones" (`mobile_card_width`,
+  30-90%, resolved to `cqw`); Shop by Collection runs on Custom 40% since 2026-10-28. Extend the stock
+  select this way, never replace it with a bare range. Judge 2 against real ~42-character product names:
+  titles wrap to three lines and the swatches cut to three.
 - **Narrow-card layouts key off the card, not the viewport** (a container query on the card), so they
   survive a column change. The review card's Verified chip moves beside the name below 340px.
 - **Hierarchy steps down together.** The product h1 is 28px on phones, so the description's h3 drops to

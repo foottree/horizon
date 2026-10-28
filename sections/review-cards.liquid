@@ -8,7 +8,7 @@
   Each review card is rendered once through snippets/review-card.liquid, its markup captured,
   then reused in two Horizon slideshows - a desktop one (cards sized to 1/`columns` of the row,
   scroll-snap carousel past the visible count) and a mobile one (single-card carousel at
-  `mobile_card_size`, 60cqw or 44cqw, i.e. Horizon's 1 / 2 columns) - only one of the pair is visible at a time
+  `mobile_card_size`, 60cqw or 44cqw, i.e. Horizon's 1 / 2 columns, or "custom" = `mobile_card_width` %) - only one of the pair is visible at a time
   (hidden--mobile / hidden--desktop), the same technique collection-rail uses for its own
   desktop/mobile split.
 {% endcomment %}
@@ -54,6 +54,10 @@
 
 {%- liquid
   assign mobile_card_size = section.settings.mobile_card_size | default: '60cqw'
+  # "Custom" resolves the % range to a real length, so nothing downstream sees the word.
+  if mobile_card_size == 'custom'
+    assign mobile_card_size = section.settings.mobile_card_width | default: 50 | append: 'cqw'
+  endif
   assign columns = section.settings.columns | default: 3
   assign card_gap = section.settings.card_gap | default: 20
 
@@ -340,7 +344,7 @@
     height: auto;
   }
 
-  /* Mobile: every card is its own slide at mobile_card_size, 60cqw or 44cqw (collection-rail's carousel pattern). */
+  /* Mobile: every card is its own slide at mobile_card_size, 60cqw or 44cqw, or mobile_card_width % when custom (collection-rail's carousel pattern). */
   .review-cards .slideshow-controls__progress {
     margin-top: 32px;
     padding-inline: 0;
@@ -581,9 +585,22 @@
       "label": "t:settings.mobile_columns",
       "options": [
         { "value": "60cqw", "label": "t:options.one_number" },
-        { "value": "44cqw", "label": "t:options.two_number" }
+        { "value": "44cqw", "label": "t:options.two_number" },
+        { "value": "custom", "label": "Custom" }
       ],
       "default": "60cqw"
+    },
+    {
+      "type": "range",
+      "id": "mobile_card_width",
+      "label": "Card width on phones",
+      "info": "Share of the screen width each card takes. 1 column is 60%, 2 columns is 44%.",
+      "min": 30,
+      "max": 90,
+      "step": 1,
+      "unit": "%",
+      "default": 50,
+      "visible_if": "{{ section.settings.mobile_card_size == 'custom' }}"
     },
     {
       "type": "text",

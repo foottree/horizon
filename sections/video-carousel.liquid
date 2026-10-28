@@ -8,7 +8,7 @@
   Each tile is rendered once through snippets/video-tile.liquid, its markup captured, then
   reused in two Horizon slideshows - a desktop one (tiles sized to a fixed `--video-carousel-
   card-width`, see the Desktop grid paragraph below, peeking past the visible count when
-  `bleed_right` is on) and a mobile one (single tile at `mobile_card_size`, 60cqw or 44cqw, i.e. Horizon's 1 / 2 columns) -
+  `bleed_right` is on) and a mobile one (single tile at `mobile_card_size`, 60cqw or 44cqw, i.e. Horizon's 1 / 2 columns, or "custom" = `mobile_card_width` %) -
   only one of the pair is visible at a time (hidden--mobile / hidden--desktop), the same
   technique review-cards uses for its own desktop/mobile split.
 
@@ -114,6 +114,10 @@
 {%- liquid
   assign card_gap = section.settings.card_gap | default: 24
   assign mobile_card_size = section.settings.mobile_card_size | default: '60cqw'
+  # "Custom" resolves the % range to a real length, so nothing downstream sees the word.
+  if mobile_card_size == 'custom'
+    assign mobile_card_size = section.settings.mobile_card_width | default: 50 | append: 'cqw'
+  endif
   assign bleed_right = section.settings.bleed_right
 
   # A single shared card-width variable (set on the outer .video-carousel div below, and
@@ -846,9 +850,22 @@
       "label": "t:settings.mobile_columns",
       "options": [
         { "value": "60cqw", "label": "t:options.one_number" },
-        { "value": "44cqw", "label": "t:options.two_number" }
+        { "value": "44cqw", "label": "t:options.two_number" },
+        { "value": "custom", "label": "Custom" }
       ],
       "default": "60cqw"
+    },
+    {
+      "type": "range",
+      "id": "mobile_card_width",
+      "label": "Card width on phones",
+      "info": "Share of the screen width each card takes. 1 column is 60%, 2 columns is 44%.",
+      "min": 30,
+      "max": 90,
+      "step": 1,
+      "unit": "%",
+      "default": 50,
+      "visible_if": "{{ section.settings.mobile_card_size == 'custom' }}"
     },
     {
       "type": "checkbox",

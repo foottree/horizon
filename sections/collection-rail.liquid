@@ -86,6 +86,10 @@
 
 {%- liquid
   assign mobile_card_size = section.settings.mobile_card_size | default: '60cqw'
+  # "Custom" resolves the % range to a real length, so nothing downstream sees the word.
+  if mobile_card_size == 'custom'
+    assign mobile_card_size = section.settings.mobile_card_width | default: 50 | append: 'cqw'
+  endif
   assign desktop_style = '--slideshow-gap: 40px;'
   assign mobile_style = '--slideshow-gap: 16px; --slide-width: ' | append: mobile_card_size | append: ';'
   assign desktop_slideshow_id = 'collection-rail-desktop-' | append: section.id
@@ -555,9 +559,22 @@
       "label": "t:settings.mobile_columns",
       "options": [
         { "value": "60cqw", "label": "t:options.one_number" },
-        { "value": "44cqw", "label": "t:options.two_number" }
+        { "value": "44cqw", "label": "t:options.two_number" },
+        { "value": "custom", "label": "Custom" }
       ],
       "default": "60cqw"
+    },
+    {
+      "type": "range",
+      "id": "mobile_card_width",
+      "label": "Card width on phones",
+      "info": "Share of the screen width each card takes. 1 column is 60%, 2 columns is 44%.",
+      "min": 30,
+      "max": 90,
+      "step": 1,
+      "unit": "%",
+      "default": 50,
+      "visible_if": "{{ section.settings.mobile_card_size == 'custom' }}"
     },
     {
       "type": "checkbox",

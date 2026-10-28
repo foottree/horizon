@@ -591,7 +591,8 @@
         "link_label": "Shop All",
         "link": "shopify://collections",
         "section_width": "narrow",
-        "mobile_card_size": "44cqw",
+        "mobile_card_size": "custom",
+        "mobile_card_width": 40,
         "show_arrows": true,
         "background_color": "",
         "padding-block-start": 50,
@@ -1453,7 +1454,7 @@
                   "type": "button",
                   "settings": {
                     "label": "Request a quote",
-                    "link": "shopify://pages/wholesale",
+                    "link": "/pages/wholesale#quotation",
                     "show_arrow": true,
                     "open_in_new_tab": false,
                     "style_class": "button",
@@ -1470,10 +1471,10 @@
                 "cta_whatsapp": {
                   "type": "button",
                   "settings": {
-                    "label": "WhatsApp us",
-                    "link": "https://wa.me/65XXXXXXXX",
+                    "label": "Wholesale",
+                    "link": "shopify://pages/wholesale",
                     "show_arrow": false,
-                    "open_in_new_tab": true,
+                    "open_in_new_tab": false,
                     "style_class": "button-secondary",
                     "custom_button_background": "",
                     "custom_button_text": "",
