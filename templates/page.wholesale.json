@@ -484,7 +484,7 @@
                 "image": {
                   "type": "image",
                   "settings": {
-                    "image": "shopify://shop_images/wholesale-tech-1.jpg",
+                    "image": "shopify://shop_images/wholesale-genuine-uppers.jpg",
                     "link": "",
                     "image_ratio": "square",
                     "width": "custom",
@@ -789,14 +789,14 @@
         "industry_1": {
           "type": "industry",
           "settings": {
-            "image": "shopify://shop_images/wholesale-industry-healthcare.png",
+            "image": "shopify://shop_images/wholesale-industry-healthcare-kv.jpg",
             "label": "Healthcare"
           }
         },
         "industry_2": {
           "type": "industry",
           "settings": {
-            "image": "shopify://shop_images/wholesale-industry-aviation.png",
+            "image": "shopify://shop_images/wholesale-industry-aviation-kv.jpg",
             "label": "Aviation"
           }
         },
@@ -810,14 +810,14 @@
         "industry_4": {
           "type": "industry",
           "settings": {
-            "image": "shopify://shop_images/wholesale-industry-fnb.png",
+            "image": "shopify://shop_images/wholesale-industry-fnb-kv.jpg",
             "label": "F&B"
           }
         },
         "industry_5": {
           "type": "industry",
           "settings": {
-            "image": "shopify://shop_images/wholesale-industry-hospitality.png",
+            "image": "shopify://shop_images/wholesale-industry-hospitality-kv.jpg",
             "label": "Hospitality"
           }
         }
