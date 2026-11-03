@@ -43,10 +43,10 @@
           {%- assign sibling_colour = sibling.title | split: ' - ' | last | strip -%}
           <li class="colour-siblings-card__item">
             <a
-              class="colour-siblings-card__link"
+              class="colour-siblings-card__link{% unless sibling.available %} colour-siblings-card__link--sold-out{% endunless %}"
               href="{{ sibling.url }}"
-              aria-label="{{ sibling_colour | escape }}"
-              title="{{ sibling_colour | escape }}"
+              aria-label="{{ sibling_colour | escape }}{% unless sibling.available %} - {{ 'products.product.sold_out' | t }}{% endunless %}"
+              title="{{ sibling_colour | escape }}{% unless sibling.available %} - {{ 'products.product.sold_out' | t }}{% endunless %}"
               {% if is_current %}aria-current="page"{% endif %}
             >
               {{-
@@ -60,6 +60,7 @@
                   loading: 'lazy',
                   widths: '24, 48, 72'
               -}}
+              {%- render 'strikethrough-variant', product_option: sibling -%}
             </a>
           </li>
         {%- endfor -%}
@@ -98,6 +99,7 @@
   }
 
   .colour-siblings-card__link {
+    position: relative; /* anchors the sold-out slash over the photo */
     display: block;
     width: 24px;
     height: 24px;
@@ -124,6 +126,30 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+
+  /* Sold-out colourway: same slant as a sold-out size pill (the stock rule is scoped to
+     .variant-option__button-label, so it is mirrored here). The photo fades so the line reads over it. */
+  .colour-siblings-card__link .variant-option__strikethrough {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    stroke: rgb(var(--color-foreground-rgb) / var(--opacity-60));
+  }
+
+  .colour-siblings-card__link .variant-option__strikethrough line {
+    stroke-width: 1px;
+  }
+
+  /* The second line is a duplicate meant for a motion overlay; hidden, as stock does. */
+  .colour-siblings-card__link .variant-option__strikethrough line:last-of-type {
+    stroke: none;
+  }
+
+  .colour-siblings-card__link--sold-out .colour-siblings-card__img {
+    opacity: 0.5;
   }
 
   .colour-siblings-card__more-link {
