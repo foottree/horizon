@@ -23,6 +23,8 @@ stores before, and an omitted `--store` silently reads or writes the wrong shop.
 | 14 | small print, meta |
 | 12 | **eyebrow**, caption, legal. Every uppercase micro-label is this size: the hero and section eyebrows, "HEAR FROM OUR CUSTOMERS", "FOR ORGANISATIONS", the footer column headings, product card badges. They drifted to 14, 13 and 12 before this was written down |
 
+**One sanctioned exception below 12:** product badges in the zoomed-out collection grid (the dense grid toggle) are 10px, by request on 2026-11-04. Those cards are 100-167px wide and "Bunion-Friendly" does not fit at 12px. Scoped to `[product-grid-view='zoom-out']` in custom.css; do not "fix" it back to 12.
+
 Sizes live in **Theme settings → Typography** (`type_size_h1`…`h6` in
 `config/settings_data.json`). Do not hardcode a heading size in a section's `{% stylesheet %}`
 — change the scale, or use the right level.
