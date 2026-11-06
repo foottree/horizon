@@ -152,7 +152,9 @@ in a phone pass is below 750px only.
 - **Carousels use Horizon's "Mobile columns: 1 / 2"** (`mobile_card_size`, 60cqw / 44cqw), the stock
   control. The four custom homepage carousels (collection-rail, product-rail-tabs, review-cards,
   video-carousel) add a third choice, "Custom", which reveals "Card width on phones" (`mobile_card_width`,
-  30-90%, resolved to `cqw`); Shop by Collection runs on Custom 40% since 2026-10-28. Extend the stock
+  30-90%, resolved to `cqw`). Shop by Collection's "Mobile layout" (`mobile_layout`) is on "Grid slider,
+  4 per slide" since 2026-11-07 (client's pick over the carousel and the 2-per-row grid): two 2x2
+  panels, swipe for the second, 670px at 390. The card-size settings only apply to its Carousel layout. Extend the stock
   select this way, never replace it with a bare range. Judge 2 against real ~42-character product names:
   titles wrap to three lines and the swatches cut to three.
 - **Narrow-card layouts key off the card, not the viewport** (a container query on the card), so they
