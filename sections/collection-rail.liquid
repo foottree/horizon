@@ -21,6 +21,9 @@
 {%- liquid
   assign desktop_slides = ''
   assign mobile_slides = ''
+  assign mobile_grid_tiles = ''
+  assign mobile_panel_slides = ''
+  assign mobile_panel_buffer = ''
   assign panel_buffer = ''
   assign panel_index = 0
   assign tile_count = section.blocks.size
@@ -65,6 +68,8 @@
   {%- endcapture -%}
 
   {%- assign panel_buffer = panel_buffer | append: tile_html -%}
+  {%- assign mobile_grid_tiles = mobile_grid_tiles | append: tile_html -%}
+  {%- assign mobile_panel_buffer = mobile_panel_buffer | append: tile_html -%}
 
   {%- capture mobile_slide -%}
     {%- render 'slideshow-slide', index: forloop.index0, children: tile_html, class: 'collection-rail__mobile-slide' -%}
@@ -72,6 +77,9 @@
   {%- assign mobile_slides = mobile_slides | append: mobile_slide -%}
 
   {%- if slot_index == 3 or forloop.last -%}
+    {%- capture mobile_panel_html -%}
+      <div class="collection-rail__mobile-panel">{{ mobile_panel_buffer }}</div>
+    {%- endcapture -%}
     {%- capture panel_html -%}
       <div class="collection-rail__panel" style="{{ panel_style }}">{{ panel_buffer }}</div>
     {%- endcapture -%}
@@ -79,6 +87,11 @@
       {%- render 'slideshow-slide', index: panel_index, children: panel_html, class: 'collection-rail__panel-slide' -%}
     {%- endcapture -%}
     {%- assign desktop_slides = desktop_slides | append: desktop_slide -%}
+    {%- capture mobile_panel_slide -%}
+      {%- render 'slideshow-slide', index: panel_index, children: mobile_panel_html, class: 'collection-rail__mobile-slide' -%}
+    {%- endcapture -%}
+    {%- assign mobile_panel_slides = mobile_panel_slides | append: mobile_panel_slide -%}
+    {%- assign mobile_panel_buffer = '' -%}
     {%- assign panel_index = panel_index | plus: 1 -%}
     {%- assign panel_buffer = '' -%}
   {%- endif -%}
@@ -90,8 +103,18 @@
   if mobile_card_size == 'custom'
     assign mobile_card_size = section.settings.mobile_card_width | default: 50 | append: 'cqw'
   endif
+  assign mobile_slides_out = mobile_slides
+  assign mobile_slide_count = tile_count
+  if section.settings.mobile_layout == 'grid_slider'
+    # One 2x2 panel per slide, as wide as the content column (viewport minus both page margins).
+    assign mobile_slides_out = mobile_panel_slides
+    assign mobile_slide_count = panel_index
+  endif
   assign desktop_style = '--slideshow-gap: 40px;'
   assign mobile_style = '--slideshow-gap: 16px; --slide-width: ' | append: mobile_card_size | append: ';'
+  if section.settings.mobile_layout == 'grid_slider'
+    assign mobile_style = '--slideshow-gap: 16px; --slide-width: calc(100cqw - 2 * var(--util-page-margin-offset));'
+  endif
   assign desktop_slideshow_id = 'collection-rail-desktop-' | append: section.id
   assign desktop_slideshow_attributes = 'id="' | append: desktop_slideshow_id | append: '"'
 -%}
@@ -199,6 +222,14 @@
     -%}
   </div>
 
+  {%- if section.settings.mobile_layout == 'grid' -%}
+    {%- comment -%}
+      Grid layout: every tile at once, 2 per row, inside the page margins (no force-full-width).
+    {%- endcomment -%}
+    <div class="collection-rail__mobile hidden--desktop">
+      <div class="collection-rail__mobile-grid">{{ mobile_grid_tiles }}</div>
+    </div>
+  {%- else -%}
   <div
     class="collection-rail__mobile hidden--desktop force-full-width"
     style="--gutter-slide-width: var(--util-page-margin-offset);"
@@ -206,7 +237,7 @@
     {%- capture mobile_controls -%}
       {%- render 'slideshow-controls',
         style: 'progress',
-        item_count: tile_count,
+        item_count: mobile_slide_count,
         show_arrows: false,
         arrows_on_media: false,
         controls_on_media: false,
@@ -218,16 +249,17 @@
       ref: 'collectionRailMobile',
       class: 'collection-rail__slideshow collection-rail__slideshow--mobile',
       style: mobile_style,
-      slides: mobile_slides,
+      slides: mobile_slides_out,
       show_arrows: false,
       auto_hide_controls: false,
       infinite: false,
       initial_slide: 0,
-      slide_count: tile_count,
+      slide_count: mobile_slide_count,
       slideshow_gutters: 'start end',
       controls: mobile_controls
     -%}
   </div>
+  {%- endif -%}
 </div>
 
 {%- if section.settings.show_arrows -%}
@@ -433,6 +465,20 @@
     aspect-ratio: 3 / 4;
   }
 
+  /* Grid layout on phones: all tiles, two per row, inside the page margins. */
+  .collection-rail__mobile-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  /* Grid slider on phones: each slide is a 2x2 panel of tiles. */
+  .collection-rail__mobile-panel {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
   /* Progress bar: 4px track spanning the rail's own width, no arrows. */
   .collection-rail .slideshow-controls__progress {
     margin-top: 32px;
@@ -555,6 +601,17 @@
     },
     {
       "type": "select",
+      "id": "mobile_layout",
+      "label": "Mobile layout",
+      "options": [
+        { "value": "carousel", "label": "Carousel" },
+        { "value": "grid", "label": "Grid, 2 per row" },
+        { "value": "grid_slider", "label": "Grid slider, 4 per slide" }
+      ],
+      "default": "carousel"
+    },
+    {
+      "type": "select",
       "id": "mobile_card_size",
       "label": "t:settings.mobile_columns",
       "options": [
@@ -562,7 +619,8 @@
         { "value": "44cqw", "label": "t:options.two_number" },
         { "value": "custom", "label": "Custom" }
       ],
-      "default": "60cqw"
+      "default": "60cqw",
+      "visible_if": "{{ section.settings.mobile_layout == 'carousel' }}"
     },
     {
       "type": "range",
@@ -574,7 +632,7 @@
       "step": 1,
       "unit": "%",
       "default": 50,
-      "visible_if": "{{ section.settings.mobile_card_size == 'custom' }}"
+      "visible_if": "{{ section.settings.mobile_layout == 'carousel' and section.settings.mobile_card_size == 'custom' }}"
     },
     {
       "type": "checkbox",
