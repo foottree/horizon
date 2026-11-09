@@ -1595,10 +1595,16 @@
    --ft-gutter box the breadcrumb/title above it resolve to (1240px, 100px inset - see
    .section--narrow up top). Left as-is the row would sit 60px further left than the title.
    Giving it the same --page-width the narrow sections use closes that gap; :has() keeps this
-   scoped to collection pages using the vertical filter block only, so search (always horizontal
-   filters, see sections/search-results.liquid) is untouched. */
+   scoped to pages whose filters block is really in vertical (sidebar) style. blocks/filters.liquid
+   ALWAYS renders the mobile filter drawer with the --vertical class, even when filter_style is
+   horizontal, so --vertical alone is not proof of a sidebar: every selector in this block also
+   requires that no .facets-block-wrapper--horizontal bar is present.
+   The --page-width rule below needs only that second condition, not --vertical, so the no-results
+   page (no filters block rendered at all) lines its "Products" heading and grid up with the header.
+   Collection and search both use vertical filters now; a template that switches back to
+   horizontal keeps the stock grid. */
 @media screen and (min-width: 750px) {
-  .product-grid-container:has(.facets-block-wrapper--vertical) {
+  .product-grid-container:not(:has(.facets-block-wrapper--horizontal)) {
     --page-width: calc(100vw - (var(--ft-gutter) * 2) + (var(--page-margin) * 2));
   }
 }
@@ -1613,7 +1619,7 @@
    "desktop" breakpoint in that file; below it (tablet, 750-989px) keeps the existing fluid
    sidebar, and below 750px the filters are a drawer, not a column, so nothing here applies. */
 @media screen and (min-width: 990px) {
-  .collection-wrapper:has(.facets-block-wrapper--vertical) {
+  .collection-wrapper:has(.facets-block-wrapper--vertical):not(:has(.facets-block-wrapper--horizontal)) {
     grid-template-columns: 280px 1fr !important;
     column-gap: 40px !important;
     /* .grid (the shared base class .collection-wrapper also carries) names its 14 columns via
@@ -1624,7 +1630,7 @@
     grid-template-areas: none !important;
   }
 
-  .collection-wrapper:has(.facets-block-wrapper--vertical) .facets-block-wrapper--vertical {
+  .collection-wrapper:has(.facets-block-wrapper--vertical):not(:has(.facets-block-wrapper--horizontal)) .facets-block-wrapper--vertical {
     grid-column: 1 !important;
     /* The block's own facets_margin_right setting (see blocks/filters.liquid) still renders a
        gap in the horizontal filter style; zeroed here so it does not add to the 40px column-gap
@@ -1632,7 +1638,7 @@
     margin-inline-end: 0 !important;
   }
 
-  .collection-wrapper:has(.facets-block-wrapper--vertical)
+  .collection-wrapper:has(.facets-block-wrapper--vertical):not(:has(.facets-block-wrapper--horizontal))
     .facets-block-wrapper--vertical:not(.hidden)
     ~ .main-collection-grid {
     grid-column: 2 !important;
@@ -1643,8 +1649,21 @@
      grid ("column-1 / column-12"). Those names do not exist in the two-track grid above either,
      which is the other half of the implicit-column growth this file works around; a plain
      line-number span keeps it spanning the full row without resurrecting that. */
-  .collection-wrapper:has(.facets-block-wrapper--vertical) .facets-controls-wrapper {
+  .collection-wrapper:has(.facets-block-wrapper--vertical):not(:has(.facets-block-wrapper--horizontal)) .facets-controls-wrapper {
     grid-column: 1 / -1 !important;
+  }
+}
+
+/* ---- Search page: header left edge ----
+   sections/search-header.liquid is stock and renders a plain "section--page-width", so at 1440
+   "Search results" and the search box sat on the theme's 40px page margin while the breadcrumb
+   and the collection title sit on the --ft-gutter column. Same fix as .product-information
+   above: move --page-margin (the section's side tracks) onto the gutter so the whole page
+   shares one left edge. Below 750px the 16px phone inset is untouched. */
+@media screen and (min-width: 750px) {
+  .section--page-width:has(> .search-page__header) {
+    --page-content-width: calc(100vw - (var(--ft-gutter) * 2));
+    --page-margin: max(40px, calc((100% - var(--page-content-width)) / 2));
   }
 }
 
