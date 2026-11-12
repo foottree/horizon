@@ -15,6 +15,39 @@ import { Component } from '@theme/component';
  * @extends {Component<Refs>}
  */
 class ProductRailTabs extends Component {
+  connectedCallback() {
+    super.connectedCallback();
+    this.#bindSideArrows();
+  }
+
+  /**
+   * Side-image layout: each desktop rail carries a round previous/next arrow on the cards
+   * (`.product-rail-tabs__side-arrow`). They start `hidden` and are shown only while there is
+   * more to scroll in that direction, so a rail that fits shows no arrow at all.
+   */
+  #bindSideArrows() {
+    this.querySelectorAll('.product-rail-tabs__rail-desktop').forEach((rail) => {
+      const previous = rail.querySelector('.product-rail-tabs__side-arrow--previous');
+      const next = rail.querySelector('.product-rail-tabs__side-arrow--next');
+      const scroller = rail.querySelector('[ref="scroller"]');
+      if (!(scroller instanceof HTMLElement) || (!previous && !next)) return;
+
+      const update = () => {
+        const max = scroller.scrollWidth - scroller.clientWidth;
+        const rtl = getComputedStyle(scroller).direction === 'rtl';
+        const pos = Math.abs(scroller.scrollLeft);
+        const atStart = pos <= 2;
+        const atEnd = pos >= max - 2;
+        if (previous) previous.hidden = max <= 2 || (rtl ? atEnd : atStart);
+        if (next) next.hidden = max <= 2 || (rtl ? atStart : atEnd);
+      };
+
+      scroller.addEventListener('scroll', update, { passive: true });
+      new ResizeObserver(update).observe(scroller);
+      update();
+    });
+  }
+
   /**
    * Activates the tab (and its panel) at `index`.
    *

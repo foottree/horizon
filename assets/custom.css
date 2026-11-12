@@ -1295,8 +1295,11 @@
   letter-spacing: -0.022em;
 }
 
-/* the theme's default pill is 61px tall (18px text, 16px padding); the client wants a smaller CTA */
-#MainContent .ft-hero .slide__content .button {
+/* The site's preset button: the theme's default pill is 61px tall (18px text, 16px padding) and the
+   client wants a smaller CTA. The hero CTA and the bestsellers section buttons (product-rail-tabs
+   side-image layout) share this one rule, so they always match. */
+#MainContent .ft-hero .slide__content .button,
+#MainContent .product-rail-tabs__footer .button {
   font-size: 1rem;
   padding-block: 12px;
   padding-inline: 22px;

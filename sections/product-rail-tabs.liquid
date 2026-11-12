@@ -83,6 +83,28 @@
     assign render_header_arrows = false
   endif
 
+  # Side image mode: a photo beside the rail (see the split layout in the stylesheet). The
+  # header arrows are replaced by one arrow on the cards, and the rail is always a carousel.
+  assign has_side_image = false
+  if section.settings.side_image != blank
+    assign has_side_image = true
+    assign render_header_arrows = false
+  endif
+  assign side_position = section.settings.side_image_position | default: 'left'
+  assign show_side_arrows = false
+  if has_side_image and section.settings.hide_arrows != true
+    assign show_side_arrows = true
+  endif
+
+  # The tab bar only makes sense with 2+ tabs.
+  assign visible_tab_total = 0
+  for i in (1..4)
+    assign count_label_key = 'tab_' | append: i | append: '_label'
+    if section.settings[count_label_key] != blank
+      assign visible_tab_total = visible_tab_total | plus: 1
+    endif
+  endfor
+
   assign nav_first_tab_collection = null
   assign nav_first_tab_max_items = 0
   for i in (1..4)
@@ -103,7 +125,7 @@
   endif
 
   assign nav_first_is_grid = false
-  if section.settings.desktop_layout == 'auto' and nav_first_card_count <= 4
+  if section.settings.desktop_layout == 'auto' and nav_first_card_count <= 4 and has_side_image == false
     assign nav_first_is_grid = true
   endif
 
@@ -118,13 +140,14 @@
 <div
   class="
     section
-    section--{{ section.settings.section_width }}
+    section--{% if has_side_image %}full-width{% else %}{{ section.settings.section_width }}{% endif %}
     {% if section.settings.background_color != blank %}color-custom-{{ section.id }}{% endif %}
     product-rail-tabs
-    spacing-style
+    {% if has_side_image %}product-rail-tabs--split product-rail-tabs--image-{{ side_position }}{% else %}spacing-style{% endif %}
   "
   style="
-    {% render 'spacing-style', settings: section.settings %}
+    {% unless has_side_image %}{% render 'spacing-style', settings: section.settings %}{% endunless %}
+    {% if has_side_image %}--side-ratio-mobile: {% if section.settings.side_image_ratio_mobile == '4 / 3' %}4 / 3{% else %}1 / 1{% endif %};{% endif %}
     --product-rail-tabs-heading-color: {{ heading_color }};
     --product-rail-tabs-accent-color: {{ accent_color }};
     --product-rail-tabs-track-color: {{ track_color }};
@@ -133,7 +156,35 @@
   "
   data-testid="product-rail-tabs"
 >
-  {%- if section.settings.heading != blank or section.settings.description != blank or section.settings.link != blank or render_header_arrows -%}
+  {%- if has_side_image -%}
+    {%- liquid
+      assign side_focal = section.settings.side_image.presentation.focal_point
+      # Shopify reports a centred point when no focal point is set on the file.
+      if side_focal == blank or side_focal == '50.0% 50.0%' or side_focal == '50% 50%'
+        assign side_focal = '50% ' | append: section.settings.side_image_focus_y | append: '%'
+      endif
+      assign side_style = 'object-position: ' | append: side_focal | append: ';'
+    -%}
+    <div class="product-rail-tabs__split">
+      <div class="product-rail-tabs__side-media">
+        {{
+          section.settings.side_image
+          | image_url: width: 1500
+          | image_tag:
+            loading: 'lazy',
+            widths: '400, 600, 800, 1000, 1200, 1500',
+            sizes: '(min-width: 990px) 45vw, 100vw',
+            alt: section.settings.heading,
+            class: 'product-rail-tabs__side-image',
+            style: side_style
+        }}
+      </div>
+      <div
+        class="product-rail-tabs__content spacing-style"
+        style="{% render 'spacing-style', settings: section.settings %}"
+      >
+  {%- endif -%}
+  {%- if section.settings.heading != blank or section.settings.description != blank or section.settings.link != blank or section.settings.subheading != blank or render_header_arrows -%}
     <div class="product-rail-tabs__header">
       <div class="product-rail-tabs__header-text">
         {%- if section.settings.heading != blank -%}
@@ -144,6 +195,9 @@
         {%- endif -%}
         {%- if section.settings.description != blank -%}
           <div class="product-rail-tabs__description">{{ section.settings.description }}</div>
+        {%- endif -%}
+        {%- if section.settings.subheading != blank -%}
+          <p class="product-rail-tabs__subheading paragraph">{{ section.settings.subheading }}</p>
         {%- endif -%}
       </div>
       {%- if section.settings.link != blank or render_header_arrows -%}
@@ -209,9 +263,10 @@
       data-nav-id="{{ nav_id }}"
     {% endif %}
   >
+    {%- if visible_tab_total > 1 -%}
     <div
       class="product-rail-tabs__tablist-wrap"
-      style="padding-inline: var(--util-page-margin-offset);"
+      {% unless has_side_image %}style="padding-inline: var(--util-page-margin-offset);"{% endunless %}
     >
       <div
         role="tablist"
@@ -248,7 +303,7 @@
               assign nav_tab_card_count = nav_tab_collection.products.size | at_most: nav_tab_max_items
             endif
             assign nav_tab_is_grid = false
-            if section.settings.desktop_layout == 'auto' and nav_tab_card_count <= 4
+            if section.settings.desktop_layout == 'auto' and nav_tab_card_count <= 4 and has_side_image == false
               assign nav_tab_is_grid = true
             endif
             assign nav_tab_slideshow_id = ''
@@ -278,6 +333,7 @@
         {%- endfor -%}
       </div>
     </div>
+    {%- endif -%}
 
     {%- assign visible_panel_index = -1 -%}
     {%- for i in (1..4) -%}
@@ -310,7 +366,7 @@
         endif
 
         assign is_desktop_grid = false
-        if section.settings.desktop_layout == 'auto' and card_count <= 4
+        if section.settings.desktop_layout == 'auto' and card_count <= 4 and has_side_image == false
           assign is_desktop_grid = true
         endif
 
@@ -390,7 +446,7 @@
         {%- else -%}
           <div
             class="product-rail-tabs__rail-desktop hidden--mobile force-full-width"
-            style="--gutter-slide-width: var(--util-page-margin-offset);"
+            {% unless has_side_image %}style="--gutter-slide-width: var(--util-page-margin-offset);"{% endunless %}
           >
             {%- capture desktop_controls -%}
               {%- render 'slideshow-controls',
@@ -416,6 +472,30 @@
               attributes: desktop_slideshow_attributes,
               controls: desktop_controls
             -%}
+            {%- if show_side_arrows -%}
+              <button
+                type="button"
+                class="product-rail-tabs__side-arrow product-rail-tabs__side-arrow--previous flip-x"
+                aria-label="{{ 'accessibility.slideshow_previous' | t }}"
+                on:click="#{{ desktop_slideshow_id }}/previous"
+                hidden
+              >
+                <span class="svg-wrapper icon-arrow" aria-hidden="true">
+                  {{- 'icon-arrow.svg' | inline_asset_content -}}
+                </span>
+              </button>
+              <button
+                type="button"
+                class="product-rail-tabs__side-arrow product-rail-tabs__side-arrow--next"
+                aria-label="{{ 'accessibility.slideshow_next' | t }}"
+                on:click="#{{ desktop_slideshow_id }}/next"
+                hidden
+              >
+                <span class="svg-wrapper icon-arrow" aria-hidden="true">
+                  {{- 'icon-arrow.svg' | inline_asset_content -}}
+                </span>
+              </button>
+            {%- endif -%}
           </div>
         {%- endif -%}
 
@@ -456,6 +536,18 @@
       </div>
     {%- endfor -%}
   </product-rail-tabs>
+  {%- if section.settings.button_label != blank -%}
+    <div class="product-rail-tabs__footer">
+      <a
+        class="button"
+        {% if section.settings.button_link != blank %}href="{{ section.settings.button_link }}"{% else %}role="link" aria-disabled="true"{% endif %}
+      >{{ section.settings.button_label }}</a>
+    </div>
+  {%- endif -%}
+  {%- if has_side_image -%}
+      </div>
+    </div>
+  {%- endif -%}
 </div>
 
 <script
@@ -823,6 +915,201 @@
   .product-rail-tabs swatches-variant-picker-component overflow-list::part(list) {
     gap: 6px;
   }
+
+  /* Side image layout (only when a "Side image" is set; without one none of this applies).
+     Photo and content stack on phones/tablets (photo first, whichever side is chosen) and sit
+     side by side from 990px: the photo is flush to the page edge on its side and to the section
+     top/bottom, the content column keeps the homepage 50px block rhythm (spacing-style on
+     .product-rail-tabs__content). Colours come from the section's own palette variables. */
+  .product-rail-tabs--split {
+    --rail-inset: max(
+      var(--page-margin),
+      calc((100vw - min(var(--page-content-width), 100vw - var(--page-margin) * 2)) / 2)
+    );
+  }
+
+  .product-rail-tabs.product-rail-tabs--split > .product-rail-tabs__split {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    min-width: 0;
+  }
+
+  .product-rail-tabs__side-media {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+  }
+
+  .product-rail-tabs__side-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .product-rail-tabs__content {
+    min-width: 0;
+  }
+
+  /* Phones and tablets: copy keeps the page margin; the rail already insets itself. */
+  .product-rail-tabs--split :is(.product-rail-tabs__header, .product-rail-tabs__tablist-wrap, .product-rail-tabs__footer) {
+    padding-inline: var(--page-margin);
+  }
+
+  .product-rail-tabs--split .product-rail-tabs__rail-desktop {
+    --rail-card-width: clamp(220px, 20vw, 300px);
+    --gutter-slide-width: var(--page-margin);
+
+    position: relative;
+  }
+
+  .product-rail-tabs--split .product-rail-tabs__header {
+    margin-block-end: 32px;
+  }
+
+  .product-rail-tabs__subheading {
+    margin: 0;
+    max-width: 700px;
+    color: var(--product-rail-tabs-ink-soft, currentcolor);
+  }
+
+  .product-rail-tabs__footer {
+    margin-block-start: 40px;
+  }
+
+  /* One round arrow on the card photos. JS (product-rail-tabs.js) un-hides each arrow only
+     while there is more to scroll in that direction. */
+  .product-rail-tabs__side-arrow {
+    position: absolute;
+    top: calc(var(--rail-card-width) / 2);
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    transform: translateY(-50%);
+    background: var(--color-background);
+    border: 1px solid var(--product-rail-tabs-track-color, var(--color-border));
+    border-radius: 50%;
+    color: var(--color-foreground);
+    cursor: pointer;
+  }
+
+  .product-rail-tabs__side-arrow[hidden] {
+    display: none;
+  }
+
+  .product-rail-tabs__side-arrow--next {
+    right: 16px;
+  }
+
+  .product-rail-tabs__side-arrow--previous {
+    left: 16px;
+  }
+
+  .product-rail-tabs__side-arrow .svg-wrapper {
+    display: flex;
+    width: 16px;
+    height: 16px;
+  }
+
+  .product-rail-tabs__side-arrow svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Progress bar keeps the plain rail's look; only its side insets change in the split layout. */
+  .product-rail-tabs--split .product-rail-tabs__rail-desktop.force-full-width .slideshow-controls__progress,
+  .product-rail-tabs--split .product-rail-tabs__rail-mobile.force-full-width .slideshow-controls__progress {
+    padding-inline: var(--page-margin);
+  }
+
+  @media screen and (max-width: 749px) {
+    .product-rail-tabs__side-media {
+      aspect-ratio: var(--side-ratio-mobile, 1 / 1);
+    }
+
+    .product-rail-tabs--split .product-rail-tabs__header {
+      margin-block-end: 24px;
+    }
+
+    .product-rail-tabs--split .product-rail-tabs__footer {
+      margin-block-start: 24px;
+    }
+
+    /* Phones, split layout only: cards to progress bar 16 (plain rail keeps 40) to cut scroll, user's ask 2026-11-12. */
+    .product-rail-tabs--split .slideshow-controls__progress {
+      margin-top: 16px;
+    }
+
+    /* Stock controls keep a 44px min-height for arrows phones do not show; it re-centred the bar and kept the space. */
+    .product-rail-tabs--split .product-rail-tabs__controls {
+      min-height: 0;
+    }
+
+    .product-rail-tabs--split .product-rail-tabs__footer .button {
+      display: block;
+      width: 100%;
+      text-align: center;
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .product-rail-tabs.product-rail-tabs--image-left > .product-rail-tabs__split {
+      grid-template-columns: 45% minmax(0, 1fr);
+      column-gap: 32px;
+    }
+
+    .product-rail-tabs.product-rail-tabs--image-right > .product-rail-tabs__split {
+      grid-template-columns: minmax(0, 1fr) 45%;
+      column-gap: 32px;
+    }
+
+    .product-rail-tabs--image-right .product-rail-tabs__side-media {
+      order: 2;
+    }
+
+    .product-rail-tabs__side-media {
+      aspect-ratio: auto;
+    }
+
+    /* Image left: copy starts at the column edge and stops short of the page edge, cards
+       bleed off the right edge like the plain rail. */
+    .product-rail-tabs--image-left :is(.product-rail-tabs__header, .product-rail-tabs__tablist-wrap, .product-rail-tabs__footer) {
+      padding-inline: 0 var(--rail-inset);
+    }
+
+    .product-rail-tabs--image-left .product-rail-tabs__rail-desktop {
+      --gutter-slide-width: 0px;
+    }
+
+    .product-rail-tabs--image-left .product-rail-tabs__rail-desktop.force-full-width .slideshow-controls__progress {
+      padding-inline: 0 var(--rail-inset);
+    }
+
+    /* Image right: the column starts at the normal page margin and clips the rail at its
+       own edge so no card runs under the photo. */
+    .product-rail-tabs--image-right .product-rail-tabs__content {
+      padding-inline-start: var(--rail-inset);
+      overflow: hidden;
+    }
+
+    .product-rail-tabs--image-right :is(.product-rail-tabs__header, .product-rail-tabs__tablist-wrap, .product-rail-tabs__footer) {
+      padding-inline: 0;
+    }
+
+    .product-rail-tabs--image-right .product-rail-tabs__rail-desktop {
+      --gutter-slide-width: 0px;
+    }
+
+    .product-rail-tabs--image-right .product-rail-tabs__rail-desktop.force-full-width .slideshow-controls__progress {
+      padding-inline: 0;
+    }
+  }
 {% endstylesheet %}
 
 {% schema %}
@@ -857,6 +1144,67 @@
       "type": "url",
       "id": "link",
       "label": "t:settings.link"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "info": "Short line under the heading."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "info": "Leave blank for no button."
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Side image"
+    },
+    {
+      "type": "image_picker",
+      "id": "side_image",
+      "label": "Side image",
+      "info": "A photo beside the products on desktop, above them on phones. Leave empty for the plain rail."
+    },
+    {
+      "type": "select",
+      "id": "side_image_position",
+      "label": "Image position",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left",
+      "visible_if": "{{ section.settings.side_image != blank }}"
+    },
+    {
+      "type": "select",
+      "id": "side_image_ratio_mobile",
+      "label": "Photo shape on phones",
+      "options": [
+        { "value": "1 / 1", "label": "Square" },
+        { "value": "4 / 3", "label": "Landscape 4:3" }
+      ],
+      "default": "1 / 1",
+      "visible_if": "{{ section.settings.side_image != blank }}"
+    },
+    {
+      "type": "range",
+      "id": "side_image_focus_y",
+      "label": "Image focus, vertical",
+      "info": "Which part of the photo stays in view when it is cropped. 0 is the top, 100 the bottom. Used only when the file has no focal point set in Shopify.",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 50,
+      "visible_if": "{{ section.settings.side_image != blank }}"
     },
     {
       "type": "header",
