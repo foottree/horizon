@@ -1238,7 +1238,6 @@
         "door_link"
       ],
       "custom_css": [
-        ".ft-corporate .ft-corp-buttons a{border:1.5px solid transparent;font-weight:600}",
         "@media(min-width:750px){.ft-corporate{--section-min-height:640px}}",
         "@media(max-width:749px){.ft-corporate .group-block__media-wrapper{display:none}}"
       ],

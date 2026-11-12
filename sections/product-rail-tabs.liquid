@@ -1087,6 +1087,14 @@
       --gutter-slide-width: 0px;
     }
 
+    /* The zero gutter above keeps the first card on the column edge, but also dropped the end
+       gutter, so the last card scrolled flush to the viewport. End it at the page margin, where
+       the progress bar ends. */
+    .product-rail-tabs--image-left .product-rail-tabs__rail-desktop slideshow-slides[gutters*='end'] {
+      padding-inline-end: var(--rail-inset);
+      scroll-padding-inline-end: var(--rail-inset);
+    }
+
     .product-rail-tabs--image-left .product-rail-tabs__rail-desktop.force-full-width .slideshow-controls__progress {
       padding-inline: 0 var(--rail-inset);
     }

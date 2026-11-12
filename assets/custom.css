@@ -1295,11 +1295,14 @@
   letter-spacing: -0.022em;
 }
 
-/* The site's preset button: the theme's default pill is 61px tall (18px text, 16px padding) and the
-   client wants a smaller CTA. The hero CTA and the bestsellers section buttons (product-rail-tabs
-   side-image layout) share this one rule, so they always match. */
+/* The site's preset button (49.6px: 12px / 22px padding, 16px text). Stock .button is 16px / 24px
+   (~58px), which the client finds too tall. Every text button and button-styled tab joins this one
+   rule so they always match: hero CTA, bestsellers buttons, Corporate "Request a quote", and the
+   size guide's Women's / Men's tabs (page and product drawer). Add new buttons here. */
 #MainContent .ft-hero .slide__content .button,
-#MainContent .product-rail-tabs__footer .button {
+#MainContent .product-rail-tabs__footer .button,
+#MainContent .ft-corporate .button,
+.size-chart .size-chart__tab {
   font-size: 1rem;
   padding-block: 12px;
   padding-inline: 22px;
