@@ -2619,3 +2619,82 @@ body:has(.shopify-policy__container) {
   margin-inline-start: 0;
   margin-block-start: 8px;
 }
+
+/* ---- Size guide page: numbered measuring steps ----
+   The Step 1 text block holds a plain <ol>; stock text blocks have no numbered-circle list style, so
+   the circles live here (the section Custom CSS box is capped near 500 characters and this is
+   longer). 36px olive circles with white digits, 30px on phones, 16px to the text, 18px between
+   steps. Colours come from the primary button tokens (palette color4 and white). Opt in with the
+   text block's Custom class "ft-numbered-steps". */
+.ft-numbered-steps ol {
+  list-style: none;
+  counter-reset: ft-step;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.ft-numbered-steps li {
+  --ft-step-size: 36px;
+
+  position: relative;
+  min-height: var(--ft-step-size);
+  padding-inline-start: calc(var(--ft-step-size) + 16px);
+  counter-increment: ft-step;
+}
+
+.ft-numbered-steps li::before {
+  content: counter(ft-step);
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  width: var(--ft-step-size);
+  height: var(--ft-step-size);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-primary-button-background);
+  color: var(--color-primary-button-text);
+  font-family: var(--font-subheading--family);
+  font-size: var(--font-paragraph--size);
+  font-weight: var(--font-subheading--weight);
+  line-height: 1;
+}
+
+@media screen and (max-width: 749px) {
+  .ft-numbered-steps li {
+    --ft-step-size: 30px;
+  }
+}
+
+/* ---- Size guide page: dotted list in the exchange band ----
+   Stock text blocks render a plain <ul>; this gives it small round dots in the text colour, 12px
+   apart. Opt in with the text block's Custom class "ft-dot-list". Lives here, not in the section's
+   Custom CSS, because Shopify rejects `content` in that box. */
+.ft-dot-list ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ft-dot-list li {
+  position: relative;
+  padding-inline-start: 20px;
+}
+
+.ft-dot-list li::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block-start: 0.65em;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentcolor;
+}

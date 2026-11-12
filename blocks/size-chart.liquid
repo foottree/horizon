@@ -1,0 +1,41 @@
+{%- doc -%}
+  The size chart for the size guide page: Women's / Men's switch, tables and notes box, read from
+  the `size_chart` metaobject entries. Custom because no stock block renders metaobject rows.
+{%- enddoc -%}
+
+<div
+  class="size-chart-block"
+  {{ block.shopify_attributes }}
+>
+  {% render 'size-chart', layout: 'page', default_chart: block.settings.default_chart, id: block.id %}
+</div>
+
+{% schema %}
+{
+  "name": "Size chart",
+  "tag": null,
+  "settings": [
+    {
+      "type": "select",
+      "id": "default_chart",
+      "label": "Chart shown first",
+      "options": [
+        {
+          "value": "womens",
+          "label": "Women's"
+        },
+        {
+          "value": "mens",
+          "label": "Men's"
+        }
+      ],
+      "default": "womens"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Size chart"
+    }
+  ]
+}
+{% endschema %}

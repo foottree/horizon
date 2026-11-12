@@ -19,6 +19,7 @@
 {% capture class %}
   image-block image-block--{{ block.id }} image-block--height-{{ block_settings.height }} spacing-style size-style
   {%- if block_settings.hide_on_mobile %} hidden--mobile{% endif -%}
+  {%- if block_settings.hide_on_desktop %} hidden--desktop{% endif -%}
 {% endcapture %}
 
 {% capture style %}
@@ -220,6 +221,12 @@
       "type": "checkbox",
       "id": "hide_on_mobile",
       "label": "Hide on mobile",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_on_desktop",
+      "label": "Hide on desktop",
       "default": false
     },
     {

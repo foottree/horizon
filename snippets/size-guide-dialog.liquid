@@ -1,6 +1,6 @@
 {%- doc -%}
   The "Size Guide" link that sits on the size option's own label row in the variant picker,
-  and the dialog it opens.
+  and the right-hand drawer it opens (measuring steps + the size chart).
 
   Rendered in three parts because a <legend> may only contain phrasing content: the trigger
   goes inside the legend (a <button> is phrasing content, a <dialog> is not), and the dialog
@@ -11,15 +11,17 @@
   size's own pill translated off the pill. The trigger reaches the dialog by id instead.
 
   @param {string} part - 'open', 'trigger' or 'close'
-  @param {object} settings - The variant picker block's settings
+  @param {object} block_settings - The variant picker block's settings (named so the global `settings.color_palette` stays reachable)
   @param {string} id - The block id, so two pickers on one page get distinct heading ids
+  @param {object} [product] - The product, used to open on the Men's chart when it is tagged `men`
 
   @example
-  {% render 'size-guide-dialog', part: 'open', settings: block_settings, id: block.id %}
+  {% render 'size-guide-dialog', part: 'open', block_settings: block_settings, id: block.id %}
 {%- enddoc -%}
 
 {%- liquid
-  assign size_guide_label = settings.size_guide_text | default: 'Size Guide'
+  assign size_guide_label = block_settings.size_guide_text | default: 'Size Guide'
+  assign size_guide_title = block_settings.size_guide_title | default: 'Size guide'
   assign size_guide_heading_id = 'size-guide-heading-' | append: id
   assign size_guide_dialog_id = 'size-guide-' | append: id
 -%}
@@ -44,33 +46,109 @@
       </span>
     </button>
   {%- when 'close' -%}
+    {%- liquid
+      assign default_chart = 'womens'
+      for product_tag in product.tags
+        assign product_tag_key = product_tag | downcase
+        if product_tag_key == 'men'
+          assign default_chart = 'mens'
+        endif
+      endfor
+
+      assign measuring_steps = block_settings.size_guide_steps | newline_to_br | split: '<br />'
+    -%}
     <dialog-component
       id="{{ size_guide_dialog_id }}"
       class="size-guide"
     >
       <dialog
         ref="dialog"
-        class="size-guide__content dialog-modal color-custom-popover"
+        class="size-guide__content dialog-drawer color-custom-popover"
         scroll-lock
         aria-labelledby="{{ size_guide_heading_id }}"
+        style="
+          --sg-line: {{ settings.color_palette.color3 }};
+          --sg-tint: {{ settings.color_palette.color2 }};
+          --sg-cream: {{ settings.color_palette.color5 }};
+          --sg-olive: {{ settings.color_palette.color4 }};
+          --sg-ink: {{ settings.color_palette.foreground }};
+          --sg-ink-soft: {{ settings.color_palette.color8 }};
+          --sg-white: {{ settings.color_palette.background }};
+        "
       >
-        <h2
-          id="{{ size_guide_heading_id }}"
-          class="visually-hidden"
-        >
-          {{ size_guide_label }}
-        </h2>
-        <div class="size-guide__inner">
-          {{ settings.size_guide_content }}
+        <div class="size-guide__header">
+          <h2
+            id="{{ size_guide_heading_id }}"
+            class="size-guide__title h3"
+            tabindex="-1"
+            autofocus
+          >
+            {{- size_guide_title -}}
+          </h2>
+          <button
+            type="button"
+            ref="closeButton"
+            on:click="/closeDialog"
+            class="button button-unstyled close-button size-guide__close"
+            aria-label="{{ 'accessibility.close_dialog' | t }}"
+          >
+            {{- 'icon-close.svg' | inline_asset_content -}}
+          </button>
         </div>
-        <button
-          ref="closeButton"
-          on:click="/closeDialog"
-          class="button button-unstyled close-button size-guide__close"
-          aria-label="{{ 'accessibility.close_dialog' | t }}"
-        >
-          {{- 'icon-close.svg' | inline_asset_content -}}
-        </button>
+
+        <div class="size-guide__body">
+          <section class="size-guide__step size-guide__step--measure">
+            <p class="size-guide__eyebrow">Step 1</p>
+            <h3 class="size-guide__step-title h4">Measure your foot</h3>
+            <div class="size-guide__measure">
+              <ol class="size-guide__steps">
+                {%- for measuring_step in measuring_steps -%}
+                  {%- assign step_text = measuring_step | strip -%}
+                  {%- if step_text != blank -%}
+                    <li>{{ step_text }}</li>
+                  {%- endif -%}
+                {%- endfor -%}
+              </ol>
+              {%- if block_settings.size_guide_diagram != blank -%}
+                <figure class="size-guide__figure">
+                  {{
+                    block_settings.size_guide_diagram
+                    | image_url: width: 756
+                    | image_tag:
+                      loading: 'lazy',
+                      widths: '252, 504, 756',
+                      sizes: '(min-width: 750px) 252px, 100vw',
+                      alt: 'Foot length is measured from the back of the heel to the tip of the longest toe'
+                  }}
+                  {%- if block_settings.size_guide_diagram_caption != blank -%}
+                    <figcaption>{{ block_settings.size_guide_diagram_caption }}</figcaption>
+                  {%- endif -%}
+                </figure>
+              {%- endif -%}
+            </div>
+          </section>
+
+          <section class="size-guide__step size-guide__step--chart">
+            <p class="size-guide__eyebrow">Step 2</p>
+            <h3 class="size-guide__step-title h4">Find your size</h3>
+            {%- if block_settings.size_guide_chart_lead != blank -%}
+              <p class="size-guide__lead">{{ block_settings.size_guide_chart_lead }}</p>
+            {%- endif -%}
+            {% render 'size-chart', layout: 'drawer', default_chart: default_chart, id: size_guide_dialog_id %}
+          </section>
+
+          {%- if block_settings.size_guide_page != blank -%}
+            <a
+              href="{{ block_settings.size_guide_page.url }}"
+              class="size-guide__more"
+            >
+              See the full size guide
+              <span class="svg-wrapper size-guide__arrow">
+                {{- 'icon-arrow.svg' | inline_asset_content -}}
+              </span>
+            </a>
+          {%- endif -%}
+        </div>
       </dialog>
     </dialog-component>
 {%- endcase -%}

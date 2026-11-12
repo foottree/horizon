@@ -1,0 +1,472 @@
+{%- doc -%}
+  The Women's / Men's size chart: a switch, one panel per chart (table + notes box).
+
+  Data comes from the `size_chart` metaobject entries `womens` and `mens` (fields: name, rows,
+  notes). `rows` is one size per line, `foot cm | EU | US | UK`; `notes` is one note per line.
+  Values are rendered verbatim. If only one entry exists there is no switch.
+
+  The <size-chart> element (assets/size-chart.js) is a plain element that only swaps tabs and
+  panels. Nothing in here carries `ref=`, so it is safe inside a <dialog-component>.
+
+  @param {string} layout - 'page' (two tables side by side from 990px) or 'drawer' (one table)
+  @param {string} default_chart - 'womens' or 'mens', the chart shown first
+  @param {string} id - Unique per instance, used for aria ids
+
+  @example
+  {% render 'size-chart', layout: 'page', default_chart: 'womens', id: block.id %}
+{%- enddoc -%}
+
+{%- liquid
+  assign chart_layout = layout | default: 'page'
+  assign chart_handles = 'womens,mens' | split: ','
+
+  assign chart_count = 0
+  assign first_handle = ''
+  for handle in chart_handles
+    assign chart = shop.metaobjects.size_chart[handle]
+    if chart != blank
+      assign chart_count = chart_count | plus: 1
+      if first_handle == ''
+        assign first_handle = handle
+      endif
+    endif
+  endfor
+
+  assign active_handle = default_chart | default: 'womens'
+  assign active_chart = shop.metaobjects.size_chart[active_handle]
+  if active_chart == blank
+    assign active_handle = first_handle
+  endif
+
+  if chart_layout == 'page'
+    assign notes_tag = 'h3'
+    assign notes_preset = 'h4'
+  else
+    assign notes_tag = 'h4'
+    assign notes_preset = 'h5'
+  endif
+-%}
+
+{%- if chart_count > 0 -%}
+  <script
+    src="{{ 'size-chart.js' | asset_url }}"
+    type="module"
+  ></script>
+
+  <size-chart
+    class="size-chart size-chart--{{ chart_layout }}"
+    style="
+      --sc-head-bg: {{ settings.color_palette.color4 }};
+      --sc-head-text: {{ settings.color_palette.background }};
+      --sc-head-alt-bg: {{ settings.color_palette.color2 }};
+      --sc-head-alt-text: {{ settings.color_palette.color4 }};
+      --sc-zebra: {{ settings.color_palette.color5 }};
+      --sc-row-bg: {{ settings.color_palette.background }};
+      --sc-ink: {{ settings.color_palette.foreground }};
+      --sc-ink-soft: {{ settings.color_palette.color8 }};
+      --sc-line: {{ settings.color_palette.color3 }};
+      --sc-notes-bg: {{ settings.color_palette.color10 }};
+      --sc-notes-line: {{ settings.color_palette.color6 }};
+    "
+  >
+    {%- if chart_count > 1 -%}
+      <div
+        class="size-chart__switch"
+        role="tablist"
+        aria-label="Size chart"
+      >
+        {%- for handle in chart_handles -%}
+          {%- assign chart = shop.metaobjects.size_chart[handle] -%}
+          {%- if chart != blank -%}
+            {%- assign is_active = false -%}
+            {%- if handle == active_handle -%}
+              {%- assign is_active = true -%}
+            {%- endif -%}
+            <button
+              type="button"
+              role="tab"
+              id="{{ id }}-tab-{{ handle }}"
+              class="size-chart__tab {% if is_active %}button{% else %}button-secondary{% endif %}"
+              aria-selected="{{ is_active }}"
+              aria-controls="{{ id }}-panel-{{ handle }}"
+              {% unless is_active %}
+                tabindex="-1"
+              {% endunless %}
+            >
+              {{- chart.name.value -}}
+            </button>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- for handle in chart_handles -%}
+      {%- assign chart = shop.metaobjects.size_chart[handle] -%}
+      {%- if chart == blank -%}
+        {%- continue -%}
+      {%- endif -%}
+
+      {%- liquid
+        assign row_lines = chart.rows.value | newline_to_br | split: '<br />'
+        assign joined_rows = ''
+        for row_line in row_lines
+          assign clean_line = row_line | strip
+          if clean_line != blank
+            assign joined_rows = joined_rows | append: clean_line | append: '^^'
+          endif
+        endfor
+        assign chart_rows = joined_rows | split: '^^'
+        assign row_total = chart_rows.size
+        assign half = row_total | divided_by: 2.0 | ceil
+
+        assign note_lines = chart.notes.value | newline_to_br | split: '<br />'
+        assign is_active = false
+        if handle == active_handle
+          assign is_active = true
+        endif
+
+        if chart_layout == 'page'
+          assign table_count = 2
+        else
+          assign table_count = 1
+        endif
+      -%}
+
+      <div
+        class="size-chart__panel"
+        role="tabpanel"
+        id="{{ id }}-panel-{{ handle }}"
+        {% if chart_count > 1 %}
+          aria-labelledby="{{ id }}-tab-{{ handle }}"
+        {% endif %}
+        {% unless is_active %}
+          hidden
+        {% endunless %}
+      >
+        <div class="size-chart__tables">
+          {%- for table_index in (1..table_count) -%}
+            {%- liquid
+              if table_count == 1
+                assign range_start = 0
+                assign range_end = row_total
+              elsif table_index == 1
+                assign range_start = 0
+                assign range_end = half
+              else
+                assign range_start = half
+                assign range_end = row_total
+              endif
+              assign range_len = range_end | minus: range_start
+            -%}
+            {%- if range_end > range_start -%}
+              <div class="size-chart__scroll{% if table_index == 2 %} size-chart__scroll--second{% endif %}">
+                <table class="size-chart__table">
+                  <colgroup>
+                    <col class="size-chart__col-length">
+                    <col class="size-chart__col-eu">
+                    <col class="size-chart__col-ref">
+                    <col class="size-chart__col-ref">
+                  </colgroup>
+                  <thead>
+                    <tr>
+                      <th scope="col">Foot length (cm)</th>
+                      <th scope="col">EU size</th>
+                      <th
+                        scope="col"
+                        class="size-chart__ref"
+                      >
+                        US*
+                      </th>
+                      <th
+                        scope="col"
+                        class="size-chart__ref"
+                      >
+                        UK*
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {%- for chart_row in chart_rows offset: range_start limit: range_len -%}
+                      {%- liquid
+                        assign global_index = forloop.index0 | plus: range_start
+                        assign row_parity = global_index | modulo: 2
+                        assign cells = chart_row | split: '|'
+                      -%}
+                      <tr{% if row_parity == 1 %} class="size-chart__row--alt"{% endif %}>
+                        <td>{{ cells[0] | strip }}</td>
+                        <th scope="row" class="size-chart__eu">{{ cells[1] | strip }}</th>
+                        <td class="size-chart__ref-cell">{{ cells[2] | strip }}</td>
+                        <td class="size-chart__ref-cell">{{ cells[3] | strip }}</td>
+                      </tr>
+                    {%- endfor -%}
+                  </tbody>
+                </table>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+
+        <div class="size-chart__notes">
+          <{{ notes_tag }} class="size-chart__notes-title {{ notes_preset }}">How to read this chart</{{ notes_tag }}>
+          <ul class="size-chart__notes-list">
+            {%- for note_line in note_lines -%}
+              {%- assign note_text = note_line | strip -%}
+              {%- if note_text != blank -%}
+                <li>{{ note_text }}</li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        </div>
+      </div>
+    {%- endfor -%}
+  </size-chart>
+{%- endif -%}
+
+{% stylesheet %}
+  .size-chart {
+    --sc-gap: 24px;
+    --sc-row-h: 40px;
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--sc-gap);
+    width: 100%;
+    text-align: start;
+  }
+
+  .size-chart--page {
+    @media screen and (min-width: 990px) {
+      --sc-gap: 40px;
+      --sc-row-h: 56px;
+    }
+  }
+
+  .size-chart__switch {
+    display: flex;
+    gap: 12px;
+  }
+
+  .size-chart__tab {
+    flex: 1 1 0;
+    min-width: 168px;
+    justify-content: center;
+    text-align: center;
+    cursor: pointer;
+
+    @media screen and (min-width: 750px) {
+      flex: 0 0 auto;
+    }
+
+    @media screen and (max-width: 749px) {
+      min-width: 0;
+    }
+  }
+
+  .size-chart__panel {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sc-gap);
+  }
+
+  .size-chart__panel[hidden] {
+    display: none;
+  }
+
+  .size-chart__tables {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .size-chart--page .size-chart__tables {
+    @media screen and (min-width: 990px) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 40px;
+      align-items: start;
+    }
+  }
+
+  .size-chart__scroll {
+    container: size-chart-table / inline-size;
+    overflow: hidden;
+    border: 1px solid var(--sc-line);
+    border-radius: 8px;
+    background: var(--sc-row-bg);
+  }
+
+  /* Below 990 the two halves read as one table: the second has no header and the seam is joined */
+  .size-chart--page .size-chart__scroll:not(.size-chart__scroll--second):not(:last-child) {
+    @media screen and (max-width: 989px) {
+      border-bottom: 0;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+
+  .size-chart--page .size-chart__scroll--second {
+    @media screen and (max-width: 989px) {
+      border-top: 0;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+  }
+
+  .size-chart--page .size-chart__scroll--second thead {
+    @media screen and (max-width: 989px) {
+      display: none;
+    }
+  }
+
+  .size-chart__table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-size: var(--font-paragraph--size);
+    line-height: var(--font-paragraph--line-height);
+  }
+
+  /* Fixed column shares so the two halves line up when they stack into one table below 990 */
+  .size-chart__col-length {
+    width: 38%;
+  }
+
+  .size-chart__col-eu,
+  .size-chart__col-ref {
+    width: 20.67%;
+  }
+
+  .size-chart__table tbody :is(th, td) {
+    white-space: nowrap;
+  }
+
+  .size-chart__table :is(th, td) {
+    height: var(--sc-row-h);
+    padding: 0 10px;
+    text-align: start;
+    vertical-align: middle;
+    font-size: var(--font-paragraph--size);
+    line-height: var(--font-paragraph--line-height);
+    border: 0;
+
+    @media screen and (min-width: 750px) {
+      padding: 0 18px;
+    }
+  }
+
+  .size-chart__table thead th {
+    background: var(--sc-head-bg);
+    color: var(--sc-head-text);
+    font-family: var(--font-subheading--family);
+    font-weight: var(--font-subheading--weight);
+  }
+
+  .size-chart__table thead th.size-chart__ref {
+    background: var(--sc-head-alt-bg);
+    color: var(--sc-head-alt-text);
+  }
+
+  .size-chart__table tbody tr {
+    background: var(--sc-row-bg);
+  }
+
+  .size-chart__table tbody tr.size-chart__row--alt {
+    background: var(--sc-zebra);
+  }
+
+  .size-chart__table tbody td,
+  .size-chart__table tbody th {
+    color: var(--sc-ink);
+    font-family: var(--font-body--family);
+    font-weight: var(--font-body--weight);
+  }
+
+  .size-chart__table tbody th.size-chart__eu {
+    font-family: var(--font-subheading--family);
+    font-weight: var(--font-subheading--weight);
+  }
+
+  .size-chart__table tbody td.size-chart__ref-cell {
+    color: var(--sc-ink-soft);
+  }
+
+  /* Narrow tables (phones, the phone drawer): the table's own width decides, not the viewport.
+     Foot length gets the widest column, headers keep the paragraph size with tighter block padding, and cells give up inline padding (10px, 6px below 340px) so "6.5 / 7" stays on one line. */
+  @container size-chart-table (max-width: 480px) {
+    .size-chart__col-length {
+      width: 32%;
+    }
+
+    .size-chart__col-eu {
+      width: 23%;
+    }
+
+    .size-chart__col-ref {
+      width: 22.5%;
+    }
+
+    .size-chart__table :is(th, td) {
+      padding-inline: 10px;
+    }
+
+    .size-chart__table thead th {
+      padding-block: 10px;
+    }
+  }
+
+  @container size-chart-table (max-width: 340px) {
+    .size-chart__table :is(th, td) {
+      padding-inline: 6px;
+    }
+  }
+
+  .size-chart__notes {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px 22px;
+    background: var(--sc-notes-bg);
+    border: 1px solid var(--sc-notes-line);
+    border-radius: 8px;
+  }
+
+  .size-chart--page .size-chart__notes {
+    padding: 24px 22px;
+
+    @media screen and (min-width: 750px) {
+      padding: 32px;
+    }
+  }
+
+  .size-chart__notes-title {
+    margin: 0;
+    color: var(--sc-ink);
+  }
+
+  .size-chart__notes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .size-chart__notes-list li {
+    position: relative;
+    padding-inline-start: 20px;
+    color: var(--sc-ink);
+    font-size: var(--font-paragraph--size);
+    line-height: var(--font-paragraph--line-height);
+  }
+
+  .size-chart__notes-list li::before {
+    content: '';
+    position: absolute;
+    inset-inline-start: 0;
+    top: 0.6em;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--sc-notes-line);
+  }
+{% endstylesheet %}

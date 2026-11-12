@@ -213,7 +213,12 @@
                 "padding-inline-start": 0,
                 "padding-inline-end": 0,
                 "size_guide_text": "Size Guide",
-                "size_guide_content": "<p>Our full size and width chart is coming soon.</p>"
+                "size_guide_title": "Size guide",
+                "size_guide_steps": "Stand on a sheet of paper, heel against a wall.\nMark the tip of your longest toe.\nMeasure from the wall to the mark, in cm. Do both feet and use the longer one.",
+                "size_guide_diagram": "shopify://shop_images/size-guide-diagram-drawer.png",
+                "size_guide_diagram_caption": "Foot length is heel to longest toe, in centimetres.",
+                "size_guide_chart_lead": "Match your foot length to the chart.",
+                "size_guide_page": "size-width-guide"
               },
               "blocks": {}
             },
