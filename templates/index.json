@@ -895,7 +895,7 @@
             "product_name": {
               "type": "text",
               "settings": {
-                "text": "<p>Helen Slip-On Mule Sneakers - Taupe</p>",
+                "text": "<p>Clover Lace-Up Sneakers</p>",
                 "width": "fit-content",
                 "max_width": "none",
                 "alignment": "left",
@@ -949,16 +949,17 @@
             "cta"
           ]
         },
-        "video_lifestyle": {
-          "type": "video",
+        "img_lifestyle": {
+          "type": "image",
           "settings": {
-            "source": "uploaded",
-            "video": "shopify://files/videos/new-arrivals-helen.mp4",
-            "video_autoplay": true,
-            "video_loop": true,
+            "image": "shopify://shop_images/new-arrivals-clover-lifestyle.jpg",
+            "link": "",
+            "image_ratio": "adapt",
+            "width": "custom",
             "custom_width": 54,
+            "width_mobile": "fill",
             "custom_width_mobile": 100,
-            "aspect_ratio": "auto",
+            "height": "fill",
             "border": "none",
             "border_width": 1,
             "border_opacity": 100,
@@ -967,20 +968,18 @@
             "padding-block-start": 0,
             "padding-block-end": 0,
             "padding-inline-start": 0,
-            "padding-inline-end": 0,
-            "hide_controls": true
+            "padding-inline-end": 0
           }
         }
       },
       "block_order": [
         "content",
-        "video_lifestyle"
+        "img_lifestyle"
       ],
       "custom_css": [
         "[class*=__img_product] .image-block__image{--ratio:528/360!important}",
-        "deferred-media{aspect-ratio:772/640!important;pointer-events:none}",
-        "@media(max-width:749px){[class*=__img_product] .image-block__image{--ratio:2/1!important}deferred-media{aspect-ratio:4/3!important}deferred-media img,deferred-media video{object-position:50% 75%}}",
-        "video{width:100%;height:100%;object-fit:cover;pointer-events:none}",
+        "[class*=__img_lifestyle] .image-block__image{--ratio:772/640!important;object-position:50% 90%}",
+        "@media(max-width:749px){[class*=__img_product] .image-block__image{--ratio:2/1!important}[class*=__img_lifestyle] .image-block__image{--ratio:4/3!important}}",
         ".button{font-size:1rem;padding:12px 24px;border-radius:999px}"
       ],
       "settings": {
@@ -1628,7 +1627,7 @@
         "review_2": {
           "type": "review",
           "settings": {
-            "image": "",
+            "image": "shopify://shop_images/review-google-shena.jpg",
             "quote": "<p>“Very good service and a very happy customer! The staff was so helpful and patient while I tried on a few different pairs. Really appreciated the wonderful service and friendly assistance. Highly recommend Foot Tree!”</p>",
             "name": "Shena H.",
             "role": "Google review",
@@ -1639,7 +1638,7 @@
         "review_3": {
           "type": "review",
           "settings": {
-            "image": "",
+            "image": "shopify://shop_images/review-google-emmy.jpg",
             "quote": "<p>“The shoes quality are very very good. Very comfortable. I have purchased 2 pairs from the shop, because of the design and comfy. Shi Ying service also very kind, helpful and friendly.”</p>",
             "name": "Emmy M.",
             "role": "Google review",
@@ -1650,7 +1649,7 @@
         "review_4": {
           "type": "review",
           "settings": {
-            "image": "",
+            "image": "shopify://shop_images/review-google-eian.jpg",
             "quote": "<p>“I was immediately drawn to a cute, wide-width design on the rack that I knew my mom would love. … SY’s warm customer service made our shopping experience truly wonderful.”</p>",
             "name": "Eian T.",
             "role": "Google review",
@@ -1661,7 +1660,7 @@
         "review_5": {
           "type": "review",
           "settings": {
-            "image": "",
+            "image": "shopify://shop_images/review-google-cs.jpg",
             "quote": "<p>“bought a pair of shoes from Foot Tree - truly amazed by how comfortable and well-made the shoes are. will highly recommend them to anyone looking for comfort, quality and style!!!”</p>",
             "name": "C.S.",
             "role": "Google review",
@@ -1688,8 +1687,8 @@
         "columns": 5,
         "card_gap": 20,
         "card_align": "center",
-        "image_ratio": "landscape",
-        "image_fit": "contain",
+        "image_ratio": "square",
+        "image_fit": "cover",
         "mobile_card_size": "60cqw",
         "autoplay": true,
         "autoplay_speed": 7,
