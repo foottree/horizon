@@ -45,6 +45,27 @@ so per-block settings would move three of them and leave the other four behind.
 Snap each one to the nearest ladder value before writing it. Typing Figma numbers verbatim is
 how 22px, 20px, 15px and 13px got onto the homepage.
 
+### Sizes come from the declared presets, never typed
+
+A size being *on* the ladder is not enough: it must come from the preset that owns that role, so
+Theme settings → Typography still controls it.
+
+- **Body copy** (paragraphs, steps, notes, table cells, captions, list items, links in running text)
+  is the **paragraph** preset: `type_preset: "paragraph"` on a text block, the `.paragraph` class or
+  the paragraph variables in snippet markup. 18 is the h5 rung, never body.
+- **Headings** use the `h1`–`h6` presets (`type_preset`, the `.h3` / `.h4` / `.h5` classes, or the
+  `--font-hN--*` variables in snippets).
+- The only `custom` presets allowed are the two the site already declares: the **eyebrow** (copy
+  `templates/index.json` → `why_foot_tree/panel/eyebrow`: 0.75rem, subheading family, uppercase,
+  loose tracking) and the **card title** (below: subheading family, `font_size: ""`).
+- No `font-size` / `line-height` typed into a `{% stylesheet %}`, snippet or custom.css for a new
+  element. A build spec names the preset per element, never a px value, and the agent greps its diff
+  for `font-size` and justifies every hit. Review measures computed sizes against the **role**
+  (body = paragraph = 16), not just against the ladder.
+- Lesson: the size guide (2026-11-12) was specced at "18px" for steps, intros, notes and table cells
+  (the designer's 18px minimum) and shipped with `1.125rem` typed in every block and stylesheet. Body
+  text read bigger than the rest of the site and the client caught it.
+
 ### Heading level is not a styling choice
 
 - A **page title** is an `<h1>` **and** must use the `h1` type preset. Horizon text blocks let
