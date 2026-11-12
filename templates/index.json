@@ -1617,33 +1617,55 @@
         "review_1": {
           "type": "review",
           "settings": {
-            "image": "shopify://shop_images/review-1.jpg",
-            "quote": "<p>“I have been wearing them almost 365 days of the year.”</p>",
-            "name": "K.H. Cheng",
-            "role": "Hospital staff",
-            "product": "Gaia Mary Jane",
+            "image": "",
+            "quote": "<p>“Joanne was so helpful. We visited her in city square mall and she was extremely patient and understanding in what I wanted. I’m so happy because I found the right footwear for my flat feet.”</p>",
+            "name": "Sanju S.",
+            "role": "Google review",
+            "product": "",
             "verified": true
           }
         },
         "review_2": {
           "type": "review",
           "settings": {
-            "image": "shopify://shop_images/review-2.jpg",
-            "quote": "<p>“First pair in years that didn’t rub my bunion. I ordered the wide and it was right the first time.”</p>",
-            "name": "Real name",
-            "role": "Role",
-            "product": "Style",
+            "image": "",
+            "quote": "<p>“Very good service and a very happy customer! The staff was so helpful and patient while I tried on a few different pairs. Really appreciated the wonderful service and friendly assistance. Highly recommend Foot Tree!”</p>",
+            "name": "Shena H.",
+            "role": "Google review",
+            "product": "",
             "verified": true
           }
         },
         "review_3": {
           "type": "review",
           "settings": {
-            "image": "shopify://shop_images/review-3.jpg",
-            "quote": "<p>“Twelve hours on a ward floor and my feet still felt fine at the end of it.”</p>",
-            "name": "Real name",
-            "role": "Role",
-            "product": "Style",
+            "image": "",
+            "quote": "<p>“The shoes quality are very very good. Very comfortable. I have purchased 2 pairs from the shop, because of the design and comfy. Shi Ying service also very kind, helpful and friendly.”</p>",
+            "name": "Emmy M.",
+            "role": "Google review",
+            "product": "",
+            "verified": true
+          }
+        },
+        "review_4": {
+          "type": "review",
+          "settings": {
+            "image": "",
+            "quote": "<p>“I was immediately drawn to a cute, wide-width design on the rack that I knew my mom would love. … SY’s warm customer service made our shopping experience truly wonderful.”</p>",
+            "name": "Eian T.",
+            "role": "Google review",
+            "product": "",
+            "verified": true
+          }
+        },
+        "review_5": {
+          "type": "review",
+          "settings": {
+            "image": "",
+            "quote": "<p>“bought a pair of shoes from Foot Tree - truly amazed by how comfortable and well-made the shoes are. will highly recommend them to anyone looking for comfort, quality and style!!!”</p>",
+            "name": "C.S.",
+            "role": "Google review",
+            "product": "",
             "verified": true
           }
         }
@@ -1651,7 +1673,9 @@
       "block_order": [
         "review_1",
         "review_2",
-        "review_3"
+        "review_3",
+        "review_4",
+        "review_5"
       ],
       "settings": {
         "eyebrow": "HEAR FROM OUR CUSTOMERS",
@@ -1659,13 +1683,14 @@
         "show_rating": true,
         "rating": "5.0",
         "stars": 5,
-        "rating_caption": "60+ reviews",
-        "rating_link": "",
-        "columns": 3,
+        "rating_caption": "68 Google reviews",
+        "rating_link": "https://maps.app.goo.gl/n1gptY89CcuRjuQE6",
+        "columns": 5,
         "card_gap": 20,
+        "card_align": "center",
         "image_ratio": "landscape",
         "image_fit": "contain",
-        "mobile_card_size": "44cqw",
+        "mobile_card_size": "60cqw",
         "autoplay": true,
         "autoplay_speed": 7,
         "verified_label": "Verified",

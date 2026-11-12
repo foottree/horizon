@@ -33,6 +33,8 @@
       name: block.settings.name,
       role: block.settings.role,
       product: block.settings.product,
+      stars: block.settings.stars,
+      align: section.settings.card_align,
       verified: block.settings.verified,
       verified_label: section.settings.verified_label,
       image_ratio: section.settings.image_ratio,
@@ -109,6 +111,7 @@
     {% render 'spacing-style', settings: section.settings %}
     --review-cards-eyebrow-color: {{ settings.color_palette.color1 }};
     --review-cards-accent-color: {{ settings.color_palette.color4 }};
+    --review-cards-star-color: {{ settings.color_palette.color6 }};
     --review-cards-muted-color: {{ settings.color_palette.color8 }};
     --review-cards-line-color: {{ settings.color_palette.color3 }};
     --review-cards-chip-bg: {{ settings.color_palette.color2 }};
@@ -147,8 +150,10 @@
         </span>
       {%- endcapture -%}
       {%- if section.settings.rating_link != blank -%}
+        {%- assign rating_link_start = section.settings.rating_link | slice: 0, 4 -%}
         <a
           href="{{ section.settings.rating_link }}"
+          {% if rating_link_start == 'http' %}target="_blank" rel="noopener noreferrer"{% endif %}
           class="review-cards__score"
         >{{ score_content }}</a>
       {%- else -%}
@@ -316,7 +321,7 @@
     font-size: 1.125rem; /* 18px, h5 rung of the type ladder */
     letter-spacing: 2px;
     line-height: 1;
-    color: var(--review-cards-accent-color, currentcolor);
+    color: var(--review-cards-star-color, currentcolor);
   }
 
   .review-cards__caption {
@@ -471,6 +476,16 @@
           "id": "verified",
           "label": "t:settings.show_verified_chip",
           "default": true
+        },
+        {
+          "type": "range",
+          "id": "stars",
+          "label": "Stars",
+          "info": "Gold stars shown above the name. 0 hides them.",
+          "min": 0,
+          "max": 5,
+          "step": 1,
+          "default": 5
         }
       ]
     }
@@ -539,7 +554,7 @@
       "id": "columns",
       "label": "t:settings.columns",
       "min": 2,
-      "max": 4,
+      "max": 6,
       "step": 1,
       "default": 3
     },
@@ -552,6 +567,16 @@
       "step": 4,
       "unit": "px",
       "default": 20
+    },
+    {
+      "type": "select",
+      "id": "card_align",
+      "label": "Card text alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" }
+      ],
+      "default": "left"
     },
     {
       "type": "select",

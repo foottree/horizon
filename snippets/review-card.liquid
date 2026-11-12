@@ -7,7 +7,7 @@
   section-local `review` blocks and renders each one through this snippet directly.
 
   All colors are inherited from CSS custom properties set on the section wrapper
-  (--review-cards-accent-color, --review-cards-muted-color, --review-cards-line-color,
+  (--review-cards-star-color, --review-cards-accent-color, --review-cards-muted-color, --review-cards-line-color,
   --review-cards-chip-bg, --review-card-bg, --review-card-radius, --review-card-border,
   --review-card-media-bg) rather than hard-coded here.
 
@@ -16,6 +16,8 @@
   @param {string} [name] - Customer name.
   @param {string} [role] - Customer role, e.g. "Hospital staff".
   @param {string} [product] - Product / style the review references.
+  @param {number} [stars] - Gold stars above the name, 0 to 5 (default 5). 0 hides them.
+  @param {string} [align] - 'left' | 'center' - text alignment inside the card (default left).
   @param {boolean} [verified] - Whether to show the "Verified" chip.
   @param {string} [verified_label] - Label text for the verified chip.
   @param {string} [image_ratio] - 'wide' | 'landscape' | 'square' - controls the media aspect ratio.
@@ -30,6 +32,8 @@
     name: block.settings.name,
     role: block.settings.role,
     product: block.settings.product,
+    stars: block.settings.stars,
+    align: section.settings.card_align,
     verified: block.settings.verified,
     verified_label: section.settings.verified_label,
     image_ratio: section.settings.image_ratio,
@@ -52,14 +56,17 @@
   endif
 
   assign img_alt = image.alt | default: name
+  assign star_count = stars | default: 5
+  assign align_class = align | default: 'left'
 -%}
 
 <article
-  class="review-card"
+  class="review-card review-card--{{ align_class }}"
   {{ block_attributes }}
 >
-  <div class="review-card__media review-card__media--{{ ratio_class }} review-card__media--{{ fit_class }}">
-    {%- if image -%}
+  {%- comment -%} No photo, no media box: a blank image renders nothing (no placeholder, no empty ratio box). {%- endcomment -%}
+  {%- if image -%}
+    <div class="review-card__media review-card__media--{{ ratio_class }} review-card__media--{{ fit_class }}">
       {{
         image
         | image_url: width: 1200
@@ -70,40 +77,39 @@
           alt: img_alt,
           class: 'review-card__image'
       }}
-    {%- else -%}
-      <span
-        class="review-card__placeholder"
-        aria-hidden="true"
-      ></span>
-    {%- endif -%}
-  </div>
+    </div>
+  {%- endif -%}
   <div class="review-card__body">
-    {%- if quote != blank -%}
-      <blockquote class="review-card__quote">{{ quote }}</blockquote>
+    {%- if star_count > 0 -%}
+      <div
+        class="review-card__stars"
+        aria-hidden="true"
+      >{% for i in (1..star_count) %}&#9733;{% endfor %}</div>
     {%- endif -%}
-    <div class="review-card__spacer"></div>
-    <div class="review-card__rule"></div>
-    <div class="review-card__attribution">
-      <div class="review-card__who">
+    {%- if name != blank or verified -%}
+      <div class="review-card__attribution">
         {%- if name != blank -%}
           <span class="review-card__name">{{ name }}</span>
         {%- endif -%}
-        {%- if meta != blank -%}
-          <span class="review-card__meta">{{ meta }}</span>
+        {%- if verified -%}
+          <span class="review-card__verified">
+            <span
+              class="review-card__verified-icon svg-wrapper"
+              aria-hidden="true"
+            >
+              {{- 'icon-verified-seal.svg' | inline_asset_content -}}
+            </span>
+            {{- verified_label | default: 'Verified' -}}
+          </span>
         {%- endif -%}
       </div>
-      {%- if verified -%}
-        <span class="review-card__verified">
-          <span
-            class="review-card__verified-icon svg-wrapper"
-            aria-hidden="true"
-          >
-            {{- 'icon-verified-seal.svg' | inline_asset_content -}}
-          </span>
-          {{- verified_label | default: 'Verified' -}}
-        </span>
-      {%- endif -%}
-    </div>
+    {%- endif -%}
+    {%- if quote != blank -%}
+      <blockquote class="review-card__quote">{{ quote }}</blockquote>
+    {%- endif -%}
+    {%- if meta != blank -%}
+      <span class="review-card__meta">{{ meta }}</span>
+    {%- endif -%}
   </div>
 </article>
 
@@ -155,12 +161,6 @@
     object-fit: contain;
   }
 
-  .review-card__placeholder {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(#fff7e2, #e7e2d8);
-  }
-
   .review-card__body {
     display: flex;
     flex-direction: column;
@@ -179,51 +179,53 @@
     }
   }
 
+  /* Review text is body copy: the paragraph preset (size, family, weight from Theme settings). */
   .review-card__quote {
     margin: 0;
-    font-family: var(--font-heading--family);
-    font-weight: 600;
-    /* 18px. At 24px the quote was three quarters of the 32px section heading and dominated a
-       400px card; a step down lets the heading lead and keeps the card's own hierarchy
-       readable at 18 / 16 / 14. */
-    font-size: 1.125rem;
-    line-height: 1.24;
+    font-family: var(--font-paragraph--family);
+    font-weight: var(--font-paragraph--weight);
+    font-size: var(--font-paragraph--size);
+    line-height: var(--font-paragraph--line-height, var(--line-height--body-normal));
     color: var(--color-foreground);
   }
 
-  .review-card__spacer {
-    margin-top: auto;
+  .review-card--center {
+    text-align: center;
   }
 
-  .review-card__rule {
-    height: 1px;
-    flex-shrink: 0;
-    background: var(--review-cards-line-color, var(--color-border));
+  /* Gold stars at the paragraph size; colour is palette color6 via the section wrapper. */
+  .review-card__stars {
+    font-size: var(--font-paragraph--size);
+    line-height: 1;
+    letter-spacing: 2px;
+    color: var(--review-cards-star-color, currentcolor);
   }
 
+  /* Name + Verified chip on one row; the chip wraps under the name when the card is too narrow. */
   .review-card__attribution {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    justify-content: space-between;
-    gap: 12px;
+    gap: 4px 8px;
   }
 
-  .review-card__who {
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
+  .review-card--center .review-card__attribution {
+    justify-content: center;
   }
 
+  /* Card-title recipe: subheading family + weight at the paragraph size (16 / 600). */
   .review-card__name {
     font-family: var(--font-subheading--family);
-    font-weight: 600;
-    font-size: 0.875rem; /* 14px, a step under the quote so the card reads 18 / 14 / 12 */
-    line-height: 1.6;
+    font-weight: var(--font-subheading--weight);
+    font-size: var(--font-paragraph--size);
+    line-height: var(--line-height--body-normal);
     color: var(--color-foreground);
   }
 
+  /* Role / product line: the theme's small size (14). */
   .review-card__meta {
-    font-size: 0.75rem; /* 12px, the caption rung: the role sits under the name */
+    font-size: var(--font-size--sm);
+    line-height: var(--line-height--body-normal);
     color: var(--review-cards-muted-color, var(--color-foreground));
   }
 
@@ -255,33 +257,5 @@
   .review-card__verified-icon svg {
     width: 100%;
     height: 100%;
-  }
-
-  /* Narrow card (phones, or any column count that shrinks the card): the chip's nowrap width
-     squeezed the role into a two-line column beside it. Here the chip moves up beside the name and
-     the role takes the full width underneath; if the name and chip still don't fit side by side,
-     the chip wraps under the name instead of squeezing either. Keyed to the card, not the
-     viewport, so it holds whatever width the carousel gives a card. Wide desktop cards keep the
-     chip on the right. */
-  @container (max-width: 339px) {
-    .review-card__attribution {
-      flex-wrap: wrap;
-      justify-content: flex-start;
-      gap: 2px 8px;
-    }
-
-    .review-card__who {
-      display: contents;
-    }
-
-    .review-card__meta {
-      order: 1;
-      flex-basis: 100%;
-    }
-
-    /* 16px body rung: at 18px a narrow card's quote ran to eight lines. */
-    .review-card__quote {
-      font-size: 1rem;
-    }
   }
 {% endstylesheet %}
