@@ -1613,17 +1613,6 @@
     "customer_reviews": {
       "type": "review-cards",
       "blocks": {
-        "review_1": {
-          "type": "review",
-          "settings": {
-            "image": "",
-            "quote": "<p>“Joanne was so helpful. We visited her in city square mall and she was extremely patient and understanding in what I wanted. I’m so happy because I found the right footwear for my flat feet.”</p>",
-            "name": "Sanju S.",
-            "role": "Google review",
-            "product": "",
-            "verified": true
-          }
-        },
         "review_2": {
           "type": "review",
           "settings": {
@@ -1667,14 +1656,25 @@
             "product": "",
             "verified": true
           }
+        },
+        "review_6": {
+          "type": "review",
+          "settings": {
+            "image": "shopify://shop_images/review-google-tz.jpg",
+            "quote": "<p>“Foottree shoes perform really well in wet weather, even during rainy rides, my feet stay dry.”</p>",
+            "name": "TZ T.",
+            "role": "Google review",
+            "product": "",
+            "verified": true
+          }
         }
       },
       "block_order": [
-        "review_1",
         "review_2",
         "review_3",
         "review_4",
-        "review_5"
+        "review_5",
+        "review_6"
       ],
       "settings": {
         "eyebrow": "HEAR FROM OUR CUSTOMERS",
@@ -1706,7 +1706,10 @@
         "mobile-padding-block-end": 40,
         "mobile-padding-inline-start": 0,
         "mobile-padding-inline-end": 0
-      }
+      },
+      "custom_css": [
+        ".review-card__image[src*=\"review-google-tz\"]{object-position:50% 100%}"
+      ]
     },
     "social_videos": {
       "type": "video-carousel",
