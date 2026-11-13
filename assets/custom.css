@@ -1525,6 +1525,31 @@
   color: rgb(255 255 255 / 0.82);
 }
 
+/* REACH US contact rows (WhatsApp Us, Email Us) are Text Icon blocks (blocks/text-icon.liquid),
+   which has no colour setting, so they take the menu links' colour here: text, link and icon paint
+   white-82% and the link has no underline, matching the menu links beside them. Size, weight and
+   line height come from the paragraph preset. .footer-content .text-icon-block is safe scoping: these
+   are the only Text Icon blocks in the footer. */
+.footer-content .text-icon-block {
+  --color: rgb(255 255 255 / 0.82);
+  color: rgb(255 255 255 / 0.82);
+}
+
+.footer-content .text-icon-block .text-block,
+.footer-content .text-icon-block .text-block p,
+.footer-content .text-icon-block .text-block a {
+  color: rgb(255 255 255 / 0.82);
+  text-decoration: none;
+}
+
+/* The stock Social Links block writes its Color setting into --color-utilities, but only
+   sections/footer-utilities.liquid (the legal bar) reads that variable, so in the sitemap row the
+   setting did nothing and the icons painted pure white. This lets the setting apply here too, so the
+   client still controls the colour from the editor. The svg paints with currentColor. */
+.footer-content .social-icons__wrapper a {
+  color: var(--color-utilities, currentColor);
+}
+
 /* Stock lays the legal bar out as two EQUAL columns (sections/footer-utilities.liquid,
    .utilities--blocks-2), so the copyright was capped at half the row and wrapped onto a second
    line from about 1600px down, while the payment column sat on ~300px of unused space. Sizing

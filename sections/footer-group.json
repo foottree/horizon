@@ -94,7 +94,7 @@
             "reach_text": {
               "type": "text",
               "settings": {
-                "text": "<p>Visit City Square Mall<br>180 Kitchener Rd, #03-15 Singapore 208539<br><br><a href=\"https://wa.me/6580740350\">WhatsApp +65 8074 0350</a><br><a href=\"mailto:hello@foottree.com\">hello@foottree.com</a></p>",
+                "text": "<p>Visit City Square Mall<br>180 Kitchener Rd, #03-15 Singapore 208539</p>",
                 "width": "100%",
                 "max_width": "none",
                 "type_preset": "paragraph",
@@ -102,21 +102,55 @@
                 "custom_class": "ft-footer-reach-text"
               }
             },
-            "reach_tiktok": {
-              "type": "icon",
+            "reach_whatsapp": {
+              "type": "text-icon",
               "settings": {
-                "icon": "tiktok",
-                "width": 24,
+                "icon_position": "left",
+                "icon": "whatsapp",
+                "icon_width": 20,
+                "text": "<p><a href=\"https://wa.me/6580740350\">WhatsApp Us</a></p>",
+                "text_width": "fit-content",
+                "type_preset": "paragraph",
                 "link": "",
-                "open_in_new_tab": true,
-                "icon_color": "#ffffffd1"
+                "content_direction": "row",
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "center",
+                "gap": 10
+              }
+            },
+            "reach_email": {
+              "type": "text-icon",
+              "settings": {
+                "icon_position": "left",
+                "icon": "none",
+                "custom_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\" focusable=\"false\"><path d=\"M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z\"/></svg>",
+                "icon_width": 20,
+                "text": "<p><a href=\"mailto:hello@foottree.com\">Email Us</a></p>",
+                "text_width": "fit-content",
+                "type_preset": "paragraph",
+                "link": "",
+                "content_direction": "row",
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "center",
+                "gap": 10
+              }
+            },
+            "reach_social_links": {
+              "type": "social-links",
+              "settings": {
+                "icon_color": "#ffffffd1",
+                "facebook_url": "https://www.facebook.com/foottree.footwear",
+                "instagram_url": "https://www.instagram.com/foottree.sg/",
+                "tiktok_url": "https://www.tiktok.com/@foot.tree"
               }
             }
           },
           "block_order": [
             "reach_heading",
             "reach_text",
-            "reach_tiktok"
+            "reach_whatsapp",
+            "reach_email",
+            "reach_social_links"
           ]
         }
       },
