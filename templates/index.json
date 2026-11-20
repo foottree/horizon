@@ -1323,7 +1323,7 @@
           "type": "review",
           "settings": {
             "image": "shopify://shop_images/review-google-cs.jpg",
-            "quote": "<p>“bought a pair of shoes from Foot Tree - truly amazed by how comfortable and well-made the shoes are. will highly recommend them to anyone looking for comfort, quality and style!!!”</p>",
+            "quote": "<p>“Bought a pair of shoes from Foot Tree - truly amazed by how comfortable and well-made the shoes are. will highly recommend them to anyone looking for comfort, quality and style!!!”</p>",
             "name": "C.S.",
             "role": "Google review",
             "product": "",
