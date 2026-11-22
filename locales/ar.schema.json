@@ -246,7 +246,9 @@
     "media_type_info": "تمت تعبئة الميزات من روابط القائمة الخاصة بك",
     "submenu_style": "Dropdown shows a compact list under the parent link. A third level opens as a flyout beside its row.",
     "slide_height_mobile_fit_content": "0 = fit content",
-    "submenu_style_exceptions": "Top-level item titles, comma separated, e.g. Find your shoe. Those items get Dropdown when the default is Mega menu, and Mega menu when the default is Dropdown."
+    "submenu_style_exceptions": "Top-level item titles, comma separated, e.g. Find your shoe. Those items get Dropdown when the default is Mega menu, and Mega menu when the default is Dropdown.",
+    "shop_pay_payment_options": "يعرض شارات تقسيط Shop Pay وHSA/FSA عند توفرها.",
+    "show_physical_stores_help": "إدراج المواقع المحددة كواجهة متجر فعلية والتي يتوفر فيها المنتج في المخزون أيضًا، حتى عندما لا توفر استلام الطلب."
   },
   "names": {
     "404": "404",
@@ -873,7 +875,6 @@
     "inventory_threshold": "حد المخزون المنخفض",
     "inverse": "معكوس",
     "inverse_logo": "شعار معكوس",
-    "installments": "الأقساط",
     "integrated_button": "زر مدمج",
     "items_to_show": "العناصر المطلوب عرضها",
     "label": "التسمية",
@@ -1126,6 +1127,7 @@
     "top_row_text": "نص الصف العلوي",
     "bottom_row_background": "خلفية الصف السفلي",
     "bottom_row_text": "نص الصف السفلي",
+    "customer_account_menu": "قائمة حساب العميل",
     "grid_section_card_layout": "Card layout",
     "grid_section_carousel_match_collection": "Match Collection list (section grid)",
     "grid_section_carousel_match_collection_info": "Carousel uses the same section grid as Collection list.",
@@ -1158,7 +1160,8 @@
     "duration": "Duration",
     "bleed_right": "Bleed right on desktop",
     "show_arrow_icon": "Show arrow icon",
-    "customer_account_menu": "قائمة حساب العميل"
+    "shop_pay_payment_options": "إظهار خيارات دفع Shop Pay",
+    "show_physical_stores": "إظهار المتاجر الفعلية"
   },
   "text_defaults": {
     "accordion_heading": "عنوان القائمة المنسدلة",

@@ -339,7 +339,6 @@
     "icon_background": "Ikonbaggrund",
     "icons": "Ikoner",
     "image_border_radius": "Hjørneradius for billede",
-    "installments": "Rater",
     "integrated_button": "Integreret knap",
     "language_selector": "Sprogvælger",
     "large": "Stor",
@@ -593,6 +592,7 @@
     "selected_button_style": "Valgt knapstil",
     "open_by_default": "Åben som standard",
     "title_preset": "Forudindstilling for titel",
+    "customer_account_menu": "Kundekontomenu",
     "grid_section_card_layout": "Card layout",
     "grid_section_carousel_match_collection": "Match Collection list (section grid)",
     "grid_section_carousel_match_collection_info": "Carousel uses the same section grid as Collection list.",
@@ -625,7 +625,8 @@
     "duration": "Duration",
     "bleed_right": "Bleed right on desktop",
     "show_arrow_icon": "Show arrow icon",
-    "customer_account_menu": "Kundekontomenu"
+    "shop_pay_payment_options": "Vis betalingsmuligheder for Shop Pay",
+    "show_physical_stores": "Vis fysiske butikker"
   },
   "options": {
     "apple": "Apple",
@@ -1177,7 +1178,9 @@
     "edit_variants_in_theme_settings": "Rediger styling af varianter i [temaindstillinger](/editor?context=theme&category=variant%20pickers)",
     "submenu_style": "Dropdown shows a compact list under the parent link. A third level opens as a flyout beside its row.",
     "slide_height_mobile_fit_content": "0 = fit content",
-    "submenu_style_exceptions": "Top-level item titles, comma separated, e.g. Find your shoe. Those items get Dropdown when the default is Mega menu, and Mega menu when the default is Dropdown."
+    "submenu_style_exceptions": "Top-level item titles, comma separated, e.g. Find your shoe. Those items get Dropdown when the default is Mega menu, and Mega menu when the default is Dropdown.",
+    "shop_pay_payment_options": "Viser badges for Shop Pay Afbetaling og HSA/FSA, når de er tilgængelige.",
+    "show_physical_stores_help": "Vis også lokationer, der er markeret som en fysisk storefront, og som har produktet på lager, selvom de ikke tilbyder afhentning."
   },
   "categories": {
     "basic": "Grundlæggende",

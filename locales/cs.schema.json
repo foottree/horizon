@@ -339,7 +339,6 @@
     "icon_background": "Pozadí ikony",
     "icons": "Ikony",
     "image_border_radius": "Poloměr rohů obrázku",
-    "installments": "Splátky",
     "integrated_button": "Integrované tlačítko",
     "language_selector": "Výběr jazyka",
     "large": "Velké",
@@ -593,6 +592,7 @@
     "selected_button_style": "Styl vybraného tlačítka",
     "open_by_default": "Otevřeno ve výchozím stavu",
     "title_preset": "Předvolba nadpisu",
+    "customer_account_menu": "Nabídka zákaznického účtu",
     "grid_section_card_layout": "Card layout",
     "grid_section_carousel_match_collection": "Match Collection list (section grid)",
     "grid_section_carousel_match_collection_info": "Carousel uses the same section grid as Collection list.",
@@ -625,7 +625,8 @@
     "duration": "Duration",
     "bleed_right": "Bleed right on desktop",
     "show_arrow_icon": "Show arrow icon",
-    "customer_account_menu": "Nabídka zákaznického účtu"
+    "shop_pay_payment_options": "Zobrazit platební možnosti Shop Pay",
+    "show_physical_stores": "Zobrazit fyzické obchody"
   },
   "options": {
     "apple": "Apple",
@@ -1177,7 +1178,9 @@
     "edit_variants_in_theme_settings": "Styl variant upravíte v [nastavení šablony](/editor?context=theme&category=variant%20pickers)",
     "submenu_style": "Dropdown shows a compact list under the parent link. A third level opens as a flyout beside its row.",
     "slide_height_mobile_fit_content": "0 = fit content",
-    "submenu_style_exceptions": "Top-level item titles, comma separated, e.g. Find your shoe. Those items get Dropdown when the default is Mega menu, and Mega menu when the default is Dropdown."
+    "submenu_style_exceptions": "Top-level item titles, comma separated, e.g. Find your shoe. Those items get Dropdown when the default is Mega menu, and Mega menu when the default is Dropdown.",
+    "shop_pay_payment_options": "Zobrazuje odznaky pro Splátky Shop Pay a HSA/FSA, pokud jsou k dispozici.",
+    "show_physical_stores_help": "Zobrazit také lokality označené jako fyzický obchod, které mají produkt skladem, i když nenabízejí vyzvednutí."
   },
   "categories": {
     "product_list": "Propagovaná kolekce",

@@ -353,7 +353,6 @@
     "icon_background": "Tło ikony",
     "icons": "Ikony",
     "image_border_radius": "Promień narożnika obrazu",
-    "installments": "Raty",
     "integrated_button": "Zintegrowany przycisk",
     "language_selector": "Selektor języka",
     "large": "Duży",
@@ -593,6 +592,7 @@
     "selected_button_style": "Styl wybranego przycisku",
     "open_by_default": "Domyślnie otwarte",
     "title_preset": "Gotowe ustawienie tytułu",
+    "customer_account_menu": "Menu konta klienta",
     "grid_section_card_layout": "Card layout",
     "grid_section_carousel_match_collection": "Match Collection list (section grid)",
     "grid_section_carousel_match_collection_info": "Carousel uses the same section grid as Collection list.",
@@ -625,7 +625,8 @@
     "duration": "Duration",
     "bleed_right": "Bleed right on desktop",
     "show_arrow_icon": "Show arrow icon",
-    "customer_account_menu": "Menu konta klienta"
+    "shop_pay_payment_options": "Pokaż opcje płatności Shop Pay",
+    "show_physical_stores": "Pokaż sklepy fizyczne"
   },
   "options": {
     "apple": "Apple",
@@ -1177,7 +1178,9 @@
     "edit_variants_in_theme_settings": "Edytuj styl wariantów w [ustawieniach szablonu](/editor?context=theme&category=variant%20pickers)",
     "submenu_style": "Dropdown shows a compact list under the parent link. A third level opens as a flyout beside its row.",
     "slide_height_mobile_fit_content": "0 = fit content",
-    "submenu_style_exceptions": "Top-level item titles, comma separated, e.g. Find your shoe. Those items get Dropdown when the default is Mega menu, and Mega menu when the default is Dropdown."
+    "submenu_style_exceptions": "Top-level item titles, comma separated, e.g. Find your shoe. Those items get Dropdown when the default is Mega menu, and Mega menu when the default is Dropdown.",
+    "shop_pay_payment_options": "Wyświetla plakietki Rat Shop Pay oraz HSA/FSA, gdy są dostępne.",
+    "show_physical_stores_help": "Wyświetlaj również lokalizacje oznaczone jako fizyczna witryna sklepu, które mają produkt na stanie, nawet jeśli nie oferują odbioru."
   },
   "categories": {
     "product_list": "Polecana kolekcja",

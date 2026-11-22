@@ -342,7 +342,6 @@
     "icon_background": "Arrière-plan de l'icône",
     "icons": "Icônes",
     "image_border_radius": "Rayon de la bordure de l'image",
-    "installments": "Échéances",
     "integrated_button": "Bouton intégré",
     "language_selector": "Sélecteur de langue",
     "large": "Grande",
@@ -593,6 +592,7 @@
     "selected_button_style": "Style de bouton sélectionné",
     "open_by_default": "Ouvert par défaut",
     "title_preset": "Préréglage du titre",
+    "customer_account_menu": "Menu du compte client",
     "grid_section_card_layout": "Card layout",
     "grid_section_carousel_match_collection": "Match Collection list (section grid)",
     "grid_section_carousel_match_collection_info": "Carousel uses the same section grid as Collection list.",
@@ -625,7 +625,8 @@
     "duration": "Duration",
     "bleed_right": "Bleed right on desktop",
     "show_arrow_icon": "Show arrow icon",
-    "customer_account_menu": "Menu du compte client"
+    "shop_pay_payment_options": "Afficher les options de paiement Shop Pay",
+    "show_physical_stores": "Afficher les magasins physiques"
   },
   "options": {
     "apple": "Pomme",
@@ -1177,7 +1178,9 @@
     "edit_variants_in_theme_settings": "Modifier le style des variantes dans les [paramètres du thème](/editor?context=theme&category=variant%20pickers)",
     "submenu_style": "Dropdown shows a compact list under the parent link. A third level opens as a flyout beside its row.",
     "slide_height_mobile_fit_content": "0 = fit content",
-    "submenu_style_exceptions": "Top-level item titles, comma separated, e.g. Find your shoe. Those items get Dropdown when the default is Mega menu, and Mega menu when the default is Dropdown."
+    "submenu_style_exceptions": "Top-level item titles, comma separated, e.g. Find your shoe. Those items get Dropdown when the default is Mega menu, and Mega menu when the default is Dropdown.",
+    "shop_pay_payment_options": "Affiche les badges du paiement en plusieurs fois avec Shop Pay et HSA/FSA lorsqu’ils sont disponibles.",
+    "show_physical_stores_help": "Afficher également les emplacements marqués comme magasin physique qui ont le produit en stock, même s’ils ne proposent pas la collecte."
   },
   "categories": {
     "basic": "De base",

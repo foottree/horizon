@@ -345,7 +345,6 @@
     "icon_background": "Kuvakkeen tausta",
     "icons": "Kuvakkeet",
     "image_border_radius": "Kuvan kulman säde",
-    "installments": "Maksuerät",
     "integrated_button": "Integroitu painike",
     "language_selector": "Kielivalitsin",
     "large": "Suuri",
@@ -593,6 +592,7 @@
     "selected_button_style": "Valitun painikkeen tyyli",
     "open_by_default": "Avoinna oletuksena",
     "title_preset": "Otsikon esiasetus",
+    "customer_account_menu": "Asiakastilin valikko",
     "grid_section_card_layout": "Card layout",
     "grid_section_carousel_match_collection": "Match Collection list (section grid)",
     "grid_section_carousel_match_collection_info": "Carousel uses the same section grid as Collection list.",
@@ -625,7 +625,8 @@
     "duration": "Duration",
     "bleed_right": "Bleed right on desktop",
     "show_arrow_icon": "Show arrow icon",
-    "customer_account_menu": "Asiakastilin valikko"
+    "shop_pay_payment_options": "Näytä Shop Pay -maksuvaihtoehdot",
+    "show_physical_stores": "Näytä fyysiset kaupat"
   },
   "options": {
     "apple": "Omena",
@@ -1177,7 +1178,9 @@
     "edit_variants_in_theme_settings": "Muokkaa versioiden tyyliä [teeman asetuksissa](/editor?context=theme&category=variant%20pickers)",
     "submenu_style": "Dropdown shows a compact list under the parent link. A third level opens as a flyout beside its row.",
     "slide_height_mobile_fit_content": "0 = fit content",
-    "submenu_style_exceptions": "Top-level item titles, comma separated, e.g. Find your shoe. Those items get Dropdown when the default is Mega menu, and Mega menu when the default is Dropdown."
+    "submenu_style_exceptions": "Top-level item titles, comma separated, e.g. Find your shoe. Those items get Dropdown when the default is Mega menu, and Mega menu when the default is Dropdown.",
+    "shop_pay_payment_options": "Näyttää Shop Pay -maksuerien ja HSA/FSA-tunnukset, kun ne ovat saatavilla.",
+    "show_physical_stores_help": "Listaa myös fyysiseksi myyntipaikaksi merkityt sijainnit, joissa tuotetta on varastossa, vaikka ne eivät tarjoaisi noutoa."
   },
   "categories": {
     "basic": "Perusosat",
