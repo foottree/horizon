@@ -227,6 +227,7 @@
               "settings": {
                 "stacking": true,
                 "show_pickup_availability": false,
+                "show_physical_stores": false,
                 "gift_card_form": true,
                 "padding-block-start": 0,
                 "padding-block-end": 0,
