@@ -352,7 +352,6 @@
     "icon_background": "Fondo del ícono",
     "icons": "Íconos",
     "image_border_radius": "Radio de las esquinas de la imagen",
-    "installments": "Cuotas",
     "integrated_button": "Botón integrado",
     "language_selector": "Selector de idioma",
     "large": "Grande",
@@ -593,6 +592,7 @@
     "selected_button_style": "Estilo de botón seleccionado",
     "open_by_default": "Abrir de forma predeterminada",
     "title_preset": "Preajuste del título",
+    "customer_account_menu": "Menú de la cuenta de cliente",
     "grid_section_card_layout": "Card layout",
     "grid_section_carousel_match_collection": "Match Collection list (section grid)",
     "grid_section_carousel_match_collection_info": "Carousel uses the same section grid as Collection list.",
@@ -625,7 +625,8 @@
     "duration": "Duration",
     "bleed_right": "Bleed right on desktop",
     "show_arrow_icon": "Show arrow icon",
-    "customer_account_menu": "Menú de la cuenta de cliente"
+    "shop_pay_payment_options": "Mostrar opciones de pago de Shop Pay",
+    "show_physical_stores": "Mostrar tiendas físicas"
   },
   "options": {
     "apple": "Apple",
@@ -1177,7 +1178,9 @@
     "edit_variants_in_theme_settings": "Edita el estilo de las variantes en la [configuración del tema](/editor?context=theme&category=variant%20pickers)",
     "submenu_style": "Dropdown shows a compact list under the parent link. A third level opens as a flyout beside its row.",
     "slide_height_mobile_fit_content": "0 = fit content",
-    "submenu_style_exceptions": "Top-level item titles, comma separated, e.g. Find your shoe. Those items get Dropdown when the default is Mega menu, and Mega menu when the default is Dropdown."
+    "submenu_style_exceptions": "Top-level item titles, comma separated, e.g. Find your shoe. Those items get Dropdown when the default is Mega menu, and Mega menu when the default is Dropdown.",
+    "shop_pay_payment_options": "Muestra los emblemas de Cuotas de Shop Pay y HSA/FSA cuando estén disponibles.",
+    "show_physical_stores_help": "Mostrar también las sucursales marcadas como tienda física que tengan el producto en existencias, incluso si no ofrecen retiro."
   },
   "categories": {
     "basic": "Básico",

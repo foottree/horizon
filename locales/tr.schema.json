@@ -353,7 +353,6 @@
     "icon_background": "Simge arka planı",
     "icons": "Simgeler",
     "image_border_radius": "Görsel köşe yarıçapı",
-    "installments": "Taksitler",
     "integrated_button": "Entegre düğme",
     "language_selector": "Dil seçici",
     "large": "Büyük",
@@ -593,6 +592,7 @@
     "selected_button_style": "Seçili düğme stili",
     "open_by_default": "Varsayılan olarak açık",
     "title_preset": "Başlık ön ayarı",
+    "customer_account_menu": "Müşteri hesabı menüsü",
     "grid_section_card_layout": "Card layout",
     "grid_section_carousel_match_collection": "Match Collection list (section grid)",
     "grid_section_carousel_match_collection_info": "Carousel uses the same section grid as Collection list.",
@@ -625,7 +625,8 @@
     "duration": "Duration",
     "bleed_right": "Bleed right on desktop",
     "show_arrow_icon": "Show arrow icon",
-    "customer_account_menu": "Müşteri hesabı menüsü"
+    "shop_pay_payment_options": "Shop Pay ödeme seçeneklerini göster",
+    "show_physical_stores": "Fiziksel mağazaları göster"
   },
   "options": {
     "apple": "Apple",
@@ -1177,7 +1178,9 @@
     "edit_variants_in_theme_settings": "Varyasyon stilini [tema ayarlarından](/editor?context=theme&category=variant%20pickers) düzenleyin",
     "submenu_style": "Dropdown shows a compact list under the parent link. A third level opens as a flyout beside its row.",
     "slide_height_mobile_fit_content": "0 = fit content",
-    "submenu_style_exceptions": "Top-level item titles, comma separated, e.g. Find your shoe. Those items get Dropdown when the default is Mega menu, and Mega menu when the default is Dropdown."
+    "submenu_style_exceptions": "Top-level item titles, comma separated, e.g. Find your shoe. Those items get Dropdown when the default is Mega menu, and Mega menu when the default is Dropdown.",
+    "shop_pay_payment_options": "Kullanılabilir olduğunda Shop Pay Taksitli Alışveriş ve HSA/FSA rozetlerini gösterir.",
+    "show_physical_stores_help": "Teslim alım sunmasalar bile, ürünün stokta bulunduğu ve fiziksel mağaza olarak işaretlenmiş konumları da listeleyin."
   },
   "categories": {
     "product_list": "Öne çıkan koleksiyon",

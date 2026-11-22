@@ -246,7 +246,9 @@
     "media_type_info": "خصوصیات آپ کے مینو کے لنک سے پُر کی گئی ہیں",
     "submenu_style": "Dropdown shows a compact list under the parent link. A third level opens as a flyout beside its row.",
     "slide_height_mobile_fit_content": "0 = fit content",
-    "submenu_style_exceptions": "Top-level item titles, comma separated, e.g. Find your shoe. Those items get Dropdown when the default is Mega menu, and Mega menu when the default is Dropdown."
+    "submenu_style_exceptions": "Top-level item titles, comma separated, e.g. Find your shoe. Those items get Dropdown when the default is Mega menu, and Mega menu when the default is Dropdown.",
+    "shop_pay_payment_options": "دستیاب ہونے پر Shop Pay قسطیں اور HSA/FSA کے بیج دکھاتا ہے۔",
+    "show_physical_stores_help": "ایسی لوکیشن کو بھی فہرست میں شامل کریں جو فزیکل اسٹور فرنٹ کے طور پر نشان زد ہیں اور جہاں پروڈکٹ اسٹاک میں موجود ہے، چاہے وہ پک اپ کی سہولت فراہم نہ کرتی ہوں۔"
   },
   "names": {
     "404": "404",
@@ -873,7 +875,6 @@
     "inventory_threshold": "کم اسٹاک کی حد",
     "inverse": "معکوس",
     "inverse_logo": "معکوس لوگو",
-    "installments": "اقساط",
     "integrated_button": "مربوط بٹن",
     "items_to_show": "دکھائے جانے والے آئٹم",
     "label": "لیبل",
@@ -1126,6 +1127,7 @@
     "top_row_text": "اوپری قطار کا متن",
     "bottom_row_background": "نچلی قطار کا پس منظر",
     "bottom_row_text": "نچلی قطار کا متن",
+    "customer_account_menu": "کسٹمر اکاؤنٹ مینو",
     "grid_section_card_layout": "Card layout",
     "grid_section_carousel_match_collection": "Match Collection list (section grid)",
     "grid_section_carousel_match_collection_info": "Carousel uses the same section grid as Collection list.",
@@ -1158,7 +1160,8 @@
     "duration": "Duration",
     "bleed_right": "Bleed right on desktop",
     "show_arrow_icon": "Show arrow icon",
-    "customer_account_menu": "کسٹمر اکاؤنٹ مینو"
+    "shop_pay_payment_options": "Shop Pay ادائیگی کے اختیارات دکھائیں",
+    "show_physical_stores": "فزیکل اسٹور دکھائیں"
   },
   "text_defaults": {
     "accordion_heading": "ایکارڈین کی سرخی",

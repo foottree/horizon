@@ -337,7 +337,6 @@
     "icon_background": "พื้นหลังไอคอน",
     "icons": "ไอคอน",
     "image_border_radius": "รัศมีมุมของรูปภาพ",
-    "installments": "การผ่อนชำระ",
     "integrated_button": "ปุ่มในตัว",
     "language_selector": "ตัวเลือกภาษา",
     "large": "ใหญ่",
@@ -593,6 +592,7 @@
     "selected_button_style": "สไตล์ปุ่มที่เลือก",
     "open_by_default": "เปิดตามค่าเริ่มต้น",
     "title_preset": "พรีเซ็ตชื่อ",
+    "customer_account_menu": "เมนูบัญชีผู้ใช้ของลูกค้า",
     "grid_section_card_layout": "Card layout",
     "grid_section_carousel_match_collection": "Match Collection list (section grid)",
     "grid_section_carousel_match_collection_info": "Carousel uses the same section grid as Collection list.",
@@ -625,7 +625,8 @@
     "duration": "Duration",
     "bleed_right": "Bleed right on desktop",
     "show_arrow_icon": "Show arrow icon",
-    "customer_account_menu": "เมนูบัญชีผู้ใช้ของลูกค้า"
+    "shop_pay_payment_options": "แสดงตัวเลือกการชำระเงิน Shop Pay",
+    "show_physical_stores": "แสดงร้านค้าจริง"
   },
   "options": {
     "apple": "Apple",
@@ -1177,7 +1178,9 @@
     "edit_variants_in_theme_settings": "แก้ไขสไตล์ตัวเลือกสินค้าใน[การตั้งค่าธีม](/editor?context=theme&category=variant%20pickers)",
     "submenu_style": "Dropdown shows a compact list under the parent link. A third level opens as a flyout beside its row.",
     "slide_height_mobile_fit_content": "0 = fit content",
-    "submenu_style_exceptions": "Top-level item titles, comma separated, e.g. Find your shoe. Those items get Dropdown when the default is Mega menu, and Mega menu when the default is Dropdown."
+    "submenu_style_exceptions": "Top-level item titles, comma separated, e.g. Find your shoe. Those items get Dropdown when the default is Mega menu, and Mega menu when the default is Dropdown.",
+    "shop_pay_payment_options": "แสดงเครื่องหมายการผ่อนชำระผ่าน Shop Pay และ HSA/FSA เมื่อมีให้บริการ",
+    "show_physical_stores_help": "แสดงรายการตำแหน่งที่ตั้งที่ทำเครื่องหมายว่าเป็นหน้าร้านจริงและมีสินค้าในสต็อกด้วย แม้ว่าจะไม่มีบริการการรับก็ตาม"
   },
   "categories": {
     "basic": "พื้นฐาน",

@@ -356,7 +356,6 @@
     "icon_background": "アイコンの背景",
     "icons": "アイコン",
     "image_border_radius": "画像の角の丸み",
-    "installments": "分割払い",
     "integrated_button": "統合ボタン",
     "language_selector": "言語セレクター",
     "large": "大",
@@ -593,6 +592,7 @@
     "selected_button_style": "選択されたボタンのスタイル",
     "open_by_default": "デフォルトで開く",
     "title_preset": "タイトルプリセット",
+    "customer_account_menu": "お客様アカウントメニュー",
     "grid_section_card_layout": "Card layout",
     "grid_section_carousel_match_collection": "Match Collection list (section grid)",
     "grid_section_carousel_match_collection_info": "Carousel uses the same section grid as Collection list.",
@@ -625,7 +625,8 @@
     "duration": "Duration",
     "bleed_right": "Bleed right on desktop",
     "show_arrow_icon": "Show arrow icon",
-    "customer_account_menu": "お客様アカウントメニュー"
+    "shop_pay_payment_options": "Shop Pay の決済オプションを表示する",
+    "show_physical_stores": "実店舗を表示"
   },
   "options": {
     "apple": "Apple",
@@ -1177,7 +1178,9 @@
     "edit_variants_in_theme_settings": "バリエーションのスタイルは[テーマ設定](/editor?context=theme&category=variant%20pickers)で編集できます",
     "submenu_style": "Dropdown shows a compact list under the parent link. A third level opens as a flyout beside its row.",
     "slide_height_mobile_fit_content": "0 = fit content",
-    "submenu_style_exceptions": "Top-level item titles, comma separated, e.g. Find your shoe. Those items get Dropdown when the default is Mega menu, and Mega menu when the default is Dropdown."
+    "submenu_style_exceptions": "Top-level item titles, comma separated, e.g. Find your shoe. Those items get Dropdown when the default is Mega menu, and Mega menu when the default is Dropdown.",
+    "shop_pay_payment_options": "利用可能な場合、Shop Payの分割払いおよび HSA/FSA バッジを表示します。",
+    "show_physical_stores_help": "受取に対応していない場合でも、商品の在庫があり、実店舗のストアフロントとしてマークされているロケーションも表示します。"
   },
   "categories": {
     "product_list": "特集コレクション",

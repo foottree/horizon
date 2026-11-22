@@ -345,7 +345,6 @@
     "icon_background": "圖示背景",
     "icons": "圖示",
     "image_border_radius": "圖片圓角半徑",
-    "installments": "分期付款",
     "integrated_button": "內嵌按鈕",
     "language_selector": "語言選擇器",
     "large": "大",
@@ -593,6 +592,7 @@
     "selected_button_style": "已選取按鈕樣式",
     "open_by_default": "預設為開啟",
     "title_preset": "標題預設設定",
+    "customer_account_menu": "顧客帳號選單",
     "grid_section_card_layout": "Card layout",
     "grid_section_carousel_match_collection": "Match Collection list (section grid)",
     "grid_section_carousel_match_collection_info": "Carousel uses the same section grid as Collection list.",
@@ -625,7 +625,8 @@
     "duration": "Duration",
     "bleed_right": "Bleed right on desktop",
     "show_arrow_icon": "Show arrow icon",
-    "customer_account_menu": "顧客帳號選單"
+    "shop_pay_payment_options": "顯示 Shop Pay 付款選項",
+    "show_physical_stores": "顯示實體店面"
   },
   "options": {
     "apple": "Apple",
@@ -1177,7 +1178,9 @@
     "edit_variants_in_theme_settings": "在[佈景主題設定](/editor?context=theme&category=variant%20pickers)中編輯子類樣式",
     "submenu_style": "Dropdown shows a compact list under the parent link. A third level opens as a flyout beside its row.",
     "slide_height_mobile_fit_content": "0 = fit content",
-    "submenu_style_exceptions": "Top-level item titles, comma separated, e.g. Find your shoe. Those items get Dropdown when the default is Mega menu, and Mega menu when the default is Dropdown."
+    "submenu_style_exceptions": "Top-level item titles, comma separated, e.g. Find your shoe. Those items get Dropdown when the default is Mega menu, and Mega menu when the default is Dropdown.",
+    "shop_pay_payment_options": "可供使用時顯示 Shop Pay 分期付款和 HSA/FSA 徽章。",
+    "show_physical_stores_help": "同時列出標示為實體店面且商品有庫存的地點，即使未提供取貨服務亦然。"
   },
   "categories": {
     "basic": "基本",
