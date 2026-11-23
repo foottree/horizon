@@ -1298,10 +1298,12 @@
 /* The site's preset button (49.6px: 12px / 22px padding, 16px text). Stock .button is 16px / 24px
    (~58px), which the client finds too tall. Every text button and button-styled tab joins this one
    rule so they always match: hero CTA, bestsellers buttons, Corporate "Request a quote", and the
-   size guide's Women's / Men's tabs (page and product drawer). Add new buttons here. */
+   size guide's Women's / Men's tabs (page and product drawer), and the Our Story page's button
+   (the wholesale team CTA in .ft-story-org). Add new buttons here. */
 #MainContent .ft-hero .slide__content .button,
 #MainContent .product-rail-tabs__footer .button,
 #MainContent .ft-corporate .button,
+#MainContent .ft-story-org :is(.button, .button-secondary),
 .size-chart .size-chart__tab {
   font-size: 1rem;
   padding-block: 12px;
