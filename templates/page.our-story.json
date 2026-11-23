@@ -40,97 +40,269 @@
       ],
       "settings": {
         "layout": "split",
-        "image": "shopify://shop_images/our-story-hero-placeholder.png",
+        "image": "shopify://shop_images/our-story-hero-craft.jpg",
         "min_height": 440,
         "eyebrow": "BUILT FOR PROFESSIONALS, NOW EVERYONE",
-        "heading": "Three generations.\n50 years of craftsmanship.",
+        "heading": "Three generations.\nFive decades of shoemaking.",
         "text": "",
         "alignment": "left",
         "watermark_color": "#6c814f",
         "padding-block-start": 50,
         "padding-block-end": 50,
         "custom_mobile_padding": true,
-        "mobile-padding-block-start": 91,
+        "mobile-padding-block-start": 46,
         "mobile-padding-block-end": 91
       }
     },
-    "timeline": {
-      "type": "story-timeline",
+    "story": {
+      "type": "section",
       "blocks": {
-        "row_1974": {
-          "type": "row",
+        "gallery": {
+          "type": "group",
           "settings": {
-            "chip": "1974",
-            "heading": "Where it all began",
-            "body": "<p>Our founder grew up in his father’s shoe factory in Singapore, learning the trade at the bench from the time he was a boy.</p><p>It taught him the idea every shoe is still built on: comfort is not one size fits all.</p>",
-            "layout": "single",
-            "image": "shopify://shop_images/our-story-1974-placeholder.png",
-            "caption": "",
-            "media_shape": "landscape"
-          }
+            "link": "",
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "flex-start",
+            "gap": 0,
+            "width": "fill",
+            "width_mobile": "fill",
+            "height": "fit",
+            "background_media": "none",
+            "border": "none",
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 60,
+            "padding-inline-end": 60,
+            "custom_mobile_padding": true,
+            "mobile-padding-block-start": 0,
+            "mobile-padding-block-end": 0,
+            "mobile-padding-inline-start": 0,
+            "mobile-padding-inline-end": 0
+          },
+          "blocks": {
+            "photo": {
+              "type": "image",
+              "settings": {
+                "image": "shopify://shop_images/our-story-gallery-placeholder.png",
+                "link": "",
+                "image_ratio": "adapt",
+                "width": "fill",
+                "custom_width": 100,
+                "width_mobile": "fill",
+                "height": "fit",
+                "border": "none",
+                "border_radius": 8
+              }
+            }
+          },
+          "block_order": [
+            "photo"
+          ]
         },
-        "row_1981": {
-          "type": "row",
+        "column": {
+          "type": "group",
           "settings": {
-            "chip": "1981",
-            "heading": "Our founder took over the business",
-            "body": "<p>After taking over the business, our founder decided to shift production overseas in order to stay more price competitive. He was adamant in maintaining our manufacturing capabilities to ensure quality control and proper workmanship.</p>",
-            "layout": "pair",
-            "image": "shopify://shop_images/our-story-1981-a-placeholder.png",
-            "caption": "",
-            "image_2": "shopify://shop_images/our-story-1981-b-placeholder.png"
-          }
-        },
-        "row_1989": {
-          "type": "row",
-          "settings": {
-            "chip": "1989",
-            "heading": "Uniform shoes for frontline workers",
-            "body": "<p>Nurses, cabin crew and bus captains spend all day on their feet. We began making uniform footwear for the organisations they work for — and learned exactly what a long shift asks of a shoe.</p>",
-            "layout": "pair",
-            "image": "shopify://shop_images/our-story-1989-a-placeholder.png",
-            "caption": "",
-            "image_2": "shopify://shop_images/our-story-1989-b-placeholder.png"
-          }
-        },
-        "row_2000": {
-          "type": "row",
-          "settings": {
-            "chip": "2000",
-            "heading": "Our headquarters at Paya Lebar",
-            "body": "<p>We built our headquarters in Paya Lebar and grew our team. From just the founder and his wife, they grew to a dedicated team of 10, with a dedicated delivery fleet to service customers from all over Singapore.</p>",
-            "layout": "single",
-            "image": "shopify://shop_images/our-story-2000-placeholder.png",
-            "caption": "",
-            "media_shape": "landscape"
-          }
-        },
-        "row_today": {
-          "type": "row",
-          "settings": {
-            "chip": "Today — City Square",
-            "heading": "Our First Flagship Store",
-            "body": "<p>We opened our store at City Square Mall so anyone could walk in and be fitted properly — both feet measured, length and width, by people who fit feet every day.</p>",
-            "layout": "single",
-            "image": "shopify://shop_images/our-story-today-placeholder.png",
-            "caption": "",
-            "media_shape": "landscape"
-          }
+            "link": "",
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "flex-start",
+            "gap": 28,
+            "width": "custom",
+            "width_mobile": "fill",
+            "height": "fit",
+            "background_media": "none",
+            "border": "none",
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "custom_width": 56
+          },
+          "blocks": {
+            "eyebrow": {
+              "type": "text",
+              "settings": {
+                "text": "<p>OUR STORY</p>",
+                "width": "fit-content",
+                "max_width": "none",
+                "alignment": "left",
+                "type_preset": "custom",
+                "font": "var(--font-subheading--family)",
+                "font_size": "0.75rem",
+                "enable_mobile_size": false,
+                "mobile_font_size": "1rem",
+                "line_height": "tight",
+                "letter_spacing": "loose",
+                "case": "uppercase",
+                "wrap": "pretty",
+                "text_color": "{{ settings.color_palette.color4 }}",
+                "background": false,
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "custom_mobile_padding": false,
+                "mobile-padding-block-start": 0,
+                "mobile-padding-block-end": 0,
+                "mobile-padding-inline-start": 0,
+                "mobile-padding-inline-end": 0,
+                "custom_class": ""
+              }
+            },
+            "question": {
+              "type": "text",
+              "settings": {
+                "text": "<h2><em>What does a pair of comfortable shoes mean?</em></h2>",
+                "width": "100%",
+                "max_width": "none",
+                "alignment": "left",
+                "type_preset": "h2",
+                "font": "var(--font-body--family)",
+                "font_size": "",
+                "enable_mobile_size": false,
+                "mobile_font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "",
+                "text_color": "{{ settings.color_palette.color1 }}",
+                "background": false,
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "custom_mobile_padding": false,
+                "mobile-padding-block-start": 0,
+                "mobile-padding-block-end": 0,
+                "mobile-padding-inline-start": 0,
+                "mobile-padding-inline-end": 0,
+                "custom_class": ""
+              }
+            },
+            "body": {
+              "type": "text",
+              "settings": {
+                "text": "<p>Our founder, Mr Yik, grew up in his father’s shoe factory in Singapore, learning the trade at the workbench in the 1970s. Fresh out of national service, he took over the reins from his father at 20. To further his skills, he took on an apprenticeship in shoemaking, learning the science and art behind what makes a shoe comfortable. More than forty years later, he’s still obsessed with every detail, from the last to the materials and the fit. To him, comfort can’t be standardised. No two feet are alike, so no single size can fit everyone.</p><p>Soon after taking over, he moved production overseas to stay competitive on price. But he refused to give up making shoes in-house. Keeping design and production under our own control meant we could still answer for the quality and workmanship of every pair. It also let us design our own lasts for Asian feet, especially catered for Singapore market, in extreme, half and wide sizes.</p><p>In 1989, we started making uniform shoes for the organisations behind Singapore’s frontline: nurses, cabin crew and bus captains, people who are on their feet for an entire shift. These clients taught us what a long day demands of a shoe. It has to look smart with a uniform, grip on wet floors, and stay supportive and comfortable from the first hour to the last. Our dedication to quality and comfort earned us many long-standing customers, including major healthcare, transport and aviation organisations across Singapore.</p><p>The business grew with its clients. From a husband-and-wife operation, it expanded to a team of ten and set up its own delivery fleet to reach customers across the island. Today, we supply more than 80 corporate clients across healthcare, aviation, transport and F&amp;B, handling specialised sizing, customisation and bulk orders from start to finish. More than a million pairs have now been made and fitted.</p><p>Now in our third generation, we have opened our doors to everyone. At our first flagship store in City Square Mall, anyone can walk in, have both feet measured for length and width, and try the same shoes Singapore’s frontline teams wear every day. Our shoes now come in more designs, colours and styles to suit every occasion, with the same comfort built in.</p>",
+                "width": "100%",
+                "max_width": "none",
+                "alignment": "left",
+                "type_preset": "paragraph",
+                "font": "var(--font-body--family)",
+                "font_size": "",
+                "enable_mobile_size": false,
+                "mobile_font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "",
+                "text_color": "{{ settings.color_palette.foreground }}",
+                "background": false,
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "custom_mobile_padding": false,
+                "mobile-padding-block-start": 0,
+                "mobile-padding-block-end": 0,
+                "mobile-padding-inline-start": 0,
+                "mobile-padding-inline-end": 0,
+                "custom_class": ""
+              }
+            },
+            "archive": {
+              "type": "image",
+              "settings": {
+                "image": "shopify://shop_images/our-story-archive-placeholder.jpg",
+                "link": "",
+                "image_ratio": "square",
+                "width": "fill",
+                "custom_width": 100,
+                "width_mobile": "fill",
+                "height": "fill",
+                "border": "none",
+                "border_radius": 8
+              }
+            },
+            "closing": {
+              "type": "text",
+              "settings": {
+                "text": "<p>Built for professionals, now for everyone.</p>",
+                "width": "100%",
+                "max_width": "none",
+                "alignment": "left",
+                "type_preset": "h3",
+                "font": "var(--font-body--family)",
+                "font_size": "",
+                "enable_mobile_size": false,
+                "mobile_font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "",
+                "text_color": "{{ settings.color_palette.color4 }}",
+                "background": false,
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "custom_mobile_padding": false,
+                "mobile-padding-block-start": 0,
+                "mobile-padding-block-end": 0,
+                "mobile-padding-inline-start": 0,
+                "mobile-padding-inline-end": 0,
+                "custom_class": ""
+              }
+            }
+          },
+          "block_order": [
+            "eyebrow",
+            "question",
+            "body",
+            "archive",
+            "closing"
+          ]
         }
       },
       "block_order": [
-        "row_1974",
-        "row_1981",
-        "row_1989",
-        "row_2000",
-        "row_today"
+        "gallery",
+        "column"
       ],
+      "custom_css": [],
       "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "center",
+        "vertical_alignment": "center",
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "flex-start",
+        "gap": 56,
+        "section_width": "page-width",
+        "section_height": "",
+        "background_media": "none",
+        "border": "none",
+        "enable_mobile_gap": true,
+        "mobile_gap": 32,
+        "background_color": "{{ settings.color_palette.background }}",
         "padding-block-start": 50,
         "padding-block-end": 50,
         "custom_mobile_padding": true,
         "mobile-padding-block-start": 91,
-        "mobile-padding-block-end": 91
+        "mobile-padding-block-end": 91,
+        "mobile-padding-inline-start": 0,
+        "mobile-padding-inline-end": 0
       }
     },
     "letter": {
@@ -184,7 +356,7 @@
             "eyebrow": {
               "type": "text",
               "settings": {
-                "text": "<p>SINCE 1974</p>",
+                "text": "<p>FROM THE FOUNDER</p>",
                 "width": "fit-content",
                 "max_width": "none",
                 "alignment": "left",
@@ -203,15 +375,15 @@
             "statement": {
               "type": "text",
               "settings": {
-                "text": "<p>For over fifty years, we’ve made shoes for frontline staff. Now we’d love to fit you.</p>",
+                "text": "<p><em>“Shoes are not one-size-fits-all; every pair of feet is different. Other people can say their shoes are comfortable, but we walk the talk. Over the years, we have kept improving our shoes, from the mould and last to the insole and fit, and we keep listening to our customers. We’ve been in the industry for 50 years, and comfort is something we cannot compromise on.”</em></p>",
                 "width": "fit-content",
                 "max_width": "none",
                 "alignment": "left",
-                "type_preset": "custom",
+                "type_preset": "h4",
                 "font": "var(--font-heading--family)",
-                "font_size": "2rem",
+                "font_size": "",
                 "enable_mobile_size": true,
-                "mobile_font_size": "1.5rem",
+                "mobile_font_size": "1.125rem",
                 "line_height": "tight",
                 "letter_spacing": "tight",
                 "case": "none",
@@ -222,7 +394,7 @@
             "signoff": {
               "type": "text",
               "settings": {
-                "text": "<p><em>Built for professionals. Now everyone.</em></p>",
+                "text": "<p><em>Yik Kiam Fei, Founder, Foot Tree</em></p>",
                 "width": "fit-content",
                 "max_width": "none",
                 "alignment": "left",
@@ -230,7 +402,7 @@
                 "font": "var(--font-body--family)",
                 "font_size": "",
                 "enable_mobile_size": true,
-                "mobile_font_size": "1.125rem",
+                "mobile_font_size": "1.5rem",
                 "line_height": "normal",
                 "letter_spacing": "normal",
                 "case": "none",
@@ -274,6 +446,673 @@
         "mobile-padding-inline-start": 0,
         "mobile-padding-inline-end": 0,
         "css_class": "ft-story-letter"
+      }
+    },
+    "organisations": {
+      "type": "section",
+      "blocks": {
+        "copy": {
+          "type": "group",
+          "settings": {
+            "link": "",
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "flex-start",
+            "gap": 20,
+            "width": "custom",
+            "width_mobile": "fill",
+            "height": "fit",
+            "background_media": "none",
+            "border": "none",
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 60,
+            "padding-inline-end": 0,
+            "custom_width": 45,
+            "custom_mobile_padding": true,
+            "mobile-padding-block-start": 0,
+            "mobile-padding-block-end": 0,
+            "mobile-padding-inline-start": 0,
+            "mobile-padding-inline-end": 0
+          },
+          "blocks": {
+            "eyebrow": {
+              "type": "text",
+              "settings": {
+                "text": "<p>FOR ORGANISATIONS</p>",
+                "width": "fit-content",
+                "max_width": "none",
+                "alignment": "left",
+                "type_preset": "custom",
+                "font": "var(--font-subheading--family)",
+                "font_size": "0.75rem",
+                "enable_mobile_size": false,
+                "mobile_font_size": "1rem",
+                "line_height": "tight",
+                "letter_spacing": "loose",
+                "case": "uppercase",
+                "wrap": "pretty",
+                "text_color": "{{ settings.color_palette.color4 }}",
+                "background": false,
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "custom_mobile_padding": false,
+                "mobile-padding-block-start": 0,
+                "mobile-padding-block-end": 0,
+                "mobile-padding-inline-start": 0,
+                "mobile-padding-inline-end": 0,
+                "custom_class": ""
+              }
+            },
+            "heading": {
+              "type": "text",
+              "settings": {
+                "text": "<h2>Outfitting a team?</h2>",
+                "width": "100%",
+                "max_width": "none",
+                "alignment": "left",
+                "type_preset": "h2",
+                "font": "var(--font-body--family)",
+                "font_size": "",
+                "enable_mobile_size": false,
+                "mobile_font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "",
+                "text_color": "{{ settings.color_palette.foreground }}",
+                "background": false,
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "custom_mobile_padding": false,
+                "mobile-padding-block-start": 0,
+                "mobile-padding-block-end": 0,
+                "mobile-padding-inline-start": 0,
+                "mobile-padding-inline-end": 0,
+                "custom_class": ""
+              }
+            },
+            "lead": {
+              "type": "text",
+              "settings": {
+                "text": "<p>We supply uniform footwear to organisations across Singapore, with specialised sizing, customisation and bulk orders delivered island-wide.</p>",
+                "width": "100%",
+                "max_width": "none",
+                "alignment": "left",
+                "type_preset": "paragraph",
+                "font": "var(--font-body--family)",
+                "font_size": "",
+                "enable_mobile_size": false,
+                "mobile_font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "",
+                "text_color": "{{ settings.color_palette.color8 }}",
+                "background": false,
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "custom_mobile_padding": false,
+                "mobile-padding-block-start": 0,
+                "mobile-padding-block-end": 0,
+                "mobile-padding-inline-start": 0,
+                "mobile-padding-inline-end": 0,
+                "custom_class": ""
+              }
+            },
+            "buttons": {
+              "type": "group",
+              "settings": {
+                "link": "",
+                "content_direction": "row",
+                "vertical_on_mobile": true,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "center",
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "vertical_alignment_flex_direction_column": "flex-start",
+                "gap": 16,
+                "width": "fill",
+                "width_mobile": "fill",
+                "height": "fit",
+                "background_media": "none",
+                "border": "none",
+                "border_radius": 0,
+                "padding-block-start": 4,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "enable_mobile_gap": true,
+                "mobile_gap": 16
+              },
+              "blocks": {
+                "cta": {
+                  "type": "button",
+                  "settings": {
+                    "label": "Talk to our Wholesale team",
+                    "link": "shopify://pages/wholesale",
+                    "show_arrow": false,
+                    "open_in_new_tab": false,
+                    "style_class": "button",
+                    "width": "fit-content",
+                    "width_mobile": "fill"
+                  }
+                }
+              },
+              "block_order": [
+                "cta"
+              ]
+            }
+          },
+          "block_order": [
+            "eyebrow",
+            "heading",
+            "lead",
+            "buttons"
+          ]
+        },
+        "tiles": {
+          "type": "group",
+          "settings": {
+            "link": "",
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "flex-start",
+            "gap": 32,
+            "width": "fill",
+            "width_mobile": "fill",
+            "height": "fit",
+            "background_media": "none",
+            "border": "none",
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 60,
+            "enable_mobile_gap": true,
+            "mobile_gap": 24,
+            "custom_mobile_padding": true,
+            "mobile-padding-block-start": 0,
+            "mobile-padding-block-end": 0,
+            "mobile-padding-inline-start": 0,
+            "mobile-padding-inline-end": 0
+          },
+          "blocks": {
+            "row_1": {
+              "type": "group",
+              "settings": {
+                "link": "",
+                "content_direction": "row",
+                "vertical_on_mobile": false,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "flex-start",
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "vertical_alignment_flex_direction_column": "flex-start",
+                "gap": 24,
+                "width": "fill",
+                "width_mobile": "fill",
+                "height": "fit",
+                "background_media": "none",
+                "border": "none",
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "enable_mobile_gap": true,
+                "mobile_gap": 16
+              },
+              "blocks": {
+                "t1": {
+                  "type": "group",
+                  "settings": {
+                    "link": "",
+                    "content_direction": "column",
+                    "vertical_on_mobile": true,
+                    "horizontal_alignment": "flex-start",
+                    "vertical_alignment": "center",
+                    "horizontal_alignment_flex_direction_column": "flex-start",
+                    "vertical_alignment_flex_direction_column": "flex-start",
+                    "gap": 4,
+                    "width": "fill",
+                    "width_mobile": "fill",
+                    "height": "fit",
+                    "background_media": "none",
+                    "border": "none",
+                    "border_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {
+                    "value": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>80+</p>",
+                        "width": "100%",
+                        "max_width": "none",
+                        "alignment": "left",
+                        "type_preset": "h4",
+                        "font": "var(--font-body--family)",
+                        "font_size": "",
+                        "enable_mobile_size": false,
+                        "mobile_font_size": "1rem",
+                        "line_height": "normal",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "",
+                        "text_color": "{{ settings.color_palette.color1 }}",
+                        "background": false,
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "custom_mobile_padding": false,
+                        "mobile-padding-block-start": 0,
+                        "mobile-padding-block-end": 0,
+                        "mobile-padding-inline-start": 0,
+                        "mobile-padding-inline-end": 0,
+                        "custom_class": ""
+                      }
+                    },
+                    "label": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>corporate clients</p>",
+                        "width": "100%",
+                        "max_width": "none",
+                        "alignment": "left",
+                        "type_preset": "paragraph",
+                        "font": "var(--font-body--family)",
+                        "font_size": "",
+                        "enable_mobile_size": false,
+                        "mobile_font_size": "1rem",
+                        "line_height": "normal",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "",
+                        "text_color": "{{ settings.color_palette.color8 }}",
+                        "background": false,
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "custom_mobile_padding": false,
+                        "mobile-padding-block-start": 0,
+                        "mobile-padding-block-end": 0,
+                        "mobile-padding-inline-start": 0,
+                        "mobile-padding-inline-end": 0,
+                        "custom_class": ""
+                      }
+                    }
+                  },
+                  "block_order": [
+                    "value",
+                    "label"
+                  ]
+                },
+                "t2": {
+                  "type": "group",
+                  "settings": {
+                    "link": "",
+                    "content_direction": "column",
+                    "vertical_on_mobile": true,
+                    "horizontal_alignment": "flex-start",
+                    "vertical_alignment": "center",
+                    "horizontal_alignment_flex_direction_column": "flex-start",
+                    "vertical_alignment_flex_direction_column": "flex-start",
+                    "gap": 4,
+                    "width": "fill",
+                    "width_mobile": "fill",
+                    "height": "fit",
+                    "background_media": "none",
+                    "border": "none",
+                    "border_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {
+                    "value": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>4 sectors</p>",
+                        "width": "100%",
+                        "max_width": "none",
+                        "alignment": "left",
+                        "type_preset": "h4",
+                        "font": "var(--font-body--family)",
+                        "font_size": "",
+                        "enable_mobile_size": false,
+                        "mobile_font_size": "1rem",
+                        "line_height": "normal",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "",
+                        "text_color": "{{ settings.color_palette.color1 }}",
+                        "background": false,
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "custom_mobile_padding": false,
+                        "mobile-padding-block-start": 0,
+                        "mobile-padding-block-end": 0,
+                        "mobile-padding-inline-start": 0,
+                        "mobile-padding-inline-end": 0,
+                        "custom_class": ""
+                      }
+                    },
+                    "label": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>healthcare, aviation, transport, F&amp;B</p>",
+                        "width": "100%",
+                        "max_width": "none",
+                        "alignment": "left",
+                        "type_preset": "paragraph",
+                        "font": "var(--font-body--family)",
+                        "font_size": "",
+                        "enable_mobile_size": false,
+                        "mobile_font_size": "1rem",
+                        "line_height": "normal",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "",
+                        "text_color": "{{ settings.color_palette.color8 }}",
+                        "background": false,
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "custom_mobile_padding": false,
+                        "mobile-padding-block-start": 0,
+                        "mobile-padding-block-end": 0,
+                        "mobile-padding-inline-start": 0,
+                        "mobile-padding-inline-end": 0,
+                        "custom_class": ""
+                      }
+                    }
+                  },
+                  "block_order": [
+                    "value",
+                    "label"
+                  ]
+                }
+              },
+              "block_order": [
+                "t1",
+                "t2"
+              ]
+            },
+            "row_2": {
+              "type": "group",
+              "settings": {
+                "link": "",
+                "content_direction": "row",
+                "vertical_on_mobile": false,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "flex-start",
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "vertical_alignment_flex_direction_column": "flex-start",
+                "gap": 24,
+                "width": "fill",
+                "width_mobile": "fill",
+                "height": "fit",
+                "background_media": "none",
+                "border": "none",
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0,
+                "enable_mobile_gap": true,
+                "mobile_gap": 16
+              },
+              "blocks": {
+                "t3": {
+                  "type": "group",
+                  "settings": {
+                    "link": "",
+                    "content_direction": "column",
+                    "vertical_on_mobile": true,
+                    "horizontal_alignment": "flex-start",
+                    "vertical_alignment": "center",
+                    "horizontal_alignment_flex_direction_column": "flex-start",
+                    "vertical_alignment_flex_direction_column": "flex-start",
+                    "gap": 4,
+                    "width": "fill",
+                    "width_mobile": "fill",
+                    "height": "fit",
+                    "background_media": "none",
+                    "border": "none",
+                    "border_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {
+                    "value": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>In-house</p>",
+                        "width": "100%",
+                        "max_width": "none",
+                        "alignment": "left",
+                        "type_preset": "h4",
+                        "font": "var(--font-body--family)",
+                        "font_size": "",
+                        "enable_mobile_size": false,
+                        "mobile_font_size": "1rem",
+                        "line_height": "normal",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "",
+                        "text_color": "{{ settings.color_palette.color1 }}",
+                        "background": false,
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "custom_mobile_padding": false,
+                        "mobile-padding-block-start": 0,
+                        "mobile-padding-block-end": 0,
+                        "mobile-padding-inline-start": 0,
+                        "mobile-padding-inline-end": 0,
+                        "custom_class": ""
+                      }
+                    },
+                    "label": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>design and manufacture</p>",
+                        "width": "100%",
+                        "max_width": "none",
+                        "alignment": "left",
+                        "type_preset": "paragraph",
+                        "font": "var(--font-body--family)",
+                        "font_size": "",
+                        "enable_mobile_size": false,
+                        "mobile_font_size": "1rem",
+                        "line_height": "normal",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "",
+                        "text_color": "{{ settings.color_palette.color8 }}",
+                        "background": false,
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "custom_mobile_padding": false,
+                        "mobile-padding-block-start": 0,
+                        "mobile-padding-block-end": 0,
+                        "mobile-padding-inline-start": 0,
+                        "mobile-padding-inline-end": 0,
+                        "custom_class": ""
+                      }
+                    }
+                  },
+                  "block_order": [
+                    "value",
+                    "label"
+                  ]
+                },
+                "t4": {
+                  "type": "group",
+                  "settings": {
+                    "link": "",
+                    "content_direction": "column",
+                    "vertical_on_mobile": true,
+                    "horizontal_alignment": "flex-start",
+                    "vertical_alignment": "center",
+                    "horizontal_alignment_flex_direction_column": "flex-start",
+                    "vertical_alignment_flex_direction_column": "flex-start",
+                    "gap": 4,
+                    "width": "fill",
+                    "width_mobile": "fill",
+                    "height": "fit",
+                    "background_media": "none",
+                    "border": "none",
+                    "border_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {
+                    "value": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>Asian fit</p>",
+                        "width": "100%",
+                        "max_width": "none",
+                        "alignment": "left",
+                        "type_preset": "h4",
+                        "font": "var(--font-body--family)",
+                        "font_size": "",
+                        "enable_mobile_size": false,
+                        "mobile_font_size": "1rem",
+                        "line_height": "normal",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "",
+                        "text_color": "{{ settings.color_palette.color1 }}",
+                        "background": false,
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "custom_mobile_padding": false,
+                        "mobile-padding-block-start": 0,
+                        "mobile-padding-block-end": 0,
+                        "mobile-padding-inline-start": 0,
+                        "mobile-padding-inline-end": 0,
+                        "custom_class": ""
+                      }
+                    },
+                    "label": {
+                      "type": "text",
+                      "settings": {
+                        "text": "<p>extreme, half and wide sizes</p>",
+                        "width": "100%",
+                        "max_width": "none",
+                        "alignment": "left",
+                        "type_preset": "paragraph",
+                        "font": "var(--font-body--family)",
+                        "font_size": "",
+                        "enable_mobile_size": false,
+                        "mobile_font_size": "1rem",
+                        "line_height": "normal",
+                        "letter_spacing": "normal",
+                        "case": "none",
+                        "wrap": "",
+                        "text_color": "{{ settings.color_palette.color8 }}",
+                        "background": false,
+                        "corner_radius": 0,
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0,
+                        "custom_mobile_padding": false,
+                        "mobile-padding-block-start": 0,
+                        "mobile-padding-block-end": 0,
+                        "mobile-padding-inline-start": 0,
+                        "mobile-padding-inline-end": 0,
+                        "custom_class": ""
+                      }
+                    }
+                  },
+                  "block_order": [
+                    "value",
+                    "label"
+                  ]
+                }
+              },
+              "block_order": [
+                "t3",
+                "t4"
+              ]
+            }
+          },
+          "block_order": [
+            "row_1",
+            "row_2"
+          ]
+        }
+      },
+      "block_order": [
+        "copy",
+        "tiles"
+      ],
+      "custom_css": [],
+      "settings": {
+        "content_direction": "row",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "flex-start",
+        "gap": 64,
+        "section_width": "page-width",
+        "section_height": "",
+        "background_media": "none",
+        "border": "none",
+        "enable_mobile_gap": true,
+        "mobile_gap": 64,
+        "background_color": "{{ settings.color_palette.color2 }}",
+        "padding-block-start": 50,
+        "padding-block-end": 50,
+        "custom_mobile_padding": true,
+        "mobile-padding-block-start": 91,
+        "mobile-padding-block-end": 91,
+        "mobile-padding-inline-start": 0,
+        "mobile-padding-inline-end": 0
       }
     },
     "visit": {
@@ -798,8 +1637,9 @@
   "order": [
     "breadcrumb",
     "hero",
-    "timeline",
+    "story",
     "letter",
+    "organisations",
     "visit"
   ]
 }

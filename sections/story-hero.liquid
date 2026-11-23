@@ -41,7 +41,7 @@
     <div class="story-split__cols">
       <div
         class="story-split__copy spacing-style"
-        style="{% render 'spacing-style', settings: section.settings %}"
+        style="{% render 'spacing-style', settings: section.settings %} --wm-scale: {{ section.settings.watermark_size_mobile | default: 50 | divided_by: 100.0 }};"
       >
         <div class="story-split__watermark" aria-hidden="true">
           {%- if section.settings.watermark_image != blank -%}
@@ -380,6 +380,54 @@
     color: var(--sh-tagline);
   }
 
+  /* Phones: copy aligned to the top of the column, and the mark shrunk by "Watermark size on phones"
+     (100 = the old 560px) and pushed down so only its upper part shows, under the end of the copy. The
+     text takes bottom room equal to the visible part so the mark never runs behind the tagline. */
+  @media screen and (max-width: 749px) {
+    .story-split__copy {
+      --wm-w: calc(560px * var(--wm-scale, 0.5));
+      --wm-h: calc(var(--wm-w) * 0.9);
+
+      justify-content: flex-start;
+    }
+
+    .story-split__watermark {
+      inset-block-start: auto;
+      inset-block-end: calc(var(--wm-h) * -0.6);
+      inset-inline-start: calc(-180px * var(--wm-scale, 0.5));
+      width: var(--wm-w);
+    }
+
+    .story-split__text {
+      margin-block-end: max(0px, calc(var(--wm-h) * 0.4 - 48px));
+    }
+
+    /* Stats in one row of equal columns with vertical hairlines, as on desktop. The number steps down
+       to the 18px rung so "1,000,000+" fits a third of a phone. */
+    .story-split__stats-grid {
+      grid-template-columns: repeat(var(--sh-stat-count), minmax(0, 1fr));
+    }
+
+    .story-split__stat {
+      padding-inline: 8px;
+    }
+
+    .story-split__stat:only-child,
+    .story-split__stat:first-child:nth-last-child(3) {
+      grid-column: auto;
+    }
+
+    .story-split__stat + .story-split__stat,
+    .story-split__stat:first-child:nth-last-child(3) ~ .story-split__stat {
+      border-block-start: 0;
+      border-inline-start: 1px solid var(--sh-line);
+    }
+
+    .story-split__stat-number.story-split__stat-number {
+      font-size: var(--font-size--lg);
+    }
+  }
+
   @media screen and (min-width: 750px) {
     .story-split__cols {
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -486,6 +534,17 @@
       "id": "watermark_image",
       "label": "Watermark image",
       "info": "Optional. Replaces the built-in Foot Tree mark."
+    },
+    {
+      "type": "range",
+      "id": "watermark_size_mobile",
+      "label": "Watermark size on phones",
+      "info": "Split layout only. 100 is the desktop size; lower is smaller. It sits at the bottom of the copy.",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 50
     },
     {
       "type": "color",
