@@ -105,6 +105,41 @@ Horizon's "Mobile columns: 2" (172px cards at 390), where 18px wrapped real prod
 lines, so the rule was removed. Do not reintroduce a phone-only card title size; if a single-card
 carousel ever returns, size it from the card (container query), not the viewport.
 
+## Buttons: one preset size, on every page
+
+The site has **one** text button: the homepage hero's "Shop Bestsellers". **49.6px tall, 12px / 22px
+padding, 16px text at weight 400, 8px radius.** Stock Horizon `.button` is 16px / 24px padding,
+**57.6px tall**, and the client spots the difference at a glance.
+
+A stock `button` block does **not** get the preset by itself. The preset is one rule in
+`assets/custom.css` ("The site's preset button") whose selector list names every member, so a button
+on a new page renders at the stock 57.6px until its section is added to that list.
+
+For every new or touched page, section or block that has a text button or a button-styled tab:
+
+1. Give the section a `css_class` (stock `section` has the setting; `ft-story-org` is the worked
+   example) and add `#MainContent .<class> :is(.button, .button-secondary)` to the preset rule's
+   selector list, and name it in the rule's comment. Add a member; never add declarations.
+2. Never type padding, height or font-size for a button anywhere else, and never change the global
+   `--button-padding-block`: it also sizes Add to cart, the cart and form submit buttons.
+3. Check the section's Custom CSS box does not undo it (Corporate once carried
+   `border:1.5px solid transparent;font-weight:600` on its buttons).
+4. **Measure before reporting**: `getBoundingClientRect().height` and the computed padding and
+   font-weight of every button on the page at 1440 and 390, against the hero CTA on `/`. Anything
+   that is not 49.6px / 12px 22px / 400 is a defect, not a detail. A build brief for a page with a
+   button names this check, and the review re-measures it.
+5. Removing a section? Remove its member from the selector list too, so the list stays true.
+
+Not on the preset, by decision so far (do not "fix" without being asked): Add to cart, cart and
+checkout buttons, form submit buttons ("Submit" on Contact, "Send request" on Wholesale), and the
+Wholesale page's "Request a quotation" / "Sample button" (flagged to the owner on 2026-11-23, no
+answer yet).
+
+Lesson: the Our Story page shipped on 2026-11-23 with four buttons at 57.6px. They were stock
+`button` blocks copied from an older section that had never joined the preset, the build spec said
+"same settings as the existing button", and the review measured type sizes but not button heights.
+The owner caught it on the live page.
+
 ## New pages and sections: adapt the mockup, never copy it 1:1
 
 Every new template, page or section requested from the Figma is built **into the design system
@@ -142,9 +177,12 @@ Before writing a new section:
    different button), follow the system and name the deviation in the report so the client can
    push back.
 7. **No phone frame?** Design the phone layout from how the existing sections stack, then measure.
+8. **Buttons** join the preset rule (see "Buttons: one preset size" above). Copying an existing
+   button block's settings is not enough: the size comes from the selector list in custom.css.
 
 Verify at **390 and 1440** by measuring the rendered page (computed font sizes on the ladder,
-the boundary table at 64 on phones), then look at the screenshots before reporting.
+the boundary table at 64 on phones, every button at 49.6px), then look at the screenshots before
+reporting.
 
 ## Phone pass: make a page shorter, then hold every boundary at 64
 
