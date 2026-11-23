@@ -54,6 +54,39 @@
     endif
   endif
 
+  # Store-wide sale (snippets/storewide-sale.liquid): when it applies, show the variant as if its
+  # compare-at price were the current crossed-out price and its price were the sale price.
+  # The "% OFF" tag gets the same two numbers. Off = nothing below changes.
+  assign tag_compare_at = selected_variant.compare_at_price
+  assign tag_price = selected_variant.price
+  if product_resource != blank
+    capture sale_cents
+      render 'storewide-sale', amount: selected_variant.price, product: product_resource
+    endcapture
+    assign sale_cents = sale_cents | plus: 0
+    if sale_cents > 0
+      if compare_at_price > price
+        assign tag_compare_at = compare_at_price
+      else
+        assign tag_compare_at = price
+        assign compare_at_price = price
+      endif
+      assign tag_price = sale_cents
+      assign price = sale_cents
+      assign show_compare_price = true
+      if price_min != null
+        capture sale_min
+          render 'storewide-sale', amount: price_min, product: product_resource
+        endcapture
+        capture sale_max
+          render 'storewide-sale', amount: price_max, product: product_resource
+        endcapture
+        assign price_min = sale_min | plus: 0
+        assign price_max = sale_max | plus: 0
+      endif
+    endif
+  endif
+
   # Determine if currency code should be shown
   assign use_currency = false
   if product.handle == product_resource.handle
@@ -116,7 +149,7 @@
           <bdi>{{- compare_at_price -}}</bdi>
         </span>
         {%- if show_percent_off -%}
-          {% render 'percent-off-tag', compare_at: selected_variant.compare_at_price, price: selected_variant.price %}
+          {% render 'percent-off-tag', compare_at: tag_compare_at, price: tag_price %}
         {%- endif -%}
       {% else %}
         <span class="price-item__group price-item--regular compare-at-price">
@@ -124,7 +157,7 @@
           <bdi>{{- compare_at_price -}}</bdi>
         </span>
         {%- if show_percent_off -%}
-          {% render 'percent-off-tag', compare_at: selected_variant.compare_at_price, price: selected_variant.price %}
+          {% render 'percent-off-tag', compare_at: tag_compare_at, price: tag_price %}
         {%- endif -%}
         <span class="price-item__group price">
           <span class="visually-hidden">{{ 'content.price_sale' | t }}&nbsp;</span>
@@ -132,7 +165,7 @@
         </span>
       {% endif %}
       {%- if percent_off_below -%}
-        {% render 'percent-off-tag', compare_at: selected_variant.compare_at_price, price: selected_variant.price, modifier: 'below' %}
+        {% render 'percent-off-tag', compare_at: tag_compare_at, price: tag_price, modifier: 'below' %}
       {%- endif -%}
     {% else %}
       <span class="price"

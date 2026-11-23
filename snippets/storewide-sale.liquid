@@ -1,0 +1,47 @@
+{%- doc -%}
+  Store-wide sale rule, in one place. Returns the DISPLAY sale price in cents for one amount,
+  or prints nothing when the sale does not apply.
+
+  What it reads (Settings > Custom data > Shop metafields):
+  - custom.sale_percent  whole number, 0 to 90. Empty or 0 = no sale.
+  - custom.sale_ends     optional date and time. Once now is at or past it, no sale.
+
+  The real discount is NOT created here. It comes from the automatic discount in
+  Shopify Discounts, which is what the cart and checkout charge. This snippet only changes the
+  prices SHOWN on product pages, cards, search and so on, so keep the two percentages the same.
+  Rounding is to the nearest cent, like the discount in the cart.
+
+  It does not apply to gift cards.
+
+  Times are compared as epoch seconds so the shop timezone cannot skew the cut-off.
+
+  @param {number} amount - Price in cents (a variant price, price_min, price_max)
+  @param {product} product - The product the price belongs to (used to skip gift cards)
+
+  @example
+  {% capture sale_cents %}{% render 'storewide-sale', amount: variant.price, product: product %}{% endcapture %}
+  {% assign sale_cents = sale_cents | plus: 0 %}
+  {% if sale_cents > 0 %} ...show sale_cents... {% endif %}
+{%- enddoc -%}
+
+{%- liquid
+  assign sale_percent = shop.metafields.custom.sale_percent.value | plus: 0
+  assign sale_is_on = false
+
+  if sale_percent > 0 and product != blank and product.gift_card? != true and amount > 0
+    assign sale_is_on = true
+    assign sale_ends_at = shop.metafields.custom.sale_ends.value
+    if sale_ends_at != blank
+      assign sale_now_s = 'now' | date: '%s' | plus: 0
+      assign sale_ends_s = sale_ends_at | date: '%s' | plus: 0
+      if sale_now_s >= sale_ends_s
+        assign sale_is_on = false
+      endif
+    endif
+  endif
+
+  if sale_is_on
+    assign sale_discount = amount | times: sale_percent | divided_by: 100.0 | round
+    echo amount | minus: sale_discount
+  endif
+-%}

@@ -4,10 +4,20 @@
   assign product = closest.product
   assign block_settings = block.settings
 
+  # Store-wide sale (snippets/storewide-sale.liquid): "From" shows the sale price when it applies.
+  assign price_min_cents = product.price_min
+  capture sale_min_cents
+    render 'storewide-sale', amount: product.price_min, product: product
+  endcapture
+  assign sale_min_cents = sale_min_cents | plus: 0
+  if sale_min_cents > 0
+    assign price_min_cents = sale_min_cents
+  endif
+
   if settings.currency_code_enabled_product_cards
-    assign price_min = product.price_min | money_with_currency
+    assign price_min = price_min_cents | money_with_currency
   else
-    assign price_min = product.price_min | money
+    assign price_min = price_min_cents | money
   endif
 
   if product.price_varies
