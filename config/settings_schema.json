@@ -1668,6 +1668,13 @@
           }
         ],
         "default": "default"
+      },
+      {
+        "type": "checkbox",
+        "id": "progress_arrows_on_phones",
+        "label": "Arrows beside the progress bar on phones",
+        "info": "Shows previous and next buttons at the right-hand end of the progress bar under carousels on phones.",
+        "default": true
       }
     ]
   },

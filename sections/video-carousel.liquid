@@ -511,7 +511,14 @@
 
   /* The nav arrows live in the header only - always hide the progress style's own built-in
      arrows so they never double up next to the track. */
+  /* Phone arrows: keeps the 64px boundary under the taller progress row (see slideshow-controls) */
+  .video-carousel slideshow-controls {
+    --progress-row-end: 6px;
+  }
+
   .video-carousel .slideshow-controls__progress-arrows {
+    --progress-arrow-color: var(--video-carousel-accent-color, var(--color-foreground));
+    --progress-arrow-border: var(--video-carousel-line-color, var(--color-border));
     display: none;
   }
 

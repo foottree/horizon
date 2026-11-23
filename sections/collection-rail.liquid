@@ -495,7 +495,14 @@
     background: var(--collection-rail-accent-color, var(--color-foreground));
   }
 
+  /* Phone arrows: keeps the 64px boundary under the taller progress row (see slideshow-controls) */
+  .collection-rail slideshow-controls {
+    --progress-row-end: 4px;
+  }
+
   .collection-rail .slideshow-controls__progress-arrows {
+    --progress-arrow-color: var(--collection-rail-accent-color, var(--color-foreground));
+    --progress-arrow-border: var(--collection-rail-track-color, var(--color-border));
     display: none;
   }
 

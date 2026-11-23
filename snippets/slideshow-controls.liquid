@@ -534,6 +534,54 @@
     stroke: currentColor;
   }
 
+  /* Phones only: arrows at the right-hand end of the progress bar's row, gated by Theme settings
+     > Icons > "Arrows beside the progress bar on phones" (body.progress-arrows-phone). The sections
+     hide these buttons at every width and set --progress-arrow-color / --progress-arrow-border from
+     their own accent and line colours; the body prefix wins that tie without !important. Same
+     control as the round outlined arrows in the Shop by Collection header, 40px so a thumb lands. */
+  @media screen and (max-width: 749px) {
+    body.progress-arrows-phone .slideshow-controls__progress-arrows {
+      display: flex;
+      gap: 8px;
+    }
+
+    /* A section that reserved slack under its 4px bar (the stock 44px controls height) sets
+       --progress-row-end to the amount the taller row used up, so the 64px boundary holds. */
+    body.progress-arrows-phone .slideshow-controls__progress {
+      margin-block-end: var(--progress-row-end, 0px);
+    }
+
+    /* Nothing to scroll (both ends disabled): no dead arrows, the bar takes the row. */
+    body.progress-arrows-phone .slideshow-controls__progress-arrows:not(:has(:not(:disabled))) {
+      display: none;
+    }
+
+    body.progress-arrows-phone .slideshow-controls__progress-arrows .slideshow-control--progress-arrow {
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+      min-height: 40px;
+      border: 1px solid var(--progress-arrow-border, var(--color-border));
+      border-radius: 50%;
+      background: transparent;
+      color: var(--progress-arrow-color, var(--color-foreground));
+    }
+
+    body.progress-arrows-phone .slideshow-controls__progress-arrows .slideshow-control--progress-arrow:is(:hover, :focus-visible) {
+      background: transparent;
+      color: var(--progress-arrow-color, var(--color-foreground));
+    }
+
+    body.progress-arrows-phone .slideshow-controls__progress-arrows .slideshow-control--progress-arrow:is(:hover, :focus-visible) svg {
+      stroke: currentColor;
+    }
+
+    body.progress-arrows-phone .slideshow-controls__progress-arrows .slideshow-control--progress-arrow:disabled {
+      opacity: 0.4;
+      cursor: default;
+    }
+  }
+
   /* Hide progress controls when not in progress mode */
   .carousel-controls:not(.carousel-controls--progress) .slideshow-controls__progress {
     display: none;

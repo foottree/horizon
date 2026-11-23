@@ -375,7 +375,14 @@
     background: var(--review-cards-accent-color, var(--color-foreground));
   }
 
+  /* Phone arrows: keeps the 64px boundary under the taller progress row (see slideshow-controls) */
+  .review-cards slideshow-controls {
+    --progress-row-end: 4px;
+  }
+
   .review-cards .slideshow-controls__progress-arrows {
+    --progress-arrow-color: var(--review-cards-accent-color, var(--color-foreground));
+    --progress-arrow-border: var(--review-cards-line-color, var(--color-border));
     display: none;
   }
 
@@ -421,6 +428,12 @@
   .review-cards slideshow-controls .slideshow-control:is(.icon-pause, .icon-play) svg {
     width: 16px;
     height: 16px;
+  }
+
+  @media screen and (max-width: 749px) {
+    body.progress-arrows-phone .review-cards slideshow-controls .slideshow-control:is(.icon-pause, .icon-play) {
+      margin-block-end: var(--progress-row-end, 0px);
+    }
   }
 
   .review-cards__mobile.force-full-width .slideshow-controls__progress {
