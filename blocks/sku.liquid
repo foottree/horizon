@@ -5,6 +5,7 @@
   assign product_resource = closest.product
   assign selected_variant = product_resource.selected_or_first_available_variant
   assign sku = selected_variant.sku
+  assign prefix = block_settings.prefix
 -%}
 
 {% liquid
@@ -52,7 +53,7 @@
   "
   {{ block.shopify_attributes }}
 >
-  {% render 'sku', product_resource: product_resource %}
+  {% render 'sku', product_resource: product_resource, prefix: prefix %}
 </product-sku-component>
 
 {% schema %}
@@ -63,6 +64,13 @@
     {
       "type": "paragraph",
       "content": "t:content.resource_reference_product_sku"
+    },
+    {
+      "type": "text",
+      "id": "prefix",
+      "label": "Prefix",
+      "info": "Shown before the SKU, for example \"SKU:\". Leave empty to show the SKU alone.",
+      "default": "SKU:"
     },
     {
       "type": "header",

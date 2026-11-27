@@ -3,6 +3,7 @@
   It is used in the sku block.
 
   @param {product} product_resource - The product to render
+  @param {string} [prefix] - Optional label rendered before the SKU, for example "SKU:"
 {%- enddoc -%}
 
 {%- liquid
@@ -10,6 +11,9 @@
 -%}
 
 <div ref="skuContainer">
+  {%- if prefix != blank -%}
+    <span class="sku-prefix">{{ prefix }}</span>
+  {%- endif %}
   <span
     class="sku"
     data-testid="product-sku"
